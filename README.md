@@ -5,5 +5,6 @@
 - #### [k-nearest-neighbors -> classification](./監督式機器學習/README.ipynb)
 - #### [k-nearest-neighbors -> regression](./監督式機器學習/README1.ipynb)
 - #### [Linear Models -> regression](./監督式機器學習/README2.ipynb)
+- #### [Linear Models -> classification](./監督式機器學習/README3.ipynb)
 
 
