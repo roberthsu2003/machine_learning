@@ -6,5 +6,7 @@
 - #### [k-nearest-neighbors -> regression](./監督式機器學習/README1.ipynb)
 - #### [Linear Models -> regression](./監督式機器學習/README2.ipynb)
 - #### [Linear Models -> classification](./監督式機器學習/README3.ipynb)
+- #### [Naive Bayes classifier(貝葉氏分類器)](./監督式機器學習/README4.ipynb)
+- #### [Decision Tree(決策樹)](./監督式機器學習/README5.ipynb)
 
 
