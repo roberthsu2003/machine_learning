@@ -8,5 +8,6 @@
 - #### [Linear Models -> classification](./監督式機器學習/README3.ipynb)
 - #### [Naive Bayes classifier(貝葉氏分類器)](./監督式機器學習/README4.ipynb)
 - #### [Decision Tree(決策樹)](./監督式機器學習/README5.ipynb)
+- #### [Neural Networks-Deep Learning(深度學習)](./監督式機器學習/README6.ipynb)
 
 

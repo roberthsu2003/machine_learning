@@ -4,3 +4,4 @@ matplotlib
 ipython
 scikit-learn
 pandas
+graphviz
