@@ -1,1 +1,1 @@
-# 簡單線性回歸
+# 簡單線性回歸(Simple Linear Regression)

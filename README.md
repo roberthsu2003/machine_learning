@@ -11,3 +11,4 @@
 - #### [Neural Networks-Deep Learning(深度學習)](./監督式機器學習/README6.ipynb)
 
 
+> [統計學](https://wangcc.me/LSHTMlearningnote/)
