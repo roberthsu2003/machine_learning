@@ -30,6 +30,11 @@ print(random.sample(choices, 2))
 
 **(1) 正態分佈（Normal Distribution）**
 
+### 正態分佈實作檔
+
+[正態分佈實作ipynb檔](./正態分佈.ipynb)
+
+
 ```other
 import numpy as np
 
