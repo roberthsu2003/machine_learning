@@ -10,3 +10,5 @@
 - 解釋如何使用決策樹來處理迴歸問題。
 
 ## 實作:
+
+[**DecisionTreeClassifier model**](./sklearn實作1.ipynb)
