@@ -22,3 +22,6 @@
 ## [迴歸分類 Logistic Regression](./邏輯迴歸)
 
 ## [樹狀模型(決策樹) DecisionTreeClassifier](./樹狀模型)
+
+## [隨機森林 RandomForestClassifier]
+(./隨機森林)
