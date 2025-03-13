@@ -10,4 +10,4 @@
 - 討論 k 近鄰分類的應用場景，例如推薦系統和圖像分類。
 
 ##  實作:
-[KNeighborsClassifier](./sklearn實作1.ipynb)
+[**KNeighborsClassifier model實作**](./sklearn實作1.ipynb)

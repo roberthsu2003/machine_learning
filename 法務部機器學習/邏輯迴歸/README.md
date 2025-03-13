@@ -10,4 +10,4 @@
 - 解釋如何使用機率來解釋邏輯回歸的輸出。
 
 ## 實作
-- [**Logistic Regression Model**](./sklearn實作1.ipynb)
+- [**Logistic Regression Model實作**](./sklearn實作1.ipynb)

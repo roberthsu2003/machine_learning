@@ -11,4 +11,4 @@
 
 ## 實作:
 
-[**DecisionTreeClassifier model**](./sklearn實作1.ipynb)
+[**DecisionTreeClassifier model實作**](./sklearn實作1.ipynb)

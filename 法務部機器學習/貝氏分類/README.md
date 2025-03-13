@@ -10,5 +10,5 @@
 - 了解Laplace平滑，來處理訓練資料中，某個特徵在某個分類中沒有出現過的問題。
 
 ## 實作
-[GaussianNB Model](./sklearn實作1.ipynb)
+[**GaussianNB Model實作**](./sklearn實作1.ipynb)
 
