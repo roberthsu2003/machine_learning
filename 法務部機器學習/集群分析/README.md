@@ -23,7 +23,7 @@
 
 * **K-means：**
 
-[**K-means實作ipynb檔**](./k-means.ipynb)
+ - [**K-means實作ipynb檔**](./k-means.ipynb)
 
    * 將資料分成預先定義的 K 個群集。
 	
