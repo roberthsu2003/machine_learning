@@ -1,5 +1,8 @@
 ## 機器學習
 
+## 何謂AI,機器學習,深度學習
+- [簡報檔案下載位置](./法務部機器學習/簡報圖片)
+
 ### [基本使用套件](./基本package/README.ipynb)
 ### 監督式機器學習
 - #### [k-nearest-neighbors -> classification](./監督式機器學習/README.ipynb)
