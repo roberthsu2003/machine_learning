@@ -21,4 +21,4 @@
 - [**linear Regression_手動**](./簡單線性迴歸)
 - [**linear Regression Model*‌*](./簡單線性迴歸/sklearn實作1.ipynb)
 
-## [迴歸分類]()
+## [迴歸分類 LogisticRegression](./邏輯迴歸)

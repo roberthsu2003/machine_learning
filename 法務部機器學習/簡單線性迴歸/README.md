@@ -1,74 +1,14 @@
-# 簡單線性回歸(Simple Linear Regression)
-- 請使用`說明jam資料夾內檔案做說明`
-- [實作筆記本檔案](./simple_linear_regression.ipynb)
+# 簡單線性迴歸(Linear Regression)
 
-```python
-!pip install wget
-```
+## 重點:
+- 從簡單的線性關係開始，讓學生理解線性迴歸的基本概念。
+- 解釋迴歸係數和截距的意義，以及它們如何影響預測結果。
+- 嘗試修改數據，觀察模型的變化。
+- 介紹其他評估指標，例如均方誤差（MSE）和 R 平方值，來評估模型的性能。
+- 嘗試使用真實世界的數據集，例如房價數據集，來進行線性迴歸分析。
+- 線性回歸的假設，例如線性關係，資料常態分佈等等
 
-```python
-import pandas as pd
+## 範例實作
+[**簡單線性迴歸_手動**](./簡單線性迴歸_手動.md)
 
-url = "https://github.com/roberthsu2003/machine_learning/raw/refs/heads/main/source_data/Salary_Data.csv"
-data = pd.read_csv(url)
-data
-# y = w*x + b
-x = data["YearsExperience"]
-y = data["Salary"]
-
-```
-
-```python
-
-import wget
-
-wget.download("https://github.com/roberthsu2003/machine_learning/raw/refs/heads/main/source_data/ChineseFont.ttf")
-```
-
-```python
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-from matplotlib.font_manager import fontManager
-
-fontManager.addfont("ChineseFont.ttf")
-mpl.rc('font', family="ChineseFont")
-
-plt.scatter(x, y, marker="x", color="red")
-plt.title("年資-薪水")
-plt.xlabel("年資")
-plt.ylabel("月薪(千)")
-plt.show()
-```
-
-```python
-def plot_pred(w, b):
-  y_pred = x*w + b
-  plt.plot(x, y_pred, color="blue", label="預測線")
-  plt.scatter(x, y, marker="x", color="red", label="真實數據")
-  plt.title("年資-薪水")
-  plt.xlabel("年資")
-  plt.ylabel("月薪(千)")
-  plt.xlim([0, 12])
-  plt.ylim([-60, 140])
-  plt.legend()
-  plt.show()
-
-plot_pred(-5, -30)
-```
-
-```python
-from ipywidgets import interact
-
-interact(plot_pred, w=(-100, 100, 1), b=(-100, 100, 1))
-```
-
-## 尋找最適合的w和b
-![](./images/pic1.png)
-
-## 怎樣是最適合資料的直線?
-
-![](./images/pic2.png)
-
-## 利用cost function(成本函數)找出最適合的w和b
-
-[cost_function的ipynb](./cost_function1.ipynb)
+[**簡單線性迴歸_模型**](./sklearn實作1.ipynb)
