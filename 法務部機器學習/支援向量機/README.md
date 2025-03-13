@@ -17,3 +17,4 @@
 - 如何使用 SVM 進行迴歸分析（SVR）。
 
 ## 實作:
+[SVC(Support Vector Classifier）model](./sklearn實作1.ipynb)
