@@ -61,6 +61,8 @@ print(uniform_data)
 
 **(3) 二項分佈（Binomial Distribution）**
 
+[**2項分佈實作ipynb檔**](./2項分佈.ipynb)
+
 ```other
 # 進行 10 次獨立拋硬幣試驗，成功機率為 0.5
 binomial_data = np.random.binomial(n=10, p=0.5, size=5)
