@@ -34,7 +34,10 @@ print(random.sample(choices, 2))
 
 ### 正態分佈實作檔
 
-[正態分佈實作ipynb檔](./正態分佈.ipynb)
+[**正態(常態)分佈實作ipynb檔**](./正態分佈.ipynb)
+
+[**正態(常態)分佈實作ipynb檔**](./正態分佈1.ipynb)
+
 
 
 ```other
@@ -47,6 +50,8 @@ print(normal_data)
 
 
 **(2) 均勻分佈（Uniform Distribution）**
+
+[**均勻分佈實作ipynb檔**](./均勻分佈.ipynb)
 
 ```other
 uniform_data = np.random.uniform(low=0, high=10, size=5)
