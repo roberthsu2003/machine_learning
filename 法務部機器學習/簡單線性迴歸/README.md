@@ -10,10 +10,11 @@
 
 ## 範例實作
 - [**簡單線性迴歸_手動**](./簡單線性迴歸_手動.md)
-**操作複雜,可以學習很多基本觀念**
 
-	- [cost_function實作](./cost_function.ipynb)
+> 操作複雜,可以學習很多基本觀念
 
-	- [gradient_descent實作](./gradient_descent.ipynb)
+- [cost_function實作](./cost_function.ipynb)
+
+- [gradient_descent實作](./gradient_descent.ipynb)
 
 [**簡單線性迴歸_模型**](./sklearn實作1.ipynb)
