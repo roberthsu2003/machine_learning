@@ -58,7 +58,14 @@ data = data.drop(['City','CityC'],axis=1)
 
 ![](./images/pic3.png)
 
+## 拆分為訓練集,測試集
+- **測試集主要目的:評估模型的準確度**
+
+![](./images/pic4.png)
+
 
 ## 手動實作
 - cost function
 - gradient descent
+
+![](./images/pic5.png)
