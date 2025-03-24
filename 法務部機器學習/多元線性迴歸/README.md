@@ -5,7 +5,6 @@
 > [ipynb實作](./multiple_linear_regression1.ipynb)
 
 ## 讀取資料
-![](./images/pic1.png)
 
 ```python
 import pandas as pd
@@ -15,6 +14,8 @@ data = pd.read_csv(url)
 data
 ```
 
+![](./images/pic1.png)
+
 ## Label Encoding
 - 將文字轉為數值
 - 有高低的欄位(EducationLevel)
@@ -22,13 +23,14 @@ data
 - 大學 -> 1
 - 碩士以上 -> 2
 
-![](./images/pic2.png)
 
 ```python
 educationLabel_encoding = data['EducationLevel'].map({'高中以下':0,'大學':1,'碩士以上':2})
 
 data['EducationLevel'] = educationLabel_encoding
 ```
+
+![](./images/pic2.png)
 
 ## One Hot Encoding
 - 將文字轉為數值
