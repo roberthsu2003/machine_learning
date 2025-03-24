@@ -55,3 +55,8 @@ data = data.drop(['City','CityC'],axis=1)
 ```
 
 ![](./images/pic3.png)
+
+
+## 手動實作
+- cost function
+- gradient descent
