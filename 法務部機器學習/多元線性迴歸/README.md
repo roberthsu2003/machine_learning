@@ -3,7 +3,7 @@
 > [!TIP]
 > [Jam簡報檔目錄](./說明jam)  
 > [手動gradient的實作](./multiple_linear_regression1.ipynb)  
-> [自動scikit-learn模型的實作] (./multiple_linear_regression2.ipynb)
+> [自動scikit-learn模型的實作](.multiple_linear_regression2.ipynb)    
 
 ## 讀取資料
 
