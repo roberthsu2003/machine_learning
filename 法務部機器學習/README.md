@@ -19,6 +19,8 @@
 ## [集群分析](./集群分析)
 ## [簡單線性迴歸 Linear Regression](./簡單線性迴歸)
 
+## [多元線性迴歸 Multiple Linear Regression](./多元線性迴歸)
+
 ## [迴歸分類 Logistic Regression](./邏輯迴歸)
 
 ## [樹狀模型(決策樹) DecisionTreeClassifier](./樹狀模型)
