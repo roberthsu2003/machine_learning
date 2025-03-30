@@ -45,67 +45,13 @@
 
 [**實作的ipynb**](./README.ipynb)
 
-```python
-import numpy as np
-import matplotlib.pyplot as plt
+![](./images/pic1.png)
 
-# 生成模擬數據
-np.random.seed(0)
-x = np.linspace(0, 10, 100)
-y = np.sin(x) + np.random.normal(0, 0.1, 100)  # 真實數據為正弦函數加上噪聲
 
-# 欠擬合：用一次多項式（直線）擬合
-underfit_coeffs = np.polyfit(x, y, 1)  # 一次多項式
-underfit_model = np.poly1d(underfit_coeffs)
 
-# 過度擬合：用高次多項式（15次）擬合
-overfit_coeffs = np.polyfit(x, y, 15)  # 15次多項式
-overfit_model = np.poly1d(overfit_coeffs)
 
-# 適當擬合：用三次多項式擬合
-goodfit_coeffs = np.polyfit(x, y, 3)  # 三次多項式
-goodfit_model = np.poly1d(goodfit_coeffs)
-
-# 繪圖
-plt.figure(figsize=(12, 8))
-
-# 原始數據
-plt.scatter(x, y, color='gray', label='數據點', alpha=0.5)
-
-# 欠擬合
-plt.plot(x, underfit_model(x), color='blue', label='欠擬合 (1次多項式)', linewidth=2)
-
-# 過度擬合
-plt.plot(x, overfit_model(x), color='red', label='過度擬合 (15次多項式)', linewidth=2)
-
-# 適當擬合
-plt.plot(x, goodfit_model(x), color='green', label='適當擬合 (3次多項式)', linewidth=2)
-
-# 圖表設置
-plt.title('欠擬合 vs 過度擬合 vs 適當擬合')
-plt.xlabel('X')
-plt.ylabel('Y')
-plt.legend()
-plt.grid(True)
-plt.show()
-```
-
-### 解釋：
-1. **欠擬合 (Underfitting)**：
-   - 用藍色直線表示（一次多項式）。
-   - 模型過於簡單，無法捕捉數據中的非線性模式（這裡是正弦波）。
-   - 結果是模型既不能很好地擬合訓練數據，也無法泛化到新數據。
-
-2. **過度擬合 (Overfitting)**：
-   - 用紅色曲線表示（15次多項式）。
-   - 模型過於複雜，不僅擬合了數據的真實趨勢，還擬合了噪聲。
-   - 雖然在訓練數據上表現很好，但在新數據上泛化能力差。
-
-3. **適當擬合 (Good Fit)**：
-   - 用綠色曲線表示（三次多項式）。
-   - 模型複雜度適中，能夠捕捉數據的主要趨勢（正弦波），同時不過分擬合噪聲。
-   - 在訓練數據和新數據上都能表現良好。
-
-### 圖表展示：
-運行這段程式碼後，你會看到一個圖表，灰色點是原始數據，藍線是欠擬合，紅線是過度擬合，綠線是適當擬合。這樣的視覺化可以清楚展示這三者的區別。
+### 擬合模型：
+- **欠擬合**：用一次多項式（直線）擬合，無法捕捉數據的非線性趨勢。
+- **適當擬合**：用二次多項式（拋物線）擬合，與真實數據的趨勢匹配。
+- **過度擬合**：用 10 次多項式擬合，過分捕捉噪聲，導致曲線過於複雜。
 
