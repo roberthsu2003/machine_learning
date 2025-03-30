@@ -17,6 +17,8 @@
 - 欠擬合(underfitting)
 - 過度擬合(overfitting)
 
+### [k近鄰分類](./k近鄰分類)
+
 ### [簡單線性迴歸 Linear Regression](./簡單線性迴歸)
 
 ### [多元線性迴歸 Multiple Linear Regression](./多元線性迴歸)
@@ -26,8 +28,6 @@
 ### [樹狀模型(決策樹) DecisionTreeClassifier](./樹狀模型)
 
 ### [隨機森林 RandomForestClassifier](./隨機森林)
-
-### [k近鄰分類](./k近鄰分類)
 
 ### [貝式分類](./貝氏分類)
 
