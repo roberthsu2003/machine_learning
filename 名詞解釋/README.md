@@ -39,9 +39,11 @@
 
 #### 用圖簡單解釋 欠擬合(underfitting) 與 過度擬合(overfitting)
 
-我可以用 Matplotlib 來展示欠擬合 (underfitting) 和過度擬合 (overfitting) 的概念，並搭配簡單的例子來說明這兩個現象在機器學習中的區別。以下我會生成一個簡單的數據集，並用 Python 程式碼展示如何用 Matplotlib 畫出欠擬合、過度擬合以及適當擬合的模型。
+使用Matplotlib 來展示欠擬合 (underfitting) 和過度擬合 (overfitting) 的概念，並搭配簡單的例子來說明這兩個現象在機器學習中的區別。
 
 假設我們有一個簡單的非線性數據集，並嘗試用不同複雜度的模型來擬合它：
+
+[**實作的ipynb**](./README.ipynb)
 
 ```python
 import numpy as np
