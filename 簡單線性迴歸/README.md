@@ -20,7 +20,8 @@
 - [gradient_descent實作](./gradient_descent.ipynb)
 
 ---
-### 快速說明
+### [mglearn說明](./mglearn說明.ipynb)
+
 ---
 ### 使用scikit-learn
 
