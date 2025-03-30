@@ -9,18 +9,19 @@
 - 線性回歸的假設，例如線性關係，資料常態分佈等等
 
 ## 範例實作
-### 使用手動
+### 詳細說明(手動)
 
 - [**簡單線性迴歸_手動**](./簡單線性迴歸_手動.md)
 
+> [!NOTE]
 > 操作複雜,可以學習很多基本觀念
 
-- [cost_function實作](./cost_function.ipynb)
-
+- [cost_function實作](./cost_function.ipynb)  
 - [gradient_descent實作](./gradient_descent.ipynb)
 
-
-
+---
+### 快速說明
+---
 ### 使用scikit-learn
 
 **房屋面積和價格的數據**
