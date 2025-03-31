@@ -5,15 +5,13 @@
 
 ** 分類實作**
 
-[**簡單實作**](./sklearn實作1.ipynb)
+** [**真偽和乳癌資料集-細部說明實作**](./README.ipynb)
 
-[**KNeighborsClassifier model說明實作**](./README.ipynb)
+[**鳶尾花-簡單實作**](./sklearn實作1.ipynb)
 
-## 重點:
+[**手寫數字數據集實作-使用GPU**](./sklearn實作2.ipynb)
 
-- 可以給我例如手寫數字數據集，來進行 k 近鄰分類分析。
 
-- 討論 k 近鄰分類的應用場景，例如推薦系統和圖像分類。
 
 ## k 近鄰分類 (k-Nearest Neighbors, KNN) 的基本概念
 
