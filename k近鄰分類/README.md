@@ -12,6 +12,7 @@
 
 ##  實作:
 > [!IMPORTANT]
+> 以下實作
 
 [**KNeighborsClassifier model簡單實作**](./sklearn實作1.ipynb)
 
