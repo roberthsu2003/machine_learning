@@ -11,7 +11,7 @@
 
 
 ##  實作:
-> [!IMPORTMENT]
+> [!IMPORTMENTS]
 
 [**KNeighborsClassifier model簡單實作**](./sklearn實作1.ipynb)
 
