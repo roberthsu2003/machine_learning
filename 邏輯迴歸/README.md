@@ -13,8 +13,9 @@
 
 ### 實作
 > [!IMPORTANT]
-> [**Logistic Regression實例解說**](./說明1.ipynb)
-> [**Logistic Regression實作**](./sklearn實作1.ipynb)
+> [**Logistic Regression VS LinearSVC**](./說明1.ipynb)  
+> [**Logistic Regression解說**](./說明2.ipynb)  
+> [**Logistic Regression實作**](./sklearn實作1.ipynb)  
 
 ### 什麼是邏輯迴歸？
 
