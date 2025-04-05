@@ -11,11 +11,7 @@
 - 解釋Sigmoid函數在邏輯回歸扮演的角色。
 - 解釋如何使用機率來解釋邏輯回歸的輸出。
 
-### 實作
-> [!IMPORTANT]
-> [**Logistic Regression VS LinearSVC**](./說明1.ipynb)  
-> [**Logistic Regression解說**](./說明2.ipynb)  
-> [**Logistic Regression實作**](./sklearn實作1.ipynb)  
+
 
 ### 什麼是邏輯迴歸？
 
@@ -61,6 +57,13 @@
     * 邏輯迴歸假設資料是線性可分的，如果資料不是線性可分的，則效果可能不佳。
 * **對特徵工程的要求：**
     * 邏輯迴歸的性能很大程度上取決於特徵工程的質量。
+
+### 實作
+> [!IMPORTANT]
+> [**Logistic Regression VS LinearSVC**](./說明1.ipynb)  
+> [**真偽資料集**實作解說](./forge說明2.ipynb)  
+> [**斯康辛州乳癌資料集**實作解說](./cancer說明3.ipynb)  
+> [**Logistic Regression實作**](./sklearn實作1.ipynb)  
 
 
 
