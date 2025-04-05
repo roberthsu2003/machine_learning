@@ -110,5 +110,6 @@ P(A|B) = (0.99 * 0.01) / 0.0594
 ---
 
 ## 實作
-[**GaussianNB Model實作**](./sklearn實作1.ipynb)
+[**GaussianNB Model實作**](./sklearn實作1.ipynb) 
+ 
 [**MNIST 手寫數字數據集**實作](./sklearn實作2.ipynb)
