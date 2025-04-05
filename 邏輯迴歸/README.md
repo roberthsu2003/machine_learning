@@ -62,7 +62,7 @@
 > [!IMPORTANT]
 > [**Logistic Regression VS LinearSVC**](./說明1.ipynb)  
 > [**真偽資料集**實作解說](./forge說明2.ipynb)  
-> [**斯康辛州乳癌資料集**實作解說](./cancer說明3.ipynb)
+> [**斯康辛州乳癌資料集**實作解說](./cancer說明3.ipynb)  
 > [**Logistic Regression實作**](./sklearn實作1.ipynb)  
 
 
