@@ -41,7 +41,7 @@ print(normal_data)
 ```
 
 
-高斯分佈（Gaussian distribution），也稱為常態分佈（normal distribution），是一種連續概率分佈，常用於描述自然界中許多現象的數據分佈。它的特徵是數據分佈呈現鐘形曲線（bell-shaped curve），具有以下關鍵特性：
+→高斯分佈（Gaussian distribution），也稱為常態分佈（normal distribution），是一種連續概率分佈，常用於描述自然界中許多現象的數據分佈。它的特徵是數據分佈呈現鐘形曲線（bell-shaped curve），具有以下關鍵特性：
 
 1. **對稱性**：曲線以平均值（mean, μ）為中心，左右對稱。
 2. **集中性**：大多數數據點分佈在平均值附近，隨著數據值偏離平均值，出現的概率逐漸減少。
