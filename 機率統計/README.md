@@ -28,7 +28,7 @@ print(random.sample(choices, 2))
 
 ## 2. 常見機率分佈
 
-### 1常態分佈（Normal Distribution）
+### 2.1 常態分佈（Normal Distribution）
 
 **常態分佈實作檔**
 
@@ -87,7 +87,7 @@ print(normal_data)
 ```
 
 
-### 2. 均勻分佈（Uniform Distribution）
+### 2.2. 均勻分佈（Uniform Distribution）
 
 [**均勻分佈實作ipynb檔**](./均勻分佈.ipynb)
 
@@ -97,7 +97,7 @@ print(uniform_data)
 ```
 
 
-### 3. 二項分佈（Binomial Distribution）
+### 2.3.  二項分佈（Binomial Distribution）
 
 [**2項分佈實作ipynb檔**](./2項分佈.ipynb)
 
@@ -109,7 +109,7 @@ print(binomial_data)
 
 ----
 
-## [Quantile-Quantile Plot](./Q-Q圖)（簡稱 Q-Q 圖）
+## 3. [Quantile-Quantile Plot](./Q-Q圖)（簡稱 Q-Q 圖）
 
 是一種圖形工具，用於檢查數據的分佈是否符合某個特定的理論分佈，或者比較兩個數據集的分佈是否相似。
 
@@ -117,9 +117,9 @@ print(binomial_data)
 
 
 
-**3. 基本統計計算**
+## 4. 基本統計計算
 
-使用 numpy 計算常見統計量：
+**使用 numpy 計算常見統計量**：
 
 ```other
 data = [12, 15, 20, 25, 30]
