@@ -28,8 +28,6 @@ print(random.sample(choices, 2))
 
 ## 2. 常見機率分佈
 
-
-
 ### 1常態分佈（Normal Distribution）
 
 **常態分佈實作檔**
