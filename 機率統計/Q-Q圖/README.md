@@ -53,14 +53,33 @@ from matplotlib.font_manager import fontManager
 fontManager.addfont('ChineseFont.ttf')
 mlp.rc('font', family='ChineseFont')
 
-#模擬高斯分佈數據
-data = np.random.normal(loc=75, scale=10, size=100)
+# 創建2x2子圖
+fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 15))
 
-# 繪製Q-Q圖
-stats.probplot(data, dist='norm', plot=plt)
-plt.xlabel('理論分位數')
-plt.ylabel('樣本分位數')
-plt.title('常態分布Q-Q圖')
+# 生成不同分佈的數據
+normal_data = np.random.normal(loc=0, scale=1, size=1000)  # 高斯分佈
+uniform_data = np.random.uniform(low=-3, high=3, size=1000)  # 均勻分佈
+exp_data = np.random.exponential(scale=1.0, size=1000)  # 指數分佈
+lognormal_data = np.random.lognormal(mean=0, sigma=1, size=1000)  # 對數正態分佈
+
+# 繪製高斯分佈Q-Q圖
+stats.probplot(normal_data, dist='norm', plot=ax1)
+ax1.set_title('高斯分佈 Q-Q圖')
+
+# 繪製均勻分佈Q-Q圖
+stats.probplot(uniform_data, dist='norm', plot=ax2)
+ax2.set_title('均勻分佈 Q-Q圖')
+
+# 繪製指數分佈Q-Q圖
+stats.probplot(exp_data, dist='norm', plot=ax3)
+ax3.set_title('指數分佈 Q-Q圖')
+
+# 繪製對數正態分佈Q-Q圖
+stats.probplot(lognormal_data, dist='norm', plot=ax4)
+ax4.set_title('對數正態分佈 Q-Q圖')
+
+# 調整子圖之間的間距
+plt.tight_layout()
 
 plt.show()
 ```
@@ -76,23 +95,29 @@ Q-Q 圖是通用的工具，理論上可以用來檢查任何分佈是否與數�
    - 最常見的應用，因為許多統計方法（如 GaussianNB）假設數據符合高斯分佈。
    - Q-Q 圖檢查數據是否呈現鐘形曲線分佈。
    - **例子**：檢查學生的考試成績是否符合高斯分佈。
-   - **判斷標準**：如果點沿著對角線分佈，則數據近似高斯分佈；如果點偏離（例如呈 S 形或彎曲），則可能不符。
+   - **判斷標準**：
+	   - 數據點會落在對角線上
 
 2. **均勻分佈（Uniform Distribution）**：  
    - 用於檢查數據是否均勻分佈在某個範圍內（每個值出現的概率相等）。  
    - **例子**：檢查隨機數生成器的輸出是否均勻分佈。  
-   - **判斷標準**：如果數據符合均勻分佈，Q-Q 圖的點會近似沿對角線排列。  
+   - **判斷標準**：
+	   - S形曲線
+	   - 中間部分較平坦,兩端彎曲  
 
 3. **指數分佈（Exponential Distribution）**：  
    - 用於檢查數據是否符合指數分佈，常用於描述事件間的等待時間（如電話呼叫間隔）。
    - **例子**：檢查顧客到達商店的時間間隔是否符合指數分佈。
-   - **判斷標準**：如果點沿對→角線，則數據符合指數分佈；否則可能有其他分佈特性。
+   - **判斷標準**：`
+	   - 呈現彎曲的形狀`
+	   - 有明顯的偏態(skewness)
 
 4. **對數正態分佈（Log-Normal Distribution）**：
    - 用於檢查數據取對數後是否符合高斯分佈，常用於描述偏態數據（如收入、股票價格）。
    - **例子**：檢查某公司員工薪資是否符合對數正態分佈。
-   - **判斷標準**：對數據取對數後，Q-Q 圖與高斯分佈比較，若點沿對角線，則符合。
-
+   - **判斷標準**：
+	   - 明顯彎曲
+	   - 也具有偏態特性
 5. **其他分佈**：
    - Q-Q 圖也可以檢查其他分佈，例如伽馬分佈（Gamma Distribution）、韋伯分佈（Weibull Distribution）、卡方分佈（Chi-Square Distribution）等。
    - 只要能定義理論分佈的分量，Q-Q 圖就可以用來比較。
