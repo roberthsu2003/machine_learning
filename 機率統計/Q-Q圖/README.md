@@ -40,6 +40,33 @@ Q-Q 圖通過比較**數據的分量(quantiles)**與**理論分佈(或另一組�
 
 3. 如果 Q-Q 圖上的點近似落在對角線（y=x 線）上，則表示數據分佈與理論分佈（或另一組數據）一致。
 
+**➜常態分布Q-Q圖實作**
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy import stats
+import matplotlib as mlp
+from matplotlib.font_manager import fontManager
+
+#載入中文字型
+fontManager.addfont('ChineseFont.ttf')
+mlp.rc('font', family='ChineseFont')
+
+#模擬高斯分佈數據
+data = np.random.normal(loc=75, scale=10, size=100)
+
+# 繪製Q-Q圖
+stats.probplot(data, dist='norm', plot=plt)
+plt.xlabel('理論分位數')
+plt.ylabel('樣本分位數')
+plt.title('常態分布Q-Q圖')
+
+plt.show()
+```
+
+![](./images/pic1.png)
+
 
 **➜Q-Q 圖可以檢查哪些分佈？**
 
