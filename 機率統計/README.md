@@ -76,7 +76,7 @@ print(random.sample(choices, 2))
 
 [**正態(常態)分佈實作ipynb檔**](./正態分佈.ipynb)
 
-[**正態(常態)分佈實作ipynb檔**](./正態分佈1.ipynb)
+[**使用Q-Q圖(Quantile-Quantile Plot)是否為常態分佈-ipynb檔**](./正態分佈1.ipynb)
 
 
 
