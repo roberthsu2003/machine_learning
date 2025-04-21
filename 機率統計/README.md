@@ -40,6 +40,10 @@ normal_data = np.random.normal(loc=0, scale=1, size=5)
 print(normal_data)
 ```
 
+**高斯分佈(Gaussian distribution),常態分佈（normal distribution)**
+
+![](./images/pic2.png)
+
 
 ➜ 高斯分佈（Gaussian distribution），也稱為常態分佈（normal distribution），是一種連續概率分佈，常用於描述自然界中許多現象的數據分佈。它的特徵是數據分佈呈現鐘形曲線（bell-shaped curve），具有以下關鍵特性：
 
