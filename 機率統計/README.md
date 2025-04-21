@@ -30,7 +30,16 @@ print(random.sample(choices, 2))
 
 ### 2.1 常態分佈（Normal Distribution）
 
-**常態分佈實作檔**
+**numpy建立理論常態分佈**
+
+```python
+import numpy as np
+
+# 生成 5 個符合均值 0、標準差 1 的正態分佈數值
+normal_data = np.random.normal(loc=0, scale=1, size=5)
+print(normal_data)
+```
+
 
 高斯分佈（Gaussian distribution），也稱為常態分佈（normal distribution），是一種連續概率分佈，常用於描述自然界中許多現象的數據分佈。它的特徵是數據分佈呈現鐘形曲線（bell-shaped curve），具有以下關鍵特性：
 
@@ -76,15 +85,6 @@ print(random.sample(choices, 2))
 
 [**使用Q-Q圖(Quantile-Quantile Plot)是否為常態分佈-ipynb檔**](./正態分佈1.ipynb)
 
-
-
-```other
-import numpy as np
-
-# 生成 5 個符合均值 0、標準差 1 的正態分佈數值
-normal_data = np.random.normal(loc=0, scale=1, size=5)
-print(normal_data)
-```
 
 
 ### 2.2. 均勻分佈（Uniform Distribution）
