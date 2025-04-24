@@ -27,7 +27,7 @@
 
 ### 實作
 
-- [書店文具物品分類_欄位較少版](./bookstore.ipynb)
+- [書店文具物品分類_欄位較少版](./bookstore.ipynb)  
 - [書店文具物品分類_欄位較多版](./bookstore_enhanced.ipynb)
 
 
