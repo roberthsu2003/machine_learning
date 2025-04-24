@@ -23,7 +23,7 @@
 
 ### [評估指標](./評估指標)
 
-## 機器學習模型
+## 監督式機器學習
 
 ### [k近鄰分類](./k近鄰分類)
 
@@ -43,22 +43,11 @@
 
 ### [薈萃式學習](./薈萃式學習)
 
----
-
-### 監督式機器學習
-- #### [k-nearest-neighbors -> classification](./監督式機器學習/README.ipynb)
-- #### [k-nearest-neighbors -> regression](./監督式機器學習/README1.ipynb)
-- #### [Linear Models -> regression](./監督式機器學習/README2.ipynb)
-- #### [Linear Models -> classification](./監督式機器學習/README3.ipynb)
-- #### [Naive Bayes classifier(貝葉氏分類器)](./監督式機器學習/README4.ipynb)
-- #### [Decision Tree(決策樹)](./監督式機器學習/README5.ipynb)
-- #### [Neural Networks-Deep Learning(深度學習)](./監督式機器學習/README6.ipynb)
+### [Neural Networks-Deep Learning(深度學習)](./深度學習/README6.ipynb)
 
 ---
 
-> [統計學](https://wangcc.me/LSHTMlearningnote/)
+## 非監督式機器學習
 
 
----
-
-### [政府部門課程大綱](./法務部機器學習)
+> [課程大綱](./法務部機器學習)
