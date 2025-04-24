@@ -42,6 +42,6 @@ data["營業額"] = np.clip(data["營業額"], 5000, 20000)  # 限制範圍5000-
 df = pd.DataFrame(data)
 
 # 保存為CSV檔案
-df.to_csv("福利社營業額資料集.csv", index=False, encoding="utf-8-sig")
+df.to_csv("Welfare_Club_Sales.csv", index=False, encoding="utf-8-sig")
 
-print("資料集已生成並保存為 '福利社營業額資料集.csv'")
+print("資料集已生成並保存為 'Welfare_Club_Sales.csv'")
