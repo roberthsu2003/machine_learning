@@ -57,11 +57,11 @@ scikit-learn 中的決策樹在DecisionTreeRegressor 和 DecisionTreeClassifier 
 
 讓我們更詳細地看看預修剪對乳癌資料集的影響。與往常一樣，我們會匯入資料集並將其分為訓練部分和測試部分。然後，我們使用完全開發樹的預設（生長樹直到所有葉子都pure）來建立模型。我們修復樹中的 random_state，它在內部用於打破平局
 
-[生長樹直到所有leaf都pure](./demo2.ipynb)
+[生長樹直到所有leaf都pure-實作ipynb](./demo2.ipynb)
 
 現在讓我們對樹木進行預剪枝，這樣樹就不會再生長了,我們之前的樹完美地適合訓練資料。一種選擇是在達到一定深度後停止建造樹。這裡我們設定max_depth=4，表示只能問四個連續的問題。限制樹的深度可以減少過度擬合。這會導致訓練集上的準確率降低，但測試集上的準確率會提高：
 
-[限制max_depth=4](./demo3.ipynb)
+[限制(max_depth=4)-實作ipynb](./demo3.ipynb)
 
 ### 分析決策樹
 
