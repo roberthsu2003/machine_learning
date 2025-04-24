@@ -3,8 +3,15 @@
 - 資料集圖表分析方法
 - 評估指標方式
 
+### 實作
+
+- [書店文具物品分類_欄位較少版](./bookstore.ipynb)
+- [書店文具物品分類_欄位較多版](./bookstore_enhanced.ipynb)
+
+
 ### 1. 資料集
 - Bookstore_Stationery_DataSet.csv
+- Bookstore_Stationery_Dataset_Enhanced.csv
 - 包含120筆資料
 - 資料集為書店文具物品分類，
 - 欄位：物品名稱、類型、價格、尺寸、顏色、是否為書寫工具。
