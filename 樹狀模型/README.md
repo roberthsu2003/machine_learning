@@ -12,5 +12,5 @@
 
 ## 實作:
 
-[**DecisionTreeClassifier model實作**](./sklearn實作1.ipynb)
+[**DecisionTreeClassifier model實作**](./sklearn實作1.ipynb)  
 [**書店文具物品分類實作**](./sklearn實作2)
