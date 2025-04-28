@@ -28,7 +28,6 @@
 
 ### 實作
 
-- [書店文具物品分類_說明](./bookstore_enhanced.ipynb)  
-- [書店文具物品分類_實作](./bookstore_enhanced_final.ipynb)
+- [書店文具物品分類_實作](./bookstore_enhanced.ipynb)
 
 
