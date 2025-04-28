@@ -71,10 +71,20 @@ scikit-learn 中的決策樹在`DecisionTreeRegressor` 和 `DecisionTreeClassifi
 
 ![](./images/pic6.png)
 
+### 決策樹的重要特徵
+
+與其觀察整個樹狀結構（這可能會造成負擔），我們可以推導出一些有用的屬性來總結樹狀結構的運作。最常用的摘要是特徵重要性，它會評定每個特徵對樹所做的決策有多重要。它是每個特徵介乎 0 和 1 之間的數字，其中 0 代表 「完全沒有使用」，1 代表 「完美預測目標」。特徵匯總總和為 1：
+
+[圖形化重要特徵-實作ipynb](./demo5.ipynb)
+
+
+![](./images/pic7.png)
+
 
 
 
 ## 實作:
 
 [**DecisionTreeClassifier model實作**](./sklearn實作1.ipynb)  
+
 [**書店文具物品分類實作**](./sklearn實作2)
