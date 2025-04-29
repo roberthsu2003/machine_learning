@@ -105,3 +105,5 @@ plt.show()
 ### 隨機森林 Random Forests實作
 
 - [隨機森林 Random Forests實作1](./random_forests1.ipynb)
+
+## 梯度提升分類器(GradientBoostingClassifier)
