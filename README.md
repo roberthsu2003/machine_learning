@@ -29,14 +29,13 @@
 
 ### [迴歸分類 Logistic Regression](./邏輯迴歸)
 
-### [支援向量機](./支援向量機)
-
 ### [貝式分類 Naive bayes Classifiers](./貝氏分類)
 
 ### [樹狀模型(決策樹) DecisionTreeClassifier](./樹狀模型)
 
 ### [決策樹集成模型(Ensembles of Decision Trees)](./決策樹集成模型)
 
+### [支援向量機](./支援向量機)
 
 ### [薈萃式學習](./薈萃式學習)
 
