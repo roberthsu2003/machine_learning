@@ -52,9 +52,11 @@ Ensembles of Decision Trees是一種將多種機器學習模型結合起來以�
 - 5棵樹
 - two_moons資料集
 
+[分析Random_Forests實作](./分析Random_Forests.ipynb)
+
 ![](./images/pic1.png)
 
-[分析Random_Forests實作](./分析Random_Forests.ipynb)
+
 
 ### 在乳癌資料集上應用由 100 棵樹組成的隨機森林：
 
