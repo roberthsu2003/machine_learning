@@ -52,9 +52,53 @@ Ensembles of Decision Trees是一種將多種機器學習模型結合起來以�
 - 5棵樹
 - two_moons資料集
 
-![](./images/pci1.png)
+![](./images/pic1.png)
 
 [分析Random_Forests實作](./分析Random_Forests.ipynb)
+
+### 在乳癌資料集上應用由 100 棵樹組成的隨機森林：
+
+[100棵樹組成的隨機森林](./100棵樹組成的隨機森林.ipynb)
+
+```python
+from sklearn.datasets import load_breast_cancer
+from sklearn.model_selection import train_test_split
+from sklearn.ensemble import RandomForestClassifier
+
+canser = load_breast_cancer()
+
+X_train, X_test, y_train, y_test = train_test_split(canser.data, canser.target, random_state=0)
+forest = RandomForestClassifier(n_estimators=100, random_state=0)
+forest.fit(X_train, y_train)
+
+print("Accuracy on training set:{:.3f}".format(forest.score(X_train, y_train)))
+print("Accuracy on test set:{:.3f}".format(forest.score(X_test, y_test)))
+
+#===output===
+Accuracy on training set:1.000
+Accuracy on test set:0.972
+```
+
+隨機森林為我們提供了 97% 的準確率，比線性模型或單一決策樹更好，而且無需調整任何參數。我們可以調整 max_features 設置，或像對單一決策樹那樣應用預修剪(pre-pruning)。然而，隨機森林的預設參數通常已經運行得相當好。
+
+與決策樹類似，隨機森林提供特徵重要性，它是透過聚合森林中樹的特徵重要性來計算的。通常，隨機森林提供的特徵重要性比單棵樹提供的特徵重要性更可靠。
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+n_features = cancer.data.shape[1]
+plt.barh(range(n_features), forest.feature_importances_, align='center')
+plt.yticks(np.arange(n_features), cancer.feature_names)
+plt.xlabel("Feature importance")
+plt.ylabel("Feature")
+plt.show()
+```
+
+
+![](./images/pic2.png)
+
+
 
 ### 隨機森林 Random Forests實作
 
