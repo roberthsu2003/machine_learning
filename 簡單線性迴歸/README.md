@@ -51,7 +51,9 @@ import mglearn
 mglearn.plots.plot_linear_regression_wave()
 ```
 
+![](./images/pic8.png)
 
+[解釋上圖實作範例說明-(也可以了解斜率和偏移值)](./simple_linear_regression.ipynb)
 
 
 
