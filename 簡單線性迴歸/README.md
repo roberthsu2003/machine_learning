@@ -11,18 +11,20 @@
 ## [了解線性迴歸公式-互動繪圖](./線性迴歸公式繪圖.ipynb)
 
 > [!NOTE]
-> 操作複雜,可以學習很多基本觀念
+> 使用公式實作,可以學習較多基本觀念
 
-## 範例實作-詳細說明(手動)
+## 範例實作-直接使用公式(y=Xw+b)
 - [**簡單線性迴歸_手動**](./簡單線性迴歸_手動.md)
 - [cost_function實作](./cost_function.ipynb)  
 - [gradient_descent實作](./gradient_descent.ipynb)
----
-### [mglearn說明](./mglearn說明.ipynb)
 
 ---
-## 範例實作-scikit-learn
 
+## scikit-learn套件
+
+### [線性迴歸說明](./mglearn說明.ipynb)
+
+### 範例實作
 **房屋面積和價格的數據**
 
 - [**簡單線性迴歸_模型**](./sklearn實作1.ipynb)
