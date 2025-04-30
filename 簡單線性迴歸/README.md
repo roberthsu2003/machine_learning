@@ -68,11 +68,29 @@ mglearn.plots.plot_linear_regression_wave()
 
 線性迴歸，或稱最小平方法（OLS），是最簡單、最經典的線性迴歸方法。線性迴歸找到參數 w 和 b，以最小化訓練集上的預測和真實迴歸目標 y 之間的均方誤差。均方誤差是預測值與真實值之間的平方差之和。線性迴歸沒有參數，這是一個好處，但它也無法控制模型的複雜度。
 
-**➜找出最適合資料的直線**
+### ➜找出最適合資料的直線  
+- 資料集使用Salary_Data.csv->年資,薪資
+- 使用cost function 成本函數(不是最有效率的方式)
+- 公式(真實值-預測值)^2
 
-![](./images/pic2.png)
+![成本函數說明](./images/pic2.png)
 
-[➜利用cost function取出最適合的直線](./cost_function.ipynb)
+**➜ 在b=0, w=-100\~100,和cost之間的關係圖**
+
+![](./images/pic3.png)
+
+**➜ 在b=-100\~100,w=-100\~100,和cost之間的關係圖**
+
+![](./images/pic4.png)
+
+[➜利用cost function取出最適合的直線-實作](./cost_function.ipynb)
+
+### [使用sklearn套件內的LinearRegression找出最適合的直線-ipynb實作](./sklearn實作2.ipynb)
+
+
+
+
+
 
 
 ### 範例實作
