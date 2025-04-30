@@ -57,7 +57,7 @@ mglearn.plots.plot_linear_regression_wave()
 [➜解釋上圖實作範例說明-(也可以了解斜率和偏移值)](./simple_linear_regression.ipynb)
 
 > [!IMPORTANT]
-> 這個範例可以了解線性迴歸公式和斜率和偏移值
+> 這個範例可以了解`線性迴歸公式`和`斜率`和`偏移值`
 
 
 
