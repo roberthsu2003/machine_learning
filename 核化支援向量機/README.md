@@ -16,5 +16,33 @@
 - 可以講解如何使用交叉驗證來選擇最佳的參數組合。
 - 如何使用 SVM 進行迴歸分析（SVR）。
 
+### 何時使用 Support Vector Classifier(Linear SVC)?
+
+**➜適合情況**:   
+1. 資料在原始特徵空間中大致線性可分。
+2. 資料維度(特徵數)遠大於樣本數(例如文字分類,TF-IDF)
+3. 想要模型可解釋性較高
+4. 速度考量: 線性 SVM 通常比 kernel SVM 快得多，尤其是資料量大時。
+5. 想做特徵選擇(可搭配L1 Regularization)
+
+```
+from sklearn.svm import SVC
+clf = SVC(kernel='linear')
+```
+
+### 何時使用 Support Vector Classifier(Linear SVC)?
+
+**➜適合情況**:
+
+1. 資料在原始空間中不是線性可分,需要更靈活的decision boundary
+2. 資料數量不是很大(kernel方法計算量大)
+3. 想利用RBF, Polynomial 或 Sigmoid Kernel 來捕捉非線性關係
+4. 資料有複雜的形狀或結構(例如螺旋,環狀)
+
+```python
+from sklearn.svm import SVC
+clf = SVC(keranl='rbf')
+```
+
 ## 實作:
 [**SVC(Support Vector Classifier）model實作**](./sklearn實作1.ipynb)

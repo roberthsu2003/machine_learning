@@ -35,7 +35,7 @@
 
 ### [決策樹集成模型(Ensembles of Decision Trees)](./決策樹集成模型)
 
-### [支援向量機](./支援向量機)
+### [核化支援向量機(Kernelized Support Vector Machines)](./核化支援向量機)
 
 ### [薈萃式學習](./薈萃式學習)
 
