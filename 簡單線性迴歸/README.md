@@ -85,7 +85,7 @@ mglearn.plots.plot_linear_regression_wave()
 
 [➜利用cost function取出最適合的直線-實作](./cost_function.ipynb)
 
-### [使用sklearn套件內的LinearRegression找出最適合的直線-ipynb實作](./sklearn實_薪資_年資.ipynb)
+### [使用sklearn套件內的LinearRegression找出最適合的直線-ipynb實作](./sklearn_薪資_年資.ipynb)
 
 
 
