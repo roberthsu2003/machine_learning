@@ -87,7 +87,7 @@ mglearn.plots.plot_linear_regression_wave()
 
 ### [➜薪資_年資_sklearn-ipynb實作](./sklearn_薪資_年資.ipynb)
 
-### [➜薪資_年資_評固指標-ipynb實作](./model_evaluation_薪資_年資.ipynb)
+### [➜薪資_年資_評估指標的說明-ipynb實作](./model_evaluation_薪資_年資.ipynb)
 
 
 
