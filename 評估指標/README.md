@@ -73,7 +73,7 @@
 
 ---
 
-**➜ 什麼是資料變異性？**
+### ➜ 什麼是資料變異性？
 
 資料變異性是指數據點與平均值之間的差異程度。簡單來說，就是數據分散的程度。
 
@@ -144,8 +144,7 @@
 - [**範例**](r_squared.ipynb)
 
 ---
-
-**➜均方誤差 (Mean Squared Error, MSE)**：預測值與實際值之間差的平方的平均值。
+### ➜均方誤差 (Mean Squared Error, MSE)：預測值與實際值之間差的平方的平均值。
 
 1. **為什麼叫「均方誤差」**
 
@@ -182,8 +181,7 @@ MSE = 12.67
 - [**範例**](mse.ipynb)
 
 ---
-
-**➜均方根誤差 (Root Mean Squared Error, RMSE)**：均方誤差的平方根。
+### ➜均方根誤差 (Root Mean Squared Error, RMSE)：均方誤差的平方根。
 
 **1. 為什麼叫RMSE?**  
 RMSE (Root Mean Squared Error) 名稱由三個部分組成:
@@ -226,7 +224,7 @@ RMSE = √4,000,000 = 2,000
 
 ---
 
-**➜平均絕對誤差 (Mean Absolute Error, MAE)**：預測值與實際值之間絕對誤差的平均值。
+### ➜平均絕對誤差 (Mean Absolute Error, MAE)：預測值與實際值之間絕對誤差的平均值。
 
 **1. 為什麼叫MAE**
 
