@@ -70,7 +70,7 @@ mglearn.plots.plot_linear_regression_wave()
 
 > [!IMPORTANT]
 > 更深入了解請參考下方連結(包含有參數的線性迴歸)
-> [線性迴歸更多的說明](./mglearn說明.ipynb)
+> [**線性迴歸更多的說明**](./mglearn說明.ipynb)
 
 
 
