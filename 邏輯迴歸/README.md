@@ -1,4 +1,4 @@
-## 線性分類模型(Linear Classification Model)
+## 線性迴歸分類模型(Linear Regression Classification Model)
 
 線性分類模型雖然簡單，但在許多實際應用中仍然非常有用，特別是在數據量較小或需要快速部署的場景中。理解線性分類模型也是學習更複雜模型的重要基礎。
 
@@ -27,7 +27,14 @@
 
 ## 常見的線性分類模型
 
-### 1. 邏輯迴歸（Logistic Regression）
+## 1. 邏輯迴歸（Logistic Regression）
+
+> [!IMPORTANT]
+> [**Logistic Regression VS LinearSVC**](./說明1.ipynb) 
+> 這個範例說明  
+> 1. 什麼是邏輯分類(Logistic Classification)  
+> 2. Sigmoid函數(S型函數)  
+> 3. Logistic Classification 和 LinearSVC比較
 
 #### 1.1 雖然名稱中有"迴歸"，但實際上是分類模型
 
@@ -75,6 +82,7 @@
     * 邏輯迴歸的性能很大程度上取決於特徵工程的質量。
 
 
+--- 
 
 ### 2. 感知器（Perceptron）
 
@@ -82,11 +90,15 @@
 - 使用階躍函數作為激活函數
 - 只能處理線性可分的數據
 
+---
+
 ### 3. 支持向量機（SVM）
 
 - 尋找最大間隔超平面
 - 可以處理非線性分類問題（通過核技巧）
 - 對異常值具有較強的魯棒性
+
+---
 
 ## 缺點
 
@@ -106,7 +118,7 @@
 
 ### 實作
 > [!IMPORTANT]
-> [**Logistic Regression VS LinearSVC**](./說明1.ipynb)  
+>  
 > [**真偽資料集**實作解說](./forge說明2.ipynb)  
 > [**斯康辛州乳癌資料集**實作解說](./cancer說明3.ipynb)  
 > [**多元線性分類說明**](./multiclass_classification說明.ipynb)  
