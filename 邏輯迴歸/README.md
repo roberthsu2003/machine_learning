@@ -30,7 +30,7 @@
 ## 1. 邏輯迴歸（Logistic Regression）
 
 > [!IMPORTANT]
-> [**Logistic Regression VS LinearSVC**](./說明1.ipynb) 
+> [**Logistic Regression VS LinearSVC**](./說明1.ipynb)  
 > 這個範例說明  
 > 1. 什麼是邏輯分類(Logistic Classification)  
 > 2. Sigmoid函數(S型函數)  
