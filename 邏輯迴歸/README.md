@@ -118,10 +118,10 @@
 
 ### 實作
 > [!IMPORTANT]
-> [**真偽資料集**實作解說](./forge說明2.ipynb)  
-> [**斯康辛州乳癌資料集**實作解說](./cancer說明3.ipynb)  
-> [**多元線性分類說明**](./multiclass_classification說明.ipynb)  
-> [**多元線性分類實作**](./multiclass_classification實作.ipynb)  
+> [**真偽資料集(2元分類)**實作解說](./forge說明2.ipynb)  
+> [**斯康辛州乳癌資料集(2元分類)**實作解說](./cancer說明3.ipynb)  
+> [多元線性分類說明](./multiclass_classification說明.ipynb)  
+> [**多元線性分類實作(iris)**](./multiclass_classification實作.ipynb)  
  
 
 
