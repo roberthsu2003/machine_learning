@@ -71,7 +71,7 @@ gamma參數，它控制高斯核的寬度。它決定了點靠近的尺度。 C 
 
 > [!IMPORTANT]
 > 調整SVM的c參數和gamma參數
-> [調整SVC模型的c和gamma參數_範例](svm_4調整SVC模型的c和gamma參數.ipynb)
+> [調整SVC模型的c和gamma參數_範例](./svm_4調整SVC模型的c和gamma參數.ipynb)
 
 ## 為SVM預處理資料
 
