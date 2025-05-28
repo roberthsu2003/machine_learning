@@ -41,7 +41,7 @@
 
 ### [核化支援向量機(Kernelized Support Vector Machines)](./核化支援向量機)
 
-### [薈萃式學習](./薈萃式學習)
+### [薈萃式學習-集成學習(Ensemble Learning))](./薈萃式學習)
 
 ### [Neural Networks-Deep Learning(深度學習)](./深度學習/README6.ipynb)
 
