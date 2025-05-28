@@ -28,6 +28,8 @@
 > 使用Matplotlib生成一張圖表
 > [直觀理解薈萃式學習的優勢](./emsemble_直觀理解薈萃式學習的優勢.ipynb)
 
+![](./ensemble_vs_single_model_real_training.png)
+
 
 
 
