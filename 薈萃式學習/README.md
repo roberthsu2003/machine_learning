@@ -1,4 +1,4 @@
-# 薈萃式學習-集成學習(Emsemble Learning)
+# 薈萃式學習-集成學習(Ensemble Learning)
 
 薈萃式學習（集成學習）是一種機器學習方法，通過結合多個基礎模型（稱為弱學習器或基學習器）的預測結果來提高整體模型的性能。這些基礎模型可以是決策樹、線性模型、神經網絡等，通過特定的組合策略（如投票、平均或加權）生成最終預測。薈萃式學習的核心思想是**「集體智慧」**，即多個模型的協同工作通常比單一模型更穩健且準確。
 
@@ -22,53 +22,31 @@
 
 ### 範例:直觀理解薈萃式學習的優勢
 
+- 預測模型(regression)
+
 > [!IMPORTANT]
 > - 比較單一決策樹與隨機森林（一種薈萃式學習方法）  
 > - 不同數據集大小下的預測誤差。  
 > - 使用Matplotlib生成一張圖表  
-> - [直觀理解薈萃式學習的優勢-ipynb範例](./emsemble_直觀理解薈萃式學習的優勢.ipynb)
+> - [直觀理解薈萃式學習的優勢_regression-ipynb範例](./emsemble_直觀理解薈萃式學習的優勢.ipynb)
 
 ![](./ensemble_vs_single_model_real_training.png)
 
-
-
-
-
-
 ### 範例:
 
-- 隨機森林的分類範例
-- 何應用薈萃式學習解決簡單的二元分類問題。
-- 該範例生成一個包含1000個樣本和20個特征的模擬數據集。
-- 使用隨機森林（100棵決策樹）進行二元分類。
-- 輸出模型在測試集上的準確率，展示薈萃式學習的應用。
-- 隨機森林的簡單實現，並解釋其內部如何通過多棵決策樹的投票提高預測性能。
+- 分類模型(classification)
 
-```python
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.datasets import make_classification
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
+> [!IMPORTANT]
+> - 隨機森林的分類範例
+> - 何應用薈萃式學習解決簡單的二元分類問題。
+> - 該範例生成一個包含1000個樣本和20個特征的模擬數據集。
+> - 使用隨機森林（100棵決策樹）進行二元分類。
+> - 輸出模型在測試集上的準確率，展示薈萃式學習的應用。
+> - 隨機森林的簡單實現，並解釋其內部如何通過多棵決策樹的投票提高預測性能。
+> - [直觀理解薈萃式學習的優勢_classification-ipynb範例](./emsemble_直觀理解薈萃式學習的優勢1.ipynb)
 
-# 生成模擬數據
-X, y = make_classification(n_samples=1000, n_features=20, n_informative=15, random_state=42)
+![](./ensemble_vs_single_model_classification_accuracy.png)
 
-# 拆分訓練和測試數據
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-# 初始化隨機森林模型
-rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-
-# 訓練模型
-rf_model.fit(X_train, y_train)
-
-# 預測
-y_pred = rf_model.predict(X_test)
-
-# 計算準確率
-accuracy = accuracy_score(y_test, y_pred)
-print(f"Random Forest Accuracy: {accuracy:.2f}")
-```
 
 ### 實際案例
 
