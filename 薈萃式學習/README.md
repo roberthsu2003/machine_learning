@@ -43,7 +43,7 @@
 > - 使用隨機森林（100棵決策樹）進行二元分類。
 > - 輸出模型在測試集上的準確率，展示薈萃式學習的應用。
 > - 隨機森林的簡單實現，並解釋其內部如何通過多棵決策樹的投票提高預測性能。
-> - [直觀理解薈萃式學習的優勢_classification-ipynb範例](./emsemble_直觀理解薈萃式學習的優勢1.ipynb)
+> - [直觀理解薈萃式學習的優勢_classification-ipynb範例](./ensemble_直觀理解薈萃式學習的優勢1.ipynb)
 
 ![](./ensemble_vs_single_model_classification_accuracy.png)
 
