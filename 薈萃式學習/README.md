@@ -26,7 +26,7 @@
 > - 比較單一決策樹與隨機森林（一種薈萃式學習方法）  
 > - 不同數據集大小下的預測誤差。  
 > - 使用Matplotlib生成一張圖表  
-> - [直觀理解薈萃式學習的優勢](./emsemble_直觀理解薈萃式學習的優勢.ipynb)
+> - [直觀理解薈萃式學習的優勢-ipynb範例](./emsemble_直觀理解薈萃式學習的優勢.ipynb)
 
 ![](./ensemble_vs_single_model_real_training.png)
 
