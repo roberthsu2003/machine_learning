@@ -20,34 +20,18 @@
 
 5. **特征重要性評估:** 如隨機森林和Gradient Boosting能提供特征重要性分數，幫助理解數據中的關鍵變量。
 
-### 簡單小範例
-- 直觀理解薈萃式學習的優勢，以下是一個簡單的Python腳本，使用Matplotlib生成一張圖表，比較單一決策樹與隨機森林（一種薈萃式學習方法）在不同數據集大小下的預測誤差。
+### 範例:直觀理解薈萃式學習的優勢
 
-```python
-import matplotlib.pyplot as plt
-import numpy as np
+> [!IMPORTANT]
+> 比較單一決策樹與隨機森林（一種薈萃式學習方法）
+> 不同數據集大小下的預測誤差。
+> 使用Matplotlib生成一張圖表
+> [直觀理解薈萃式學習的優勢](./emsemble_直觀理解薈萃式學習的優勢.ipynb)
 
-# 模擬數據：單一決策樹與隨機森林的誤差
-np.random.seed(42)
-data_sizes = np.array([100, 200, 300, 400, 500])
-single_tree_error = np.array([0.25, 0.22, 0.20, 0.19, 0.18])
-random_forest_error = np.array([0.20, 0.17, 0.15, 0.13, 0.12])
 
-# 繪製圖表
-plt.figure(figsize=(8, 6))
-plt.plot(data_sizes, single_tree_error, 'r-', label='Single Decision Tree')
-plt.plot(data_sizes, random_forest_error, 'b-', label='Random Forest (Ensemble)')
-plt.title('Prediction Error Comparison: Single Model vs Ensemble')
-plt.xlabel('Training Data Size')
-plt.ylabel('Prediction Error')
-plt.grid(True)
-plt.legend()
 
-# 保存圖表
-plt.savefig('ensemble_vs_single_model.png')
-```
 
-⬆︎ 圖表展示了隨著訓練數據量增加，隨機森林的預測誤差低於單一決策樹，突顯了薈萃式學習在提高準確性和穩定性方面的優勢。教師可將此圖表展示給學生，解釋薈萃式學習如何通過多模型協作降低誤差。
+
 
 ### 範例:
 
