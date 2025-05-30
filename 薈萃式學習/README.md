@@ -69,111 +69,26 @@
 
 以下是一個使用Python和Scikit-learn實現的範例，展示如何使用隨機森林（一種ensemble學習方法）對信用卡違約風險進行預測，並比較其與單一決策樹的性能。該範例包括數據下載、預處理、模型訓練和圖表生成，以幫助學生理解薈萃式學習的優勢。
 
-```python
-import pandas as pd
-import numpy as np
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.tree import DecisionTreeClassifier
-from sklearn.metrics import accuracy_score, roc_auc_score
-import matplotlib.pyplot as plt
+> [!IMPORTANT]
+> 金融風險評估
+> [ensemble_金融風險評估-ipynb範例](./ensemble_金融風險評估)
 
-# 1. 數據加載
-# UCI Credit Card Default Dataset需從以下網址下載：
-# https://archive.ics.uci.edu/ml/machine-learning-databases/00350/default%20of%20credit%20card%20clients.xls
-# 下載後將文件保存為'default_credit_card.xls'
-url = 'https://archive.ics.uci.edu/ml/machine-learning-databases/00350/default%20of%20credit%20card%20clients.xls'
-data = pd.read_excel(url, header=1)  # 跳過第一行（標題）
+![](./model_performance_comparison.png)
 
-# 2. 數據預處理
-# 移除ID列，選擇特征和標籤
-X = data.drop(columns=['ID', 'default payment next month'])
-y = data['default payment next month']
-
-# 分割訓練和測試數據
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.3, random_state=42)
-
-# 3. 訓練隨機森林和單一決策樹模型
-rf_model = RandomForestClassifier(n_estimators=100, random_state=42)
-dt_model = DecisionTreeClassifier(random_state=42)
-
-rf_model.fit(X_train, y_train)
-dt_model.fit(X_train, y_train)
-
-# 4. 預測並計算性能指標
-rf_pred = rf_model.predict(X_test)
-dt_pred = dt_model.predict(X_test)
-
-rf_accuracy = accuracy_score(y_test, rf_pred)
-dt_accuracy = accuracy_score(y_test, dt_pred)
-rf_roc_auc = roc_auc_score(y_test, rf_model.predict_proba(X_test)[:, 1])
-dt_roc_auc = roc_auc_score(y_test, dt_model.predict_proba(X_test)[:, 1])
-
-print(f"Random Forest Accuracy: {rf_accuracy:.4f}, ROC-AUC: {rf_roc_auc:.4f}")
-print(f"Decision Tree Accuracy: {dt_accuracy:.4f}, ROC-AUC: {dt_roc_auc:.4f}")
-
-# 5. 繪製圖表比較模型性能
-models = ['Decision Tree', 'Random Forest']
-accuracies = [dt_accuracy, rf_accuracy]
-roc_aucs = [dt_roc_auc, rf_roc_auc]
-
-plt.figure(figsize=(10, 6))
-bar_width = 0.35
-index = np.arange(2)
-
-plt.bar(index, accuracies, bar_width, label='Accuracy', color='skyblue')
-plt.bar(index + bar_width, roc_aucs, bar_width, label='ROC-AUC', color='lightcoral')
-plt.xlabel('Model')
-plt.ylabel('Score')
-plt.title('Performance Comparison: Decision Tree vs Random Forest')
-plt.xticks(index + bar_width / 2, models)
-plt.legend()
-plt.tight_layout()
-
-# 保存圖表
-plt.savefig('model_performance_comparison.png')
-plt.show()
-```
-
-### 範例說明
-- 數據來源：使用UCI Credit Card Default Dataset，包含30,000筆真實信用卡客戶數據（2005年台灣某銀行），特征包括信用額度、還款記錄、帳單金額等，目標是預測客戶下個月是否違約（0=未違約，1=違約）。
-- 模型：比較單一決策樹和隨機森林的性能，使用準確率（Accuracy）和ROC-AUC（衡量模型對違約和未違約的分類能力）作為評估指標。
-- 輸出：程式碼會輸出兩個模型的準確率和ROC-AUC分數，並生成一個柱狀圖，比較兩者的性能。
-- 結果：隨機森林通常在ROC-AUC指標上表現優於單一決策樹，顯示其在金融風險評估中的優勢（更高的ROC-AUC表示模型能更好地區分違約與未違約客戶）。
-
-### 圖表展示
-
-生成的柱狀圖（model_performance_comparison.png）將顯示隨機森林和單一決策樹在準確率和ROC-AUC上的表現差異。隨機森林通常具有更高的ROC-AUC分數，反映其在處理不平衡數據（違約案例較少）時的優越性。此圖表可作為教學工具，向學生展示薈萃式學習如何提升預測性能。
 
 ---
 
-雖然搜尋結果中未提供2023年後的具體金融風險評估案例，但以下是基於公開數據和近期趨勢的補充說明：
+### 擴展練習
 
-近期趨勢：
-根據金融監督管理委員會（金管會）2023年12月發布的資料，台灣金融機構在風險評估中越來越重視洗錢防制（AML）和虛擬資產交易（VASP）的風險管理，顯示金融風險評估的應用範圍正在擴展。薈萃式學習因其對複雜數據的適應性，適合用於檢測洗錢交易或異常行為。
-2020年銀行公會的報告提到，金融機構需定期更新風險數據（如連動債申訴案件），這表明真實數據的持續收集和分析在金融風險管理中的重要性。
+- 鼓勵學生嘗試調整隨機森林的參數（如樹的數量n_estimators或最大深度max_depth），觀察對性能的影響；或使用Gradient Boosting（如XGBoost）進行比較。
 
-銀行違約風險評估：台灣某銀行使用類似UCI數據集的內部數據，結合XGBoost（另一種薈萃式學習方法）預測信用卡違約風險。通過分析還款記錄、消費行為等特征，模型能識別高風險客戶，幫助銀行優化貸款審批流程。
-詐欺檢測：國際銀行（如JPMorgan）使用薈萃式學習模型分析交易模式，識別異常交易以防止詐欺。此類模型利用歷史交易數據（如Kaggle的LendingClub數據集），結合隨機森林或Gradient Boosting，達到高準確率。
+- 醫療診斷:
 
----
-
-### 教學建議
-
-- 數據獲取：教師可指導學生從UCI網站下載數據集（https://archive.ics.uci.edu/ml/datasets/default+of+credit+card+clients），或使用Kaggle的LendingClub數據進行實作。
-- 課堂演示：運行上述Python代碼，讓學生觀察隨機森林相較於決策樹的性能提升，並討論ROC-AUC為何在金融風險評估中更重要（因為違約數據通常不平衡）。
-- 圖表應用：展示生成的柱狀圖，解釋薈萃式學習如何通過多模型集成減少過擬合並提高預測穩定性。
-- 擴展練習：鼓勵學生嘗試調整隨機森林的參數（如樹的數量n_estimators或最大深度max_depth），觀察對性能的影響；或使用Gradient Boosting（如XGBoost）進行比較。
+	- 場景：醫療機構使用隨機森林預測患者是否患有某種疾病（如糖尿病）。
+	- 應用：利用患者的醫療記錄（如血糖水平、BMI、家族病史），隨機森林通過多棵決策樹的投票，生成更可靠的診斷結果，並提供特征重要性分數，幫助醫生了解關鍵風險因素。
+	- 優勢：隨機森林對噪音數據的魯棒性使其適合處理醫療數據中的缺失值或異常值。
 
 ---
-### 總結
-本範例使用UCI Credit Card Default Dataset，展示如何應用隨機森林進行信用卡違約風險預測，並通過圖表比較其與單一決策樹的性能，突顯薈萃式學習的優勢。數據集來自真實金融場景，符合您的要求，且易於下載和使用。近期趨勢顯示薈萃式學習在洗錢防制和詐欺檢測等領域的應用日益廣泛。若需更具體的近期案例、其他數據集的範例，或進一步的代碼優化，請告知，我可提供更詳細的內容或調整範例。
-
-2. 醫療診斷:
-
-- 場景：醫療機構使用隨機森林預測患者是否患有某種疾病（如糖尿病）。
-- 應用：利用患者的醫療記錄（如血糖水平、BMI、家族病史），隨機森林通過多棵決策樹的投票，生成更可靠的診斷結果，並提供特征重要性分數，幫助醫生了解關鍵風險因素。
-- 優勢：隨機森林對噪音數據的魯棒性使其適合處理醫療數據中的缺失值或異常值。
 
 ## 實作:
 
