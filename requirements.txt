@@ -7,3 +7,4 @@ scikit-learn
 pandas
 graphviz
 ipywidgets
+xlrd
