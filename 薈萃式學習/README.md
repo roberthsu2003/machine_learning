@@ -71,7 +71,7 @@
 
 > [!IMPORTANT]
 > 金融風險評估
-> [ensemble_金融風險評估-ipynb範例](./ensemble_金融風險評估)
+> [ensemble_金融風險評估-ipynb範例](./ensemble_金融風險評估.ipynb)
 
 ![](./model_performance_comparison.png)
 
