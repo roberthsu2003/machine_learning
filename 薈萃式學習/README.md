@@ -10,6 +10,9 @@
 
 - **Boosting**：如AdaBoost、Gradient Boosting和XGBoost，通過迭代地調整樣本權重或梯度來訓練模型，逐步提升性能。
 
+> [!TIP]
+> [**Boosting**的細節說明](./Boosting說明.md)
+
 - **Stacking**：將多個不同類型的模型預測結果作為輸入，訓練一個元模型（meta-model）進行最終預測。
 
 ### 薈萃式學習的優點:
