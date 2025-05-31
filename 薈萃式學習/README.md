@@ -80,19 +80,18 @@
 以下是一個使用Python和Scikit-learn實現的範例，展示如何使用隨機森林（一種ensemble學習方法）對信用卡違約風險進行預測，並比較其與單一決策樹的性能。該範例包括數據下載、預處理、模型訓練和圖表生成，以幫助學生理解薈萃式學習的優勢。
 
 > [!IMPORTANT]
-> 金融風險評估
+> 金融風險評估.  
 > [ensemble_金融風險評估-ipynb範例](./ensemble_金融風險評估.ipynb)
 
 ![](./model_performance_comparison.png)
 
 
----
-
 ### 擴展練習
 
-- 鼓勵學生嘗試調整隨機森林的參數（如樹的數量n_estimators或最大深度max_depth），觀察對性能的影響；或使用Gradient Boosting（如XGBoost）進行比較。
+- 嘗試調整隨機森林的參數（如樹的數量n_estimators或最大深度max_depth），觀察對性能的影響；或使用Gradient Boosting（如XGBoost）進行比較。
 
 ---
+
 ### Boosting 實際案例
 **Boosting** 演算法的範例，
 
