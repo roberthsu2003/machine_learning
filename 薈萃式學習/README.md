@@ -113,7 +113,7 @@
 > 6. 為了比較，也會單獨訓練和評估這些基礎學習器。
 > 7. 計算所有模型（基礎學習器和 Stacking 分類器）的準確率和 ROC-AUC 分數。
 > 8. 繪製一個長條圖，比較這些模型的效能。
-> 9. 儲存圖表並顯示。
+> 9. 儲存圖表並顯示。  
 > [**集成學習Stacking-ipynb範例**](./Stacking範例.ipynb)
 
 ![tacking實作](./pima_diabetes_stacking_performance_comparison.png)
