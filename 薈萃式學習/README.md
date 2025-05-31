@@ -58,7 +58,7 @@
 ![](./ensemble_vs_single_model_classification_accuracy.png)
 
 
-### 實際案例
+### Bagging實際案例
 
 金融風險評估-使用UCI Credit Card Default Dataset進行違約風險預測：
 	
@@ -92,16 +92,34 @@
 
 - 鼓勵學生嘗試調整隨機森林的參數（如樹的數量n_estimators或最大深度max_depth），觀察對性能的影響；或使用Gradient Boosting（如XGBoost）進行比較。
 
-- 醫療診斷:
+---
+### Boosting 實際案例
+**Boosting** 演算法的範例，
 
-	- 場景：醫療機構使用隨機森林預測患者是否患有某種疾病（如糖尿病）。
-	- 應用：利用患者的醫療記錄（如血糖水平、BMI、家族病史），隨機森林通過多棵決策樹的投票，生成更可靠的診斷結果，並提供特征重要性分數，幫助醫生了解關鍵風險因素。
-	- 優勢：隨機森林對噪音數據的魯棒性使其適合處理醫療數據中的缺失值或異常值。
+**UCI 心臟病數據集 (Heart Disease UCI)**。
+
+> [!TIP]
+> **這個範例將包含：**
+> 1. 載入 UCI 心臟病數據集。
+> 2. 進行數據預處理，包括：
+>    - 賦予欄位名稱。
+>    - 處理數據集中的缺失值（通常以 '?' 表示）。
+>    - 對類別型特徵進行獨熱編碼 (One-Hot Encoding)。
+>    - 對數值型特徵進行標準化 (Standard Scaling)。
+> 3. 訓練一個基礎模型（例如：決策樹）作為比較基準。
+> 4. 訓練一個 Boosting 模型（我們將使用 `GradientBoostingClassifier`）。
+> 5. 評估兩個模型的準確率 (Accuracy) 和 ROC-AUC 分數。
+> 6. 繪製一個長條圖，比較這些模型的效能。
+> 7. 儲存圖表並顯示。  
+> [**集成學習Boosting-ipynb範例**](./ensemble_Boosting範例.ipynb)
+
+![Boosting 實際案例](./heart_disease_boosting_performance_comparison.png)
+
 
 ---
 
-## Stacking 實作:
-我將為您提供一個使用 Pima 印第安人糖尿病數據集 (Pima Indians Diabetes Database) 的 Stacking 學習範例，並將其整合到一個儲存格中，包含數據載入、預處理、Stacking 模型訓練、基礎模型訓練（用於比較）、評估以及效能比較圖表的繪製與儲存。
+### Stacking 實際案例
+我將為您提供一個使用 Pima 印第安人糖尿病數據集 (Pima Indians Diabetes Database) 的 Stacking 學習範例，並將其整合到一個儲存格中，包含數據載入、預處理、Stacking 模型訓練、基礎模型訓練（用於比較）、評估以及效能比較圖表的繪製與儲存。這個數據集來自 UCI 機器學習數據庫，包含了 Pima 印第安女性的幾項醫療預測變量以及她們是否在五年內患上糖尿病的資訊。這是一個典型的二元分類問題。
 
 > [!TIP]
 > **這個範例會：**
