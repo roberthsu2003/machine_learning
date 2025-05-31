@@ -100,6 +100,6 @@
 
 ---
 
-## 實作:
+## Stacking 實作:
 
-[**集成學習 VotingClassifier model實作**](./sklearn實作1.ipynb)
+[**集成學習Stacking-ipynb範例**](./Stacking範例.ipynb)
