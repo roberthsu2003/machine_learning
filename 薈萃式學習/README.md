@@ -101,7 +101,19 @@
 ---
 
 ## Stacking 實作:
+我將為您提供一個使用 Pima 印第安人糖尿病數據集 (Pima Indians Diabetes Database) 的 Stacking 學習範例，並將其整合到一個儲存格中，包含數據載入、預處理、Stacking 模型訓練、基礎模型訓練（用於比較）、評估以及效能比較圖表的繪製與儲存。
 
-[**集成學習Stacking-ipynb範例**](./Stacking範例.ipynb)
+> [!TIP]
+> **這個範例會：**
+> 1. 載入 Pima 印第安人糖尿病數據集。
+> 2. 進行必要的數據預處理（處理不合理的零值、特徵標準化）。
+> 3. 定義幾個基礎學習器（例如：邏輯回歸、決策樹、支持向量機）。
+> 4. 定義一個元學習器（例如：邏輯回歸）。
+> 5. 訓練 Stacking 分類器。
+> 6. 為了比較，也會單獨訓練和評估這些基礎學習器。
+> 7. 計算所有模型（基礎學習器和 Stacking 分類器）的準確率和 ROC-AUC 分數。
+> 8. 繪製一個長條圖，比較這些模型的效能。
+> 9. 儲存圖表並顯示。
+> [**集成學習Stacking-ipynb範例**](./Stacking範例.ipynb)
 
-![tacking實作](./stacking_model_performance_comparison.png)
+![tacking實作](./pima_diabetes_stacking_performance_comparison.png)
