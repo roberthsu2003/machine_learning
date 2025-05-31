@@ -5,6 +5,9 @@
 ### 常見的薈萃式學習方法包括：
 - **Bagging（Bootstrap Aggregating）**：如隨機森林（Random Forest），通過對數據進行有放回採樣訓練多個模型，並平均或投票得出結果。
 
+> [!TIP]
+> [**Bagging（Bootstrap Aggregating）**的細節說明](./Bagging(Bootstrap_Aggregating)說明.md)
+
 - **Boosting**：如AdaBoost、Gradient Boosting和XGBoost，通過迭代地調整樣本權重或梯度來訓練模型，逐步提升性能。
 
 - **Stacking**：將多個不同類型的模型預測結果作為輸入，訓練一個元模型（meta-model）進行最終預測。
