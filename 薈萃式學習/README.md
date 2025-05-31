@@ -103,3 +103,5 @@
 ## Stacking 實作:
 
 [**集成學習Stacking-ipynb範例**](./Stacking範例.ipynb)
+
+![tacking實作](./stacking_model_performance_comparison.png)
