@@ -1,6 +1,9 @@
 ## 範本數據集
-
-- [**完整資料實作.ipynb**](./README.ipynb)
+> [!IMPORTANT]
+> - 包含numpy在機器學習中常用的操作
+> - 包含常用的數據集
+> - 包含圖表的顯示  
+> - [**完整資料實作.ipynb**](./README.ipynb)
 
 ### forge數據集
 - two-class classification(2個種類的分類)
