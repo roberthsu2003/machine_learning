@@ -206,7 +206,7 @@ print(uniform_data)
 
 ### 2.4  二項分佈（Binomial Distribution） - 離散分佈
 
-[**2項分佈實作ipynb檔**](./2項分佈.ipynb)
+[**2項分佈實作ipynb檔**](./二項分佈.ipynb)
 
 ```other
 # 進行 10 次獨立拋硬幣試驗，成功機率為 0.5
