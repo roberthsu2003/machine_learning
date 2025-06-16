@@ -11,6 +11,15 @@
 	- 6點 -> 6
 
 - 說明2:是一個將隨機實驗結果對應到數值的函數
+- 
+```python
+import numpy as np
+
+# 模擬擲骰子 10 次，每次結果為 1~6 的整數
+dice_rolls = np.random.randint(1, 7, size=10)
+print("擲骰子的結果（隨機變數 X）:", dice_rolls)
+```
+
 ## 離散隨機變數(Discrete Random Variable) 
 是指「所有可能的取值只有有限個或可數無窮個」的隨機變數，例如擲骰子的點數（1, 2, 3, 4, 5, 6）。
 
@@ -29,6 +38,14 @@
 
 **總結**  
 離散隨機變數就是「可以一一列出所有可能值」的隨機變數，每個值都有明確的機率
+
+```python
+import numpy as np
+
+# 模擬投擲硬幣 10 次，0 表示反面，1 表示正面
+coin_flips = np.random.binomial(n=1, p=0.5, size=10)
+print("投擲硬幣的結果（離散隨機變數 Y）:", coin_flips)
+```
 
 
 ## 連續隨機變數
@@ -58,6 +75,14 @@
 | 體重 | 例如 30~150 kg |
 | 溫度 | 例如 0~40 ℃ |
 | 時間 | 例如 0~∞ 秒 |
+
+```python
+import numpy as np
+
+# 產生 10 筆身高資料（單位：公分）
+heights = np.random.normal(loc=170, scale=10, size=10)
+print("模擬身高資料（連續隨機變數 Z）:", heights)
+```
 
 ## 離散隨機變數的概率分佈
 **概率質量分佈(PMF)**
