@@ -8,6 +8,7 @@
 ### forge數據集
 
 - two-class classification(2個種類的分類)
+
 > [!TIP]
 > [**forge數據集實作ipynb**](./forge數據集.ipynb)
 
@@ -30,6 +31,9 @@ y有26個標籤
 - regression 迴歸的演算法
 - X:1個feature
 - y:1個label
+
+[!TIP]
+> [**wave數據集實作ipynb**](./wave數據集.ipynb)
 
 ```python
 import mglearn
