@@ -32,7 +32,7 @@ y有26個標籤
 - X:1個feature
 - y:1個label
 
-[!TIP]
+> [!TIP]
 > [**wave數據集實作ipynb**](./wave數據集.ipynb)
 
 ```python
