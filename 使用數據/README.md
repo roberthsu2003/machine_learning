@@ -6,7 +6,10 @@
 > - [**完整資料實作.ipynb**](./README.ipynb)
 
 ### forge數據集
+
 - two-class classification(2個種類的分類)
+> [!TIP]
+> [**forge數據集**](./forge數據集.ipynb)
 
 ```python
 import mglearn
