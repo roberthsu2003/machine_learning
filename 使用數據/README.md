@@ -33,6 +33,9 @@ X, y = mglearn.datasets.make_wave(n_samples=40)
 
 ### Wisconsin Breast Cancer dataset(威斯康辛州乳癌資料集)
 
+> [!TIP]
+> [**wave數據集實作ipynb**](./威斯康辛州乳癌數據集_load_breast_cancer.ipynb)
+
 ```python
 from sklearn.datasets import load_breast_cancer
 cancer = load_breast_cancer()
