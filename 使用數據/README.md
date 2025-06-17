@@ -16,15 +16,6 @@
 import mglearn
 X, y = mglearn.datasets.make_forge()
 
-#X是特徵(feature)一般用大寫的
-#y是標籤(label)
-
-X.shape, y.shape
-#======output===========
-((26, 2), (26,))
-X有26筆資料,每筆資料有2個特徵
-y有26個標籤
-
 ```
 
 ### wave數據集
