@@ -42,17 +42,18 @@ cancer = load_breast_cancer()
 print("cancer.keys():\n{}".format(cancer.keys()))
 ```
 
-### fetch_california_housing數據集
+### 加州房價數據集 (Scikit-learn) 與 Ames 房價數據集 (OpenML)
+
+> [!TIP]
+> [**加州房價數據集和Ames 房價數據集 ipynb**](./加州房價數據集_fetch_california_housing.ipynb)
+
 
 ```python
 from sklearn.datasets import fetch_california_housing
 housing = fetch_california_housing()
 print(f"California housing data shape: {housing.data.shape}")
-```
 
-### Ames housing dataset數據集
 
-```python
 from sklearn.datasets import fetch_openml
 housing = fetch_openml(name="house_prices", as_frame=True)
 print(f"Ames housing data shape: {housing.data.shape}")
