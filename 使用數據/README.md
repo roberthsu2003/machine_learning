@@ -36,6 +36,19 @@ X, y = mglearn.datasets.make_wave(n_samples=40)
 ```
 
 ---
+
+### Scikit-learn的Iris 數據
+- Scikit-learn 內建的 Iris (鳶尾花) 數據集
+
+> [!TIP]
+> [** Iris數據集實作ipynb**](./Iris數據集進行數據選擇與切片.ipynb)
+
+```python
+from sklearn.datasets import load_iris
+iris = load_iris()
+```
+
+---
 ### Wisconsin Breast Cancer dataset(威斯康辛州乳癌資料集)
 
 > [!TIP]
