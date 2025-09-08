@@ -3,7 +3,7 @@
 > - 包含numpy在機器學習中常用的操作
 > - 包含簡單的數據集
 > - 包含簡單圖表的顯示  
-> - [**numpyd的基本操作和ipynb**](./README.ipynb)
+> - [**numpy的基本操作和ipynb**](./README.ipynb)
 
 ---
 
