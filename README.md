@@ -42,7 +42,9 @@
 
 ### [薈萃式學習-集成學習(Ensemble Learning))](./薈萃式學習)
 
-### [Neural Networks-Deep Learning(深度學習)](./深度學習)
+---
+
+### [深度學習(Neural Networks-Deep Learning)](./深度學習)
 
 ---
 
