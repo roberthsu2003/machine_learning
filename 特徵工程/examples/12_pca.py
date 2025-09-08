@@ -1,0 +1,75 @@
+import pandas as pd
+import numpy as np
+from sklearn.datasets import make_classification
+from sklearn.preprocessing import StandardScaler
+from sklearn.decomposition import PCA
+import matplotlib.pyplot as plt
+
+# --- 降維 (Dimensionality Reduction) ---
+# 降維是指在盡可能保持數據結構的情況下，減少特徵的數量。
+# 降維的好處：
+# - 減少計算成本和儲存空間。
+# - 降低模型過擬合的風險。
+# - 方便數據視覺化 (例如降到 2D 或 3D)。
+
+# --- 主成分分析 (Principal Component Analysis, PCA) ---
+# PCA 是一種最常用的線性降維方法。
+# 它的目標是找到一組新的互相垂直的特徵 (稱為主成分)，
+# 這些主成分是原始特徵的線性組合。
+# PCA 會選擇那些能夠最大化數據變異數的主成分。
+
+# 建立一個分類問題的範例數據集
+X, y = make_classification(n_samples=200, n_features=20, n_informative=5,
+                           n_redundant=5, n_classes=3, n_clusters_per_class=1, random_state=42)
+
+# 將數據轉換為 DataFrame (方便觀察)
+X = pd.DataFrame(X, columns=[f'feature_{i}' for i in range(20)])
+
+print("原始數據的維度:")
+print(X.shape)
+print("\n")
+
+# --- 步驟一：數據標準化 ---
+# PCA 對特徵的尺度非常敏感，所以在進行 PCA 之前，
+# 通常需要先對數據進行標準化。
+scaler = StandardScaler()
+X_scaled = scaler.fit_transform(X)
+
+# --- 步驟二：應用 PCA ---
+# 建立 PCA 物件
+# n_components: 要保留的主成分數量
+# 如果 n_components 是一個 0 到 1 之間的浮點數，
+#   它表示希望保留的變異數比例。
+#   例如，n_components=0.95 表示保留 95% 的變異數。
+# 如果 n_components 是一個整數，它表示要保留的主成分數量。
+pca = PCA(n_components=2)
+
+# 對標準化後的數據進行擬合與轉換
+X_pca = pca.fit_transform(X_scaled)
+
+print("PCA 降維後的數據維度:")
+print(X_pca.shape)
+print("\n")
+
+# --- 分析 PCA 結果 ---
+# explained_variance_ratio_ 屬性顯示了每個主成分所解釋的變異數比例。
+print("每個主成分解釋的變異數比例:")
+print(pca.explained_variance_ratio_)
+print(f"總共解釋的變異數比例: {np.sum(pca.explained_variance_ratio_):.4f}")
+print("\n")
+
+# components_ 屬性顯示了主成分與原始特徵之間的關係。
+# (行是主成分，列是原始特徵)
+print("主成分與原始特徵的關係 (權重):")
+print(pca.components_)
+print("\n")
+
+# --- 視覺化 PCA 結果 ---
+plt.figure(figsize=(8, 6))
+scatter = plt.scatter(X_pca[:, 0], X_pca[:, 1], c=y, cmap='viridis', edgecolor='k', alpha=0.8)
+plt.title('PCA of Classification Data (2 Components)')
+plt.xlabel('Principal Component 1')
+plt.ylabel('Principal Component 2')
+plt.legend(handles=scatter.legend_elements()[0], labels=list(np.unique(y)))
+plt.grid(True)
+plt.show()
