@@ -102,4 +102,4 @@ mglearn.plots.plot_linear_regression_wave()
 
 **年資,薪水**
 
-- [**簡單線性迴歸_模型**](./sklearn實_薪資_年資.ipynb)
+- [**簡單線性迴歸_模型**](./sklearn薪資_年資.ipynb)
