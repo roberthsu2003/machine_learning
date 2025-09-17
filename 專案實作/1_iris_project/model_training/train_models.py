@@ -220,11 +220,14 @@ class ModelTrainer:
             save_path: 保存路徑
         """
         if 'pytorch' in self.results and 'train_losses' in self.results['pytorch']:
+            # 確保目錄存在
+            os.makedirs(save_path, exist_ok=True)
+            
             plt.figure(figsize=(10, 6))
             plt.plot(self.results['pytorch']['train_losses'])
-            plt.title('PyTorch 模型訓練損失曲線')
-            plt.xlabel('訓練輪次')
-            plt.ylabel('損失值')
+            plt.title('PyTorch Model Training Loss Curve', fontsize=14)
+            plt.xlabel('Epochs')
+            plt.ylabel('Loss')
             plt.grid(True)
             
             curve_path = os.path.join(save_path, 'training_curve.png')
