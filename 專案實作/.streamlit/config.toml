@@ -1,0 +1,29 @@
+[theme]
+# 主色調
+primaryColor = "#1e88e5"
+# 背景色
+backgroundColor = "#ffffff"
+# 次要背景色
+secondaryBackgroundColor = "#f0f2f6"
+# 文字顏色
+textColor = "#262730"
+# 字體
+font = "sans serif"
+
+[server]
+# 無頭模式（適合部署）
+headless = true
+# 端口
+port = 8501
+# 允許 CORS
+enableCORS = false
+# 允許 XSRF
+enableXsrfProtection = true
+
+[browser]
+# 自動開啟瀏覽器
+gatherUsageStats = false
+
+[logger]
+# 日誌級別
+level = "info"

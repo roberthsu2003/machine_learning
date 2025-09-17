@@ -1,0 +1,26 @@
+# 機器學習兩階段專案 - 總體依賴
+# 包含模型訓練和前端展示所需的所有套件
+
+# 核心數據處理
+numpy>=1.24.0
+pandas>=2.0.0
+
+# 機器學習框架
+scikit-learn>=1.3.0
+torch>=2.0.0
+
+# 數據視覺化
+matplotlib>=3.7.0
+seaborn>=0.12.0
+plotly>=5.15.0
+
+# 網頁應用框架
+streamlit>=1.28.0
+
+# 工具庫
+joblib>=1.3.0
+tqdm>=4.65.0
+
+# 可選：Jupyter 支援
+jupyter>=1.0.0
+ipywidgets>=8.0.0
