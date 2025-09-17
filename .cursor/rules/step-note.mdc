@@ -1,0 +1,14 @@
+---
+# 你的YAML格式基本上是正確的，但建議加上縮排與標準YAML格式，以下是修正版：
+description: "這是為了讓ai agent更容易理解程式碼"
+globs:
+  - "*.ipynb"
+  - "*.md"
+  - "*.py"
+alwaysApply: false
+---
+# 請將這些步驟加上註解
+- 這些程式碼我要教學用述的
+- 要求學生使用prompt,自動產生程式碼
+- 註解主要是給ai agent看的
+
