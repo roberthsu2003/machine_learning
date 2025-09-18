@@ -229,7 +229,7 @@ def display_predictions(selected_models, input_values, feature_names, loader):
         '特徵': feature_names,
         '數值': input_values
     })
-    st.dataframe(feature_df, use_container_width=True)
+    st.dataframe(feature_df, width='stretch')
     
     return predictions, results
 
@@ -270,12 +270,12 @@ def display_probabilities(results, selected_models, target_names):
             height=500
         )
         
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
         
         # 顯示數值表格
         st.markdown("#### 📋 機率數值表")
         pivot_df = prob_df.pivot(index='品種', columns='模型', values='機率')
-        st.dataframe(pivot_df.round(3), use_container_width=True)
+        st.dataframe(pivot_df.round(3), width='stretch')
 
 def analyze_model_consensus(predictions, loader):
     """分析模型一致性"""
@@ -342,7 +342,7 @@ def display_feature_space_visualization(input_values, feature_names, loader):
         height=400
     )
     
-    st.plotly_chart(fig, use_container_width=True)
+    st.plotly_chart(fig, width='stretch')
 
 def display_model_info(loader):
     """顯示模型資訊"""
