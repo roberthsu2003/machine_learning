@@ -1,0 +1,10 @@
+[project]
+name = "machine-learning"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "jupyter>=1.1.1",
+    "lab>=8.10",
+]
