@@ -1,61 +1,102 @@
-## 機器學習
+# 🎓 實戰機器學習：從基礎理論到雲端部署
+
+本專案是一套專為機器學習初學者與學生設計的**實戰教學教材**。從最基礎的 AI 術語、數據處理工具（NumPy），到各種監督與非監督式演算法，並進一步探討特徵工程與評估指標。最後，我們將理論落地，帶領大家建立 **FastAPI + Gradio** 預測服務，並一鍵部署至 **Hugging Face Spaces** 雲端。
+
+---
+
+## 💻 快速開始 (Quick Start)
+
+為了讓學生能快速在本機執行本專案的所有代碼，我們推薦使用現代化的 Python 套件管理器 [uv](https://github.com/astral-sh/uv) 或是傳統的 `pip` 來配置環境。
+
+### 1. 複製本專案至本地
+```bash
+git clone https://github.com/roberthsu2003/machine_learning.git
+cd machine_learning
+```
+
+### 2. 建立虛擬環境並安裝依賴
+*   **使用 `uv`（推薦，極速）：**
+    ```bash
+    # 建立環境並安裝套件
+    uv venv
+    uv pip install -r requirements.txt
+    ```
+*   **使用傳統 `pip`：**
+    ```bash
+    # 建立環境
+    python -m venv .venv
+    source .venv/bin/activate  # macOS/Linux
+    # .venv\Scripts\activate   # Windows
+    
+    # 安裝套件
+    pip install -r requirements.txt
+    ```
+
+---
+
+## 🗺️ 機器學習學習地圖
+
+我們將學習流程細分為以下四個主要模組。你可以依照此學習地圖循序漸進地研習。
+
+### 1. 🌱 基礎觀念與工具準備
+在正式進入演算法之前，我們必須先掌握數據工具與基本數學觀念。
+
+*   **[何謂 AI、機器學習與深度學習](./簡報圖片)**：釐清三者之間的關係，並提供簡報檔案下載。
+*   **[機器學習常用術語](./名詞解釋)**：釐清 Feature, Label, Train/Test Split, Overfitting 等核心術語。
+*   **[數據集與 NumPy 基礎操作](./使用數據)**：學習如何使用 NumPy 來進行多維陣列的運算，這是所有機器學習演算法的底層基石。
+*   **[數據視覺化與常用圖表](./機器學習常使用的圖表)**：學習使用 Matplotlib 和 Seaborn 繪製直方圖、散佈圖、熱力圖等重要數據分析圖表。
+*   **[機率與統計基礎](./機率統計)**：機器學習演算法底層的機率模型、貝氏定理與統計分布說明。
+*   **[初次體驗：Jupyter 實作](./基本package/README.ipynb)**：第一次使用 Python 載入數據，感受機器學習模型的訓練與預測。
+
+---
+
+### 2. 🛠️ 機器學習核心流程 (Pipeline)
+資料清理與特徵提煉是 ML 專案成敗的關鍵，而指標則是我們評估模型優劣的標準。
+
+*   **[特徵工程 (Feature Engineering)](./特徵工程)**：學習缺失值處理、標準化 (Standardization)、歸一化 (Normalization)、獨熱編碼 (One-Hot Encoding) 與特徵選取。
+*   **[模型評估指標 (Metrics)](./評估指標)**：
+    *   **分類指標**：準確度 (Accuracy)、精確率 (Precision)、召回率 (Recall)、F1-Score、ROC-AUC。
+    *   **迴歸指標**：MSE、RMSE、MAE、R-squared ($R^2$)。
+
+---
+
+### 3. 🤖 核心演算法實戰 (Algorithm Sandbox)
+深入研究每種演算法的數學原理、程式實作以及優缺點，學會它們最適合應用於哪種數據。
+
 > [!TIP]
-> 研究每種演算法的優缺點，以及它們最適合應用於哪種數據
+> **學習建議**：不要只依賴套件，試著理解演算法背後的幾何意義與數學邏輯，這對模型調參（Hyperparameter Tuning）極有幫助。
 
-## 何謂AI,機器學習,深度學習
+#### 🔹 監督式機器學習 (Supervised Learning)
+*   **[k-近鄰分類演算法 (k-NN)](./k近鄰分類)**：最直觀的分類器，依據鄰近樣本進行多數決投票。
+*   **[簡單線性迴歸 (Simple Linear Regression)](./簡單線性迴歸)**：預測連續數值，建立一條最佳擬合的二維直線。
+*   **[多元線性迴歸 (Multiple Linear Regression)](./多元線性迴歸)**：引入多個特徵的線性預測模型，與共線性 (Multicollinearity) 處理。
+*   **[邏輯迴歸分類 (Logistic Regression)](./邏輯迴歸)**：將線性模型映射至 Sigmoid 函數，用以解決二分類與多分類問題。
+*   **[貝氏分類器 (Naive Bayes Classifiers)](./貝氏分類)**：基於條件機率與特徵獨立假設，適用於垃圾郵件分類與文本分類。
+*   **[決策樹分類器 (Decision Trees)](./樹狀模型)**：透過資訊增益 (Information Gain) 或 Gini 係數進行分支割裂，建立樹狀決策模型。
+*   **[決策樹集成模型 (Ensembles of Trees)](./決策樹集成模型)**：學習隨機森林 (Random Forest) 以及提升樹 (Gradient Boosting) 解決單一決策樹過擬合的痛點。
+*   **[核化支援向量機 (SVM)](./核化支援向量機)**：利用核心技巧 (Kernel Trick) 將低維數據投影至高維空間，尋找最大邊界分割超平面。
+*   **[集成學習與薈萃式學習 (Ensemble & Stacking)](./薈萃式學習)**：學習 Bagging, Boosting 與 Stacking 策略，融合多個基學習器以取得最強泛化效能。
 
-- [簡報檔案下載位置](./簡報圖片)
+#### 🔸 非監督式機器學習 (Unsupervised Learning)
+*   **[集群分析 (Clustering)](./集群分析)**：無標籤數據的自動分類，包含 K-Means 演算法以及層次聚類，幫助探索數據底層結構。
 
-### [機器學習常用術語](./名詞解釋)
-
-### [數據集+Numpy的操作](./使用數據)
-
-### [機器學習常使用的圖表](./機器學習常使用的圖表)
-
-### [機率統計](./機率統計)
-
-### [集群分析](./集群分析)
-
-### [評估指標](./評估指標)
-
-### [特徵工程](./特徵工程)
-
-### [初次體驗](./基本package/README.ipynb)
-
-## 監督式機器學習
-
-### [k近鄰分類](./k近鄰分類)
-
-### [簡單線性迴歸 Linear Regression](./簡單線性迴歸)
-
-### [多元線性迴歸 Multiple Linear Regression](./多元線性迴歸)
-
-### [線性迴歸分類 Linear Regression Classification](./邏輯迴歸)
-
-### [貝式分類 Naive bayes Classifiers](./貝氏分類)
-
-### [樹狀模型(決策樹) DecisionTreeClassifier](./樹狀模型)
-
-### [決策樹集成模型(Ensembles of Decision Trees)](./決策樹集成模型)
-
-### [核化支援向量機(Kernelized Support Vector Machines)](./核化支援向量機)
-
-### [薈萃式學習-集成學習(Ensemble Learning))](./薈萃式學習)
+#### 🧠 深度學習基礎 (Deep Learning)
+*   **[深度學習與神經網絡](./深度學習)**：介紹多層感知機 (MLP)、權重優化、反向傳播 (Backpropagation) 以及激發函數。
 
 ---
 
-### [深度學習(Neural Networks-Deep Learning)](./深度學習)
+### 4. 🚀 專案實作與服務部署
+理論與落地結合！學習如何將機器學習模型包裝為 Web 服務並對外提供服務。
+
+*   **[Iris 鳶尾花前後端整合專案](./專案實作/1_iris_project)**：實作一個包含前端 HTML 介面與後端預測邏輯的完整機器學習網頁應用。
+*   **[模型儲存、FastAPI 預測端點與 Gradio 部署](./模型部署)**：
+    *   學習使用 `joblib` 將訓練好的 Scikit-Learn 模型進行序列化與儲存。
+    *   利用 **FastAPI** 建立高性能預測端點（包含 Pydantic 資料校驗）。
+    *   使用 **Gradio** 快速拉出網頁 UI，並將兩者混合掛載，不需要 Dockerfile 即可使用 Git 一鍵部署至 **Hugging Face Spaces** 免費雲端。
 
 ---
 
-## 非監督式機器學習
-
-
-> [課程大綱](./課程)
-
-## 專案實作
-
-### [Iris_前後端整合](./專案實作/1_iris_project)
-
-### [模型儲存與 FastAPI 部署](./模型部署)
-
+## 📖 課程資訊與大綱
+關於本課程的詳細大綱與時程安排，請參閱：
+*   **[機器學習大綱詳細說明](./機器學習大綱.md)**
+*   **[課程時程表](./課程)**
