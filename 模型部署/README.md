@@ -94,15 +94,17 @@ python app.py
 看見 `INFO: Uvicorn running on http://127.0.0.1:8000` 後，代表服務已啟動。
 
 ### 3. 本地測試方式
-*   **測試網頁 UI**：打開瀏覽器，造訪 `http://127.0.0.1:8000/`，你會看到漂亮的滑桿互動網頁，拉動滑桿即可即時獲得預測結果。
-*   **測試 FastAPI API**：
-    開啟另一個終端機，執行以下 `curl` 指令：
+*   **測試網頁 UI**：打開瀏覽器，造訪 `http://127.0.0.1:8000/`，您會看到一個整合了**雙分頁 (Tabs)** 的精美介面：
+    1. **🔮 即時模型預測**：調整 4 個特徵滑桿，即可即時獲得預測的鳶尾花品種與對應機率。
+    2. **⚙️ 線上模型訓練與評估**：調整隨機森林超參數（決策樹數量、最大深度、測試集比例、隨機種子），點擊「開始訓練模型」即可線上重訓，並動態展示最新的特徵重要性條狀圖。
+*   **測試 FastAPI API (即時預測)**：
+    開啟終端機，執行以下 `curl` 指令：
     ```bash
     curl -X POST http://127.0.0.1:8000/predict \
       -H "Content-Type: application/json" \
       -d '{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}'
     ```
-    你將會收到結構化的 JSON 預測回傳：
+    您將會收到結構化的 JSON 預測回傳：
     ```json
     {
       "prediction_id": 0,
@@ -114,6 +116,30 @@ python app.py
       }
     }
     ```
+
+*   **測試 FastAPI API (線上重新訓練)**：
+    若要線上重新訓練模型，可發送 POST 請求至 `/train` 端點，帶入超參數進行訓練：
+    ```bash
+    curl -X POST http://127.0.0.1:8000/train \
+      -H "Content-Type: application/json" \
+      -d '{"n_estimators": 50, "max_depth": 3, "test_size": 0.3, "random_state": 100}'
+    ```
+    您將會收到重新訓練後的評估結果與特徵重要性：
+    ```json
+    {
+      "status": "success",
+      "accuracy": 0.9556,
+      "train_time": 0.0190,
+      "feature_importances": {
+        "sepal length": 0.0828,
+        "sepal width": 0.0162,
+        "petal length": 0.3973,
+        "petal width": 0.5037
+      },
+      "message": "模型訓練完成並儲存成功！"
+    }
+    ```
+    重訓完成後，FastAPI 後端會自動重新載入新模型，使得 `/predict` 端點與網頁 UI 均會即時套用最新的模型進行推理。
 
 ---
 
