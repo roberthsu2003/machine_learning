@@ -326,11 +326,38 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 
 ---
 
-### 4. 線上測試與 API 訪問
-1.  推送成功後，回到 Space 網頁，狀態會從 `Building` 變成綠色的 `Running`。
-2.  你的 Space 頁面上會直接顯示出漂亮的 **🌸 Iris 鳶尾花即時預測系統** 網頁介面。
-3.  **如何訪問 API 端點？**
-    *   你的 FastAPI 端點位置即為：`https://<你的用戶名>-<你的Space名稱>.hf.space/predict`
-    *   *如何取得精確的 URL？*：
-        在 Space 網頁右上角點擊三個點（`...`），選擇 **`Embed this Space`**，複製 **`Direct URL`** 的網址，並在後面接上 `/predict` 即可！
-    *   現在你可以使用 Postman、Python `requests` 或 `curl` 直接對該雲端 URL 發送 POST 請求，便能獲取遠端模型的預測結果！
+### 4. 線上測試、獨立網址與 API 文件訪問
+
+1. **Space 狀態確認**：
+   推送成功後，回到 Space 網頁，狀態會從 `Building` 轉為綠色的 `Running`。
+
+2. **如何取得獨立網址 (Direct URL)**：
+   若要跳過 Hugging Face 的外殼（Iframe），直接打開應用的網頁或 API：
+   * **方式一（網址格式）**：獨立網址格式為 `https://<你的用戶名>-<你的Space名稱>.hf.space`（注意：用戶名與 Space 名稱之間的連接號是減號 `-`）。
+   * **方式二（介面複製）**：在 Space 網頁右上角點擊 **三個點 `...`** ➡️ 選擇 **`Embed this Space`** ➡️ 複製 **`Direct URL`** 欄位的網址。
+
+3. **如何訪問與測試 Swagger API 文件**：
+   由於我們在程式中手動繞過了 Gradio 的路徑劫持，您現在可以直接訪問獨立網址的 `/docs` 路徑來打開 FastAPI 的互動式 API 測試文件：
+   * **文件網址**：`https://<你的用戶名>-<你的Space名稱>.hf.space/docs`
+   * **測試方式**：在網頁上展開端點，點擊 `Try it out`，輸入預測特徵的 JSON，即可直接發送測試。
+
+4. **我們自訂的 API 端點說明與測試指令**：
+   Swagger UI 中會包含 Gradio 本身的系統端點與我們自訂的機器學習服務端點。我們自訂的 API 如下：
+
+   * **🔮 即時預測端點：`POST /predict`**
+     * **用途**：傳入 4 個鳶尾花測量數值，模型會即時返回品種預測與機率分布。
+     * **測試指令 (curl)**：
+       ```bash
+       curl -X POST https://<你的用戶名>-<你的Space名稱>.hf.space/predict \
+         -H "Content-Type: application/json" \
+         -d '{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}'
+       ```
+
+   * **⚙️ 線上重訓端點：`POST /train`**
+     * **用途**：傳入新的超參數重新訓練模型，重新訓練成功後，服務會自動套用新模型。
+     * **測試指令 (curl)**：
+       ```bash
+       curl -X POST https://<你的用戶名>-<你的Space名稱>.hf.space/train \
+         -H "Content-Type: application/json" \
+         -d '{"n_estimators": 50, "max_depth": 3, "test_size": 0.3, "random_state": 100}'
+       ```
