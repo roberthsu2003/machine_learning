@@ -352,7 +352,6 @@ initial_importance = make_importance_chart(MODEL_STATE["feature_importances"])
 
 # --- 建立 Gradio UI Blocks 布局 ---
 with gr.Blocks(
-    theme=gr.themes.Soft(primary_hue="teal", secondary_hue="indigo"),
     title="🌸 Iris 鳶尾花機器學習全生命週期平台"
 ) as demo:
     
@@ -379,7 +378,7 @@ with gr.Blocks(
                     
                     predict_btn = gr.Button("🔮 開始預測", variant="primary")
                     
-                with gr.Column(scale=1.2):
+                with gr.Column(scale=1):
                     gr.Markdown("### 2. 預測結果與概率分析")
                     output_card = gr.HTML(value=initial_pred_card, label="品種預測卡片")
                     output_probs = gr.HTML(value=initial_pred_bars, label="機率分析")
@@ -403,7 +402,7 @@ with gr.Blocks(
                     
                     train_btn = gr.Button("🚀 開始訓練模型", variant="primary")
                     
-                with gr.Column(scale=1.2):
+                with gr.Column(scale=1):
                     gr.Markdown("### 2. 訓練結果與特徵重要性")
                     train_status = gr.Markdown("### 📢 最新狀態: `已載入預訓練模型 (就緒)`")
                     metrics_card = gr.HTML(value=initial_metrics, label="評估指標卡片")
@@ -415,6 +414,9 @@ with gr.Blocks(
                 inputs=[n_est, m_depth, t_size, seed],
                 outputs=[train_status, metrics_card, importance_chart]
             )
+
+# 設定主題（避免 Gradio 6.0 的 Blocks 建構警告）
+demo.theme = gr.themes.Soft(primary_hue="teal", secondary_hue="indigo")
 
 # ==========================================
 # 4. 初始化 Gradio 的 FastAPI 並合併自訂的 API 路由
