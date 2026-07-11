@@ -182,7 +182,8 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 2.  填寫 Space 設定：
     *   **Space name**：例如 `iris-predict-service` (自訂名稱)
     *   **Select the Space SDK**：選擇 **`Gradio`** (注意：**千萬不要**選 Docker！)
-    *   **Space hardware**：選擇免費的 **`CPU basic`**（注意：**請勿**選擇 **ZeroGPU** 或其他 GPU 硬體。本機器學習專案為純 CPU 運算，若選用 ZeroGPU，Hugging Face 會因偵測不到 `@spaces.GPU` 函數而在啟動時報錯崩潰！）
+    *   **Space hardware**：免費帳戶請選擇 **`ZeroGPU`** (免費)。
+        *   *註：目前 Hugging Face 新制規定，免費帳戶建立 Gradio Space 時僅能使用 `ZeroGPU`，傳統的 `CPU basic` 需訂閱 PRO 才能解鎖。本專案已在 `app.py` 中加入了 `@spaces.GPU` 相容性設計，可完美在 `ZeroGPU` 正常運作！*
     *   **Visibility**：**`Public`** (公開)
 3.  點擊 **`Create Space`**。
 
