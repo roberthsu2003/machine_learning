@@ -254,9 +254,24 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 > **重要警告**：Hugging Face 必須依賴倉庫根目錄下的 `README.md` 最頂部的 YAML 設定區塊（定義了 `title`、`sdk: gradio` 等）來啟動服務。**請勿**在強制推送時將其抹除，否則 Space 會因為找不到 SDK 設定而建置失敗。
 
 #### 2. 如何解決？
-我們提供以下兩種解決方案，推薦使用 **解決方案一**，這能讓您保持專案結構乾淨（本地只有一個主 Git 倉庫），且能完美解決設定檔不一致的問題：
+我們提供以下三種解決方案，最推薦使用 **解決方案一（部署腳本）**，它會自動為您排除所有二進位檔案與 Git 歷史衝突問題，免去複雜的手動指令：
 
-* **解決方案一：克隆並複製設定檔至本地子資料夾，再使用 `git subtree` 強制推送（推薦 🚀）**
+* **解決方案一：使用一鍵部署腳本 `deploy.sh`（終極推薦 ⚡️）**
+  我們在專案中為您撰寫了一個 [deploy.sh](file:///Users/roberthsu2003/Documents/GitHub/machine_learning/模型部署/deploy.sh) 部署腳本。它會自動將純文字代碼檔案（排除 `iris_model.joblib` 二進位檔）提取至系統暫存區，建立乾淨的全新 Git 歷史紀錄，並強制推送到 Hugging Face Space：
+  
+  1. 請在終端機中切換至 `模型部署/`（或 `test/`）子目錄：
+     ```bash
+     cd 模型部署
+     ```
+  2. 執行部署腳本：
+     ```bash
+     ./deploy.sh
+     ```
+  3. 依提示輸入您的 Hugging Face 用戶名、Space 名稱以及 Access Token (Write 權限)，腳本將自動為您完成乾淨的部署，完成後會自動清空暫存檔案！
+
+---
+
+* **解決方案二：克隆並複製設定檔至本地子資料夾，再使用 `git subtree` 強制推送**
   1. **將 Hugging Face Space 克隆至主專案「外部」的暫存資料夾**：
      ```bash
      # 請克隆至與您主專案資料夾平級的外層目錄（例如 Documents/GitHub/ 下）
@@ -265,7 +280,7 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
   2. **將設定檔複製回您主專案的子資料夾**：
      將克隆下來的 Space 資料夾底下的 `README.md`（包含最頂部的 `---` 區塊）和 `.gitattributes` 複製並覆蓋到您主專案的子資料夾（如 `模型部署/`）下。
   3. **刪除該外部暫存資料夾**：
-     複製完成後，您就可以將剛才在外面 clone 的那個暫存 Space 資料夾整個刪除。
+     複製完成後，將剛才在外面 clone 的暫存 Space 資料夾刪除。
   4. **提交變更至您的主專案**：
      在主專案根目錄下：
      ```bash
@@ -273,7 +288,6 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
      git commit -m "Add Hugging Face config files to subfolder"
      ```
   5. **使用臨時分支強制推送**：
-     由於子資料夾內已經有從 Hugging Face 複製過來的正確設定檔，您可以安全地強制覆蓋遠端而不用擔心設定遺失。請在主專案根目錄下執行：
      ```bash
      # 1. 將子資料夾（以「模型部署」為例）分割成一個臨時分支 temp-deploy
      git subtree split --prefix=模型部署 -b temp-deploy
@@ -285,9 +299,11 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
      git branch -D temp-deploy
      ```
 
-* **解決方案二：改用上述「方法 B（獨立倉庫複製與手動推送）」**
+---
+
+* **解決方案三：獨立倉庫複製與手動推送**
   1. 將 Hugging Face Space 克隆至主專案**「外部」**的獨立資料夾（例如與您的課程主專案資料夾平級的目錄。**切勿** clone 在主專案內部，以防巢狀 Git 倉庫衝突）。
-  2. 將您的代碼檔案（`app.py`、`requirements.txt` 等）複製到該獨立資料夾中（**保留** `README.md` 最上方的 `---` 設定區塊）。
+  2. 將您的代碼檔案（`app.py`、`requirements.txt` 等）複製到該獨立資料夾中（**保留** `README.md` 最上方的 `---` 設定區塊，且**不要**複製 `iris_model.joblib`）。
   3. 進入該獨立資料夾，執行標準的 `git add .`、`git commit` 與 `git push` 推送。
 
 ---
