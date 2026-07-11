@@ -190,23 +190,23 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 ### 3. 使用 Git 推送專案檔案至 Spaces
 根據您的專案結構與管理習慣，我們提供以下兩種推送檔案至 Hugging Face Space 的方式：
 
-#### 方法 A：使用 `git subtree` 直接從課程專案的子資料夾推送（推薦）
-如果您的課程專案結構是一個大 Git 倉庫（例如 `machine_learning/`），而此模型部署專案位於其中的子資料夾（如 `模型部署/`），您可以使用 `git subtree` 將該子資料夾的內容作為根目錄直接推送至 Hugging Face Space，不需要額外複製檔案：
+#### 方法 A：使用一鍵部署腳本 `deploy.sh` 推送（最推薦 🚀）
+如果您的課程專案結構是一個大 Git 倉庫（例如 `machine_learning/`），而此模型部署專案位於其中的子資料夾（如 `模型部署/`），我們非常推薦您使用專屬的 `deploy.sh` 腳本。
 
-1. **確保子資料夾的變更已提交 (Commit) 到本地 Git 倉庫**：
-   在您主專案的根目錄下：
+此腳本會自動提取純文字代碼檔案（徹底排除二進位模型檔），在系統暫存區建立一個乾淨、無衝突的 Git Commit 歷史，並自動推送至 Hugging Face Space，完全避開二進位歷史被拒絕的錯誤：
+
+1. **在終端機進入子目錄**：
    ```bash
-   git add 模型部署/
-   git commit -m "Commit changes before deploying to Hugging Face"
+   cd 模型部署
    ```
 
-2. **使用 `git subtree push` 推送至 Hugging Face**：
-   請在主專案的根目錄下執行以下指令（請替換 `你的用戶名` 與 `你的Space名稱`）：
+2. **執行部署腳本**：
    ```bash
-   git subtree push --prefix=模型部署 https://huggingface.co/spaces/你的用戶名/你的Space名稱 main
+   ./deploy.sh
    ```
-   * **Username**：輸入您的 Hugging Face 使用者名稱。
-   * **Password**：**貼上剛才申請的 Access Token (Write)**（提示：貼上密碼時畫面上不會顯示任何字元，直接貼上並按 Enter 即可）。
+
+3. **輸入 Hugging Face 憑證**：
+   依據終端機提示輸入您的用戶名、Space 名稱以及 Access Token (Write 權限) 即可自動完成部署！
 
 ---
 
