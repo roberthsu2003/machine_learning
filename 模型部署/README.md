@@ -238,6 +238,42 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 
 ---
 
+### ⚠️ 常見錯誤：Git 推送被拒絕 (rejected)
+
+當您執行 `git subtree push` 或 `git push` 時，可能會遇到類似以下的錯誤：
+```text
+ ! [rejected]        b1093d0d923a863e35fa64c390311c04d3af326b -> main (fetch first)
+錯誤: 推送一些引用到 'https://huggingface.co/spaces/你的用戶名/你的Space名稱' 失敗
+提示： 更新被拒絕，因為遠端包含您本機沒有的提交。這通常是因為另一個版本庫有推送更動...
+```
+
+#### 1. 為什麼會這樣？
+當您在 Hugging Face 網站上建立新 Space 時，系統會自動在該遠端倉庫中建立初始檔案（例如包含 Space 設定的 `README.md` 元數據與 `.gitattributes`）。這些提交存在於遠端，但您本地子資料夾中沒有這些提交，因此 Git 為了防止覆蓋而拒絕了推送。
+
+> [!CAUTION]
+> **重要警告**：Hugging Face 必須依賴倉庫根目錄下的 `README.md` 最頂部的 YAML 設定區塊（定義了 `title`、`sdk: gradio` 等）來啟動服務。**請勿**在強制推送時將其抹除，否則 Space 會因為找不到 SDK 設定而建置失敗。
+
+#### 2. 如何解決？
+* **解決方案一：改用上述「方法 B（獨立倉庫複製）」**
+  1. 將 Hugging Face Space 克隆至獨立資料夾（此時本地將包含自動產生的 `README.md` 與元數據）。
+  2. 將您的代碼檔案複製進去（**保留** `README.md` 最上方的 `---` 設定區塊）。
+  3. 執行標準的 `git add .`、`git commit` 與 `git push` 推送。
+
+* **解決方案二：使用 `git subtree` 強制推送（覆蓋遠端）**
+  *如果您已在本地的子資料夾中自行準備好了正確的 Hugging Face `README.md`*，或是您的子資料夾沒有與遠端衝突的 `README.md`，可透過以下步驟建立「臨時分支」來進行強制推送：
+  ```bash
+  # 1. 將子資料夾（以「模型部署」為例）分割成一個臨時分支 temp-deploy
+  git subtree split --prefix=模型部署 -b temp-deploy
+
+  # 2. 將此臨時分支強制推送至 Hugging Face 的 main 分支
+  git push https://huggingface.co/spaces/你的用戶名/你的Space名稱 temp-deploy:main --force
+
+  # 3. 刪除本地臨時分支
+  git branch -D temp-deploy
+  ```
+
+---
+
 ### 4. 線上測試與 API 訪問
 1.  推送成功後，回到 Space 網頁，狀態會從 `Building` 變成綠色的 `Running`。
 2.  你的 Space 頁面上會直接顯示出漂亮的 **🌸 Iris 鳶尾花即時預測系統** 網頁介面。
