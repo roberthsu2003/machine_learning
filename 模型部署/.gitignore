@@ -1,0 +1,11 @@
+# 忽略二進位模型檔案，防止被 Git 追蹤並推送到 Hugging Face
+iris_model.joblib
+*.joblib
+*.pkl
+
+# 忽略 Python 快取資料夾
+__pycache__/
+*.pyc
+
+# 系統暫存檔
+.DS_Store
