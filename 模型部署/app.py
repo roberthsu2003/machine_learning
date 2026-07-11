@@ -15,14 +15,17 @@ from pydantic import BaseModel, Field
 # ==========================================
 # ZeroGPU 啟動相容性設定 (針對 Hugging Face 免費版限制)
 # ==========================================
+# 1. 為了相容本地開發環境，若無 spaces 套件則動態註冊 Mock 模組至 sys.modules
 try:
     import spaces
 except ImportError:
-    # 本地環境或無安裝 spaces 時的 Dummy 替代類別
-    class spaces:
-        @staticmethod
-        def GPU(func):
-            return func
+    import types
+    fake_spaces = types.ModuleType("spaces")
+    fake_spaces.GPU = lambda func: func
+    sys.modules["spaces"] = fake_spaces
+
+# 2. 必須在最外層進行頂級導入 (Top-level Import)，以通過 Hugging Face 的 AST 靜態語法掃描
+import spaces
 
 @spaces.GPU
 def dummy_gpu_function():
