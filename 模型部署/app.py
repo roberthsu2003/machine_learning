@@ -16,21 +16,30 @@ from pydantic import BaseModel, Field
 # ==========================================
 # ZeroGPU 啟動相容性設定 (針對 Hugging Face 免費版限制)
 # ==========================================
-# 1. 為了相容本地開發環境，若無 spaces 套件則動態註冊 Mock 模組至 sys.modules
+# 背景說明：
+# Hugging Face 免費版 Gradio 空間強制要求使用 ZeroGPU 硬體，且啟動時會靜態掃描程式碼。
+# 若偵測不到最頂層的 `import spaces` 與 `@spaces.GPU` 裝飾器，會報錯 `No @spaces.GPU function detected` 並強行中斷。
+# 為了解決「本地執行無 spaces 套件會報錯」與「雲端強檢」的矛盾，採用動態 mock 模組注入機制。
+
+# 1. 本地與雲端相容性檢查：若本地未安裝 spaces 套件，則手動向 sys.modules 註冊 Mock 模組
 try:
     import spaces
 except ImportError:
     import types
+    # 建立一個假的 spaces 模組實例
     fake_spaces = types.ModuleType("spaces")
+    # 定義一個無作用的 GPU 裝飾器（不改變原函數功能，直接回傳原函數）
     fake_spaces.GPU = lambda func: func
+    # 將假的 spaces 模組註冊進 Python 載入模組清單中，防止後續 `import spaces` 拋出錯誤
     sys.modules["spaces"] = fake_spaces
 
-# 2. 必須在最外層進行頂級導入 (Top-level Import)，以通過 Hugging Face 的 AST 靜態語法掃描
+# 2. 頂級導入 (Top-level Import)：必須置於最外層以通過 Hugging Face 的 AST 靜態語法掃描
 import spaces
 
+# 3. 虛擬 GPU 函數：專門用來滿足 Hugging Face 檢查器對 GPU 函數的掃描需求
 @spaces.GPU
 def dummy_gpu_function():
-    """此函數僅用於通過 Hugging Face ZeroGPU 啟動時的安全掃描"""
+    """此函數僅用於滿足 Hugging Face ZeroGPU 啟動時的檢測，不具備實際運算邏輯"""
     return "GPU initialized"
 
 # ==========================================
@@ -422,13 +431,22 @@ demo.theme = gr.themes.Soft(primary_hue="teal", secondary_hue="indigo")
 # ==========================================
 # 4. 初始化 Gradio 的 FastAPI 並合併自訂的 API 路由
 # ==========================================
-# 1. 初始化 Gradio 內部的 FastAPI 應用實例
+# 背景說明：
+# Hugging Face ZeroGPU 必須透過 Gradio 內建的 `demo.launch()` 啟動，才能與雲端代理伺服器完成網路握手。
+# 如果直接跑 `uvicorn.run("app:app")` 會繞過 Gradio 啟動程序，導致 Node.js 代理伺服器超時崩潰。
+# 為了「同時擁有 Gradio 網頁介面」與「FastAPI 原生路由 /predict、/train」，在此將兩者進行架構上的深度融合：
+
+# 1. 初始化 Gradio 內部的 FastAPI 應用實例：
+# 這會預先在內部建立好 ASGI 應用並綁定 Gradio 所有的 WebUI 資源
 demo.app = gr.routes.App.create_app(demo)
 
-# 2. 將我們先前在 FastAPI (app) 中定義的所有 API 路由 (/predict, /train 等) 合併到 Gradio 的 FastAPI 應用中
+# 2. 合併 API 路由：
+# 使用 FastAPI 的 include_router 機制，將先前在 `app` 中註冊的預測與線上訓練路由直接併入 Gradio 內部應用中
 demo.app.include_router(app.router)
 
-# 3. 手動開啟被 Gradio 隱藏的 Swagger UI 與 openapi.json 端點
+# 3. 解決 Swagger UI 被 Gradio 劫持與隱藏的問題：
+# 由於 Gradio 預設將 docs_url 設為 None 並註冊了萬用路由 `/{path:path}`，會將 `/docs` 導向 Gradio 主網頁。
+# 這裡我們透過顯式宣告「精確路徑優先」的 `/docs` 與 `/openapi.json` 路由，重新導向回標準的 FastAPI API 文件網頁。
 @demo.app.get("/docs", include_in_schema=False)
 async def custom_swagger_ui_html():
     return get_swagger_ui_html(
@@ -440,7 +458,9 @@ async def custom_swagger_ui_html():
 async def get_openapi_json():
     return demo.app.openapi()
 
-# 4. 將全域變數 app 指向 demo.app，以便 Uvicorn 或 Hugging Face 檢查器能正確載入合併後的應用
+# 4. 覆蓋全域 app 變數：
+# 將頂級的 app 物件指向合併後的 `demo.app`。
+# 如此一來，不論是本地的 Uvicorn 或是雲端的 ASGI 檢查器，都能正確載入這個「包含 Gradio 與 FastAPI 路由」的完整應用。
 app = demo.app
 
 if __name__ == "__main__":
