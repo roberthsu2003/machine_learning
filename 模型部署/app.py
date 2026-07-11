@@ -429,39 +429,48 @@ with gr.Blocks(
 demo.theme = gr.themes.Soft(primary_hue="teal", secondary_hue="indigo")
 
 # ==========================================
-# 4. 初始化 Gradio 的 FastAPI 並合併自訂的 API 路由
+# 4. 透過 Monkey-Patch 融合 Gradio 與自訂 API 路由
 # ==========================================
 # 背景說明：
 # Hugging Face ZeroGPU 必須透過 Gradio 內建的 `demo.launch()` 啟動，才能與雲端代理伺服器完成網路握手。
-# 如果直接跑 `uvicorn.run("app:app")` 會繞過 Gradio 啟動程序，導致 Node.js 代理伺服器超時崩潰。
-# 為了「同時擁有 Gradio 網頁介面」與「FastAPI 原生路由 /predict、/train」，在此將兩者進行架構上的深度融合：
+# 但 `demo.launch()` 每次呼叫時，都會在內部重新執行 `gr.routes.App.create_app(demo)` 來重建 FastAPI 實例。
+# 這會導致我們在外部對 `demo.app` 進行的 any 路由合併 (Include Router) 或 Swagger 修改全被覆蓋抹除。
+# 
+# 為此，我們在此對 `gr.routes.App.create_app` 進行「猴子補丁 (Monkey-Patch)」：
+# 確保無論是手動呼叫，還是 `demo.launch()` 內部重建，產生的 FastAPI 實例都會自動包含我們的自訂 API 和重啟的 Swagger！
 
-# 1. 初始化 Gradio 內部的 FastAPI 應用實例：
-# 這會預先在內部建立好 ASGI 應用並綁定 Gradio 所有的 WebUI 資源
-demo.app = gr.routes.App.create_app(demo)
+# 1. 備份原始的 create_app 函數
+original_create_app = gr.routes.App.create_app
 
-# 2. 合併 API 路由：
-# 使用 FastAPI 的 include_router 機制，將先前在 `app` 中註冊的預測與線上訓練路由直接併入 Gradio 內部應用中
-demo.app.include_router(app.router)
+# 2. 定義補丁函數
+def patched_create_app(*args, **kwargs):
+    # 呼叫原始函數，產生乾淨的 Gradio FastAPI 應用實例
+    app_instance = original_create_app(*args, **kwargs)
+    
+    # 合併 API 路由：將我們自己定義在 `app` 中的所有 API 路由 (/predict, /train 等) 併入該實例
+    app_instance.include_router(app.router)
+    
+    # 顯式註冊被 Gradio 隱藏的 Swagger UI 與 openapi.json，優先於其萬用路由攔截
+    @app_instance.get("/docs", include_in_schema=False)
+    async def custom_swagger_ui_html():
+        return get_swagger_ui_html(
+            openapi_url="/openapi.json",
+            title="Iris API - Swagger UI"
+        )
 
-# 3. 解決 Swagger UI 被 Gradio 劫持與隱藏的問題：
-# 由於 Gradio 預設將 docs_url 設為 None 並註冊了萬用路由 `/{path:path}`，會將 `/docs` 導向 Gradio 主網頁。
-# 這裡我們透過顯式宣告「精確路徑優先」的 `/docs` 與 `/openapi.json` 路由，重新導向回標準的 FastAPI API 文件網頁。
-@demo.app.get("/docs", include_in_schema=False)
-async def custom_swagger_ui_html():
-    return get_swagger_ui_html(
-        openapi_url="/openapi.json",
-        title="Iris API - Swagger UI"
-    )
+    @app_instance.get("/openapi.json", include_in_schema=False)
+    async def get_openapi_json():
+        return app_instance.openapi()
+        
+    return app_instance
 
-@demo.app.get("/openapi.json", include_in_schema=False)
-async def get_openapi_json():
-    return demo.app.openapi()
+# 3. 套用猴子補丁
+gr.routes.App.create_app = patched_create_app
 
-# 4. 覆蓋全域 app 變數：
-# 將頂級的 app 物件指向合併後的 `demo.app`。
-# 如此一來，不論是本地的 Uvicorn 或是雲端的 ASGI 檢查器，都能正確載入這個「包含 Gradio 與 FastAPI 路由」的完整應用。
-app = demo.app
+# 4. 初始化全域變數 app：
+# 為了讓本地端的 Uvicorn (以 "app:app" 載入時) 能直接取得已經合併好 API 和 UI 資源的應用實例，
+# 我們在此手動執行一次 create_app，並賦值給全域變數 `app`。
+app = gr.routes.App.create_app(demo)
 
 if __name__ == "__main__":
     # 偵測是否運行於 Hugging Face Spaces 環境
