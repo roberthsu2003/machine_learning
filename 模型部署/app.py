@@ -469,10 +469,15 @@ if __name__ == "__main__":
     
     if is_hf:
         print("偵測到為 Hugging Face Spaces 雲端環境，使用 Gradio 官方 launch() 啟動以相容 ZeroGPU 端口轉發與生命週期...")
+        # ⚠️ 必須將 ssr_mode 設為 False！
+        # 在 Gradio 5/6 中，預設啟用的 SSR 模式會另外啟動一個 Node.js 代理伺服器來攔截請求，
+        # 這會導致我們自訂的 FastAPI /docs、/predict、/train 等 API 端點被 Node.js 阻擋或劫持。
+        # 關閉 ssr_mode 後，伺服器會由 Python 直接處理 7860 端口的所有流量，使 Swagger UI 與 API 順利開通。
         demo.launch(
             server_name="0.0.0.0",
             server_port=7860,
-            prevent_thread_lock=False
+            prevent_thread_lock=False,
+            ssr_mode=False
         )
     else:
         import uvicorn
