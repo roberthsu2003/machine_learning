@@ -9,6 +9,7 @@ if current_dir not in sys.path:
 
 import joblib
 from fastapi import FastAPI, HTTPException
+from fastapi.openapi.docs import get_swagger_ui_html
 import gradio as gr
 from pydantic import BaseModel, Field
 
@@ -427,7 +428,19 @@ demo.app = gr.routes.App.create_app(demo)
 # 2. 將我們先前在 FastAPI (app) 中定義的所有 API 路由 (/predict, /train 等) 合併到 Gradio 的 FastAPI 應用中
 demo.app.include_router(app.router)
 
-# 3. 將全域變數 app 指向 demo.app，以便 Uvicorn 或 Hugging Face 檢查器能正確載入合併後的應用
+# 3. 手動開啟被 Gradio 隱藏的 Swagger UI 與 openapi.json 端點
+@demo.app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_html():
+    return get_swagger_ui_html(
+        openapi_url="/openapi.json",
+        title="Iris API - Swagger UI"
+    )
+
+@demo.app.get("/openapi.json", include_in_schema=False)
+async def get_openapi_json():
+    return demo.app.openapi()
+
+# 4. 將全域變數 app 指向 demo.app，以便 Uvicorn 或 Hugging Face 檢查器能正確載入合併後的應用
 app = demo.app
 
 if __name__ == "__main__":
