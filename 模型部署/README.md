@@ -187,32 +187,56 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 3.  點擊 **`Create Space`**。
 
 ### 3. 使用 Git 推送專案檔案至 Spaces
-開啟你的本地終端機 (Terminal)，執行以下步驟：
+根據您的專案結構與管理習慣，我們提供以下兩種推送檔案至 Hugging Face Space 的方式：
 
-1.  **複製 Hugging Face Space 的 Git 倉庫**：
-    ```bash
-    # 請替換為你的用戶名與 Space 名稱
-    git clone https://huggingface.co/spaces/你的用戶名/你的Space名稱
-    ```
-    *執行後，你的本地會生成一個與 Space 同名的資料夾。*
+#### 方法 A：使用 `git subtree` 直接從課程專案的子資料夾推送（推薦）
+如果您的課程專案結構是一個大 Git 倉庫（例如 `machine_learning/`），而此模型部署專案位於其中的子資料夾（如 `模型部署/`），您可以使用 `git subtree` 將該子資料夾的內容作為根目錄直接推送至 Hugging Face Space，不需要額外複製檔案：
 
-2.  **將專案檔案複製進去**：
-    將本教學資料夾內的以下三個檔案複製到剛剛生成的 Space 資料夾下：
-    *   `app.py`
-    *   `train_save.py`
-    *   `requirements.txt`
-    *   *註：你不需要複製 `iris_model.joblib`，因為雲端啟動 `app.py` 時會自動呼叫 `train_save.py` 線上訓練！*
+1. **確保子資料夾的變更已提交 (Commit) 到本地 Git 倉庫**：
+   在您主專案的根目錄下：
+   ```bash
+   git add 模型部署/
+   git commit -m "Commit changes before deploying to Hugging Face"
+   ```
 
-3.  **提交並推送到 Hugging Face**：
-    ```bash
-    cd 你的Space名稱
-    git add .
-    git commit -m "Deploy Gradio + FastAPI service"
-    git push
-    ```
-    *當提示輸入憑證時：*
-    *   **Username**：輸入你的 Hugging Face 使用者名稱。
-    *   **Password**：**貼上剛才申請的 Access Token (Write)**（提示：貼上密碼時畫面上不會顯示任何字元，這是正常的，直接貼上並按 Enter 即可）。
+2. **使用 `git subtree push` 推送至 Hugging Face**：
+   請在主專案的根目錄下執行以下指令（請替換 `你的用戶名` 與 `你的Space名稱`）：
+   ```bash
+   git subtree push --prefix=模型部署 https://huggingface.co/spaces/你的用戶名/你的Space名稱 main
+   ```
+   * **Username**：輸入您的 Hugging Face 使用者名稱。
+   * **Password**：**貼上剛才申請的 Access Token (Write)**（提示：貼上密碼時畫面上不會顯示任何字元，直接貼上並按 Enter 即可）。
+
+---
+
+#### 方法 B：獨立複製與推送（手動複製檔案到獨立倉庫）
+如果您習慣單獨為 Hugging Face Space 維護一個獨立的 Git 倉庫，可以執行以下步驟：
+
+1. **複製 Hugging Face Space 的 Git 倉庫**：
+   ```bash
+   # 請替換為您的用戶名與 Space 名稱
+   git clone https://huggingface.co/spaces/你的用戶名/你的Space名稱
+   ```
+   *執行後，您的本地會生成一個與 Space 同名的資料夾。*
+
+2. **將專案檔案複製進去**：
+   將本教學資料夾內的以下三個檔案複製到剛剛生成的 Space 資料夾下（置於根目錄）：
+   *   `app.py`
+   *   `train_save.py`
+   *   `requirements.txt`
+   *   *註：您不需要複製 `iris_model.joblib`，因為雲端啟動 `app.py` 時會自動呼叫 `train_save.py` 線上訓練！*
+
+3. **提交並推送到 Hugging Face**：
+   ```bash
+   cd 你的Space名稱
+   git add .
+   git commit -m "Deploy Gradio + FastAPI service"
+   git push
+   ```
+   * **Username**：輸入您的 Hugging Face 使用者名稱。
+   * **Password**：**貼上剛才申請的 Access Token (Write)**（提示：貼上密碼時畫面上不會顯示任何字元，直接貼上並按 Enter 即可）。
+
+---
 
 ### 4. 線上測試與 API 訪問
 1.  推送成功後，回到 Space 網頁，狀態會從 `Building` 變成綠色的 `Running`。
