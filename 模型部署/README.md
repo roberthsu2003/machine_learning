@@ -254,23 +254,41 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 > **重要警告**：Hugging Face 必須依賴倉庫根目錄下的 `README.md` 最頂部的 YAML 設定區塊（定義了 `title`、`sdk: gradio` 等）來啟動服務。**請勿**在強制推送時將其抹除，否則 Space 會因為找不到 SDK 設定而建置失敗。
 
 #### 2. 如何解決？
-* **解決方案一：改用上述「方法 B（獨立倉庫複製）」**
-  1. 將 Hugging Face Space 克隆至獨立資料夾（此時本地將包含自動產生的 `README.md` 與元數據）。
-  2. 將您的代碼檔案複製進去（**保留** `README.md` 最上方的 `---` 設定區塊）。
-  3. 執行標準的 `git add .`、`git commit` 與 `git push` 推送。
+我們提供以下兩種解決方案，推薦使用 **解決方案一**，這能讓您保持專案結構乾淨（本地只有一個主 Git 倉庫），且能完美解決設定檔不一致的問題：
 
-* **解決方案二：使用 `git subtree` 強制推送（覆蓋遠端）**
-  *如果您已在本地的子資料夾中自行準備好了正確的 Hugging Face `README.md`*，或是您的子資料夾沒有與遠端衝突的 `README.md`，可透過以下步驟建立「臨時分支」來進行強制推送：
-  ```bash
-  # 1. 將子資料夾（以「模型部署」為例）分割成一個臨時分支 temp-deploy
-  git subtree split --prefix=模型部署 -b temp-deploy
+* **解決方案一：克隆並複製設定檔至本地子資料夾，再使用 `git subtree` 強制推送（推薦 🚀）**
+  1. **將 Hugging Face Space 克隆至主專案「外部」的暫存資料夾**：
+     ```bash
+     # 請克隆至與您主專案資料夾平級的外層目錄（例如 Documents/GitHub/ 下）
+     git clone https://huggingface.co/spaces/你的用戶名/你的Space名稱
+     ```
+  2. **將設定檔複製回您主專案的子資料夾**：
+     將克隆下來的 Space 資料夾底下的 `README.md`（包含最頂部的 `---` 區塊）和 `.gitattributes` 複製並覆蓋到您主專案的子資料夾（如 `模型部署/`）下。
+  3. **刪除該外部暫存資料夾**：
+     複製完成後，您就可以將剛才在外面 clone 的那個暫存 Space 資料夾整個刪除。
+  4. **提交變更至您的主專案**：
+     在主專案根目錄下：
+     ```bash
+     git add 模型部署/
+     git commit -m "Add Hugging Face config files to subfolder"
+     ```
+  5. **使用臨時分支強制推送**：
+     由於子資料夾內已經有從 Hugging Face 複製過來的正確設定檔，您可以安全地強制覆蓋遠端而不用擔心設定遺失。請在主專案根目錄下執行：
+     ```bash
+     # 1. 將子資料夾（以「模型部署」為例）分割成一個臨時分支 temp-deploy
+     git subtree split --prefix=模型部署 -b temp-deploy
 
-  # 2. 將此臨時分支強制推送至 Hugging Face 的 main 分支
-  git push https://huggingface.co/spaces/你的用戶名/你的Space名稱 temp-deploy:main --force
+     # 2. 強制推送至 Hugging Face 的 main 分支
+     git push https://huggingface.co/spaces/你的用戶名/你的Space名稱 temp-deploy:main --force
 
-  # 3. 刪除本地臨時分支
-  git branch -D temp-deploy
-  ```
+     # 3. 刪除本地臨時分支
+     git branch -D temp-deploy
+     ```
+
+* **解決方案二：改用上述「方法 B（獨立倉庫複製與手動推送）」**
+  1. 將 Hugging Face Space 克隆至主專案**「外部」**的獨立資料夾（例如與您的課程主專案資料夾平級的目錄。**切勿** clone 在主專案內部，以防巢狀 Git 倉庫衝突）。
+  2. 將您的代碼檔案（`app.py`、`requirements.txt` 等）複製到該獨立資料夾中（**保留** `README.md` 最上方的 `---` 設定區塊）。
+  3. 進入該獨立資料夾，執行標準的 `git add .`、`git commit` 與 `git push` 推送。
 
 ---
 
