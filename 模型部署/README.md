@@ -190,23 +190,40 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
 ### 3. 使用 Git 推送專案檔案至 Spaces
 根據您的專案結構與管理習慣，我們提供以下兩種推送檔案至 Hugging Face Space 的方式：
 
-#### 方法 A：使用一鍵部署腳本 `deploy.sh` 推送（最推薦 🚀）
-如果您的課程專案結構是一個大 Git 倉庫（例如 `machine_learning/`），而此模型部署專案位於其中的子資料夾（如 `模型部署/`），我們非常推薦您使用專屬的 `deploy.sh` 腳本。
+#### 方法 A：克隆設定檔至本地子資料夾，再使用 `git subtree` 臨時分支強制推送（推薦 🚀）
+如果您的課程專案結構是一個大 Git 倉庫（例如 `machine_learning/`），而此模型部署專案位於其中的子資料夾（如 `模型部署/`），您可以使用以下步驟將 Hugging Face 自動產生的設定檔拉回本地，再利用臨時分支將該子資料夾作為根目錄直接推送到 Space：
 
-此腳本會自動提取純文字代碼檔案（徹底排除二進位模型檔），在系統暫存區建立一個乾淨、無衝突的 Git Commit 歷史，並自動推送至 Hugging Face Space，完全避開二進位歷史被拒絕的錯誤：
-
-1. **在終端機進入子目錄**：
+1. **將 Hugging Face Space 克隆至主專案「外部」的暫存資料夾**：
    ```bash
-   cd 模型部署
+   # 請克隆至與您主專案資料夾平級的外層目錄（例如 Documents/GitHub/ 下）
+   git clone https://huggingface.co/spaces/你的用戶名/你的Space名稱
    ```
 
-2. **執行部署腳本**：
+2. **將設定檔複製回您主專案的子資料夾**：
+   將克隆下來的 Space 資料夾底下的 `README.md`（包含最頂部的 `---` 區塊）和 `.gitattributes` 複製並覆蓋到您主專案的子資料夾（如 `模型部署/`）下。
+
+3. **刪除該外部暫存資料夾**：
+   複製完成後，將剛才在外面 clone 的暫存 Space 資料夾整個刪除。
+
+4. **提交變更至您的本地主專案**：
+   在主專案根目錄下，提交剛剛複製過來的設定檔變更：
    ```bash
-   ./deploy.sh
+   git add 模型部署/
+   git commit -m "Add Hugging Face config files to subfolder"
    ```
 
-3. **輸入 Hugging Face 憑證**：
-   依據終端機提示輸入您的用戶名、Space 名稱以及 Access Token (Write 權限) 即可自動完成部署！
+5. **使用臨時分支進行強制推送**：
+   由於子資料夾內已經有正確的設定檔，您可以安全地強制覆蓋遠端而不用擔心設定遺失。請在主專案根目錄下執行以下指令（請替換 `你的用戶名` 與 `你的Space名稱`）：
+   ```bash
+   # (1) 將子資料夾（以「模型部署」為例）分割成一個本地臨時分支 temp-deploy
+   git subtree split --prefix=模型部署 -b temp-deploy
+
+   # (2) 將此臨時分支強制推送至 Hugging Face 的 main 分支
+   git push https://huggingface.co/spaces/你的用戶名/你的Space名稱 temp-deploy:main --force
+
+   # (3) 刪除本地臨時分支以保持乾淨
+   git branch -D temp-deploy
+   ```
 
 ---
 
