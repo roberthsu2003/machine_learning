@@ -417,20 +417,29 @@ with gr.Blocks(
             )
 
 # ==========================================
-# 4. 將 Gradio UI 掛載到 FastAPI 上
+# 4. 初始化 Gradio 的 FastAPI 並合併自訂的 API 路由
 # ==========================================
-# 當用戶訪問 "/" 時會自動導向 Gradio Web UI，而對外則繼續提供 API 端點
-app = gr.mount_gradio_app(app, demo, path="/")
+# 1. 初始化 Gradio 內部的 FastAPI 應用實例
+demo.app = gr.routes.App.create_app(demo)
+
+# 2. 將我們先前在 FastAPI (app) 中定義的所有 API 路由 (/predict, /train 等) 合併到 Gradio 的 FastAPI 應用中
+demo.app.include_router(app.router)
+
+# 3. 將全域變數 app 指向 demo.app，以便 Uvicorn 或 Hugging Face 檢查器能正確載入合併後的應用
+app = demo.app
 
 if __name__ == "__main__":
-    import uvicorn
-    
     # 偵測是否運行於 Hugging Face Spaces 環境
     is_hf = os.environ.get("SYSTEM") == "spaces"
     
-    host = "0.0.0.0" if is_hf else "127.0.0.1"
-    port = int(os.environ.get("PORT", 7860)) if is_hf else 8000
-    reload_mode = False if is_hf else True
-    
-    print(f"啟動服務中... (Host: {host}, Port: {port}, Reload: {reload_mode})")
-    uvicorn.run("app:app", host=host, port=port, reload=reload_mode)
+    if is_hf:
+        print("偵測到為 Hugging Face Spaces 雲端環境，使用 Gradio 官方 launch() 啟動以相容 ZeroGPU 端口轉發與生命週期...")
+        demo.launch(
+            server_name="0.0.0.0",
+            server_port=7860,
+            prevent_thread_lock=False
+        )
+    else:
+        import uvicorn
+        print("偵測到為本地開發環境，使用 uvicorn 啟動以支援熱重載 (Reload)...")
+        uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
