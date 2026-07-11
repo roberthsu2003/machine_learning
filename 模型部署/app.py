@@ -405,5 +405,12 @@ app = gr.mount_gradio_app(app, demo, path="/")
 if __name__ == "__main__":
     import uvicorn
     
-    # 本地開發啟動指令：python app.py
-    uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+    # 偵測是否運行於 Hugging Face Spaces 環境
+    is_hf = os.environ.get("SYSTEM") == "spaces"
+    
+    host = "0.0.0.0" if is_hf else "127.0.0.1"
+    port = int(os.environ.get("PORT", 7860)) if is_hf else 8000
+    reload_mode = False if is_hf else True
+    
+    print(f"啟動服務中... (Host: {host}, Port: {port}, Reload: {reload_mode})")
+    uvicorn.run("app:app", host=host, port=port, reload=reload_mode)
