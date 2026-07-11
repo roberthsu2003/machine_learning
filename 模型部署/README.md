@@ -82,13 +82,37 @@ Gradio 提供了 `gr.mount_gradio_app()` 函數，這能讓我們做兩件事：
 ## 四、 本地測試步驟
 
 ### 1. 安裝套件
-確保你在專案的虛擬環境下，並安裝所需套件：
+請依據您使用的工具，在專案目錄下安裝所需套件：
+
+**使用 `uv`（推薦，速度極快）：**
 ```bash
+# 建立並啟用虛擬環境
+uv venv
+source .venv/bin/activate  # Windows 請用 .venv\Scripts\activate
+
+# 安裝套件
+uv pip install -r requirements.txt
+```
+
+**使用傳統 `pip`：**
+```bash
+# 建立並啟用虛擬環境 (以 macOS/Linux 為例)
+python3 -m venv .venv
+source .venv/bin/activate
+
+# 安裝套件
 pip install -r requirements.txt
 ```
 
 ### 2. 執行主程式
-在本地，你不需要手動跑 `train_save.py`，因為 `app.py` 會自動偵測並訓練。請直接在終端機輸入：
+在本地，您不需要手動跑 `train_save.py`，因為 `app.py` 會自動偵測並進行初始化訓練。請直接在終端機輸入：
+
+**使用 `uv`：**
+```bash
+uv run app.py
+```
+
+**使用傳統 `python`（需先啟用虛擬環境）：**
 ```bash
 python app.py
 ```
