@@ -10,6 +10,7 @@
 
 ---
 
+<a id="目錄"></a>
 ## 目錄
 1. [基本觀念：模型序列化](#一-基本觀念模型序列化)
 2. [技術架構：Gradio 結合 FastAPI 的巧妙之處](#二-技術架構gradio-結合-fastapi-的巧妙之處)
@@ -33,6 +34,8 @@
 > [!CAUTION]
 > **安全性警告**：`joblib` 或 `pickle` 在反序列化時會執行任意程式碼。**千萬不要載入來源不明或未受信任的模型檔案**，否則會使伺服器面臨安全威脅！
 
+[↩️ 返回目錄](#目錄)
+
 ---
 
 ## 二、 技術架構：Gradio 結合 FastAPI 的巧妙之處
@@ -50,6 +53,8 @@ Gradio 提供了 `gr.mount_gradio_app()` 函數，這能讓我們做兩件事：
 3.  將 Gradio 網頁介面掛載到 FastAPI 的根路徑 `/` 下。
 
 這樣一來，你的 Space 既是網頁（造訪首頁 `/`），也是 API 服務（造訪 `/predict`），而且完全不需要 Dockerfile！
+
+[↩️ 返回目錄](#目錄)
 
 ---
 
@@ -76,6 +81,8 @@ Gradio 提供了 `gr.mount_gradio_app()` 函數，這能讓我們做兩件事：
     我們利用 `gr.Slider` 拉出 4 個漂亮的滑桿，並用 Markdown 格式顯示預測結果與機率百分比。
 *   **融合掛載**：
     `app = gr.mount_gradio_app(app, demo, path="/")` 將兩者結合，當訪問 `/` 時顯示 Gradio 介面，訪問 `/predict` 時則是 FastAPI 預測端點。
+
+[↩️ 返回目錄](#目錄)
 
 ---
 
@@ -165,6 +172,8 @@ python app.py
     }
     ```
     重訓完成後，FastAPI 後端會自動重新載入新模型，使得 `/predict` 端點與網頁 UI 均會即時套用最新的模型進行推理。
+
+[↩️ 返回目錄](#目錄)
 
 ---
 
@@ -361,3 +370,5 @@ Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密
          -H "Content-Type: application/json" \
          -d '{"n_estimators": 50, "max_depth": 3, "test_size": 0.3, "random_state": 100}'
        ```
+
+[↩️ 返回目錄](#目錄)
