@@ -79,7 +79,10 @@ cd machine_learning
 *   **[集成學習與薈萃式學習 (Ensemble & Stacking)](./薈萃式學習)**：學習 Bagging, Boosting 與 Stacking 策略，融合多個基學習器以取得最強泛化效能。
 
 #### 🔸 非監督式機器學習 (Unsupervised Learning)
-*   **[集群分析 (Clustering)](./集群分析)**：無標籤數據的自動分類，包含 K-Means 演算法以及層次聚類，幫助探索數據底層結構。
+*   **[K-Means 集群演算法](./集群分析/k-means.ipynb)**：最經典的非監督式分群演算法，藉由迭代尋找最佳的 K 個群集中心，對相似數據進行歸類。
+*   **[階層式集群 (Hierarchical Clustering)](./集群分析/hierarchical_clustering.ipynb)**：建立群集的階層結構（樹狀圖 Dendrogram），可依凝聚或分裂方式探索多層次的分群結構。
+*   **[DBSCAN 密度分群](./集群分析/dbscan.ipynb)**：基於密度的分群演算法，能識別任何複雜形狀的群集，並自動過濾雜訊（異常點）。
+*   **[主成分分析 (PCA) 降維](./特徵工程/examples/12_pca.ipynb)**：透過線性投影將高維特徵壓縮至低維度，同時保留數據的最大方差，常用於數據視覺化與去噪。
 
 #### 🧠 深度學習基礎 (Deep Learning)
 *   **[深度學習與神經網絡](./深度學習)**：介紹多層感知機 (MLP)、權重優化、反向傳播 (Backpropagation) 以及激發函數。

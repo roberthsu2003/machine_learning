@@ -22,17 +22,17 @@
 常見的集群分析演算法包括：
 
 * **K-means：**
-
- - [**K-means實作ipynb檔**](./k-means.ipynb)
-
-   * 將資料分成預先定義的 K 個群集。
-	
-   * 通過迭代的方式，將每個資料點分配到距離其最近的群集中心。
+    * [**K-Means 實作程式碼**](./k-means.ipynb)
+    * 將資料分成預先定義的 K 個群集。
+    * 通過迭代的方式，將每個資料點分配到距離其最近的群集中心。
 	
 * **階層式集群（Hierarchical Clustering）：**
-    * 建立一個群集的階層結構。
+    * [**階層式集群實作程式碼**](./hierarchical_clustering.ipynb)
+    * 建立一個群集的階層結構（樹狀圖 Dendrogram）。
     * 可以分為凝聚式（Agglomerative）和分裂式（Divisive）兩種方法。
+
 * **DBSCAN（Density-Based Spatial Clustering of Applications with Noise）：**
+    * [**DBSCAN 實作程式碼**](./dbscan.ipynb)
     * 基於資料點的密度進行分群。
     * 能夠識別任意形狀的群集，並且對雜訊具有魯棒性。
 
