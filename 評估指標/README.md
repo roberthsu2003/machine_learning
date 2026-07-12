@@ -33,28 +33,24 @@
 
 ### 📈 [準確率 (Accuracy)](./accuracy.ipynb)
 正確分類的樣本數佔總樣本數的比例。
-*   **計算公式**：
-    $$\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{TN} + \text{FP} + \text{FN}}$$
+*   **計算公式**：$\text{Accuracy} = \frac{\text{TP} + \text{TN}}{\text{TP} + \text{TN} + \text{FP} + \text{FN}}$
 *   **最佳使用場景**：類別分佈均衡的數據集（例如垃圾郵件與非垃圾郵件數量相近）。
 *   > [!WARNING]
     > **限制**：在不均衡數據集中可能具有高度誤導性（例如 95% 為負類，模型預測全為負類仍有 95% 準確率，但卻完全無法識別正類）。
 
 ### 🎯 [精確率 (Precision)](./precision.ipynb)
 在所有預測為正類的樣本中，實際為正類的比例。
-*   **計算公式**：
-    $$\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$$
+*   **計算公式**：$\text{Precision} = \frac{\text{TP}}{\text{TP} + \text{FP}}$
 *   **最佳使用場景**：**假正例 (FP)** 代價較高的場景。例如垃圾郵件過濾（不能把重要郵件誤判為垃圾郵件）或交易詐欺檢測。
 
 ### 🔍 [召回率 (Recall / Sensitivity)](./recall.ipynb)
 在所有實際為正類的樣本中，被正確預測為正類的比例。
-*   **計算公式**：
-    $$\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}$$
+*   **計算公式**：$\text{Recall} = \frac{\text{TP}}{\text{TP} + \text{FN}}$
 *   **最佳使用場景**：**假負例 (FN)** 代價較高的場景。例如癌症篩檢、傳染病診斷（不能漏診任何一個患者）。
 
 ### ⚖️ [F1 分數 (F1-Score)](./f1_score.ipynb)
 精確率和召回率的調和平均數，提供平衡兩者的單一指標。
-*   **計算公式**：
-    $$\text{F1-score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$$
+*   **計算公式**：$\text{F1-score} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}}$
 *   **最佳使用場景**：當假正例和假負例都非常重要，且需要綜合權衡精確率與召回率時（例如資訊檢索、不平衡數據分類）。
 
 ### 📊 [AUC-ROC 曲線 (AUC-ROC Curve)](./auc_roc_curve.ipynb)
@@ -97,21 +93,18 @@
 
 ### 📉 [均方誤差 (Mean Squared Error, MSE)](./mse.ipynb)
 預測值與實際值之間差的平方的平均值。
-*   **計算公式**：
-    $$\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
+*   **計算公式**：$\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$
 *   **特點**：通過**平方**放大了較大誤差（懲罰離群值），結果越小代表模型越準確。
 *   **限制**：單位是原始數據單位的平方（如：元²），不易直觀理解。
 
 ### 📏 [均方根誤差 (Root Mean Squared Error, RMSE)](./rmse.ipynb)
 均方誤差的平方根。
-*   **計算公式**：
-    $$\text{RMSE} = \sqrt{\text{MSE}} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
+*   **計算公式**：$\text{RMSE} = \sqrt{\text{MSE}} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$
 *   **特點**：開根號後**將單位轉回原始數據單位**（如：元），更容易直觀解釋平均誤差大小，同時保留對大誤差的懲罰特性。
 
 ### 📐 [平均絕對誤差 (Mean Absolute Error, MAE)](./mae.ipynb)
 預測值與實際值之間絕對誤差的平均值。
-*   **計算公式**：
-    $$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|$$
+*   **計算公式**：$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|$
 *   **特點**：使用絕對值計算，誤差單位與原始數據一致，結果直觀易懂。相較於 MSE/RMSE，它對極端異常值的敏感度較低（權重均勻）。
 
 ---
