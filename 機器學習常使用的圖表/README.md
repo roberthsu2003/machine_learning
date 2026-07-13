@@ -13,9 +13,9 @@
 | 圖表類型 | 主要用途 | 實作範例 / 連結 |
 | :--- | :--- | :--- |
 | **散佈圖 (Scatter Plot)** | 觀察兩個變數之間的關聯性、特徵分佈或群集特徵。 | [散佈圖實作](./scatter_plot散佈圖.ipynb) 📈 |
-| **直方圖與密度圖 (Histogram & KDE)** | 觀察單一特徵的數值分佈情形、偏態（Skewness）與峰度。 | *（待擴充，常用於特徵工程階段）* |
-| **特徵相關性熱力圖 (Correlation Heatmap)** | 視覺化特徵間的皮爾森相關係數矩陣，篩選共線性特徵。 | *（待擴充，常用於特徵選取階段）* |
-| **箱形圖 (Box Plot)** | 呈現數據的五數概括（極值、四分位數、中位數）並識別異常值。 | *（待擴充，常用於資料清理階段）* |
+| **直方圖與密度圖 (Histogram & KDE)** | 觀察單一特徵的數值分佈情形、偏態（Skewness）與峰度。 | [直方圖與密度圖實作](./histogram_kde_直方圖與密度圖.ipynb) 📊 |
+| **特徵相關性熱力圖 (Correlation Heatmap)** | 視覺化特徵間的皮爾森相關係數矩陣，篩選共線性特徵。 | [相關係數熱力圖實作](./correlation_heatmap_相關係數熱力圖.ipynb) 🌡️ |
+| **箱形圖 (Box Plot)** | 呈現數據的五數概括（極值、四分位數、中位數）並識別異常值。 | [箱形圖實作](./boxplot_箱形圖.ipynb) 📦 |
 
 > [!TIP]
 > **探索數據的最佳實踐**：進行 EDA 時，建議先用 **散佈圖** 觀察特徵之間的幾何分佈，再搭配 **熱力圖** 快速篩選出高相關性的特徵，以避免多重共線性問題。
@@ -31,8 +31,8 @@
 | **混淆矩陣 (Confusion Matrix)** | 呈現分類模型在各類別上的預測正確與錯誤分佈。 | [混淆矩陣實作](./混淆矩陣confusion_maxtrix.ipynb) 🧮 |
 | **決策邊界 (Decision Boundary)** | 視覺化分類器在特徵空間中的切割邊界（搭配 Meshgrid）。 | [決策邊界實作](./meshgrid說明.ipynb) 🗺️ |
 | **ROC 曲線與 AUC (ROC-AUC Curve)** | 評估二分類模型在不同判定閾值下的真陽性率與偽陽性率關係。 | [ROC 曲線與 AUC](../評估指標/auc_roc_curve.ipynb) 📉 |
-| **殘差圖 (Residual Plot)** | 檢查迴歸預測殘差是否呈隨機分佈，驗證線性模型假設。 | *（待擴充，常用於迴歸診斷）* |
-| **學習曲線 (Learning Curve)** | 繪製訓練與驗證分數隨樣本數的變化，診斷 Overfitting / Underfitting。 | *（待擴充，常用於模型調優）* |
+| **殘差圖 (Residual Plot)** | 檢查迴歸預測殘差是否呈隨機分佈，驗證線性模型假設。 | [殘差圖實作](./residual_plot_殘差圖.ipynb) 📉 |
+| **學習曲線 (Learning Curve)** | 繪製訓練與驗證分數隨樣本數的變化，診斷 Overfitting / Underfitting。 | [學習曲線實作](./learning_curve_學習曲線.ipynb) 📈 |
 
 > [!IMPORTANT]
 > **如何選擇評估圖表**：
