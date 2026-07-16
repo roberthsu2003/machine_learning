@@ -40,6 +40,7 @@ graph TD
 | **類別變數編碼** | 🔗 [2label_encoding.jam](./說明jam/2label_encoding.jam)<br>🔗 [3one_hot_encoding.jam](./說明jam/3one_hot_encoding.jam) | [multiple_linear_regression1.ipynb](./multiple_linear_regression1.ipynb)<br>[multiple_linear_regression2.ipynb](./multiple_linear_regression2.ipynb) |
 | **梯度下降與公式運算** | 🔗 [4granient_descent.jam](./說明jam/4granient_descent.jam) | [multiple_linear_regression1.ipynb (手動梯度下降實作)](./multiple_linear_regression1.ipynb) |
 | **特徵縮放與套件實作** | 🔗 [5Feature_scaling.jam](./說明jam/5Feature_scaling.jam) | [multiple_linear_regression2.ipynb (Scikit-Learn 實作)](./multiple_linear_regression2.ipynb) |
+| **醫療保險費用預測實戰** | - | 🔗 [multiple_linear_regression_insurance.ipynb (真實數據集實戰)](./multiple_linear_regression_insurance.ipynb) |
 | **福利社營業額預測專案** | - | [學校福利社營業額預測目錄](./學校福利社營業額預測/) |
 
 ---
@@ -113,6 +114,14 @@ graph TD
 🔗 **[Scikit-Learn 套件建模實作範例](./multiple_linear_regression2.ipynb)**
 - `model.fit(x_train, y_train)` 模型訓練
 - `model.coef_` 與 `model.intercept_` 參數提取
+
+### 🌟 實戰案例：醫療保險費用預測 (真實數據集)
+這是一個使用真實保險數據集 `insurance.csv` 的完整實戰案例，涵蓋數值特徵（年齡、BMI）與類別特徵（性別、是否吸菸、居住地區）的處理。
+
+🔗 **[實作範例：醫療保險費用預測](./multiple_linear_regression_insurance.ipynb)**
+- 處理數值與類別特徵並存的真實世界問題。
+- 利用 `pd.get_dummies` 進行 One-Hot 編碼，防範虛擬變數陷阱。
+- 提取模型係數，解讀各特徵（如吸菸）對保險費用的物理/實務含意。
 
 ---
 
