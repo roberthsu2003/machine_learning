@@ -16,7 +16,7 @@
 2. [技術架構：Gradio 結合 FastAPI 的巧妙之處](#二-技術架構gradio-結合-fastapi-的巧妙之處)
 3. [專案架構與程式碼說明](#三-專案架構與程式碼說明)
 4. [本地測試步驟](#四-本地測試步驟)
-5. [部署至 Hugging Face Spaces 步驟](#五-部署至-hugging-face-spaces-步驟)
+5. [部署至 Render 步驟](#五-部署至-render-步驟)
 
 ---
 
@@ -76,156 +76,93 @@ Gradio 提供了 `gr.mount_gradio_app()` 函數，這能讓我們做兩件事：
 *   **自動化雙保險設計**：
     在 `app.py` 的最上方，程式會檢查當前目錄下是否存在 `iris_model.joblib`。如果沒有偵測到（例如學生部署到雲端時忘記上傳模型檔），程式會**自動呼叫 `train_save.py` 來進行線上訓練並生成模型**。這保證了服務永遠不會因為缺少模型檔而啟動失敗！
 *   **FastAPI API 區塊**：
-    我們定義了 Pydantic Schema（`IrisInput` 與 `IrisOutput`），限制輸入的特徵數值必須在 `0.1` 與 `10.0` 之間。如果輸入不合法，API 會自動攔截並報錯，防止模型崩潰。
-*   **Gradio UI 區塊**：
-    我們利用 `gr.Slider` 拉出 4 個漂亮的滑桿，並用 Markdown 格式顯示預測結果與機率百分比。
-*   **融合掛載**：
-    `app = gr.mount_gradio_app(app, demo, path="/")` 將兩者結合，當訪問 `/` 時顯示 Gradio 介面，訪問 `/predict` 時則是 FastAPI 預測端點。
+    我們定義了 Pydantic Schema（`IrisInput` 與 `IrisOutput`），限制輸入的特徵數值必須在 `0.1` 與 `10.0` 之間�## 五、 部署至 Render 步驟
 
-[↩️ 返回目錄](#目錄)
+### 1. 前置作業
+Render 主要是透過與您的 **GitHub** 連動來進行自動部署。因此在開始部署前，請先將專案程式碼上傳至您的 GitHub 儲存庫：
+```bash
+git add .
+git commit -m "Configure service for Render deployment"
+git push origin main
+```
+
+> [!NOTE]
+> **本專案的自動化設計：**
+> 1. 我們在專案根目錄下附帶了 `render.yaml` 配置文件，支援 Render Blueprint 一鍵部署。
+> 2. 雲端建置時，Render 會自動透過 `requirements.txt` 安裝相依套件，並執行 `train_save.py` 初始化訓練模型，確保服務啟動前即具備可用的模型檔案。
 
 ---
 
-## 四、 本地測試步驟
+### 2. 建立與部署 Web Service
 
-### 1. 安裝套件
-請依據您使用的工具，在專案目錄下安裝所需套件：
+您可以使用以下兩種方式在 Render 上部署本專案：
 
-**使用 `uv`（推薦，速度極快）：**
-```bash
-# 建立並啟用虛擬環境
-uv venv
-source .venv/bin/activate  # Windows 請用 .venv\Scripts\activate
+#### 方法 A：使用 Blueprint 宣告式部署（推薦 🚀）
+這是一種最為方便的「基礎架構即程式碼 (IaC)」部署方式，能自動載入專案的 `render.yaml` 進行設定：
+1. 登入 [Render Dashboard](https://dashboard.render.com/)。
+2. 點擊右上角 **`New +`** ➡️ 選擇 **`Blueprint`**。
+3. 連接包含本專案的 GitHub 儲存庫。
+4. 填寫 Service Group 名稱，Render 會自動解析根目錄的 `render.yaml` 並帶出配置項目。
+5. 點擊 **`Approve`**，Render 就會自動建立 Web Service 並開始拉取程式碼建置。
 
-# 安裝套件
-uv pip install -r requirements.txt
-```
+#### 方法 B：手動在 Render 控制台建立服務
+如果您想手動微調配置，也可以透過控制台按鈕逐步設定：
+1. 在 Render Dashboard 點擊右上角 **`New +`** ➡️ 選擇 **`Web Service`**。
+2. 選擇 **`Build and deploy from a Git repository`**，並連接您的 GitHub 儲存庫。
+3. 填寫以下設定：
+   * **Name**：`iris-predict-service` (可自訂)
+   * **Region**：選擇距離您較近的區域 (例如 `Singapore`)
+   * **Branch**：`main` (或您程式碼所在的分支)
+   * **Language**：`Python`
+   * **Build Command**：`pip install -r requirements.txt && python train_save.py`
+   * **Start Command**：`uvicorn app:app --host 0.0.0.0 --port $PORT`
+   * **Instance Type**：選擇 **`Free`** (免費層)
+4. 點擊 **`Create Web Service`** 即可開始部署。
 
-**使用傳統 `pip`：**
-```bash
-# 建立並啟用虛擬環境 (以 macOS/Linux 為例)
-python3 -m venv .venv
-source .venv/bin/activate
-
-# 安裝套件
-pip install -r requirements.txt
-```
-
-### 2. 執行主程式
-在本地，您不需要手動跑 `train_save.py`，因為 `app.py` 會自動偵測並進行初始化訓練。請直接在終端機輸入：
-
-**使用 `uv`：**
-```bash
-uv run app.py
-```
-
-**使用傳統 `python`（需先啟用虛擬環境）：**
-```bash
-python app.py
-```
-看見 `INFO: Uvicorn running on http://127.0.0.1:8000` 後，代表服務已啟動。
-
-### 3. 本地測試方式
-*   **測試網頁 UI**：打開瀏覽器，造訪 `http://127.0.0.1:8000/`，您會看到一個整合了**雙分頁 (Tabs)** 的精美介面：
-    1. **🔮 即時模型預測**：調整 4 個特徵滑桿，即可即時獲得預測的鳶尾花品種與對應機率。
-    2. **⚙️ 線上模型訓練與評估**：調整隨機森林超參數（決策樹數量、最大深度、測試集比例、隨機種子），點擊「開始訓練模型」即可線上重訓，並動態展示最新的特徵重要性條狀圖。
-*   **測試 FastAPI API (即時預測)**：
-    開啟終端機，執行以下 `curl` 指令：
-    ```bash
-    curl -X POST http://127.0.0.1:8000/predict \
-      -H "Content-Type: application/json" \
-      -d '{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}'
-    ```
-    您將會收到結構化的 JSON 預測回傳：
-    ```json
-    {
-      "prediction_id": 0,
-      "prediction_label": "setosa",
-      "probabilities": {
-        "setosa": 1.0,
-        "versicolor": 0.0,
-        "virginica": 0.0
-      }
-    }
-    ```
-
-*   **測試 FastAPI API (線上重新訓練)**：
-    若要線上重新訓練模型，可發送 POST 請求至 `/train` 端點，帶入超參數進行訓練：
-    ```bash
-    curl -X POST http://127.0.0.1:8000/train \
-      -H "Content-Type: application/json" \
-      -d '{"n_estimators": 50, "max_depth": 3, "test_size": 0.3, "random_state": 100}'
-    ```
-    您將會收到重新訓練後的評估結果與特徵重要性：
-    ```json
-    {
-      "status": "success",
-      "accuracy": 0.9556,
-      "train_time": 0.0190,
-      "feature_importances": {
-        "sepal length": 0.0828,
-        "sepal width": 0.0162,
-        "petal length": 0.3973,
-        "petal width": 0.5037
-      },
-      "message": "模型訓練完成並儲存成功！"
-    }
-    ```
-    重訓完成後，FastAPI 後端會自動重新載入新模型，使得 `/predict` 端點與網頁 UI 均會即時套用最新的模型進行推理。
-
-[↩️ 返回目錄](#目錄)
+> [!WARNING]
+> **免費層實例休眠限制：**
+> Render 的免費層服務在 **15 分鐘無流量** 後會自動進入休眠狀態。當下一個新請求進來時，服務會被重新喚醒，這時可能需要 **50 秒左右** 的冷啟動時間，請耐心等候。
 
 ---
 
-## 五、 部署至 Hugging Face Spaces 步驟
+### 3. 使用 `deploy.sh` 觸發手動部署
+當您在 Render 上關閉了 `Auto Deploy`（自動部署），或是想要在本地推送代碼至 GitHub 後即時手動更新時，可以使用專案附帶的 [deploy.sh](file:///Users/roberthsu2003/Documents/GitHub/machine_learning/模型部署/deploy.sh) 腳本。
 
-### 1. 設定 Hugging Face 存取憑證 (Access Token)
-Hugging Face 強制要求使用 **Access Token (Write)** 作為 Git 推送的密碼。
-1.  登入 Hugging Face 後，點擊右上角頭像 -> **`Settings`** -> **`Access Tokens`**。
-2.  點擊 **`Create new token`**。
-3.  填寫 Token 名稱（例如 `my-git-deploy`），**Token type 必須選擇 `Write`**（若選擇 Read 會無法推送程式碼）。
-4.  點擊 Create 並**複製生成的 Token** 備用。
-
-### 2. 建立 Gradio Space
-1.  在 Hugging Face 右上角個人選單中點擊 **`New Space`**。
-2.  填寫 Space 設定：
-    *   **Space name**：例如 `iris-predict-service` (自訂名稱)
-    *   **Select the Space SDK**：選擇 **`Gradio`** (注意：**千萬不要**選 Docker！)
-    *   **Space hardware**：免費帳戶請選擇 **`ZeroGPU`** (免費)。
-        *   *註：目前 Hugging Face 新制規定，免費帳戶建立 Gradio Space 時僅能使用 `ZeroGPU`，傳統的 `CPU basic` 需訂閱 PRO 才能解鎖。本專案已在 `app.py` 中加入了 `@spaces.GPU` 相容性設計，可完美在 `ZeroGPU` 正常運作！*
-    *   **Visibility**：**`Public`** (公開)
-3.  點擊 **`Create Space`**。
-
-### 3. 使用 Git 推送專案檔案至 Spaces
-根據您的專案結構與管理習慣，我們提供以下兩種推送檔案至 Hugging Face Space 的方式：
-
-#### 方法 A：克隆設定檔至本地子資料夾，再使用 `git subtree` 臨時分支強制推送（推薦 🚀）
-如果您的課程專案結構是一個大 Git 倉庫（例如 `machine_learning/`），而此模型部署專案位於其中的子資料夾（如 `模型部署/`），您可以使用以下步驟將 Hugging Face 自動產生的設定檔拉回本地，再利用臨時分支將該子資料夾作為根目錄直接推送到 Space：
-
-1. **將 Hugging Face Space 克隆至主專案「外部」的暫存資料夾**：
+1. 在您的 Render Web Service 控制台 ➡️ 進入 **`Settings`** 分頁。
+2. 找到 **`Deploy Hook`** 欄位並複製其 URL。
+3. 在本地專案終端機執行：
    ```bash
-   # 請克隆至與您主專案資料夾平級的外層目錄（例如 Documents/GitHub/ 下）
-   git clone https://huggingface.co/spaces/你的用戶名/你的Space名稱
+   ./deploy.sh
    ```
+4. 依提示貼上該 Deploy Hook URL，腳本會自動發送 POST 請求通知 Render 拉取最新程式碼重建服務。
 
-2. **將設定檔複製回您主專案的子資料夾**：
-   將克隆下來的 Space 資料夾底下的 `README.md`（包含最頂部的 `---` 區塊）和 `.gitattributes` 複製並覆蓋到您主專案的子資料夾（如 `模型部署/`）下。
+---
 
-3. **刪除該外部暫存資料夾**：
-   複製完成後，將剛才在外面 clone 的暫存 Space 資料夾整個刪除。
+### 4. 線上測試與 API 訪問說明
 
-4. **提交變更至您的本地主專案**：
-   在主專案根目錄下，提交剛剛複製過來的設定檔變更：
-   ```bash
-   git add 模型部署/
-   git commit -m "Add Hugging Face config files to subfolder"
-   ```
+當 Render 顯示部署狀態為綠色的 `Live` 後，您可以取得專案的專屬網址（例如：`https://iris-predict-service.onrender.com`）。
 
-5. **使用臨時分支進行強制推送**：
-   由於子資料夾內已經有正確的設定檔，您可以安全地強制覆蓋遠端而不用擔心設定遺失。請在主專案根目錄下執行以下指令（請替換 `你的用戶名` 與 `你的Space名稱`）：
-   ```bash
-   # (1) 將子資料夾（以「模型部署」為例）分割成一個本地臨時分支 temp-deploy
-   git subtree split --prefix=模型部署 -b temp-deploy
+1. **訪問網頁 UI (Gradio)**：
+   直接在瀏覽器打開您的服務網址：`https://<您的服務名稱>.onrender.com/`。即可體驗與本地相同的預測與線上重訓功能。
+
+2. **訪問互動式 API 文件 (Swagger UI)**：
+   造訪 `https://<您的服務名稱>.onrender.com/docs`。即可在此查看並直接測試所有開放的 FastAPI 端點。
+
+3. **使用 curl 進行 API 測試**：
+   * **🔮 即時預測端點：`POST /predict`**
+     ```bash
+     curl -X POST https://<您的服務名稱>.onrender.com/predict \
+       -H "Content-Type: application/json" \
+       -d '{"sepal_length": 5.1, "sepal_width": 3.5, "petal_length": 1.4, "petal_width": 0.2}'
+     ```
+   * **⚙️ 線上重訓端點：`POST /train`**
+     ```bash
+     curl -X POST https://<您的服務名稱>.onrender.com/train \
+       -H "Content-Type: application/json" \
+       -d '{"n_estimators": 50, "max_depth": 3, "test_size": 0.3, "random_state": 100}'
+     ```
+
+[↩️ 返回目錄](#目錄)�� -b temp-deploy
 
    # (2) 將此臨時分支強制推送至 Hugging Face 的 main 分支
    git push https://huggingface.co/spaces/你的用戶名/你的Space名稱 temp-deploy:main --force

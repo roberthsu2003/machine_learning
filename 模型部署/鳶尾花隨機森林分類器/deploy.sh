@@ -1,44 +1,77 @@
 #!/bin/bash
-# deploy.sh - 乾淨地推送程式碼至 Hugging Face Space，避開二進位歷史紀錄與衝突問題
+# deploy.sh - 鳶尾花隨機森林分類器 Render 部署輔助工具
 
 # 取得腳本所在的目錄
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+WEBHOOK_FILE="$SCRIPT_DIR/.render_webhook"
 
-echo "=== Hugging Face 乾淨部署工具 ==="
-read -p "請輸入您的 Hugging Face 用戶名 (例如: roberthsu2003): " HF_USERNAME
-read -p "請輸入您的 Space 名稱 (例如: iris-predict-service): " HF_SPACE_NAME
-read -sp "請貼上您的 Access Token (Write權限): " HF_TOKEN
+echo "============================================="
+echo "        Render 部署輔助與自動化觸發工具        "
+echo "============================================="
+echo ""
+echo "本專案支援兩種 Render 部署方式："
+echo "1. GitHub 自動部署（推薦）："
+echo "   將程式碼推送到 GitHub 後，Render 會自動偵測並重新建置部署。"
+echo "2. Deploy Webhook 手動觸發："
+echo "   當您關閉了 Render 的 Auto Deploy，或是想要手動即時觸發更新時，"
+echo "   可以使用此腳本發送 Deploy Hook 請求。"
+echo ""
+echo "---------------------------------------------"
+echo "步驟 1：請確保您的最新程式碼已提交並推送到 GitHub"
+echo "        git add ."
+echo "        git commit -m 'Update configuration for Render'"
+echo "        git push"
+echo "---------------------------------------------"
 echo ""
 
-# 建立乾淨的臨時資料夾
-DEPLOY_DIR="/tmp/hf_deploy_temp"
-rm -rf "$DEPLOY_DIR"
-mkdir -p "$DEPLOY_DIR"
-
-# 複製必要的純文字檔案，排除二進位檔案
-cp "$SCRIPT_DIR/app.py" "$DEPLOY_DIR/"
-cp "$SCRIPT_DIR/train_save.py" "$DEPLOY_DIR/"
-cp "$SCRIPT_DIR/requirements.txt" "$DEPLOY_DIR/"
-cp "$SCRIPT_DIR/README.md" "$DEPLOY_DIR/"
-if [ -f "$SCRIPT_DIR/.gitattributes" ]; then
-    cp "$SCRIPT_DIR/.gitattributes" "$DEPLOY_DIR/"
-fi
-if [ -f "$SCRIPT_DIR/.gitignore" ]; then
-    cp "$SCRIPT_DIR/.gitignore" "$DEPLOY_DIR/"
+# 檢查是否有儲存過的 Webhook URL
+SAVED_URL=""
+if [ -f "$WEBHOOK_FILE" ]; then
+    SAVED_URL=$(cat "$WEBHOOK_FILE")
 fi
 
-# 初始化新倉庫並進行第一次提交
-cd "$DEPLOY_DIR"
-git init -b main
-git config user.name "deploy"
-git config user.email "deploy@example.com"
-git add .
-git commit -m "Deploy Gradio FastAPI service (clean history)"
+HOOK_URL=""
+if [ -n "$SAVED_URL" ]; then
+    echo "偵測到先前儲存的 Render Deploy Hook URL："
+    echo "  $SAVED_URL"
+    read -p "是否使用此 URL 觸發部署？ [Y/n]: " USE_SAVED
+    USE_SAVED=${USE_SAVED:-Y}
+    if [[ "$USE_SAVED" =~ ^[Yy]$ ]]; then
+        HOOK_URL="$SAVED_URL"
+    fi
+fi
 
-# 使用 Token 自動認證並強制推送
-echo "正在推送至 Hugging Face Space..."
-git push "https://$HF_USERNAME:$HF_TOKEN@huggingface.co/spaces/$HF_USERNAME/$HF_SPACE_NAME" main:main --force
+if [ -z "$HOOK_URL" ]; then
+    echo "請輸入您的 Render Deploy Hook URL"
+    echo "(可在 Render 網頁後台 -> 您的 Web Service -> 設定頁面中找到 Deploy Hook 欄位)："
+    read -p "URL: " HOOK_URL
+    echo ""
+fi
 
-echo "=== 部署完成！正在清理暫存檔案 ==="
-rm -rf "$DEPLOY_DIR"
-echo "部署成功！您可以前往 Hugging Face Space 網頁查看狀態。"
+if [ -n "$HOOK_URL" ]; then
+    # 儲存 Webhook URL 以備下次使用
+    echo "$HOOK_URL" > "$WEBHOOK_FILE"
+    
+    echo "正在發送部署觸發請求至 Render..."
+    RESPONSE=$(curl -s -w "\nHTTP_STATUS:%{http_code}" -X POST "$HOOK_URL")
+    
+    # 取得 HTTP 狀態碼
+    HTTP_STATUS=$(echo "$RESPONSE" | tr -d '\r' | grep "HTTP_STATUS" | cut -d':' -f2)
+    # 取得回應內容
+    BODY=$(echo "$RESPONSE" | grep -v "HTTP_STATUS")
+    
+    if [ "$HTTP_STATUS" -eq 200 ] || [ "$HTTP_STATUS" -eq 201 ] || [ "$HTTP_STATUS" -eq 204 ]; then
+        echo "✅ 部署請求已成功發送！Render 正在開始拉取最新代碼並進行建置。"
+        echo "您可以前往 Render Dashboard 查看即時建置日誌。"
+    else
+        echo "❌ 部署觸發失敗！"
+        echo "HTTP 狀態碼: $HTTP_STATUS"
+        echo "回應內容: $BODY"
+    fi
+else
+    echo "未提供 Deploy Hook URL，已跳過自動觸發。"
+    echo "請手動至 Render 控制台或等待 GitHub 自動部署。"
+fi
+
+echo ""
+echo "============================================="

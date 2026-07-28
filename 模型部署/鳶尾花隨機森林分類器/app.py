@@ -14,35 +14,6 @@ import gradio as gr
 from pydantic import BaseModel, Field
 
 # ==========================================
-# ZeroGPU 啟動相容性設定 (針對 Hugging Face 免費版限制)
-# ==========================================
-# 背景說明：
-# Hugging Face 免費版 Gradio 空間強制要求使用 ZeroGPU 硬體，且啟動時會靜態掃描程式碼。
-# 若偵測不到最頂層的 `import spaces` 與 `@spaces.GPU` 裝飾器，會報錯 `No @spaces.GPU function detected` 並強行中斷。
-# 為了解決「本地執行無 spaces 套件會報錯」與「雲端強檢」的矛盾，採用動態 mock 模組注入機制。
-
-# 1. 本地與雲端相容性檢查：若本地未安裝 spaces 套件，則手動向 sys.modules 註冊 Mock 模組
-try:
-    import spaces
-except ImportError:
-    import types
-    # 建立一個假的 spaces 模組實例
-    fake_spaces = types.ModuleType("spaces")
-    # 定義一個無作用的 GPU 裝飾器（不改變原函數功能，直接回傳原函數）
-    fake_spaces.GPU = lambda func: func
-    # 將假的 spaces 模組註冊進 Python 載入模組清單中，防止後續 `import spaces` 拋出錯誤
-    sys.modules["spaces"] = fake_spaces
-
-# 2. 頂級導入 (Top-level Import)：必須置於最外層以通過 Hugging Face 的 AST 靜態語法掃描
-import spaces
-
-# 3. 虛擬 GPU 函數：專門用來滿足 Hugging Face 檢查器對 GPU 函數的掃描需求
-@spaces.GPU
-def dummy_gpu_function():
-    """此函數僅用於滿足 Hugging Face ZeroGPU 啟動時的檢測，不具備實際運算邏輯"""
-    return "GPU initialized"
-
-# ==========================================
 # 1. 載入模型與狀態管理
 # ==========================================
 model_path = os.path.join(current_dir, "iris_model.joblib")
@@ -473,22 +444,13 @@ gr.routes.App.create_app = patched_create_app
 app = gr.routes.App.create_app(demo)
 
 if __name__ == "__main__":
-    # 偵測是否運行於 Hugging Face Spaces 環境
-    is_hf = os.environ.get("SYSTEM") == "spaces"
+    import uvicorn
+    # 讀取雲端平台（如 Render）提供的 PORT，預設為 8000
+    port = int(os.environ.get("PORT", 8000))
+    # 偵測是否在雲端環境運行（Render 會設定 RENDER=true 或自動帶入 PORT 環境變數）
+    is_cloud = "RENDER" in os.environ or "PORT" in os.environ
+    host = "0.0.0.0" if is_cloud else "127.0.0.1"
+    reload_active = not is_cloud
     
-    if is_hf:
-        print("偵測到為 Hugging Face Spaces 雲端環境，使用 Gradio 官方 launch() 啟動以相容 ZeroGPU 端口轉發與生命週期...")
-        # ⚠️ 必須將 ssr_mode 設為 False！
-        # 在 Gradio 5/6 中，預設啟用的 SSR 模式會另外啟動一個 Node.js 代理伺服器來攔截請求，
-        # 這會導致我們自訂的 FastAPI /docs、/predict、/train 等 API 端點被 Node.js 阻擋或劫持。
-        # 關閉 ssr_mode 後，伺服器會由 Python 直接處理 7860 端口的所有流量，使 Swagger UI 與 API 順利開通。
-        demo.launch(
-            server_name="0.0.0.0",
-            server_port=7860,
-            prevent_thread_lock=False,
-            ssr_mode=False
-        )
-    else:
-        import uvicorn
-        print("偵測到為本地開發環境，使用 uvicorn 啟動以支援熱重載 (Reload)...")
-        uvicorn.run("app:app", host="127.0.0.1", port=8000, reload=True)
+    print(f"偵測到為 {'雲端' if is_cloud else '本地'} 運行環境，使用 uvicorn 啟動於 {host}:{port} (熱重載: {reload_active})...")
+    uvicorn.run("app:app", host=host, port=port, reload=reload_active)
