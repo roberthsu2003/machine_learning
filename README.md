@@ -92,11 +92,10 @@ cd machine_learning
 ### 4. 🚀 專案實作與服務部署
 理論與落地結合！學習如何將機器學習模型包裝為 Web 服務並對外提供服務。
 
-*   **[Iris 鳶尾花前後端整合專案](./專案實作/1_iris_project)**：實作一個包含前端 HTML 介面與後端預測邏輯的完整機器學習網頁應用。
-*   **[模型儲存、FastAPI 預測端點與 Gradio 部署](./模型部署)**：
+*   [**FastAPI + Gradio 混合服務部署-鳶尾花隨機森林分類器**](./模型部署/鳶尾花隨機森林分類器/README.md)：
     *   學習使用 `joblib` 將訓練好的 Scikit-Learn 模型進行序列化與儲存。
     *   利用 **FastAPI** 建立高性能預測端點（包含 Pydantic 資料校驗）。
-    *   使用 **Gradio** 快速拉出網頁 UI，並將兩者混合掛載，不需要 Dockerfile 即可使用 Git 一鍵部署至 **Hugging Face Spaces** 免費雲端。
+    *   使用 **Gradio** 快速拉出網頁 UI，並將兩者混合掛載
 
 ---
 
