@@ -4,20 +4,25 @@ import joblib
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
-from sklearn.preprocessing import LabelEncoder, OneHotEncoder, StandardScaler
+from sklearn.linear_model import LinearRegression, Lasso, Ridge
+from sklearn.preprocessing import OrdinalEncoder, OneHotEncoder, StandardScaler
 
 
 def train_and_save_model(
     test_size: float = 0.2,
-    random_state: int = 76
+    random_state: int = 76,
+    model_type: str = "LinearRegression",
+    alpha: float = 1.0
 ) -> dict:
     """
-    訓練多元線性迴歸模型以預測薪資，並將模型與預處理器序列化儲存。
+    訓練線性迴歸模型 (支援多元線性迴歸、Lasso 迴歸與 Ridge 嶺迴歸) 以預測薪資，
+    並將模型與預處理器序列化儲存。
     
     參數:
         test_size: 測試集比例 (0.1 ~ 0.5)
         random_state: 隨機種子 (預設 76，與教學 Notebook 一致)
+        model_type: 模型類型 ("LinearRegression", "Lasso", "Ridge")
+        alpha: 正則化強度 (適用於 Lasso 與 Ridge)
         
     回傳:
         包含訓練指標、權重與花費時間的字典。
@@ -33,13 +38,11 @@ def train_and_save_model(
     
     start_time = time.time()
     
-    # 1. 建立並擬合 LabelEncoder (學歷：大學=0, 碩士以上=1, 高中以下=2)
-    # 我們顯式指定類別，確保不論訓練集如何切分，編碼對照永遠一致：
-    # le.classes_ 順序會是 ['大學', '碩士以上', '高中以下']
-    # 這是因為 fit 會對傳入清單做不重覆排序，中文字排序為：大學 (idx 0), 碩士以上 (idx 1), 高中以下 (idx 2)
-    le = LabelEncoder()
-    le.fit(["大學", "碩士以上", "高中以下"])
-    data['EducationLevel'] = le.transform(data['EducationLevel'])
+    # 1. 建立並擬合 OrdinalEncoder (學歷：高中以下=0, 大學=1, 碩士以上=2)
+    # 顯式指定類別位階順序，確保高學歷對應較高數值：
+    # oe.categories_ 會是 [['高中以下', '大學', '碩士以上']] (索引 0: 高中以下, 1: 大學, 2: 碩士以上)
+    oe = OrdinalEncoder(categories=[["高中以下", "大學", "碩士以上"]])
+    data['EducationLevel'] = oe.fit_transform(data[['EducationLevel']])
     
     # 2. 建立並擬合 OneHotEncoder (城市：城市A, 城市B, 城市C)
     ohe = OneHotEncoder(handle_unknown='ignore', sparse_output=False)
@@ -68,10 +71,21 @@ def train_and_save_model(
     X_train_scaled = scaler.fit_transform(X_train)
     X_test_scaled = scaler.transform(X_test)
     
-    print(f"開始訓練多元線性迴歸模型 (測試集比例: {test_size}, 隨機種子: {random_state})...")
-    
-    # 5. 建立並訓練線性迴歸模型
-    model = LinearRegression()
+    model_type_clean = model_type.strip()
+    if model_type_clean.lower() == "lasso":
+        model = Lasso(alpha=alpha, random_state=random_state)
+        actual_model_name = f"Lasso 迴歸 (α={alpha})"
+        model_type_clean = "Lasso"
+    elif model_type_clean.lower() == "ridge":
+        model = Ridge(alpha=alpha, random_state=random_state)
+        actual_model_name = f"Ridge 嶺迴歸 (α={alpha})"
+        model_type_clean = "Ridge"
+    else:
+        model = LinearRegression()
+        actual_model_name = "多元線性迴歸 (OLS)"
+        model_type_clean = "LinearRegression"
+        
+    print(f"開始訓練 {actual_model_name} (測試集比例: {test_size}, 隨機種子: {random_state})...")
     model.fit(X_train_scaled, y_train)
     
     train_time = time.time() - start_time
@@ -91,7 +105,7 @@ def train_and_save_model(
     # 6. 儲存模型以及所有相關預處理器與元數據 (Metadata)
     model_data = {
         "model": model,
-        "le": le,
+        "oe": oe,
         "ohe": ohe,
         "scaler": scaler,
         "r2": float(r2),
@@ -99,6 +113,8 @@ def train_and_save_model(
         "intercept": float(intercept),
         "feature_names": feature_names,
         "feature_coefs": feature_coefs,
+        "model_type": model_type_clean,
+        "alpha": float(alpha),
         "train_time": float(train_time),
         "test_size": test_size,
         "random_state": random_state
@@ -115,8 +131,10 @@ def train_and_save_model(
         "coef": [float(c) for c in coefs],
         "intercept": float(intercept),
         "feature_coefs": feature_coefs,
+        "model_type": model_type_clean,
+        "alpha": float(alpha),
         "train_time": float(train_time),
-        "message": "模型訓練完成並儲存成功！"
+        "message": f"{actual_model_name} 模型訓練完成並儲存成功！"
     }
 
 

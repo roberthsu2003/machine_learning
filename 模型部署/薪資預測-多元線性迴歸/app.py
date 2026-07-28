@@ -36,14 +36,17 @@ def load_model_state():
     MODEL_STATE.clear()
     MODEL_STATE.update({
         "model": model_data["model"],
-        "le": model_data["le"],
+        "oe": model_data.get("oe"),
+        "le": model_data.get("le"),
         "ohe": model_data["ohe"],
         "scaler": model_data["scaler"],
-        "r2": model_data.get("r2", 0.2210),
+        "r2": model_data.get("r2", 0.8463),
         "coef": model_data.get("coef", []),
         "intercept": model_data.get("intercept", 51.2286),
         "feature_names": model_data.get("feature_names", ['YearsExperience', 'EducationLevel', 'City_城市A', 'City_城市B', 'City_城市C']),
         "feature_coefs": model_data.get("feature_coefs", {}),
+        "model_type": model_data.get("model_type", "LinearRegression"),
+        "alpha": model_data.get("alpha", 1.0),
         "train_time": model_data.get("train_time", 0.01),
         "test_size": model_data.get("test_size", 0.2),
         "random_state": model_data.get("random_state", 76),
@@ -80,19 +83,23 @@ class SalaryInput(BaseModel):
     }
 
 class SalaryOutput(BaseModel):
-    predicted_salary: float = Field(..., description="預測月薪 (萬元)")
-    estimated_annual_salary: float = Field(..., description="估計年薪 (萬元，以 14 個月估算)")
+    predicted_salary: float = Field(..., description="預測月薪 (k / 千元)")
+    estimated_annual_salary: float = Field(..., description="估計年薪 (k / 千元，以 14 個月估算)")
 
 # --- Pydantic 訓練模型 ---
 class TrainConfig(BaseModel):
     test_size: float = Field(0.2, description="測試集分割比例", ge=0.1, le=0.5)
     random_state: int = Field(76, description="隨機種子", ge=0)
+    model_type: str = Field("LinearRegression", description="模型演算法類型 (LinearRegression, Lasso, Ridge)")
+    alpha: float = Field(1.0, description="正則化強度 alpha (適用於 Lasso 與 Ridge)", ge=0.001, le=100.0)
 
     model_config = {
         "json_schema_extra": {
             "example": {
                 "test_size": 0.2,
-                "random_state": 76
+                "random_state": 76,
+                "model_type": "LinearRegression",
+                "alpha": 1.0
             }
         }
     }
@@ -103,6 +110,8 @@ class TrainResult(BaseModel):
     coef: list[float] = Field(..., description="特徵權重係數列表")
     intercept: float = Field(..., description="截距")
     feature_coefs: dict[str, float] = Field(..., description="特徵及其權重映射")
+    model_type: str = Field(..., description="模型演算法類型")
+    alpha: float = Field(..., description="正則化強度 alpha")
     train_time: float = Field(..., description="訓練耗時 (秒)")
     message: str = Field(..., description="提示訊息")
 
@@ -120,14 +129,26 @@ def predict_api(payload: SalaryInput):
         scaler = MODEL_STATE["scaler"]
         model = MODEL_STATE["model"]
 
-        # 1. 學歷編碼
-        try:
-            edu_encoded = int(le.transform([payload.education_level])[0])
-        except ValueError:
-            raise HTTPException(
-                status_code=400, 
-                detail=f"未知的學歷: {payload.education_level}。可接受的值為: {list(le.classes_)}"
-            )
+        # 1. 學歷編碼 (使用 OrdinalEncoder 順序編碼)
+        oe = MODEL_STATE.get("oe")
+        if oe is not None:
+            try:
+                edu_encoded = int(oe.transform(pd.DataFrame([[payload.education_level]], columns=["EducationLevel"]))[0][0])
+            except ValueError:
+                valid_cats = list(oe.categories_[0])
+                raise HTTPException(
+                    status_code=400, 
+                    detail=f"未知的學歷: {payload.education_level}。可接受的值為: {valid_cats}"
+                )
+        else:
+            le = MODEL_STATE["le"]
+            try:
+                edu_encoded = int(le.transform([payload.education_level])[0])
+            except ValueError:
+                raise HTTPException(
+                    status_code=400, 
+                    detail=f"未知的學歷: {payload.education_level}。可接受的值為: {list(le.classes_)}"
+                )
 
         # 2. 城市獨熱編碼
         try:
@@ -139,10 +160,11 @@ def predict_api(payload: SalaryInput):
             )
 
         # 3. 拼接特徵 (順序必須為：YearsExperience, EducationLevel, City_城市A, City_城市B, City_城市C)
-        features = np.array([[payload.years_experience, edu_encoded] + list(city_encoded)])
+        feature_names = MODEL_STATE["feature_names"]
+        features_df = pd.DataFrame([[payload.years_experience, edu_encoded] + list(city_encoded)], columns=feature_names)
 
         # 4. 標準化
-        features_scaled = scaler.transform(features)
+        features_scaled = scaler.transform(features_df)
 
         # 5. 進行預測
         pred_val = float(model.predict(features_scaled)[0])
@@ -160,14 +182,16 @@ def predict_api(payload: SalaryInput):
 @api_app.post("/train", response_model=TrainResult)
 def train_api(config: TrainConfig):
     """
-    訓練端點：傳入測試集比例與隨機種子，線上重新訓練線性迴歸模型，並即時更新服務所使用的模型。
+    訓練端點：傳入測試集比例、隨機種子、模型類型與 alpha，線上重新訓練模型，並即時更新服務所使用的模型。
     """
     try:
         from train_save import train_and_save_model
         
         res = train_and_save_model(
             test_size=config.test_size,
-            random_state=config.random_state
+            random_state=config.random_state,
+            model_type=config.model_type,
+            alpha=config.alpha
         )
         
         # 線上重新載入最新模型狀態
@@ -188,12 +212,13 @@ def make_prediction_card(salary: float) -> str:
     return f"""
     <div style="background: linear-gradient(135deg, #0f9b0f, #38ef7d); color: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 8px 20px rgba(0,0,0,0.08); margin-bottom: 20px; transition: all 0.3s ease;">
         <span style="font-size: 0.95rem; font-weight: bold; text-transform: uppercase; letter-spacing: 1.5px; opacity: 0.95;">預測月薪薪資</span>
-        <h2 style="font-size: 2.8rem; margin: 10px 0; font-weight: 800; text-shadow: 1px 1px 3px rgba(0,0,0,0.15);">{salary:.2f} <span style="font-size: 1.5rem; font-weight: 400;">萬元</span></h2>
-        <span style="font-size: 1.05rem; font-weight: 500; opacity: 0.9;">估計年薪 (14個月): <strong style="font-size: 1.3rem;">{annual:.1f}</strong> 萬元</span>
+        <h2 style="font-size: 2.8rem; margin: 10px 0; font-weight: 800; text-shadow: 1px 1px 3px rgba(0,0,0,0.15);">{salary:.2f} <span style="font-size: 1.5rem; font-weight: 400;">k</span></h2>
+        <span style="font-size: 1.05rem; font-weight: 500; opacity: 0.9;">估計年薪 (14個月): <strong style="font-size: 1.3rem;">{annual:.1f}</strong> k</span>
     </div>
     """
 
-def make_metrics_card(r2: float, train_time: float, intercept: float, test_size: float, random_state: int) -> str:
+def make_metrics_card(r2: float, train_time: float, intercept: float, test_size: float, random_state: int, model_type: str = "LinearRegression", alpha: float = 1.0) -> str:
+    alpha_info = f" (α={alpha})" if model_type.lower() in ["lasso", "ridge"] else ""
     return f"""
     <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-bottom: 20px;">
         <div style="background-color: #f8f9fa; padding: 18px 10px; border-radius: 10px; text-align: center; border: 1px solid #e0e0e0; box-shadow: 0 2px 6px rgba(0,0,0,0.02);">
@@ -204,6 +229,9 @@ def make_metrics_card(r2: float, train_time: float, intercept: float, test_size:
             <div style="font-size: 0.8rem; color: #5f6368; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px;">模型訓練耗時</div>
             <div style="font-size: 2rem; font-weight: 800; color: #137333; margin-top: 5px;">{train_time:.4f}s</div>
         </div>
+    </div>
+    <div style="font-size: 0.92rem; color: #3c4043; background: #e8f0fe; padding: 12px 18px; border-radius: 8px; border: 1px solid #d2e3fc; font-weight: 600; margin-bottom: 10px;">
+        🤖 <strong>模型演算法:</strong> <span style="color: #1a73e8;">{model_type}{alpha_info}</span>
     </div>
     <div style="font-size: 0.92rem; color: #3c4043; background: #f1f3f4; padding: 12px 18px; border-radius: 8px; border: 1px solid #e0e0e0; font-weight: 500; margin-bottom: 10px;">
         🏠 <strong>模型截距 (Intercept / 偏置值 b):</strong> {intercept:.4f}
@@ -221,7 +249,7 @@ def make_equation_html(feature_coefs: dict[str, float], intercept: float) -> str
         sign = "+" if coef >= 0 else "-"
         html_parts.append(f"""
         <span style="white-space: nowrap; margin: 0 4px; display: inline-block;">
-            {sign} <strong style="color: {color};">{abs(coef):.3f}</strong> \\times \\text{{{name}}}
+            {sign} <strong style="color: {color};">{abs(coef):.3f}</strong> × <span style="color: #202124; font-weight: 600;">({name})</span>
         </span>
         """)
     
@@ -278,16 +306,21 @@ def predict_gradio_handler(years_exp, edu_level, city):
     """
     處理 Gradio UI 的預測請求。
     """
-    le = MODEL_STATE["le"]
+    oe = MODEL_STATE.get("oe")
     ohe = MODEL_STATE["ohe"]
     scaler = MODEL_STATE["scaler"]
     model = MODEL_STATE["model"]
     
-    edu_encoded = int(le.transform([edu_level])[0])
+    if oe is not None:
+        edu_encoded = int(oe.transform(pd.DataFrame([[edu_level]], columns=["EducationLevel"]))[0][0])
+    else:
+        le = MODEL_STATE["le"]
+        edu_encoded = int(le.transform([edu_level])[0])
     city_encoded = ohe.transform(pd.DataFrame([[city]], columns=["City"]))[0]
     
-    features = np.array([[years_exp, edu_encoded] + list(city_encoded)])
-    features_scaled = scaler.transform(features)
+    feature_names = MODEL_STATE["feature_names"]
+    features_df = pd.DataFrame([[years_exp, edu_encoded] + list(city_encoded)], columns=feature_names)
+    features_scaled = scaler.transform(features_df)
     
     pred_val = float(model.predict(features_scaled)[0])
     
@@ -295,7 +328,7 @@ def predict_gradio_handler(years_exp, edu_level, city):
     return card_html
 
 
-def train_gradio_handler(test_size, random_state):
+def train_gradio_handler(test_size, random_state, model_type, alpha):
     """
     處理 Gradio UI 的重新訓練請求。
     """
@@ -303,7 +336,9 @@ def train_gradio_handler(test_size, random_state):
     
     res = train_and_save_model(
         test_size=float(test_size),
-        random_state=int(random_state)
+        random_state=int(random_state),
+        model_type=str(model_type),
+        alpha=float(alpha)
     )
     
     # 重新載入全域模型狀態
@@ -315,11 +350,13 @@ def train_gradio_handler(test_size, random_state):
         train_time=MODEL_STATE["train_time"],
         intercept=MODEL_STATE["intercept"],
         test_size=MODEL_STATE["test_size"],
-        random_state=MODEL_STATE["random_state"]
+        random_state=MODEL_STATE["random_state"],
+        model_type=MODEL_STATE.get("model_type", "LinearRegression"),
+        alpha=MODEL_STATE.get("alpha", 1.0)
     )
     equation_html = make_equation_html(MODEL_STATE["feature_coefs"], MODEL_STATE["intercept"])
     importance_html = make_importance_chart(MODEL_STATE["feature_coefs"])
-    status_text = "### 📢 最新狀態: `✅ 線上重新訓練並載入成功！`"
+    status_text = f"### 📢 最新狀態: `✅ {MODEL_STATE.get('model_type', 'LinearRegression')} 模型線上重新訓練並載入成功！`"
     
     return status_text, metrics_html, equation_html, importance_html
 
@@ -331,7 +368,9 @@ initial_metrics = make_metrics_card(
     train_time=MODEL_STATE["train_time"],
     intercept=MODEL_STATE["intercept"],
     test_size=MODEL_STATE["test_size"],
-    random_state=MODEL_STATE["random_state"]
+    random_state=MODEL_STATE["random_state"],
+    model_type=MODEL_STATE.get("model_type", "LinearRegression"),
+    alpha=MODEL_STATE.get("alpha", 1.0)
 )
 initial_equation = make_equation_html(MODEL_STATE["feature_coefs"], MODEL_STATE["intercept"])
 initial_importance = make_importance_chart(MODEL_STATE["feature_coefs"])
@@ -406,6 +445,15 @@ with gr.Blocks(
             with gr.Row():
                 with gr.Column(scale=1):
                     gr.Markdown("### 1. 調整訓練參數")
+                    m_type = gr.Dropdown(
+                        choices=["LinearRegression", "Lasso", "Ridge"],
+                        value=MODEL_STATE.get("model_type", "LinearRegression"),
+                        label="模型演算法 (Model Type)"
+                    )
+                    alpha_val = gr.Slider(
+                        minimum=0.01, maximum=10.0, value=MODEL_STATE.get("alpha", 1.0), step=0.05,
+                        label="正則化強度 (alpha / 懲罰項，僅適用 Lasso & Ridge)"
+                    )
                     t_size = gr.Slider(minimum=0.1, maximum=0.5, value=MODEL_STATE["test_size"], step=0.05, label="測試集比例 (test_size)")
                     seed = gr.Number(value=MODEL_STATE["random_state"], label="隨機種子 (random_state)", precision=0)
                     
@@ -419,11 +467,9 @@ with gr.Blocks(
                     importance_chart = gr.HTML(value=initial_importance, label="特徵重要性圖表")
             
             # 綁定訓練按鈕事件
-            # queue=False：線性迴歸訓練是毫秒級運算，避免在 Render 環境因 SSE 長連線被代理緩衝而卡在 queue。
-            # show_progress="minimal"：以頂端細進度條取代整欄灰色載入遮罩，提供輕量回饋。
             train_btn.click(
                 fn=train_gradio_handler,
-                inputs=[t_size, seed],
+                inputs=[t_size, seed, m_type, alpha_val],
                 outputs=[train_status, metrics_card, equation_box, importance_chart],
                 queue=False,
                 show_progress="minimal",
