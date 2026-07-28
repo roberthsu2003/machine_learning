@@ -7,4 +7,5 @@ requires-python = ">=3.11"
 dependencies = [
     "jupyter>=1.1.1",
     "lab>=8.10",
+    "mglearn>=0.2.0",
 ]
