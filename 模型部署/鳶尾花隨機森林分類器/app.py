@@ -53,7 +53,7 @@ load_model_state()
 # ==========================================
 # 2. 建立 FastAPI 應用與 Pydantic 格式定義
 # ==========================================
-app = FastAPI(
+api_app = FastAPI(
     title="Iris 鳶尾花機器學習服務 API",
     description="這是一個結合 FastAPI 與 Gradio 的機器學習部署服務。提供預測端點與線上訓練端點。",
     version="2.0.0",
@@ -110,7 +110,7 @@ class TrainResult(BaseModel):
 
 # --- FastAPI 路由端點 ---
 
-@app.post("/predict", response_model=IrisOutput)
+@api_app.post("/predict", response_model=IrisOutput)
 def predict_api(payload: IrisInput):
     """
     預測端點：接收鳶尾花的 4 項特徵，並回傳模型預測的類別與機率分佈。
@@ -142,7 +142,7 @@ def predict_api(payload: IrisInput):
         raise HTTPException(status_code=500, detail=f"預測失敗: {str(e)}")
 
 
-@app.post("/train", response_model=TrainResult)
+@api_app.post("/train", response_model=TrainResult)
 def train_api(config: TrainConfig):
     """
     訓練端點：傳入決策樹數量、最大深度、測試集比例等超參數，線上重新訓練模型，並即時更新服務所使用的模型。
@@ -365,11 +365,30 @@ with gr.Blocks(
                     output_probs = gr.HTML(value=initial_pred_bars, label="機率分析")
             
             # 綁定即時變更事件 (Slider 變動時即時進行預測)
+            # queue=False：預測僅是毫秒級的 CPU 運算，不需要佇列排程。若走 Gradio 佇列，
+            #   結果會透過 SSE (Server-Sent Events) 長連線回傳；在 Render 這類會緩衝長連線的
+            #   反向代理環境下，拖動滑桿時每一格都得走「建立 SSE → 排隊 → 回傳 → 關閉」一輪，
+            #   畫面會顯示 `queue: 1/1` 且反應明顯延遲。改走一般 HTTP 請求即可恢復即時回饋。
+            # show_progress="hidden"：Gradio 6 的事件預設 show_progress="full"，會在每次滑桿
+            #   變動時於右邊輸出元件蓋上一層載入/進度動畫。快速拖動時每一格都閃一次覆蓋層，
+            #   看起來就像卡在 queue。設為 hidden 後長條可平順即時更新，不再閃爍。
             inputs = [sepal_len, sepal_wid, petal_len, petal_wid]
             outputs = [output_card, output_probs]
             for slider in inputs:
-                slider.change(fn=predict_gradio_handler, inputs=inputs, outputs=outputs)
-            predict_btn.click(fn=predict_gradio_handler, inputs=inputs, outputs=outputs)
+                slider.change(
+                    fn=predict_gradio_handler,
+                    inputs=inputs,
+                    outputs=outputs,
+                    queue=False,
+                    show_progress="hidden",
+                )
+            predict_btn.click(
+                fn=predict_gradio_handler,
+                inputs=inputs,
+                outputs=outputs,
+                queue=False,
+                show_progress="hidden",
+            )
             
         # --- 分頁二：線上訓練 ---
         with gr.Tab("⚙️ 線上模型訓練與評估"):
@@ -390,67 +409,72 @@ with gr.Blocks(
                     importance_chart = gr.HTML(value=initial_importance, label="特徵重要性圖表")
             
             # 綁定訓練按鈕事件
+            # queue=False：Iris 隨機森林訓練是毫秒級運算(即使 500 棵樹也 <1 秒)，
+            #   不需要佇列排程。若走 Gradio 佇列，結果會透過 SSE 長連線回傳；在 Render
+            #   這類會緩衝長連線的反向代理下，串流回不來，畫面會卡在 `queue: 1/1 | 秒數`
+            #   一直計時、右欄被灰色遮罩蓋住(結果實際上早已算完)。改走一般 HTTP 即可正常回傳。
+            # show_progress="minimal"：以頂端細進度條取代整欄的灰色載入遮罩，提供輕量回饋。
             train_btn.click(
                 fn=train_gradio_handler,
                 inputs=[n_est, m_depth, t_size, seed],
-                outputs=[train_status, metrics_card, importance_chart]
+                outputs=[train_status, metrics_card, importance_chart],
+                queue=False,
+                show_progress="minimal",
             )
 
 # 設定主題（避免 Gradio 6.0 的 Blocks 建構警告）
 demo.theme = gr.themes.Soft(primary_hue="teal", secondary_hue="indigo")
 
+# ⚠️ 指派 demo.theme 之後，必須手動補算主題的 CSS 與雜湊值！
+# Gradio 只在 `demo.launch()` 內部才會產生 `theme_css` / `theme_hash` / `stylesheets`
+# 這三個屬性。若像本專案一樣改用 uvicorn 直接載入 app（完全不經過 launch()），
+# 它們永遠不會被建立，後果是：
+#   1. config 中的 theme_hash 為 None，前端因此請求 `/theme.css?v=null`
+#   2. `/theme.css` 路由存取 `blocks.theme_css` 時拋出 AttributeError → HTTP 500
+#   3. 瀏覽器拿不到主題樣式，整個 UI 退化成無樣式的原生 HTML
+#      （滑桿變成數字、Tab 變成純文字；但 inline style 寫死的自訂卡片仍正常顯示）
+import hashlib
+
+demo.theme_css = demo.theme._get_theme_css()
+demo.stylesheets = demo.theme._stylesheets
+demo.theme_hash = hashlib.sha256(demo.theme_css.encode("utf-8")).hexdigest()
+
+# 放寬佇列的預設併發數：
+# Gradio 的 default_concurrency_limit 預設為 1，代表同一事件同時間只能有一個在執行，
+# 其餘請求全部排隊等待。訓練按鈕仍保留佇列（長時間工作需要進度回饋），
+# 但提高上限可避免多位使用者或連續操作時互相阻塞。
+demo.queue(default_concurrency_limit=10)
+
 # ==========================================
-# 4. 透過 Monkey-Patch 融合 Gradio 與自訂 API 路由
+# 4. 融合 Gradio 與自訂 API 路由
 # ==========================================
-# 背景說明：
-# Hugging Face ZeroGPU 必須透過 Gradio 內建的 `demo.launch()` 啟動，才能與雲端代理伺服器完成網路握手。
-# 但 `demo.launch()` 每次呼叫時，都會在內部重新執行 `gr.routes.App.create_app(demo)` 來重建 FastAPI 實例。
-# 這會導致我們在外部對 `demo.app` 進行的 any 路由合併 (Include Router) 或 Swagger 修改全被覆蓋抹除。
-# 
-# 為此，我們在此對 `gr.routes.App.create_app` 進行「猴子補丁 (Monkey-Patch)」：
-# 確保無論是手動呼叫，還是 `demo.launch()` 內部重建，產生的 FastAPI 實例都會自動包含我們的自訂 API 和重啟的 Swagger！
+# 本地與 Render 皆以 uvicorn 載入 "app:app"，不經過 `demo.launch()`，
+# 因此只需在建立 Gradio 的 FastAPI 實例後，直接併入自訂路由即可，
+# 無需針對 launch() 內部重建 app 的猴子補丁 (Monkey-Patch)。
 
-# 1. 備份原始的 create_app 函數
-original_create_app = gr.routes.App.create_app
-
-# 2. 定義補丁函數
-def patched_create_app(*args, **kwargs):
-    # 呼叫原始函數，產生乾淨的 Gradio FastAPI 應用實例
-    app_instance = original_create_app(*args, **kwargs)
-    
-    # 合併 API 路由：將我們自己定義在 `app` 中的所有 API 路由 (/predict, /train 等) 併入該實例
-    app_instance.include_router(app.router)
-    
-    # 顯式註冊被 Gradio 隱藏的 Swagger UI 與 openapi.json，優先於其萬用路由攔截
-    @app_instance.get("/docs", include_in_schema=False)
-    async def custom_swagger_ui_html():
-        return get_swagger_ui_html(
-            openapi_url="/openapi.json",
-            title="Iris API - Swagger UI"
-        )
-
-    @app_instance.get("/openapi.json", include_in_schema=False)
-    async def get_openapi_json():
-        return app_instance.openapi()
-        
-    return app_instance
-
-# 3. 套用猴子補丁
-gr.routes.App.create_app = patched_create_app
-
-# 4. 初始化全域變數 app：
-# 為了讓本地端的 Uvicorn (以 "app:app" 載入時) 能直接取得已經合併好 API 和 UI 資源的應用實例，
-# 我們在此手動執行一次 create_app，並賦值給全域變數 `app`。
+# 1. 產生 Gradio 的 FastAPI 應用實例
 app = gr.routes.App.create_app(demo)
+
+# 2. 合併 API 路由：將 api_app 中的所有自訂 API 路由 (/predict, /train) 併入
+app.include_router(api_app.router)
+
+# 3. 顯式註冊被 Gradio 萬用路由隱藏的 Swagger UI 與 openapi.json
+@app.get("/docs", include_in_schema=False)
+async def custom_swagger_ui_html():
+    return get_swagger_ui_html(
+        openapi_url="/openapi.json",
+        title="Iris API - Swagger UI"
+    )
+
+@app.get("/openapi.json", include_in_schema=False)
+async def get_openapi_json():
+    return app.openapi()
 
 if __name__ == "__main__":
     import uvicorn
-    # 讀取雲端平台（如 Render）提供的 PORT，預設為 8000
+    # Render 會透過 PORT 環境變數指定對外埠號；本地開發預設 8000
     port = int(os.environ.get("PORT", 8000))
-    # 偵測是否在雲端環境運行（Render 會設定 RENDER=true 或自動帶入 PORT 環境變數）
-    is_cloud = "RENDER" in os.environ or "PORT" in os.environ
-    host = "0.0.0.0" if is_cloud else "127.0.0.1"
-    reload_active = not is_cloud
-    
-    print(f"偵測到為 {'雲端' if is_cloud else '本地'} 運行環境，使用 uvicorn 啟動於 {host}:{port} (熱重載: {reload_active})...")
-    uvicorn.run("app:app", host=host, port=port, reload=reload_active)
+    # 本地開發可設定環境變數 RELOAD=true 啟用熱重載；Render 生產環境維持關閉
+    reload = os.environ.get("RELOAD", "").lower() == "true"
+    print(f"使用 uvicorn 啟動伺服器 (port={port}, reload={reload})...")
+    uvicorn.run("app:app", host="0.0.0.0", port=port, reload=reload)
