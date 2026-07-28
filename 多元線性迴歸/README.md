@@ -104,14 +104,14 @@ graph TD
 ### 🛠️ 路徑一：手動實作梯度下降 (底層學習)
 透過自行撰寫成本函數與梯度計算公式，手動更新權重 $w$ 與截距 $b$，這有助於徹底掌握梯度下降與矩陣運算的數學本質。
 
-🔗 **[手動實作 Notebook 範例](./multiple_linear_regression1.ipynb)**
+🔗 **[手動實作 Notebook 範例-薪資](./multiple_linear_regression1.ipynb)**
 - 實作手動的 `compute_cost`（成本函數）
 - 實作手動的 `compute_gradient` 與 `gradient_descent` (optimizer)
 
 ### 📦 路徑二：Scikit-Learn 套件直接應用 (實務上手)
 使用業界常用的 Scikit-Learn 機器學習套件，直接調用 `LinearRegression` 類別，在極短代碼內完成訓練與預測。
 
-🔗 **[Scikit-Learn 套件建模實作範例](./multiple_linear_regression2.ipynb)**
+🔗 **[Scikit-Learn 套件建模實作範例-薪資](./multiple_linear_regression2.ipynb)**
 - `model.fit(x_train, y_train)` 模型訓練
 - `model.coef_` 與 `model.intercept_` 參數提取
 
