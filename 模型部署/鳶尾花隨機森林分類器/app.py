@@ -374,8 +374,12 @@ with gr.Blocks(
             #   看起來就像卡在 queue。設為 hidden 後長條可平順即時更新，不再閃爍。
             inputs = [sepal_len, sepal_wid, petal_len, petal_wid]
             outputs = [output_card, output_probs]
+            # 針對 Render 伺服器優化：使用 .release() 代替 .change()
+            # 這樣只有在使用者放開滑桿時才發送一次預測請求，避免在拖曳過程中發送數十個請求把 Render 免費版 CPU 塞爆。
+            # queue=False：預測僅是毫秒級的 CPU 運算，不需要佇列排程。
+            # show_progress="hidden"：隱藏每次變動時右邊輸出元件上的載入遮罩動畫，避免在 Render 緩慢的環境下出現不斷閃爍或卡頓在 queue 的現象。
             for slider in inputs:
-                slider.change(
+                slider.release(
                     fn=predict_gradio_handler,
                     inputs=inputs,
                     outputs=outputs,
