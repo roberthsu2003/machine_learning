@@ -134,5 +134,5 @@ graph TD
 該專案包含一個完整的機器學習流水線（ML Pipeline）實作：
 1. **[generate_dataset.ipynb](./學校福利社營業額預測/generate_dataset.ipynb)**：模擬生成福利社的營業額數據（包含氣溫、降雨量、請假人數與活動日等特徵）。
 2. **[data_analysis.ipynb](./學校福利社營業額預測/data_analysis.ipynb)**：進行探索性數據分析（EDA），繪製散佈圖、箱形圖與相關性熱圖。
-3. **[multiple_linear_regression.ipynb](./學校福利社營業額預測/multiple_linear_regression.ipynb)**：進行多元線性迴歸建模，並比較「標準化前後」的預測性能（MSE、RMSE、$R^2$ Score）。
+3. **[multiple_linear_regression.ipynb](./學校福利社營業額預測/multiple_linear_regression.ipynb)**：進行多元線性迴歸建模，並比較「標準化前後」的預測性能（MSE、RMSE、R² Score）。
 4. **[predict_new_data.ipynb](./學校福利社營業額預測/predict_new_data.ipynb)**：載入訓練好的模型，預測未來的新數據。
