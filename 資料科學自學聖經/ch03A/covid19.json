@@ -1,0 +1,1172 @@
+﻿[
+  {
+    "country_ch": "美國",
+    "country_en": "United States",
+    "cases": "34,516,883",
+    "deaths": "622,158"
+  },
+  {
+    "country_ch": "印度",
+    "country_en": "India",
+    "cases": "31,371,901",
+    "deaths": "420,551"
+  },
+  {
+    "country_ch": "巴西",
+    "country_en": "Brazil",
+    "cases": "19,688,663",
+    "deaths": "549,924"
+  },
+  {
+    "country_ch": "俄羅斯",
+    "country_en": "Russia",
+    "cases": "6,126,541",
+    "deaths": "153,874"
+  },
+  {
+    "country_ch": "法國",
+    "country_en": "France",
+    "cases": "5,993,937",
+    "deaths": "111,644"
+  },
+  {
+    "country_ch": "英國",
+    "country_en": "United Kingdom",
+    "cases": "5,697,912",
+    "deaths": "129,158"
+  },
+  {
+    "country_ch": "土耳其",
+    "country_en": "Turkey",
+    "cases": "5,601,608",
+    "deaths": "50,934"
+  },
+  {
+    "country_ch": "阿根廷",
+    "country_en": "Argentina",
+    "cases": "4,846,615",
+    "deaths": "103,721"
+  },
+  {
+    "country_ch": "哥倫比亞",
+    "country_en": "Colombia",
+    "cases": "4,727,846",
+    "deaths": "118,868"
+  },
+  {
+    "country_ch": "義大利",
+    "country_en": "Italy",
+    "cases": "4,317,415",
+    "deaths": "127,949"
+  },
+  {
+    "country_ch": "西班牙",
+    "country_en": "Spain",
+    "cases": "4,280,429",
+    "deaths": "81,221"
+  },
+  {
+    "country_ch": "德國",
+    "country_en": "Germany",
+    "cases": "3,755,898",
+    "deaths": "91,524"
+  },
+  {
+    "country_ch": "伊朗",
+    "country_en": "Iran",
+    "cases": "3,691,432",
+    "deaths": "88,800"
+  },
+  {
+    "country_ch": "印尼",
+    "country_en": "Indonesia",
+    "cases": "3,166,505",
+    "deaths": "83,279"
+  },
+  {
+    "country_ch": "波蘭",
+    "country_en": "Poland",
+    "cases": "2,882,146",
+    "deaths": "75,242"
+  },
+  {
+    "country_ch": "墨西哥",
+    "country_en": "Mexico",
+    "cases": "2,741,983",
+    "deaths": "238,316"
+  },
+  {
+    "country_ch": "南非",
+    "country_en": "South Africa",
+    "cases": "2,377,823",
+    "deaths": "69,775"
+  },
+  {
+    "country_ch": "烏克蘭",
+    "country_en": "Ukraine",
+    "cases": "2,248,450",
+    "deaths": "52,847"
+  },
+  {
+    "country_ch": "秘魯",
+    "country_en": "Peru",
+    "cases": "2,102,904",
+    "deaths": "195,795"
+  },
+  {
+    "country_ch": "荷蘭",
+    "country_en": "Netherlands",
+    "cases": "1,843,521",
+    "deaths": "17,800"
+  },
+  {
+    "country_ch": "捷克",
+    "country_en": "Czech Republic",
+    "cases": "1,672,409",
+    "deaths": "30,357"
+  },
+  {
+    "country_ch": "智利",
+    "country_en": "Chile",
+    "cases": "1,609,177",
+    "deaths": "35,026"
+  },
+  {
+    "country_ch": "伊拉克",
+    "country_en": "Iraq",
+    "cases": "1,552,648",
+    "deaths": "18,287"
+  },
+  {
+    "country_ch": "菲律賓",
+    "country_en": "Philippines",
+    "cases": "1,548,755",
+    "deaths": "27,224"
+  },
+  {
+    "country_ch": "加拿大",
+    "country_en": "Canada",
+    "cases": "1,425,987",
+    "deaths": "26,544"
+  },
+  {
+    "country_ch": "孟加拉",
+    "country_en": "Bangladesh",
+    "cases": "1,164,635",
+    "deaths": "19,274"
+  },
+  {
+    "country_ch": "比利時",
+    "country_en": "Belgium",
+    "cases": "1,113,465",
+    "deaths": "25,220"
+  },
+  {
+    "country_ch": "瑞典",
+    "country_en": "Sweden",
+    "cases": "1,096,799",
+    "deaths": "14,615"
+  },
+  {
+    "country_ch": "羅馬尼亞",
+    "country_en": "Romania",
+    "cases": "1,082,292",
+    "deaths": "34,268"
+  },
+  {
+    "country_ch": "馬來西亞",
+    "country_en": "Malaysia",
+    "cases": "1,013,438",
+    "deaths": "7,994"
+  },
+  {
+    "country_ch": "巴基斯坦",
+    "country_en": "Pakistan",
+    "cases": "1,004,694",
+    "deaths": "23,016"
+  },
+  {
+    "country_ch": "葡萄牙",
+    "country_en": "Portugal",
+    "cases": "953,059",
+    "deaths": "17,292"
+  },
+  {
+    "country_ch": "日本",
+    "country_en": "Japan",
+    "cases": "870,737",
+    "deaths": "15,128"
+  },
+  {
+    "country_ch": "以色列",
+    "country_en": "Israel",
+    "cases": "860,652",
+    "deaths": "6,460"
+  },
+  {
+    "country_ch": "匈牙利",
+    "country_en": "Hungary",
+    "cases": "809,101",
+    "deaths": "30,020"
+  },
+  {
+    "country_ch": "約旦",
+    "country_en": "Jordan",
+    "cases": "764,983",
+    "deaths": "9,963"
+  },
+  {
+    "country_ch": "塞爾維亞",
+    "country_en": "Serbia",
+    "cases": "720,112",
+    "deaths": "7,104"
+  },
+  {
+    "country_ch": "瑞士",
+    "country_en": "Switzerland",
+    "cases": "712,668",
+    "deaths": "10,389"
+  },
+  {
+    "country_ch": "尼泊爾",
+    "country_en": "Nepal",
+    "cases": "680,556",
+    "deaths": "9,713"
+  },
+  {
+    "country_ch": "阿拉伯聯合大公國",
+    "country_en": "UAE",
+    "cases": "671,636",
+    "deaths": "1,920"
+  },
+  {
+    "country_ch": "奧地利",
+    "country_en": "Austria",
+    "cases": "656,270",
+    "deaths": "10,731"
+  },
+  {
+    "country_ch": "摩洛哥",
+    "country_en": "Morocco",
+    "cases": "579,272",
+    "deaths": "9,589"
+  },
+  {
+    "country_ch": "突尼西亞",
+    "country_en": "Tunisia",
+    "cases": "569,289",
+    "deaths": "18,600"
+  },
+  {
+    "country_ch": "黎巴嫩",
+    "country_en": "Lebanon",
+    "cases": "555,302",
+    "deaths": "7,892"
+  },
+  {
+    "country_ch": "哈薩克",
+    "country_en": "Kazakhstan",
+    "cases": "529,269",
+    "deaths": "5,382"
+  },
+  {
+    "country_ch": "沙烏地阿拉伯",
+    "country_en": "Saudi Arabia",
+    "cases": "518,143",
+    "deaths": "8,167"
+  },
+  {
+    "country_ch": "泰國",
+    "country_en": "Thailand",
+    "cases": "497,302",
+    "deaths": "4,059"
+  },
+  {
+    "country_ch": "厄瓜多",
+    "country_en": "Ecuador",
+    "cases": "480,720",
+    "deaths": "30,797"
+  },
+  {
+    "country_ch": "希臘",
+    "country_en": "Greece",
+    "cases": "475,919",
+    "deaths": "12,874"
+  },
+  {
+    "country_ch": "玻利維亞",
+    "country_en": "Bolivia",
+    "cases": "467,975",
+    "deaths": "17,637"
+  },
+  {
+    "country_ch": "巴拉圭",
+    "country_en": "Paraguay",
+    "cases": "448,918",
+    "deaths": "14,593"
+  },
+  {
+    "country_ch": "白俄羅斯",
+    "country_en": "Belarus",
+    "cases": "440,708",
+    "deaths": "3,394"
+  },
+  {
+    "country_ch": "巴拿馬",
+    "country_en": "Panama",
+    "cases": "429,083",
+    "deaths": "6,750"
+  },
+  {
+    "country_ch": "保加利亞",
+    "country_en": "Bulgaria",
+    "cases": "423,686",
+    "deaths": "18,194"
+  },
+  {
+    "country_ch": "喬治亞",
+    "country_en": "Georgia",
+    "cases": "402,759",
+    "deaths": "5,688"
+  },
+  {
+    "country_ch": "哥斯大黎加",
+    "country_en": "Costa Rica",
+    "cases": "398,608",
+    "deaths": "4,941"
+  },
+  {
+    "country_ch": "科威特",
+    "country_en": "Kuwait",
+    "cases": "392,617",
+    "deaths": "2,284"
+  },
+  {
+    "country_ch": "斯洛伐克",
+    "country_en": "Slovakia",
+    "cases": "392,348",
+    "deaths": "12,534"
+  },
+  {
+    "country_ch": "烏拉圭",
+    "country_en": "Uruguay",
+    "cases": "380,431",
+    "deaths": "5,931"
+  },
+  {
+    "country_ch": "克羅埃西亞",
+    "country_en": "Croatia",
+    "cases": "362,621",
+    "deaths": "8,245"
+  },
+  {
+    "country_ch": "瓜地馬拉",
+    "country_en": "Guatemala",
+    "cases": "352,088",
+    "deaths": "10,100"
+  },
+  {
+    "country_ch": "巴勒斯坦",
+    "country_en": "Palestine",
+    "cases": "344,931",
+    "deaths": "3,867"
+  },
+  {
+    "country_ch": "亞塞拜然",
+    "country_en": "Azerbaijan",
+    "cases": "340,443",
+    "deaths": "5,006"
+  },
+  {
+    "country_ch": "多明尼加",
+    "country_en": "Dominican",
+    "cases": "340,053",
+    "deaths": "3,937"
+  },
+  {
+    "country_ch": "古巴",
+    "country_en": "Cuba",
+    "cases": "332,968",
+    "deaths": "2,351"
+  },
+  {
+    "country_ch": "丹麥",
+    "country_en": "Denmark",
+    "cases": "312,582",
+    "deaths": "2,543"
+  },
+  {
+    "country_ch": "委內瑞拉",
+    "country_en": "Venezuela",
+    "cases": "298,804",
+    "deaths": "3,475"
+  },
+  {
+    "country_ch": "斯里蘭卡",
+    "country_en": "Sri Lanka",
+    "cases": "296,516",
+    "deaths": "4,099"
+  },
+  {
+    "country_ch": "愛爾蘭",
+    "country_en": "Ireland",
+    "cases": "292,996",
+    "deaths": "5,026"
+  },
+  {
+    "country_ch": "阿曼",
+    "country_en": "Oman",
+    "cases": "289,042",
+    "deaths": "3,498"
+  },
+  {
+    "country_ch": "宏都拉斯",
+    "country_en": "Honduras",
+    "cases": "286,635",
+    "deaths": "7,594"
+  },
+  {
+    "country_ch": "埃及",
+    "country_en": "Egypt",
+    "cases": "283,985",
+    "deaths": "16,481"
+  },
+  {
+    "country_ch": "立陶宛",
+    "country_en": "Lithuania",
+    "cases": "280,966",
+    "deaths": "4,410"
+  },
+  {
+    "country_ch": "衣索比亞",
+    "country_en": "Ethiopia",
+    "cases": "278,543",
+    "deaths": "4,369"
+  },
+  {
+    "country_ch": "緬甸",
+    "country_en": "Myanmar",
+    "cases": "269,525",
+    "deaths": "7,111"
+  },
+  {
+    "country_ch": "巴林",
+    "country_en": "Bahrain",
+    "cases": "268,541",
+    "deaths": "1,383"
+  },
+  {
+    "country_ch": "斯洛維尼亞",
+    "country_en": "Slovenia",
+    "cases": "258,651",
+    "deaths": "4,428"
+  },
+  {
+    "country_ch": "摩爾多瓦",
+    "country_en": "Moldova",
+    "cases": "258,624",
+    "deaths": "6,243"
+  },
+  {
+    "country_ch": "利比亞",
+    "country_en": "Libya",
+    "cases": "233,449",
+    "deaths": "3,375"
+  },
+  {
+    "country_ch": "亞美尼亞",
+    "country_en": "Armenia",
+    "cases": "228,798",
+    "deaths": "4,587"
+  },
+  {
+    "country_ch": "卡達",
+    "country_en": "Qatar",
+    "cases": "225,198",
+    "deaths": "600"
+  },
+  {
+    "country_ch": "波士尼亞與赫塞哥維納",
+    "country_en": "Bosnia and Herzegovina",
+    "cases": "205,420",
+    "deaths": "9,675"
+  },
+  {
+    "country_ch": "肯亞",
+    "country_en": "Kenya",
+    "cases": "197,409",
+    "deaths": "3,865"
+  },
+  {
+    "country_ch": "尚比亞",
+    "country_en": "Zambia",
+    "cases": "192,071",
+    "deaths": "3,272"
+  },
+  {
+    "country_ch": "韓國",
+    "country_en": "South Korea",
+    "cases": "188,848",
+    "deaths": "2,073"
+  },
+  {
+    "country_ch": "奈及利亞",
+    "country_en": "Nigeria",
+    "cases": "170,895",
+    "deaths": "2,132"
+  },
+  {
+    "country_ch": "阿爾及利亞",
+    "country_en": "Algeria",
+    "cases": "162,155",
+    "deaths": "4,063"
+  },
+  {
+    "country_ch": "吉爾吉斯",
+    "country_en": "Kyrgyzstan",
+    "cases": "157,147",
+    "deaths": "2,249"
+  },
+  {
+    "country_ch": "蒙古",
+    "country_en": "Mongolia",
+    "cases": "156,737",
+    "deaths": "774"
+  },
+  {
+    "country_ch": "北馬其頓",
+    "country_en": "North Macedonia",
+    "cases": "156,255",
+    "deaths": "5,489"
+  },
+  {
+    "country_ch": "阿富汗",
+    "country_en": "Afghanistan",
+    "cases": "144,285",
+    "deaths": "6,480"
+  },
+  {
+    "country_ch": "拉脫維亞",
+    "country_en": "Latvia",
+    "cases": "138,481",
+    "deaths": "2,550"
+  },
+  {
+    "country_ch": "挪威",
+    "country_en": "Norway",
+    "cases": "135,714",
+    "deaths": "799"
+  },
+  {
+    "country_ch": "阿爾巴尼亞",
+    "country_en": "Albania",
+    "cases": "132,875",
+    "deaths": "2,456"
+  },
+  {
+    "country_ch": "愛沙尼亞",
+    "country_en": "Estonia",
+    "cases": "132,458",
+    "deaths": "1,271"
+  },
+  {
+    "country_ch": "烏茲別克",
+    "country_en": "Uzbekistan",
+    "cases": "124,290",
+    "deaths": "832"
+  },
+  {
+    "country_ch": "納米比亞",
+    "country_en": "Namibia",
+    "cases": "116,603",
+    "deaths": "2,811"
+  },
+  {
+    "country_ch": "莫三比克",
+    "country_en": "Mozambique",
+    "cases": "108,760",
+    "deaths": "1,257"
+  },
+  {
+    "country_ch": "科索沃",
+    "country_en": "Kosovo",
+    "cases": "108,017",
+    "deaths": "2,265"
+  },
+  {
+    "country_ch": "芬蘭",
+    "country_en": "Finland",
+    "cases": "102,972",
+    "deaths": "978"
+  },
+  {
+    "country_ch": "迦納",
+    "country_en": "Ghana",
+    "cases": "101,170",
+    "deaths": "821"
+  },
+  {
+    "country_ch": "蒙特內哥羅",
+    "country_en": "Montenegro",
+    "cases": "101,130",
+    "deaths": "1,624"
+  },
+  {
+    "country_ch": "越南",
+    "country_en": "Vietnam",
+    "cases": "98,465",
+    "deaths": "370"
+  },
+  {
+    "country_ch": "辛巴威",
+    "country_en": "Zimbabwe",
+    "cases": "97,894",
+    "deaths": "3,094"
+  },
+  {
+    "country_ch": "波札那",
+    "country_en": "Botswana",
+    "cases": "97,657",
+    "deaths": "1,375"
+  },
+  {
+    "country_ch": "賽普勒斯",
+    "country_en": "Cyprus",
+    "cases": "96,991",
+    "deaths": "399"
+  },
+  {
+    "country_ch": "中國大陸",
+    "country_en": "China",
+    "cases": "92,605",
+    "deaths": "4,636"
+  },
+  {
+    "country_ch": "烏干達",
+    "country_en": "Uganda",
+    "cases": "92,490",
+    "deaths": "2,557"
+  },
+  {
+    "country_ch": "薩爾瓦多",
+    "country_en": "El Salvador",
+    "cases": "84,691",
+    "deaths": "2,558"
+  },
+  {
+    "country_ch": "喀麥隆",
+    "country_en": "Cameroon",
+    "cases": "82,003",
+    "deaths": "1,334"
+  },
+  {
+    "country_ch": "馬爾地夫",
+    "country_en": "Maldives",
+    "cases": "76,750",
+    "deaths": "219"
+  },
+  {
+    "country_ch": "盧森堡",
+    "country_en": "Luxembourg",
+    "cases": "73,412",
+    "deaths": "821"
+  },
+  {
+    "country_ch": "柬埔寨",
+    "country_en": "Cambodia",
+    "cases": "72,923",
+    "deaths": "1,283"
+  },
+  {
+    "country_ch": "新加坡",
+    "country_en": "Singapore",
+    "cases": "64,179",
+    "deaths": "37"
+  },
+  {
+    "country_ch": "盧安達",
+    "country_en": "Rwanda",
+    "cases": "62,946",
+    "deaths": "742"
+  },
+  {
+    "country_ch": "塞內加爾",
+    "country_en": "Senegal",
+    "cases": "57,263",
+    "deaths": "1,281"
+  },
+  {
+    "country_ch": "牙買加",
+    "country_en": "Jamaica",
+    "cases": "51,828",
+    "deaths": "1,173"
+  },
+  {
+    "country_ch": "象牙海岸",
+    "country_en": "Ivory Coast",
+    "cases": "49,554",
+    "deaths": "324"
+  },
+  {
+    "country_ch": "馬拉威",
+    "country_en": "Malawi",
+    "cases": "48,637",
+    "deaths": "1,480"
+  },
+  {
+    "country_ch": "剛果民主共和國",
+    "country_en": "DR Congo",
+    "cases": "48,128",
+    "deaths": "1,023"
+  },
+  {
+    "country_ch": "馬達加斯加",
+    "country_en": "Madagascar",
+    "cases": "42,599",
+    "deaths": "939"
+  },
+  {
+    "country_ch": "安哥拉",
+    "country_en": "Angola",
+    "cases": "41,736",
+    "deaths": "982"
+  },
+  {
+    "country_ch": "千里達及托巴哥",
+    "country_en": "Trinidad and Tobago",
+    "cases": "37,554",
+    "deaths": "1,039"
+  },
+  {
+    "country_ch": "蘇丹",
+    "country_en": "Sudan",
+    "cases": "37,138",
+    "deaths": "2,776"
+  },
+  {
+    "country_ch": "馬爾他",
+    "country_en": "Malta",
+    "cases": "33,668",
+    "deaths": "421"
+  },
+  {
+    "country_ch": "維德角",
+    "country_en": "Cape Verde",
+    "cases": "33,541",
+    "deaths": "297"
+  },
+  {
+    "country_ch": "澳洲",
+    "country_en": "Australia",
+    "cases": "32,915",
+    "deaths": "918"
+  },
+  {
+    "country_ch": "敘利亞",
+    "country_en": "Syria",
+    "cases": "25,877",
+    "deaths": "1,906"
+  },
+  {
+    "country_ch": "加彭",
+    "country_en": "Gabon",
+    "cases": "25,325",
+    "deaths": "163"
+  },
+  {
+    "country_ch": "幾內亞",
+    "country_en": "Guinea",
+    "cases": "24,993",
+    "deaths": "198"
+  },
+  {
+    "country_ch": "蘇利南",
+    "country_en": "Suriname",
+    "cases": "24,797",
+    "deaths": "628"
+  },
+  {
+    "country_ch": "茅利塔尼亞",
+    "country_en": "Mauritania",
+    "cases": "23,555",
+    "deaths": "528"
+  },
+  {
+    "country_ch": "斐濟",
+    "country_en": "Fiji",
+    "cases": "23,139",
+    "deaths": "186"
+  },
+  {
+    "country_ch": "史瓦帝尼",
+    "country_en": "Eswatini",
+    "cases": "22,687",
+    "deaths": "747"
+  },
+  {
+    "country_ch": "蓋亞那",
+    "country_en": "Guyana",
+    "cases": "22,090",
+    "deaths": "523"
+  },
+  {
+    "country_ch": "海地",
+    "country_en": "Haiti",
+    "cases": "19,783",
+    "deaths": "526"
+  },
+  {
+    "country_ch": "塞席爾",
+    "country_en": "Seychelles",
+    "cases": "17,747",
+    "deaths": "89"
+  },
+  {
+    "country_ch": "巴布亞紐幾內亞",
+    "country_en": "Papua New Guinea",
+    "cases": "17,637",
+    "deaths": "192"
+  },
+  {
+    "country_ch": "臺灣",
+    "country_en": "Taiwan",
+    "cases": "15,571",
+    "deaths": "786"
+  },
+  {
+    "country_ch": "多哥",
+    "country_en": "Togo",
+    "cases": "15,149",
+    "deaths": "146"
+  },
+  {
+    "country_ch": "塔吉克",
+    "country_en": "Tajikistan",
+    "cases": "14,761",
+    "deaths": "117"
+  },
+  {
+    "country_ch": "馬利",
+    "country_en": "Mali",
+    "cases": "14,542",
+    "deaths": "530"
+  },
+  {
+    "country_ch": "安道爾",
+    "country_en": "Andorra",
+    "cases": "14,498",
+    "deaths": "127"
+  },
+  {
+    "country_ch": "貝里斯",
+    "country_en": "Belize",
+    "cases": "13,917",
+    "deaths": "332"
+  },
+  {
+    "country_ch": "巴哈馬",
+    "country_en": "Bahamas",
+    "cases": "13,781",
+    "deaths": "274"
+  },
+  {
+    "country_ch": "布吉納法索",
+    "country_en": "Burkina Faso",
+    "cases": "13,538",
+    "deaths": "169"
+  },
+  {
+    "country_ch": "剛果共和國",
+    "country_en": "Congo",
+    "cases": "13,117",
+    "deaths": "176"
+  },
+  {
+    "country_ch": "賴索托",
+    "country_en": "Lesotho",
+    "cases": "12,787",
+    "deaths": "357"
+  },
+  {
+    "country_ch": "香港",
+    "country_en": "Hong Kong",
+    "cases": "11,979",
+    "deaths": "212"
+  },
+  {
+    "country_ch": "索馬利亞",
+    "country_en": "Somalia",
+    "cases": "11,907",
+    "deaths": "514"
+  },
+  {
+    "country_ch": "吉布地",
+    "country_en": "Djibouti",
+    "cases": "11,635",
+    "deaths": "155"
+  },
+  {
+    "country_ch": "南蘇丹",
+    "country_en": "South Sudan",
+    "cases": "10,917",
+    "deaths": "117"
+  },
+  {
+    "country_ch": "東帝汶",
+    "country_en": "East Timor",
+    "cases": "10,337",
+    "deaths": "26"
+  },
+  {
+    "country_ch": "赤道幾內亞",
+    "country_en": "Equatorial Guinea",
+    "cases": "8,863",
+    "deaths": "123"
+  },
+  {
+    "country_ch": "貝南",
+    "country_en": "Benin",
+    "cases": "8,324",
+    "deaths": "107"
+  },
+  {
+    "country_ch": "甘比亞",
+    "country_en": "Gambia",
+    "cases": "7,333",
+    "deaths": "208"
+  },
+  {
+    "country_ch": "尼加拉瓜",
+    "country_en": "Nicaragua",
+    "cases": "7,313",
+    "deaths": "194"
+  },
+  {
+    "country_ch": "冰島",
+    "country_en": "Iceland",
+    "cases": "7,233",
+    "deaths": "30"
+  },
+  {
+    "country_ch": "中非",
+    "country_en": "Central Africa",
+    "cases": "7,147",
+    "deaths": "98"
+  },
+  {
+    "country_ch": "葉門",
+    "country_en": "Yemen",
+    "cases": "7,012",
+    "deaths": "1,373"
+  },
+  {
+    "country_ch": "厄利垂亞",
+    "country_en": "Eritrea",
+    "cases": "6,495",
+    "deaths": "33"
+  },
+  {
+    "country_ch": "獅子山",
+    "country_en": "Sierra Leone",
+    "cases": "6,228",
+    "deaths": "118"
+  },
+  {
+    "country_ch": "蒲隆地",
+    "country_en": "Burundi",
+    "cases": "6,128",
+    "deaths": "8"
+  },
+  {
+    "country_ch": "尼日",
+    "country_en": "Niger",
+    "cases": "5,598",
+    "deaths": "195"
+  },
+  {
+    "country_ch": "聖露西亞",
+    "country_en": "Saint Lucia",
+    "cases": "5,516",
+    "deaths": "88"
+  },
+  {
+    "country_ch": "賴比瑞亞",
+    "country_en": "Liberia",
+    "cases": "5,396",
+    "deaths": "148"
+  },
+  {
+    "country_ch": "聖馬利諾",
+    "country_en": "San Marino",
+    "cases": "5,099",
+    "deaths": "90"
+  },
+  {
+    "country_ch": "查德",
+    "country_en": "Chad",
+    "cases": "4,969",
+    "deaths": "174"
+  },
+  {
+    "country_ch": "寮國",
+    "country_en": "Laos",
+    "cases": "4,762",
+    "deaths": "5"
+  },
+  {
+    "country_ch": "索馬利蘭",
+    "country_en": "Somaliland",
+    "cases": "4,608",
+    "deaths": "311"
+  },
+  {
+    "country_ch": "巴貝多",
+    "country_en": "Barbados",
+    "cases": "4,339",
+    "deaths": "48"
+  },
+  {
+    "country_ch": "幾內亞比索",
+    "country_en": "Guinea-Bissau",
+    "cases": "4,208",
+    "deaths": "74"
+  },
+  {
+    "country_ch": "葛摩",
+    "country_en": "Comoros",
+    "cases": "4,021",
+    "deaths": "147"
+  },
+  {
+    "country_ch": "模里西斯",
+    "country_en": "Mauritius",
+    "cases": "3,735",
+    "deaths": "19"
+  },
+  {
+    "country_ch": "列支敦斯登",
+    "country_en": "Liechtenstein",
+    "cases": "3,075",
+    "deaths": "59"
+  },
+  {
+    "country_ch": "摩納哥",
+    "country_en": "Monaco",
+    "cases": "2,779",
+    "deaths": "33"
+  },
+  {
+    "country_ch": "紐西蘭",
+    "country_en": "New Zealand",
+    "cases": "2,506",
+    "deaths": "26"
+  },
+  {
+    "country_ch": "不丹",
+    "country_en": "Bhutan",
+    "cases": "2,486",
+    "deaths": "2"
+  },
+  {
+    "country_ch": "聖多美普林西比",
+    "country_en": "Sao Tome and Principe",
+    "cases": "2,424",
+    "deaths": "37"
+  },
+  {
+    "country_ch": "聖文森及格瑞那丁",
+    "country_en": "Saint Vincent and the Grenadines",
+    "cases": "2,271",
+    "deaths": "12"
+  },
+  {
+    "country_ch": "安地卡及巴布達",
+    "country_en": "Antigua and Barbuda",
+    "cases": "1,280",
+    "deaths": "43"
+  },
+  {
+    "country_ch": "國際運輸工具(鑽石公主號)",
+    "country_en": "Int'l conveyance (Japan)",
+    "cases": "741",
+    "deaths": "13"
+  },
+  {
+    "country_ch": "聖克里斯多福及尼維斯",
+    "country_en": "Saint Kitts and Nevis",
+    "cases": "564",
+    "deaths": "3"
+  },
+  {
+    "country_ch": "坦尚尼亞",
+    "country_en": "Tanzania",
+    "cases": "509",
+    "deaths": "21"
+  },
+  {
+    "country_ch": "汶萊",
+    "country_en": "Brunei",
+    "cases": "321",
+    "deaths": "3"
+  },
+  {
+    "country_ch": "多米尼克",
+    "country_en": "Dominica",
+    "cases": "209",
+    "deaths": "0"
+  },
+  {
+    "country_ch": "格瑞那達",
+    "country_en": "Grenada",
+    "cases": "164",
+    "deaths": "1"
+  },
+  {
+    "country_ch": "澳門",
+    "country_en": "Macao",
+    "cases": "59",
+    "deaths": "0"
+  },
+  {
+    "country_ch": "教廷",
+    "country_en": "Holy See",
+    "cases": "27",
+    "deaths": "0"
+  },
+  {
+    "country_ch": "索羅門群島",
+    "country_en": "Solomon islands",
+    "cases": "20",
+    "deaths": "0"
+  },
+  {
+    "country_ch": "萬那杜",
+    "country_en": "Vanuatu",
+    "cases": "4",
+    "deaths": "1"
+  },
+  {
+    "country_ch": "馬紹爾群島",
+    "country_en": "Marshall Islands",
+    "cases": "4",
+    "deaths": "0"
+  },
+  {
+    "country_ch": "帛琉",
+    "country_en": "Palau",
+    "cases": "2",
+    "deaths": "0"
+  },
+  {
+    "country_ch": "薩摩亞",
+    "country_en": "Samoa",
+    "cases": "1",
+    "deaths": "0"
+  },
+  {
+    "country_ch": "密克羅尼西亞聯邦",
+    "country_en": "Micronesia",
+    "cases": "1",
+    "deaths": "0"
+  }
+]

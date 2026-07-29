@@ -1,0 +1,112 @@
+,0
+0,"    Oct 2023  Oct 2022 Change Programming Language Programming Language.1  \
+0          1         1                                             Python   
+1          2         2                                                  C   
+2          3         4                                                C++   
+3          4         3                                               Java   
+4          5         5                                                 C#   
+5          6         7                                         JavaScript   
+6          7         6                                       Visual Basic   
+7          8         9                                                PHP   
+8          9        10                                                SQL   
+9         10         8                                  Assembly language   
+10        11        11                                                 Go   
+11        12        23                                            Scratch   
+12        13        18                               Delphi/Object Pascal   
+13        14        14                                             MATLAB   
+14        15        15                                              Swift   
+15        16        19                                            Fortran   
+16        17        12                                                  R   
+17        18        28                                             Kotlin   
+18        19        16                                               Ruby   
+19        20        20                                               Rust   
+
+   Ratings Change.1  
+0   14.82%   -2.25%  
+1   12.08%   -3.13%  
+2   10.67%   +0.74%  
+3    8.92%   -3.92%  
+4    7.71%   +3.29%  
+5    2.91%   +0.17%  
+6    2.13%   -1.82%  
+7    1.90%   -0.14%  
+8    1.78%   +0.00%  
+9    1.64%   -0.75%  
+10   1.37%   +0.10%  
+11   1.37%   +0.69%  
+12   1.30%   +0.46%  
+13   1.27%   +0.09%  
+14   1.07%   +0.02%  
+15   1.02%   +0.23%  
+16   0.96%   -0.26%  
+17   0.96%   +0.53%  
+18   0.92%   +0.05%  
+19   0.91%   +0.22%  "
+1,"    Position  Programming Language Ratings
+0         21  Classic Visual Basic   0.90%
+1         22                   SAS   0.83%
+2         23                   Ada   0.77%
+3         24                 COBOL   0.76%
+4         25                Prolog   0.70%
+5         26                   Lua   0.70%
+6         27                  Perl   0.64%
+7         28                 Julia   0.58%
+8         29                     D   0.56%
+9         30       (Visual) FoxPro   0.53%
+10        31                  Dart   0.47%
+11        32               Haskell   0.46%
+12        33           Objective-C   0.45%
+13        34          Transact-SQL   0.45%
+14        35                  Lisp   0.41%
+15        36                    F#   0.40%
+16        37                  GAMS   0.39%
+17        38                 Scala   0.36%
+18        39              VBScript   0.35%
+19        40                  Logo   0.33%
+20        41                PL/SQL   0.28%
+21        42                  Bash   0.27%
+22        43                  CFML   0.25%
+23        44            PowerShell   0.24%
+24        45              Solidity   0.24%
+25        46                Scheme   0.24%
+26        47                  ABAP   0.22%
+27        48                   X++   0.22%
+28        49            TypeScript   0.20%
+29        50                   Awk   0.20%"
+2,"   Programming Language 2023 2018 2013 2008 2003 1998 1993 1988
+0                Python    1    4    8    7   12   26   14    -
+1                     C    2    2    1    2    2    1    1    1
+2                   C++    3    3    4    4    3    2    2    4
+3                  Java    4    1    2    1    1   19    -    -
+4                    C#    5    5    5    8    9    -    -    -
+5          Visual Basic    6   17    -    -    -    -    -    -
+6            JavaScript    7    8   10    9    8   23    -    -
+7                   SQL    8  251    -    -    7    -    -    -
+8                   PHP    9    7    6    5    6    -    -    -
+9     Assembly language   10   12    -    -    -    -    -    -
+10              Fortran   19   31   26   23   13    7    3   16
+11                  Ada   25   29   20   19   17   14    6    3
+12          Objective-C   26   14    3   44   53    -    -    -
+13                 Lisp   30   30   13   18   14   10    7    2
+14       (Visual) Basic    -    -    7    3    5    3    5    7"
+3,"    Year        Winner
+0   2022           C++
+1   2021        Python
+2   2020        Python
+3   2019             C
+4   2018        Python
+5   2017             C
+6   2016            Go
+7   2015          Java
+8   2014    JavaScript
+9   2013  Transact-SQL
+10  2012   Objective-C
+11  2011   Objective-C
+12  2010        Python
+13  2009            Go
+14  2008             C
+15  2007        Python
+16  2006          Ruby
+17  2005          Java
+18  2004           PHP
+19  2003           C++"
