@@ -1,4 +1,6 @@
 # 必需配合,practice_predict_api_answer.ipynb檔,才可以完全了解
+# 必需配合,practice_train_api_answer.ipynb檔,才可以完全了解
+# 必需配點,practice_gradio_ui_answer.ipynb檔,才可以完全了解
 
 import os
 import sys
