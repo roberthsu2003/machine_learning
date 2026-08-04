@@ -7,6 +7,7 @@ current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
     sys.path.insert(0, current_dir)
 
+from train_save import train_and_save_model  # type: ignore
 import joblib
 import pandas as pd
 import numpy as np
@@ -26,7 +27,6 @@ def load_model_state():
     if not os.path.exists(model_path):
         print("未檢測到模型檔案，正在自動執行訓練以生成 salary_model.joblib...")
         try:
-            from train_save import train_and_save_model
             train_and_save_model()
         except Exception as e:
             raise RuntimeError(f"自動訓練模型失敗: {str(e)}")
@@ -173,8 +173,6 @@ def train_api(config: TrainConfig):
     訓練端點：傳入測試集比例、隨機種子、模型類型與 alpha，線上重新訓練模型，並即時更新服務所使用的模型。
     """
     try:
-        from train_save import train_and_save_model
-        
         res = train_and_save_model(
             test_size=config.test_size,
             random_state=config.random_state,
@@ -316,8 +314,6 @@ def train_gradio_handler(test_size, random_state, model_type, alpha):
     """
     處理 Gradio UI 的重新訓練請求。
     """
-    from train_save import train_and_save_model
-    
     res = train_and_save_model(
         test_size=float(test_size),
         random_state=int(random_state),
