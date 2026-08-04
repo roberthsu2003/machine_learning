@@ -36,8 +36,7 @@ def load_model_state():
     MODEL_STATE.clear()
     MODEL_STATE.update({
         "model": model_data["model"],
-        "oe": model_data.get("oe"),
-        "le": model_data.get("le"),
+        "oe": model_data["oe"],
         "ohe": model_data["ohe"],
         "scaler": model_data["scaler"],
         "r2": model_data.get("r2", 0.8463),
@@ -124,31 +123,20 @@ def predict_api(payload: SalaryInput):
     預測端點：接收年資、學歷、城市，進行編碼與標準化後，回傳模型預測的月薪與估計年薪。
     """
     try:
-        le = MODEL_STATE["le"]
+        oe = MODEL_STATE["oe"]
         ohe = MODEL_STATE["ohe"]
         scaler = MODEL_STATE["scaler"]
         model = MODEL_STATE["model"]
 
         # 1. 學歷編碼 (使用 OrdinalEncoder 順序編碼)
-        oe = MODEL_STATE.get("oe")
-        if oe is not None:
-            try:
-                edu_encoded = int(oe.transform(pd.DataFrame([[payload.education_level]], columns=["EducationLevel"]))[0][0])
-            except ValueError:
-                valid_cats = list(oe.categories_[0])
-                raise HTTPException(
-                    status_code=400, 
-                    detail=f"未知的學歷: {payload.education_level}。可接受的值為: {valid_cats}"
-                )
-        else:
-            le = MODEL_STATE["le"]
-            try:
-                edu_encoded = int(le.transform([payload.education_level])[0])
-            except ValueError:
-                raise HTTPException(
-                    status_code=400, 
-                    detail=f"未知的學歷: {payload.education_level}。可接受的值為: {list(le.classes_)}"
-                )
+        try:
+            edu_encoded = int(oe.transform(pd.DataFrame([[payload.education_level]], columns=["EducationLevel"]))[0][0])
+        except ValueError:
+            valid_cats = list(oe.categories_[0])
+            raise HTTPException(
+                status_code=400, 
+                detail=f"未知的學歷: {payload.education_level}。可接受的值為: {valid_cats}"
+            )
 
         # 2. 城市獨熱編碼
         try:
@@ -306,16 +294,12 @@ def predict_gradio_handler(years_exp, edu_level, city):
     """
     處理 Gradio UI 的預測請求。
     """
-    oe = MODEL_STATE.get("oe")
+    oe = MODEL_STATE["oe"]
     ohe = MODEL_STATE["ohe"]
     scaler = MODEL_STATE["scaler"]
     model = MODEL_STATE["model"]
     
-    if oe is not None:
-        edu_encoded = int(oe.transform(pd.DataFrame([[edu_level]], columns=["EducationLevel"]))[0][0])
-    else:
-        le = MODEL_STATE["le"]
-        edu_encoded = int(le.transform([edu_level])[0])
+    edu_encoded = int(oe.transform(pd.DataFrame([[edu_level]], columns=["EducationLevel"]))[0][0])
     city_encoded = ohe.transform(pd.DataFrame([[city]], columns=["City"]))[0]
     
     feature_names = MODEL_STATE["feature_names"]
