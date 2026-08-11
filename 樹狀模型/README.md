@@ -1,5 +1,8 @@
-# 樹狀模型_決策樹 DecisionTreeClassifier
-## 注意:
+## 📌 🎯 ⭐ [適合教學和說明使用的 ipynb 檔 (decisionThreeClassifier.ipynb)](./decisionThreeClassifier.ipynb) 🚀
+
+> [!IMPORTANT]
+> 💡 **重要推薦**：請優先參考 [decisionThreeClassifier.ipynb](./decisionThreeClassifier.ipynb)，內含完整的決策樹原理教學、漸進圖像繪製與剪枝實作說明！
+
 - 解釋決策樹的基本概念，以及它如何用於分類。
 - 解釋樹的深度、節點、葉子等概念。
 - 嘗試修改 max_depth 參數，觀察模型的變化。
