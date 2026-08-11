@@ -18,6 +18,7 @@ cd machine_learning
 *   **使用 `uv`（推薦，極速）：**
     ```bash
     # 建立環境並安裝套件
+    uv init --no-package
     uv venv
     uv pip install -r requirements.txt
     ```
