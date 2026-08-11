@@ -22,13 +22,28 @@
 本專案目錄下包含以下核心檔案：
 ```text
 薪資預測-多元線性迴歸/
-├── app.py             # FastAPI + Gradio 融合服務（啟動主程式）
-├── train_save.py      # 模型訓練與元數據序列化腳本
-├── requirements.txt   # 相依套件清單
-├── Salary_Data2.csv   # 薪資訓練數據集
-├── ChineseFont.ttf    # 中文字型檔 (備用)
-└── README.md          # 本教學講義文件
+├── app.py                             # FastAPI + Gradio 融合服務（啟動主程式）
+├── train_save.py                      # 模型訓練與元數據序列化腳本
+├── practice_train_api_answer.ipynb    # 🎓 拆解範例 1：模型訓練與 API 端點邏輯
+├── practice_predict_api_answer.ipynb  # 🎓 拆解範例 2：資料預處理與預測 API 端點
+├── practice_gradio_ui_answer.ipynb    # 🎓 拆解範例 3：Gradio 網頁 UI 與前後端整合
+├── requirements.txt                   # 相依套件清單
+├── Salary_Data2.csv                   # 薪資訓練數據集
+├── ChineseFont.ttf                    # 中文字型檔 (備用)
+└── README.md                          # 本教學講義文件
 ```
+
+> [!TIP]
+> **💡 給學生的學習提醒：從步驟拆解 Jupyter Notebook 入手**
+> 
+> 主程式 `app.py` 整合了模型訓練、FastAPI RESTful 端點以及 Gradio Web 介面，程式碼架構完整且檔案較大，初學者可能較難一口氣理解全貌。
+> 
+> 為降低學習門檻，本專案特別提供了 **3 個步驟式拆解範例 (`.ipynb`)**，建議學生可先開啟並依序學習：
+> 1. **`practice_train_api_answer.ipynb`**：拆解學習如何訓練多元線性迴歸模型、序列化保存預處理器與實作 `/train` API。
+> 2. **`practice_predict_api_answer.ipynb`**：拆解學習特徵編碼（`OrdinalEncoder` / `OneHotEncoder`）、標準化轉換與實作 `/predict` API。
+> 3. **`practice_gradio_ui_answer.ipynb`**：拆解學習如何單獨建構 Gradio 互動式 UI 介面並與後端 API 串接。
+> 
+> 先透過 Notebook 掌握各模組細節後，再閱讀完整融合的主程式 `app.py`，會更容易融會貫通！
 
 ---
 
