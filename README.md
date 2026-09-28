@@ -101,7 +101,16 @@ cd machine_learning
 *   [**FastAPI + Gradio 混合服務部署-鳶尾花隨機森林分類器**](./模型部署/鳶尾花隨機森林分類器/README.md)：
     *   學習使用 `joblib` 將訓練好的 Scikit-Learn 模型進行序列化與儲存。
     *   利用 **FastAPI** 建立高性能預測端點（包含 Pydantic 資料校驗）。
-    *   使用 **Gradio** 快速拉出網頁 UI，並將兩者混合掛載
+    *   使用 **Gradio** 快速拉出網頁 UI，並將兩者混合掛載。
+*   [**FastAPI + Gradio 混合服務部署-糖尿病風險評估-邏輯迴歸**](./模型部署/糖尿病風險評估-邏輯迴歸/README.md)：
+    *   延伸自 [糖尿病邏輯迴歸實作](./邏輯迴歸/03_diabetes_logistic_regression.ipynb)，學習使用 `joblib` 將邏輯迴歸分類模型與 `StandardScaler` 標準化預處理器打包序列化。
+    *   利用 **FastAPI** 建立包含 Pydantic 資料校驗的生理檢驗（空腹血糖、年齡、體重、性別）預測端點與線上重訓練 API。
+    *   使用 **Gradio** 打造智慧門診輔助介面，即時計算患病機率（$0\% \sim 100\%$）、給出臨床風險等級建議，並動態繪製危險因子勝算比（Odds Ratio）長條圖。
+*   [**FastAPI + Gradio 混合服務部署-心臟衰竭生存風險預測-隨機森林**](./模型部署/心臟衰竭生存風險預測-隨機森林/README.md)：
+    *   延伸自 [心臟衰竭隨機森林實作](./決策樹集成模型/05_random_forest_heart_failure.ipynb)，學習使用 `joblib` 將多樹隨機森林模型與臨床檢驗特徵名稱打包序列化。
+    *   利用 **FastAPI** 建立急診重症指標（心臟射血分數 EF、血清肌酸酐、CPK 酵素等）預測端點與線上超參數（樹深、樹量）調校 API。
+    *   使用 **Gradio** 建置智慧重症監護與病況篩檢儀表板，即時呈現死亡高風險警示與臨床特徵重要性權重水平分析圖。
+
 
 ---
 
