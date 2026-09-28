@@ -124,14 +124,14 @@ cd machine_learning
 2. **醫療特徵工程與臨床評估指標 (6小時)**：
    * [特徵工程](./特徵工程)：醫療數據缺失值補值、類別變數編碼、特徵標準化與縮放（對 SVM/Logistic 極為關鍵）。
    * [模型評估指標](./評估指標)：臨床診斷評估、混淆矩陣、召回率 (Sensitivity/Recall)、精確率 (Precision)、F1-Score 與 [AUC-ROC 曲線](./評估指標/auc_roc_curve.ipynb)。
-3. **醫療核心分類演算法實戰 (18小時)**：
-   * **Logistic Regression 邏輯迴歸 (4.5小時)**：[邏輯迴歸](./邏輯迴歸) ➡️ 疾病風險機率預測、勝算比概念與 [乳癌資料集實作 (cancer說明3.ipynb)](./邏輯迴歸/cancer說明3.ipynb)。
-   * **Support Vector Machine, SVM 支援向量機 (4.5小時)**：[核化支援向量機](./核化支援向量機) ➡️ 決策邊界、核技巧 (RBF)、參數調校 (C 與 gamma) 與 [乳癌資料集 SVM 實作 (svm_5)](./核化支援向量機/svm_5乳癌資料集使用SVM.ipynb)。
-   * **Random Forest 隨機森林 (4.5小時)**：[樹狀模型基礎](./樹狀模型) ➡️ [決策樹集成模型](./決策樹集成模型) ➡️ Bagging 機制、[乳癌資料集隨機森林實作](./決策樹集成模型/02_random_forest_cancer.ipynb) 與臨床特徵重要性 (Feature Importance) 判讀。
-   * **梯度提升決策樹 Gradient Boosting (4.5小時)**：[決策樹集成模型](./決策樹集成模型) 與 [薈萃式學習](./薈萃式學習) ➡️ Boosting 循序提升學習原理、學習率調校、[乳癌梯度提升樹實作 (03_gradient_boosting_cancer.ipynb)](./決策樹集成模型/03_gradient_boosting_cancer.ipynb) 與 [心臟病 Boosting 案例 (ensemble_Boosting範例.ipynb)](./薈萃式學習/ensemble_Boosting範例.ipynb)。
+3. **醫療核心分類演算法實戰（四大不重複臨床疾病資料集） (18小時)**：
+   * **Logistic Regression 邏輯迴歸 (4.5小時)**：[邏輯迴歸](./邏輯迴歸) ➡️ **【案例：糖尿病患病風險預測】**（資料集：[Diabetes_Data.csv](./邏輯迴歸/Diabetes_Data.csv)）➡️ 學習疾病風險機率預測 (`predict_proba`)、Sigmoid 轉換與臨床危險因子勝算比 (Odds Ratio) 解讀 ➡️ [糖尿病邏輯迴歸實作 (03_diabetes_logistic_regression.ipynb)](./邏輯迴歸/03_diabetes_logistic_regression.ipynb)。
+   * **Support Vector Machine, SVM 支援向量機 (4.5小時)**：[核化支援向量機](./核化支援向量機) ➡️ **【案例：威斯康辛乳腺腫瘤良惡性診斷】**（資料集：`load_breast_cancer` 30 維切片細胞形態特徵）➡️ 學習高維空間最大邊界超平面、RBF 核技巧、特徵標準化對距離模型之關鍵影響與超參數 (C 與 $\gamma$) 調校 ➡️ [乳癌資料集 SVM 實作 (svm_5)](./核化支援向量機/svm_5乳癌資料集使用SVM.ipynb)。
+   * **Random Forest 隨機森林 (4.5小時)**：[決策樹集成模型](./決策樹集成模型) ➡️ **【案例：心臟衰竭重症生存風險預測】**（資料集：[heart_failure_clinical_records_dataset.csv](./決策樹集成模型/heart_failure_clinical_records_dataset.csv)）➡️ 學習 Bagging 自助抽樣機制、預剪枝抑制過擬合，以及量化臨床檢驗特徵重要性 (Feature Importance) 權重（解析血清肌酸酐與射血分數）➡️ [心臟衰竭隨機森林實作 (05_random_forest_heart_failure.ipynb)](./決策樹集成模型/05_random_forest_heart_failure.ipynb)。
+   * **梯度提升決策樹 Gradient Boosting (4.5小時)**：[決策樹集成模型](./決策樹集成模型) 與 [薈萃式學習](./薈萃式學習) ➡️ **【案例：冠心病 / 心臟病患病風險預測】**（資料集：UCI Heart Disease）➡️ 學習 Boosting 循序誤差修正原理、弱學習器集成、學習率調校與 GBDT 模型評估 ➡️ [心臟病 Boosting 案例 (ensemble_Boosting範例.ipynb)](./薈萃式學習/ensemble_Boosting範例.ipynb)。
 4. **臨床專題實作與多模型綜合評比 (9小時)**：
-   * **多模型橫向評估**：對比 Logistic Regression、SVM、Random Forest 與 Gradient Boosting 在醫療資料集（乳癌/心臟病）上的準確度、AUC-ROC 與 Recall 表現。
-   * **醫療決策可解釋性分析**：特徵重要性可視化排序，解析重要生化與臨床檢驗指標。
+   * **多模型橫向評估**：針對四大真實臨床醫療疾病資料集（糖尿病、乳癌、心臟衰竭、冠心病），跨模型橫向比對準確度 (Accuracy)、敏感度 (Sensitivity/Recall)、特異度 (Specificity) 與 AUC-ROC 指標。
+   * **醫療決策可解釋性分析**：比較邏輯迴歸勝算比 (OR) 與樹模型特徵重要性 (Feature Importance) 在臨床診斷上的可解釋性優劣。
    * **模型序列化與匯出**：學習使用 `joblib` 保存訓練好的最佳模型，為醫療端點服務部署做準備。
 
 #### 🎓 54 小時完整專題班路徑

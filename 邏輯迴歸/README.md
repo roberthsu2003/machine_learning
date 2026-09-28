@@ -124,8 +124,10 @@
 > [!IMPORTANT]
 > [**真偽資料集(2元分類)**實作解說](./forge說明2.ipynb)  
 > [**斯康辛州乳癌資料集(2元分類)**實作解說](./cancer說明3.ipynb)  
+> [**真實醫療案例：糖尿病患病風險預測與勝算比分析**](./03_diabetes_logistic_regression.ipynb)  
 > [多元線性分類說明](./multiclass_classification說明.ipynb)  
 > [**多元線性分類實作(iris)**](./multiclass_classification實作.ipynb)  
+
  
 
 

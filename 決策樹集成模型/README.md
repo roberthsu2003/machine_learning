@@ -24,6 +24,7 @@
 | 📄 **[02_random_forest_cancer.ipynb](./02_random_forest_cancer.ipynb)** *(原 100棵樹組成的隨機森林.ipynb)* | 乳癌資料集 - 100 棵樹隨機森林與特徵重要性直方圖 | 🌲 隨機森林抗過擬合實作 |
 | 🚀 **[03_gradient_boosting_cancer.ipynb](./03_gradient_boosting_cancer.ipynb)** *(全新補充)* | 乳癌資料集 - 梯度提升樹 (GBDT) 實作、`max_depth` 與 `learning_rate` 調參 | ⚡ GBDT 循序學習與優化 |
 | 📄 **[04_synthetic_rf_demo.ipynb](./04_synthetic_rf_demo.ipynb)** *(原 random_forests1.ipynb)* | 合成資料集二元分類實作與單一樹結構繪製 | 🧪 基礎實作練習 |
+| 🏥 **[05_random_forest_heart_failure.ipynb](./05_random_forest_heart_failure.ipynb)** *(真實醫療案例)* | 心臟衰竭臨床記錄 - 隨機森林生存風險預測、預剪枝與特徵重要性權重 | 🩺 智慧醫療與重症風險預測實戰 |
 
 ---
 
