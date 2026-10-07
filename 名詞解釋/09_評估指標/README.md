@@ -33,25 +33,25 @@
 
 #### 1. 準確率 (Accuracy)
 - **描述**：整體被正確分類的樣本比例。
-- **公式**：$$\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}$$
+- **公式**：`Accuracy = (TP + TN) / (TP + TN + FP + FN)`
 - **適用場景**：類別分佈均勻對稱的標準數據集。
 - **致命陷阱**：在**類別高度不平衡 (Imbalanced Data)** 時會嚴重失真（例如：1000 人中只有 5 人患罕見疾病，模型即使無腦全猜健康，準確率依然高達 99.5%，卻完全抓不出任何病人）。
 
 #### 2. 精確率 (Precision / 查準率)
 - **描述**：在所有被模型預測為「正類」的樣本中，實際上真正為正類的比例。
-- **公式**：$$\text{Precision} = \frac{TP}{TP + FP}$$
+- **公式**：`Precision = TP / (TP + FP)`
 - **關注焦點**：**極力消滅 FP（誤報）**。寧可保守漏抓，也絕不能冤枉好人！
 - **經典場景**：垃圾郵件過濾（不能把正常工作郵件當垃圾扔掉）、推薦系統、法庭定罪判定。
 
 #### 3. 召回率 (Recall / 查全率 / 敏感度 Sensitivity)
 - **描述**：在所有「實際為正類」的樣本中，被模型成功抓出的比例。
-- **公式**：$$\text{Recall} = \frac{TP}{TP + FN}$$
+- **公式**：`Recall = TP / (TP + FN)`
 - **關注焦點**：**極力消滅 FN（漏報）**。寧可抓錯十個，也絕不能漏放一個！
 - **經典場景**：重大惡性腫瘤篩檢、信用卡盜刷偵測、地震防空預警。
 
 #### 4. F1 分數 (F1-Score)
 - **描述**：精確率與召回率的**調和平均數 (Harmonic Mean)**。
-- **公式**：$$\text{F1-score} = 2 \cdot \frac{\text{Precision} \cdot \text{Recall}}{\text{Precision} + \text{Recall}}$$
+- **公式**：`F1-score = 2 * (Precision * Recall) / (Precision + Recall)`
 - **特點**：調和平均數會對極端小值施加嚴厲懲罰。只要 Precision 或 Recall 其中一者過低，F1 就會被大幅拉低。
 - **適用場景**：數據不平衡，且業務上同時重視精準度與覆蓋面的綜合評估。
 
@@ -66,21 +66,21 @@
 ![回歸誤差三大指標對比](images/03_regression_metrics_errors.png)
 
 #### 1. 平均絕對誤差 (MAE, Mean Absolute Error)
-- **公式**：$$\text{MAE} = \frac{1}{n} \sum_{i=1}^{n} |y_i - \hat{y}_i|$$
+- **公式**：`MAE = (1/n) * Σ |y - ŷ|`
 - **特點**：
   - 取絕對值計算，對所有樣本誤差給予線性權重。
   - 誤差單位與原始標籤完全相同，非常直觀好懂。
   - **抗噪性強**：對離群值與極端異常值不敏感（Robust）。
 
 #### 2. 均方誤差 (MSE, Mean Squared Error)
-- **公式**：$$\text{MSE} = \frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2$$
+- **公式**：`MSE = (1/n) * Σ (y - ŷ)²`
 - **特點**：
   - 透過平方放大較大的誤差，對極端預測錯誤施加重罰。
   - 數學性質極佳（處處連續可微），是梯度下降優化器最常使用的損失函數。
   - **缺點**：單位被平方了（例如：房價誤差單位變成「元²」），缺乏直觀的物理意義。
 
 #### 3. 均方根誤差 (RMSE, Root Mean Squared Error)
-- **公式**：$$\text{RMSE} = \sqrt{\text{MSE}} = \sqrt{\frac{1}{n} \sum_{i=1}^{n} (y_i - \hat{y}_i)^2}$$
+- **公式**：`RMSE = √MSE`
 - **特點**：
   - 對 MSE 開平方根，**成功將誤差單位還原回原始物理尺度**。
   - 保留了 MSE「對大誤差高度敏感、給予更重懲罰」的優良特性。
@@ -95,9 +95,14 @@
 
 ![決定係數 R² 原理：衡量模型解釋資料變異的能力](images/04_r_squared.png)
 
-**公式**：  
-$$R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}$$  
-*(其中 $SS_{\text{res}}$ 為模型未解釋的殘差平方和，$SS_{\text{tot}}$ 為數據相對於均值的總變異平方和)*
+**公式**：
+
+`R² = 1 - (SS_res / SS_tot)`
+
+$$R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} = 1 - \frac{\sum_{i=1}^{n} (y_i - \hat{y}_i)^2}{\sum_{i=1}^{n} (y_i - \bar{y})^2}$$
+
+- $SS_{\text{res}}$（殘差平方和 / Residual Sum of Squares）：模型尚未解釋的預測誤差平方總和 $\sum (y_i - \hat{y}_i)^2$
+- $SS_{\text{tot}}$（總平方和 / Total Sum of Squares）：數據本身的總波動變異平方和 $\sum (y_i - \bar{y})^2$
 
 **數值意義與性能光譜**：
 - **$R^2 = 1.0$ (100%)**：完美預測！所有樣本點分毫不差精準落在回歸直線上。
