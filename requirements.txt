@@ -8,3 +8,4 @@ pandas
 graphviz
 ipywidgets
 xlrd
+mplfonts

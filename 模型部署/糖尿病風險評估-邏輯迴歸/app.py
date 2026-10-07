@@ -21,13 +21,15 @@ scaler = meta["scaler"]
 odds_ratios = meta["odds_ratios"]
 
 # 中文字型設定
-font_path = "ChineseFont.ttf" if os.path.exists("ChineseFont.ttf") else "../../source_data/ChineseFont.ttf"
-if os.path.exists(font_path):
-    font_prop = fm.FontProperties(fname=font_path)
-    plt.rcParams["font.sans-serif"] = [font_prop.get_name()]
-    plt.rcParams["axes.unicode_minus"] = False
-else:
-    font_prop = None
+try:
+    from mplfonts import use_font
+    use_font('Noto Sans CJK TC')
+except Exception:
+    font_path = "ChineseFont.ttf" if os.path.exists("ChineseFont.ttf") else "../../source_data/ChineseFont.ttf"
+    if os.path.exists(font_path):
+        font_prop = fm.FontProperties(fname=font_path)
+        plt.rcParams["font.sans-serif"] = [font_prop.get_name()]
+        plt.rcParams["axes.unicode_minus"] = False
 
 # 2. 建立 FastAPI 實例
 app = FastAPI(

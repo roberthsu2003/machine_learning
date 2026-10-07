@@ -46,12 +46,10 @@ Q-Q 圖通過比較**數據的分量(quantiles)**與**理論分佈(或另一組�
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy import stats
-import matplotlib as mlp
-from matplotlib.font_manager import fontManager
+from mplfonts import use_font
 
-#載入中文字型
-fontManager.addfont('ChineseFont.ttf')
-mlp.rc('font', family='ChineseFont')
+# 載入中文字型
+use_font('Noto Sans CJK TC')
 
 # 創建2x2子圖
 fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(15, 15))

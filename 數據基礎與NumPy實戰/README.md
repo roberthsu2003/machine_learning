@@ -20,19 +20,6 @@
 | **`Scikit-learn`** | 🤖 **機器學習百寶袋** | 提供數十種標準機器學習模型、評估指標與練習數據集。 | `import sklearn` |
 | **`mglearn`** | 💡 **教學視覺化小助手** | 《Python 機器學習》教科書的教學專用套件，方便快速觀察數據邊界。 | `import mglearn` |
 
-> [!TIP]
-> **💡 Google Colab 中文顯示解法**：  
-> 在 Colab 雲端環境中繪製 Matplotlib 圖表時，中文預設會變成方框（豆腐字）。只要在 Notebook 一開始執行中文字型下載與設定即可：
-> ```python
-> !pip install -q wget
-> import os, wget, matplotlib.pyplot as plt, matplotlib.font_manager as fm
-> 
-> if not os.path.exists("ChineseFont.ttf"):
->     wget.download("https://github.com/roberthsu2003/machine_learning/raw/refs/heads/main/source_data/ChineseFont.ttf")
-> fm.fontManager.addfont("ChineseFont.ttf")
-> plt.rcParams['font.family'] = fm.FontProperties(fname="ChineseFont.ttf").get_name()
-> ```
-
 ---
 
 ## 📐 2. 機器學習中的「數據」長怎樣？（核心觀念）
@@ -158,3 +145,25 @@ print("重塑後的形狀:", y_2d.shape)  # (3, 1)
   加州大學歐文分校（UCI）建立的經典開源資料庫，提供數百個依照演算法任務（Classification, Regression, Clustering）與資料型態分類好的標竿數據集。
 * 🏆 **[Kaggle Datasets 開源數據專區](https://www.kaggle.com/datasets)**：  
   全球最大的資料科學家與機器學習社群，擁有各行各業的海量數據（金融、醫療、行銷、影像、文字等），並附帶全球開發者公開分享的 Jupyter Notebook 實作分析範例。
+
+---
+
+<details>
+<summary>💡 <b>常見問題：在 Google Colab / 本機繪圖時出現中文方塊（亂碼）怎麼辦？</b></summary>
+
+<br>
+
+本專案全數範例已採用現代跨平台字型套件 **`mplfonts`**，只需兩行代碼即可自動載入開源思源黑體並修正負號顯示問題：
+
+```python
+# 1. 一鍵安裝 mplfonts 套件
+!pip install -q mplfonts
+
+# 2. 自動套用思源黑體（繁體中文）
+from mplfonts import use_font
+use_font('Noto Sans CJK TC')
+```
+
+*(註：本專案各範例 Notebook 均已在開頭內建此設定，直接依序執行 Cell 即可正常繪製中文圖表。)*
+</details>
+
