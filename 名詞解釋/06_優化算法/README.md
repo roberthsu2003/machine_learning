@@ -57,10 +57,10 @@ $$\theta_{\text{new}} = \theta_{\text{old}} - \alpha \cdot \nabla J(\theta)$$
 ### 步長大小引發的性能光譜
 
 ```mermaid
-graph LR
-    Small[學習率過小: α = 0.00001] -->|步履蹣跚 耗費算力| Slow[訓練極慢 卡在局部極值]
-    Moderate[學習率適中: α = 0.001] -->|穩健下坡 步步為營| Optimal[快速平穩收斂至最優解]
-    Large[學習率過大: α = 10.0] -->|用力過猛 跨過山谷| Diverge[兩壁劇烈震盪甚至數值發散 NaN]
+flowchart LR
+    Small["學習率過小 (α = 0.00001)"] -->|"步履蹣跚 耗費算力"| Slow["訓練極慢 卡在局部極值"]
+    Moderate["學習率適中 (α = 0.001)"] -->|"穩健下坡 步步為營"| Optimal["快速平穩收斂至最優解"]
+    Large["學習率過大 (α = 10.0)"] -->|"用力過猛 跨過山谷"| Diverge["兩壁劇烈震盪甚至數值發散 NaN"]
 ```
 
 ### 實務調優策略
@@ -91,10 +91,10 @@ graph LR
 從純粹的梯度下降到現代頂尖優化器，演算法經歷了以下演進：
 
 ```mermaid
-graph TD
-    SGD[標準 SGD: 純負梯度前進] --> Momentum[Momentum 動量法<br>加入物理慣性，像滾雪球一樣加速衝過平緩區]
-    SGD --> AdaGrad[AdaGrad / RMSprop<br>根據歷史梯度大小，自動為不同維度調整獨立步長]
-    Momentum --> Adam[Adam 優化器<br>動量 Momentum + 自適應 RMSprop 雙劍合璧]
+flowchart TD
+    SGD["標準 SGD (純負梯度前進)"] --> Momentum["Momentum 動量法<br>加入物理慣性，加速衝過平緩區"]
+    SGD --> AdaGrad["AdaGrad / RMSprop<br>依歷史梯度動態調整獨立步長"]
+    Momentum --> Adam["Adam 優化器<br>動量 + 自適應步長雙劍合璧"]
     AdaGrad --> Adam
 ```
 

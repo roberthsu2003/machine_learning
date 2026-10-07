@@ -58,12 +58,12 @@
 ### 標籤的任務型態區分
 
 ```mermaid
-graph LR
-    Label[標籤 y 的型態] --> Discrete[離散型類別]
-    Label --> Continuous[連續型數值]
-    Discrete --> Binary[二元分類: 是/否, 0/1]
-    Discrete --> MultiClass[多元分類: 貓/狗/鳥]
-    Continuous --> Reg[回歸預測: 房價, 氣溫, 股價]
+flowchart LR
+    Label["標籤 y 的型態"] --> Discrete["離散型類別"]
+    Label --> Continuous["連續型數值"]
+    Discrete --> Binary["二元分類 (是/否, 0/1)"]
+    Discrete --> MultiClass["多元分類 (貓/狗/鳥)"]
+    Continuous --> Reg["回歸預測 (房價, 氣溫, 股價)"]
 ```
 
 ---

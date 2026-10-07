@@ -163,12 +163,12 @@ $$\text{Generalization Gap} = E_{\text{test}} - E_{\text{train}}$$
 
 ```mermaid
 flowchart TD
-    A["🎯 模型泛化 (Generalization)<br/>核心目標：在未見數據上表現優異"] --> B["⚠️ 診斷指標：泛化鴻溝 (Generalization Gap)<br/>Gap = 測試誤差 - 訓練誤差"]
+    A["🎯 模型泛化 (Generalization)<br>核心目標：在未見數據上表現優異"] --> B["⚠️ 診斷指標：泛化鴻溝 (Generalization Gap)<br>Gap = 測試誤差 - 訓練誤差"]
     
     A --> C["📏 評估手段"]
-    C --> C1["數據三折劃分<br/>(訓練 70% / 驗證 15% / 測試 15%)"]
-    C --> C2["嚴防數據洩漏<br/>(Scaler 僅在訓練集 fit)"]
-    C --> C3["K-折交叉驗證<br/>(K-Fold 消除劃分隨機偏差)"]
+    C --> C1["數據三折劃分<br>(訓練 70% / 驗證 15% / 測試 15%)"]
+    C --> C2["嚴防數據洩漏<br>(Scaler 僅在訓練集 fit)"]
+    C --> C3["K-折交叉驗證<br>(K-Fold 消除劃分隨機偏差)"]
     
     A --> D["🛠️ 提升泛化實戰體系"]
     D --> D1["數據端：擴充樣本、數據增強、清洗標籤"]

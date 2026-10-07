@@ -55,21 +55,21 @@
 ### 實務常見的核心超參數清單
 
 ```mermaid
-graph TD
-    HP[常見模型超參數] --> Structure[模型架構結構類]
-    HP --> Optimization[優化與學習節奏類]
-    HP --> Regularization[正則化防過擬合類]
+flowchart TD
+    HP["常見模型超參數"] --> Structure["模型架構結構類"]
+    HP --> Optimization["優化與學習節奏類"]
+    HP --> Regularization["正則化防過擬合類"]
     
-    Structure --> S1[決策樹最大深度 max_depth]
-    Structure --> S2[K-NN 鄰居數 k]
-    Structure --> S3[神經網絡層數與神經元數量]
+    Structure --> S1["決策樹最大深度 max_depth"]
+    Structure --> S2["K-NN 鄰居數 k"]
+    Structure --> S3["神經網絡層數與神經元數量"]
     
-    Optimization --> O1[學習率 Learning Rate α]
-    Optimization --> O2[批次大小 Batch Size]
-    Optimization --> O3[訓練輪數 Epochs]
+    Optimization --> O1["學習率 Learning Rate (α)"]
+    Optimization --> O2["批次大小 Batch Size"]
+    Optimization --> O3["訓練輪數 Epochs"]
     
-    Regularization --> R1[L2 正則係數 λ / weight_decay]
-    Regularization --> R2[Dropout 機率]
+    Regularization --> R1["L2 正則係數 (λ / weight_decay)"]
+    Regularization --> R2["Dropout 機率"]
 ```
 
 ---
