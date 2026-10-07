@@ -58,12 +58,12 @@
 Herdr 採取由大到小的四層層級設計：
 
 ```mermaid
-graph TD
-    WS[Workspace: 工作區 (例如: w1)<br/>獨立專案或目錄環境]
-    TAB[Tab: 分頁 (例如: w1:t1)<br/>功能群組分類]
-    PANE1[Pane 1: 終端面板 (例如: w1:p1)<br/>執行 Shell 指令]
-    PANE2[Pane 2: 終端面板 (例如: w1:p2)<br/>運行 AI Agent]
-    AGENT[Agent: AI 代理人 (例如: writer)<br/>生命週期狀態: working / idle / blocked]
+flowchart TD
+    WS["Workspace 工作區 (例: w1) - 獨立專案環境"]
+    TAB["Tab 分頁 (例: w1:t1) - 功能群組分類"]
+    PANE1["Pane 1 面板 (例: w1:p1) - 執行 Shell 指令"]
+    PANE2["Pane 2 面板 (例: w1:p2) - 運行 AI Agent"]
+    AGENT["Agent 代理人 (例: writer) - 狀態: working / idle / blocked"]
 
     WS --> TAB
     TAB --> PANE1
