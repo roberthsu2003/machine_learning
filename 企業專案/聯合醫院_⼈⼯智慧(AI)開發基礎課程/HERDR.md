@@ -120,6 +120,7 @@ herdr completion zsh
 herdr integration install claude
 herdr integration install codex
 herdr integration install opencode
+herdr integration install antigravity    # Google Antigravity CLI (agy)
 ```
 
 ### 2.4 賦予 Agent 控制能力（Agent Skill）
@@ -269,7 +270,7 @@ herdr pane split --current --direction down --cwd "$PWD" --no-focus
 herdr agent start worker-agent --kind claude --pane <pane-id>
 ```
 * **命名規則**：符合 `[a-z][a-z0-9_-]{0,31}`，且在存活的 Agent 中需唯一。
-* **`--kind`**：支援 `claude`、`codex`、`opencode` 等。
+* **`--kind`**：支援 `claude`、`codex`、`opencode`、`antigravity` 等。
 * **注意**：`agent start` 只能掛載在已存在且處於互動 Shell Prompt 的 Pane 上。
 
 #### 步驟 3：派發 Prompt 並等待完成（關鍵：`--wait`）
