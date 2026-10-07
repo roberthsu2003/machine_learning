@@ -8,10 +8,6 @@
 
 人工智慧、機器學習、深度學習與生成式 AI 並非互相對立的平行技術，而是**層層包覆、由外向內的演進同心圓**：
 
-### 1. 3D 未來科技感同心圓架構
-![AI ML DL GenAI 3D 同心圓架構圖](images/01_ai_concentric_circles_3d.jpg)
-
-### 2. 繁體中文教學架構資訊全景圖
 ![人工智慧全景同心圓資訊圖](images/02_ai_ml_dl_concentric_infographic.png)
 
 ---
