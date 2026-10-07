@@ -8,7 +8,7 @@
 
 人工智慧、機器學習、深度學習與生成式 AI 並非互相對立的平行技術，而是**層層包覆、由外向內的演進同心圓**：
 
-![人工智慧全景同心圓資訊圖](images/02_ai_ml_dl_concentric_infographic.png)
+![人工智慧全景同心圓資訊圖](images/ai_ml_dl_concentric_infographic.png)
 
 ---
 
