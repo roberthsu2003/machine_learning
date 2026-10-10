@@ -25,6 +25,9 @@
 
 ## 📥 課程講義與簡報檔案下載
 
+* 🌐 **[線上閱讀與下載教材（Light Mode 網頁）](https://roberthsu2003.github.io/machine_learning/docx/)**
+  （GitHub Pages 啟用並部署後可使用；[網頁原始檔](../docx/index.html)）
+
 本目錄已全面重新設計高解析度 16:9 投影片，包含視覺化圖解、生動生活實例與現代科技暗黑風排版：
 
 * 👉 **[📥 點此下載高畫質 PDF 講義簡報 (機器學習簡報.pdf)](./機器學習簡報.pdf)**  
