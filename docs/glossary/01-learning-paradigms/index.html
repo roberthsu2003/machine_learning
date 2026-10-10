@@ -1,15 +1,15 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 01 章 學習範式：完整教材、原圖對照與互動 2D 幾何動畫。"><title>01 學習範式｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 01 章 機器學習的類型：完整教材、原圖對照與互動 2D 幾何動畫。"><title>01 機器學習的類型｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
 <header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%E5%AD%B8%E7%BF%92%E7%AF%84%E5%BC%8F/README.md">GitHub 原文 ↗</a></nav></header>
-<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 01 / 12 · INTERACTIVE LESSON</div><h1>學習範式</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#supervised">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 01 / 12 · INTERACTIVE LESSON</div><h1>機器學習的類型</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#supervised">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
 <noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
-<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#supervised">監督式：分類與回歸</a><a href="#unsupervised">非監督式：聚類與降維</a><a href="#paradigm-comparison">範式比較</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 監督式學習 (Supervised Learning)</a><a href="#section-3">2. 非監督式學習 (Unsupervised Learning)</a><a href="#section-4">3. 學習範式全景對照</a><a href="#section-5">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>機器學習（Machine Learning, ML）本質上是<strong>讓電腦從數據中自動尋找規律，而非依賴人工程式碼一條條寫死規則</strong>的科學。</p>
-<p>依據「是否有標準答案提供給模型學習」以及「回饋機制的不同」，機器學習主要分為兩大主流範式：<strong>監督式學習</strong>與<strong>非監督式學習</strong>；在進階實務中，亦常結合<strong>半監督式學習</strong>與<strong>強化學習</strong>。</p>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#supervised">監督式：分類與回歸</a><a href="#unsupervised">非監督式：聚類與降維</a><a href="#paradigm-comparison">學習類型比較</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 監督式學習 (Supervised Learning)</a><a href="#section-3">2. 非監督式學習 (Unsupervised Learning)</a><a href="#section-4">3. 學習類型全景對照</a><a href="#section-5">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>機器學習（Machine Learning, ML）本質上是<strong>讓電腦從數據中自動尋找規律，而非依賴人工程式碼一條條寫死規則</strong>的科學。</p>
+<p>依據「是否有標準答案提供給模型學習」以及「回饋機制的不同」，機器學習主要分為兩大主要類型：<strong>監督式學習</strong>與<strong>非監督式學習</strong>；在進階實務中，亦常結合<strong>半監督式學習</strong>與<strong>強化學習</strong>。</p>
 <hr />
 <h2 id="section-1">🎯 本章學習目標</h2>
 <ol>
 <li>掌握<strong>監督式學習</strong>的核心機制，能精準區分<strong>分類任務</strong>與<strong>回歸任務</strong>。</li>
 <li>理解<strong>非監督式學習</strong>的探索本質，掌握<strong>聚類</strong>與<strong>降維</strong>的應用場景。</li>
-<li>能從資料特性（有無標籤）與商業需求出發，正確選定合適的學習範式。</li>
+<li>能從資料特性（有無標籤）與商業需求出發，正確選定合適的學習類型。</li>
 </ol>
 <hr />
 <h2 id="section-2">1. 監督式學習 (Supervised Learning)</h2>
@@ -114,17 +114,17 @@
 </tbody>
 </table></div>
 <hr />
-<h2 id="section-4">3. 學習範式全景對照</h2>
+<h2 id="section-4">3. 學習類型全景對照</h2>
 <h4>📊 觀念圖解</h4>
 <section class="scene" id="paradigm-comparison" data-scene="paradigm-comparison" aria-labelledby="title-paradigm-comparison">
-<div class="scene-head"><h3 id="title-paradigm-comparison">範式比較</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<div class="scene-head"><h3 id="title-paradigm-comparison">學習類型比較</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">同一批資料在「有標籤／無標籤」兩條管線移動，對照模型接收的資訊。</p>
-<canvas width="760" height="450" role="img" aria-label="範式比較幾何動畫" aria-describedby="result-paradigm-comparison">請閱讀下方的動畫說明與本節教材。</canvas>
+<canvas width="760" height="450" role="img" aria-label="學習類型比較幾何動畫" aria-describedby="result-paradigm-comparison">請閱讀下方的動畫說明與本節教材。</canvas>
 <div class="scene-parameters"></div>
 <p class="scene-result" id="result-paradigm-comparison" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
-<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="範式比較播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="範式比較動畫時間軸"><span class="time-label">0%</span></div>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="學習類型比較播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="學習類型比較動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：學習範式總結比較圖解</summary><img src="./assets/images/03_comparison.png" alt="學習範式總結比較圖解" loading="lazy"><a href="./assets/images/03_comparison.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：學習類型總結比較圖解</summary><img src="./assets/images/03_comparison.png" alt="學習類型總結比較圖解" loading="lazy"><a href="./assets/images/03_comparison.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>核心對照矩陣</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -164,7 +164,7 @@
 </table></div>
 <blockquote>
 <blockquote>
-<p><strong>拓展視野：其他現代學習範式</strong></p>
+<p><strong>拓展視野：其他現代學習類型</strong></p>
 </blockquote>
 <ul>
 <li><strong>半監督式學習 (Semi-Supervised Learning)</strong>：擁有大量未標記數據，但只有極少量昂貴的人工標籤。利用少量標籤引導大量未標籤數據，大幅降低標註成本。</li>

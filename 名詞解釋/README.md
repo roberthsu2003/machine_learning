@@ -10,7 +10,7 @@
 ```mermaid
 flowchart TD
     subgraph G1 ["模組一：數據與特徵基石"]
-        M1["01 學習範式<br>(監督 vs 非監督)"]
+        M1["01 機器學習的類型<br>(監督 vs 非監督)"]
         M2["02 數據結構<br>(特徵 X 與標籤 y)"]
         M3["03 數據分割<br>(Train / Val / Test)"]
         M4["04 特徵工程<br>(縮放、編碼、選擇)"]
@@ -52,7 +52,7 @@ flowchart TD
 
 | 模組分組 | 編號 | 章節主題 | 核心學習內容與亮點 | 導覽連結 | 互動動畫 |
 | :--- | :---: | :--- | :--- | :---: | :---: |
-| **模組一：數據與特徵** | **01** | **[學習範式](./01_學習範式/README.md)** | 監督式學習（分類/回歸）、非監督式學習（聚類/降維）、半監督與強化學習全景對比 | [📖 閱讀章節](./01_學習範式/README.md) | [🎬 互動動畫](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/) |
+| **模組一：數據與特徵** | **01** | **[機器學習的類型](./01_學習範式/README.md)** | 監督式學習（分類/回歸）、非監督式學習（聚類/降維）、半監督與強化學習全景對比 | [📖 閱讀章節](./01_學習範式/README.md) | [🎬 互動動畫](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/) |
 | | **02** | **[數據結構](./02_數據結構/README.md)** | 特徵矩陣 $X$ 與標籤向量 $y$ 的組織形態、五大特徵型態、相親履歷生活比喻 | [📖 閱讀章節](./02_數據結構/README.md) | [🎬 互動動畫](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/) |
 | | **03** | **[數據分割](./03_數據分割/README.md)** | 訓練集、驗證集與測試集的三部曲職責、分層抽樣、時序分割、嚴防數據洩漏 | [📖 閱讀章節](./03_數據分割/README.md) | [🎬 互動動畫](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/) |
 | | **04** | **[特徵工程](./04_特徵工程/README.md)** | 特徵縮放幾何直覺（標準化 vs 正規化）、類別編碼陷阱（One-Hot vs 標籤編碼）、特徵選擇三大流派 | [📖 閱讀章節](./04_特徵工程/README.md) | [🎬 互動動畫](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/) |

@@ -56,7 +56,7 @@ demo('unsupervised','非監督式：聚類與降維',[select('mode','學習任�
  if(s.params.mode==='projection'){const angle=s.params.angle*Math.PI/180,ux=Math.cos(angle),uy=Math.sin(angle);G.line(c,a.X(-2*ux),a.Y(-2*uy),a.X(2*ux),a.Y(2*uy),C.orange,3);data.forEach(p=>{const v=p.x*ux+p.y*uy,tx=v*ux,ty=v*uy;G.line(c,a.X(p.x),a.Y(p.y),a.X(tx),a.Y(ty),C.line,1);G.circle(c,a.X(M.lerp(p.x,tx,s.progress)),a.Y(M.lerp(p.y,ty,s.progress)),5,C.green);});G.heading(c,'把二維座標投影到一條軸','投影方向可手動旋轉；不是自動 PCA 求解');return {message:`目前投影角 ${s.params.angle}°。每個點變成一個投影座標，垂直方向的資訊會被捨棄。`,metrics:{angle:s.params.angle}};}
  const result=M.kmeans(data,s.params.k,s.step,s.params.seed);G.dots(c,a,result.assigned,'group');result.centers.forEach((p,i)=>{G.diamond(c,a.X(p.x),a.Y(p.y),13,G.palette[i]);G.text(c,`C${i+1}`,a.X(p.x),a.Y(p.y)-22,13,G.palette[i]);});G.heading(c,'K-Means：指派群組，再移動中心',`第 ${s.step} 次中心更新`);return {message:`圓點未使用真實標籤。每一步先找最近中心，再以群內平均更新中心；目前 ${s.params.k} 群。`,metrics:{centers:result.centers,iteration:s.step}};
 },undefined,{steps:10,resample:true}),
-demo('paradigm-comparison','範式比較',[select('mode','比較學習範式',[['supervised','監督式'],['unsupervised','非監督式'],['semi','半監督式（示意）'],['rl','強化學習（示意）']])],(c,s)=>{
+demo('paradigm-comparison','學習類型比較',[select('mode','比較學習類型',[['supervised','監督式'],['unsupervised','非監督式'],['semi','半監督式（示意）'],['rl','強化學習（示意）']])],(c,s)=>{
  const m=s.params.mode;const labels=m==='rl'?['智能體','行動','環境','獎勵']:['樣本 X',m==='unsupervised'?'無標籤':m==='semi'?'少量 y':'完整 y','學習模型','輸出'];G.flow(c,labels,s.progress*3.99);
  for(let i=0;i<12;i++){G.cell(c,80+(i%6)*28,320+Math.floor(i/6)*28,(m==='unsupervised'||(m==='semi'&&i>2))?'?':i%2,i%2?'#f1e0ca':C.mint,22,22);}
  if(m==='rl'){G.arrow(c,660,260,100,260,C.orange);G.text(c,'由行動結果回饋獎勵',380,315,19,C.orange);}

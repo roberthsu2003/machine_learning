@@ -51,7 +51,7 @@ docs/
 
 | 原章序 | 章節 | 子目錄／網址尾段 | 幾何動畫重點 | 場景說明 |
 | :---: | :--- | :--- | :--- | :--- |
-| 01 | 學習範式 | `01-learning-paradigms/` | 帶標籤／無標籤資料流、分類與回歸、聚類與投影 | [3 個場景](01-learning-paradigms/README.md) |
+| 01 | 機器學習的類型 | `01-learning-paradigms/` | 帶標籤／無標籤資料流、分類與回歸、聚類與投影 | [3 個場景](01-learning-paradigms/README.md) |
 | 02 | 數據結構 | `02-data-structures/` | 欄位方塊拆解、標籤移出、X 矩陣與 y 向量重排 | [3 個場景](02-data-structures/README.md) |
 | 03 | 數據分割 | `03-data-splitting/` | 資料方塊分箱、分層與時間切分、洩漏路徑 | [4 個場景](03-data-splitting/README.md) |
 | 04 | 特徵工程 | `04-feature-engineering/` | 特徵淡出、縮放後散點移動、One-Hot 方塊展開 | [3 個場景](04-feature-engineering/README.md) |

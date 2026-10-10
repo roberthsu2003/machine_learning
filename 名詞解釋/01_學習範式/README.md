@@ -1,23 +1,23 @@
-# 1. 學習範式 (Learning Paradigms)
+# 1. 機器學習的類型 (Types of Machine Learning)
 
 <!-- interactive-glossary:start -->
 
 🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/)**
 
-動畫場景：[監督式：分類與回歸](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#supervised) · [非監督式：聚類與降維](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#unsupervised) · [範式比較](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#paradigm-comparison)
+動畫場景：[監督式：分類與回歸](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#supervised) · [非監督式：聚類與降維](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#unsupervised) · [學習類型比較](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#paradigm-comparison)
 
 <!-- interactive-glossary:end -->
 
 機器學習（Machine Learning, ML）本質上是**讓電腦從數據中自動尋找規律，而非依賴人工程式碼一條條寫死規則**的科學。
 
-依據「是否有標準答案提供給模型學習」以及「回饋機制的不同」，機器學習主要分為兩大主流範式：**監督式學習**與**非監督式學習**；在進階實務中，亦常結合**半監督式學習**與**強化學習**。
+依據「是否有標準答案提供給模型學習」以及「回饋機制的不同」，機器學習主要分為兩大主要類型：**監督式學習**與**非監督式學習**；在進階實務中，亦常結合**半監督式學習**與**強化學習**。
 
 ---
 
 ## 🎯 本章學習目標
 1. 掌握**監督式學習**的核心機制，能精準區分**分類任務**與**回歸任務**。
 2. 理解**非監督式學習**的探索本質，掌握**聚類**與**降維**的應用場景。
-3. 能從資料特性（有無標籤）與商業需求出發，正確選定合適的學習範式。
+3. 能從資料特性（有無標籤）與商業需求出發，正確選定合適的學習類型。
 
 ---
 
@@ -70,10 +70,10 @@
 
 ---
 
-## 3. 學習範式全景對照
+## 3. 學習類型全景對照
 
 #### 📊 觀念圖解
-![學習範式總結比較圖解](./images/03_comparison.png)
+![學習類型總結比較圖解](./images/03_comparison.png)
 
 ### 核心對照矩陣
 
@@ -86,7 +86,7 @@
 | **常見應用領域** | 疾病診斷、人臉識別、股價走勢預測 | 潛在客群輪廓分析、異常詐欺交易偵測、圖像特徵壓縮 |
 
 > [!NOTE]
-> **拓展視野：其他現代學習範式**
+> **拓展視野：其他現代學習類型**
 > - **半監督式學習 (Semi-Supervised Learning)**：擁有大量未標記數據，但只有極少量昂貴的人工標籤。利用少量標籤引導大量未標籤數據，大幅降低標註成本。
 > - **強化學習 (Reinforcement Learning, RL)**：沒有固定的數據集，智慧體（Agent）透過與環境互動試錯（Trial-and-Error），依據獲得的獎勵（Reward）或懲罰最大化長期累積回報（如 AlphaGo、自動駕駛）。
 

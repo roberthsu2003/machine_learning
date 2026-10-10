@@ -5,7 +5,7 @@
     {
       "number": 1,
       "slug": "01-learning-paradigms",
-      "title": "學習範式",
+      "title": "機器學習的類型",
       "source_readme": "名詞解釋/01_學習範式/README.md",
       "path": "docs/glossary/01-learning-paradigms/index.html",
       "url": "https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/",
@@ -31,9 +31,9 @@
         },
         {
           "id": "paradigm-comparison",
-          "title": "範式比較",
+          "title": "學習類型比較",
           "geometry": "同一批資料在「有標籤／無標籤」兩條管線移動，對照模型接收的資訊。",
-          "controls": "切換範式、逐步播放；半監督與強化學習以補充示意呈現",
+          "controls": "切換學習類型、逐步播放；半監督與強化學習以補充示意呈現",
           "source_images": [
             "名詞解釋/01_學習範式/images/03_comparison.png"
           ]
