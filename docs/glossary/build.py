@@ -169,12 +169,12 @@ class Renderer(mistune.HTMLRenderer):
         target = BASE / self.chapter['slug'] / 'assets/images' / path.name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(path, target)
-        scenes = []
-        for scene in self.chapter['scenes']:
-            if relative in scene['source_images'] and scene['id'] not in self.used:
-                scenes.append(scene_html(scene))
-                self.used.add(scene['id'])
-        content = ''.join(scenes) + f'<details class="original"><summary>對照原教材圖解：{text}</summary><img src="./assets/images/{quote(path.name)}" alt="{escape(text, quote=True)}" loading="lazy"><a href="./assets/images/{quote(path.name)}" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>'
+        matched = [scene for scene in self.chapter['scenes'] if relative in scene['source_images'] and scene['id'] not in self.used]
+        for scene in matched:
+            self.used.add(scene['id'])
+        content = ''.join(scene_html(scene) for scene in matched)
+        jump = ''.join(f'<a href="#{scene["id"]}">↑ 回到互動動畫：{escape(scene["title"])}</a>' for scene in matched)
+        content += f'<details class="original"><summary>對照原教材圖解：{text}</summary>' + (f'<p class="scene-jump">{jump}</p>' if jump else '') + f'<img src="./assets/images/{quote(path.name)}" alt="{escape(text, quote=True)}" loading="lazy"><a href="./assets/images/{quote(path.name)}" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>'
         token = f'@@IMAGE{len(self.placeholders)}@@'
         self.placeholders[token] = content
         return token

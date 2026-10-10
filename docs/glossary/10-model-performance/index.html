@@ -23,7 +23,7 @@
 <p class="scene-result" id="result-fit-spectrum" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="欠擬合、良好擬合與過度擬合播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="欠擬合、良好擬合與過度擬合動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：欠擬合原理與特徵圖解</summary><img src="./assets/images/01_underfitting.png" alt="欠擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/01_underfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：欠擬合原理與特徵圖解</summary><p class="scene-jump"><a href="#fit-spectrum">↑ 回到互動動畫：欠擬合、良好擬合與過度擬合</a></p><img src="./assets/images/01_underfitting.png" alt="欠擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/01_underfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>核心本質：高偏差 (High Bias)</h3>
 <ul>
 <li><strong>偏差 (Bias)</strong> 衡量的是模型預測的期望值與真實值之間的差距。</li>
@@ -87,7 +87,7 @@
 <p class="scene-result" id="result-bias-variance" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="偏差與變異數播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="偏差與變異數動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：偏差-變異數權衡與擬合光譜全貌</summary><img src="./assets/images/03_bias_variance_tradeoff.png" alt="偏差-變異數權衡與擬合光譜全貌" loading="lazy"><a href="./assets/images/03_bias_variance_tradeoff.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：偏差-變異數權衡與擬合光譜全貌</summary><p class="scene-jump"><a href="#bias-variance">↑ 回到互動動畫：偏差與變異數</a></p><img src="./assets/images/03_bias_variance_tradeoff.png" alt="偏差-變異數權衡與擬合光譜全貌" loading="lazy"><a href="./assets/images/03_bias_variance_tradeoff.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>泛化誤差的數學分解</h3>
 <p>統計學習理論證明，對於任何監督式學習回歸問題，模型的<strong>總預期泛化誤差 (Total Expected Error)</strong> 可以嚴格分解為三部分：</p>
 <div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{Total Error} = \text{Bias}^2 + \text{Variance} + \sigma^2"><mrow><mtext>Total Error</mtext><mo>=</mo><msup><mtext>Bias</mtext><mn>2</mn></msup><mo>+</mo><mtext>Variance</mtext><mo>+</mo><msup><mi>σ</mi><mn>2</mn></msup></mrow></math></div><ul>
@@ -153,7 +153,7 @@
 <p class="scene-result" id="result-learning-curves" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="學習曲線與早停播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="學習曲線與早停動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：學習曲線走勢與模型性能動態診斷</summary><img src="./assets/images/04_learning_curves.png" alt="學習曲線走勢與模型性能動態診斷" loading="lazy"><a href="./assets/images/04_learning_curves.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：學習曲線走勢與模型性能動態診斷</summary><p class="scene-jump"><a href="#learning-curves">↑ 回到互動動畫：學習曲線與早停</a></p><img src="./assets/images/04_learning_curves.png" alt="學習曲線走勢與模型性能動態診斷" loading="lazy"><a href="./assets/images/04_learning_curves.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>學習曲線的觀測維度</h3>
 <p>學習曲線繪製了模型的<strong>訓練損失 (Training Loss)</strong> 與<strong>驗證損失 (Validation Loss)</strong> 隨著「訓練輪數 (Epochs)」或「訓練樣本量」推進的動態走勢：</p>
 <h4>階段 1：欠擬合階段 (Underfitting Zone)</h4>
@@ -185,7 +185,7 @@
 <p class="scene-result" id="result-solutions" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="改善方式播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="改善方式動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：模型性能問題全景應對策略全貌</summary><img src="./assets/images/05_solutions_overview.png" alt="模型性能問題全景應對策略全貌" loading="lazy"><a href="./assets/images/05_solutions_overview.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：模型性能問題全景應對策略全貌</summary><p class="scene-jump"><a href="#solutions">↑ 回到互動動畫：改善方式</a></p><img src="./assets/images/05_solutions_overview.png" alt="模型性能問題全景應對策略全貌" loading="lazy"><a href="./assets/images/05_solutions_overview.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>欠擬合急救箱：提升容量 · 降低偏差</h3>
 <p>當模型陷入欠擬合時，首要目標是<strong>給模型「鬆綁與充能」</strong>，全面增強其表達能力：</p>
 <ol>

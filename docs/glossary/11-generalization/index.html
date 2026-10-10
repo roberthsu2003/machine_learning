@@ -23,7 +23,7 @@
 <p class="scene-result" id="result-unseen-data" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="未見資料與泛化播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="未見資料與泛化動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：模型泛化核心本質圖解</summary><img src="./assets/images/01_generalization_concept.png" alt="模型泛化核心本質圖解" loading="lazy"><a href="./assets/images/01_generalization_concept.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：模型泛化核心本質圖解</summary><p class="scene-jump"><a href="#unseen-data">↑ 回到互動動畫：未見資料與泛化</a></p><img src="./assets/images/01_generalization_concept.png" alt="模型泛化核心本質圖解" loading="lazy"><a href="./assets/images/01_generalization_concept.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>本質剖析：死記硬背 vs 融會貫通</h3>
 <ul>
 <li><strong>死記硬背 (Memorization / 過擬合)</strong>：模型記住了訓練樣本特定的背景顏色、局部噪聲或偶發個例（例如：誤以為「背景有綠色草地」才叫狗）。一旦換到室內瓷磚環境，預測立刻瓦解。</li>
@@ -55,7 +55,7 @@
 <p class="scene-result" id="result-generalization-gap" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="泛化鴻溝播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="泛化鴻溝動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：泛化誤差與泛化鴻溝圖解</summary><img src="./assets/images/02_generalization_gap.png" alt="泛化誤差與泛化鴻溝圖解" loading="lazy"><a href="./assets/images/02_generalization_gap.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：泛化誤差與泛化鴻溝圖解</summary><p class="scene-jump"><a href="#generalization-gap">↑ 回到互動動畫：泛化鴻溝</a></p><img src="./assets/images/02_generalization_gap.png" alt="泛化誤差與泛化鴻溝圖解" loading="lazy"><a href="./assets/images/02_generalization_gap.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>經驗風險 vs 期望風險</h3>
 <ul>
 <li><strong>經驗誤差 (Empirical Error / 訓練誤差 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="E_{\text{train}}"><mrow><msub><mi>E</mi><mrow><mtext>train</mtext></mrow></msub></mrow></math>)</strong>：模型在已知訓練樣本集上的平均損失。</li>
@@ -113,7 +113,7 @@
 <p class="scene-result" id="result-cross-validation" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="資料分割與 K 折交叉驗證播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="資料分割與 K 折交叉驗證動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：數據集標準三大劃分規範與數據洩漏防範</summary><img src="./assets/images/03_data_splitting.png" alt="數據集標準三大劃分規範與數據洩漏防範" loading="lazy"><a href="./assets/images/03_data_splitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：數據集標準三大劃分規範與數據洩漏防範</summary><p class="scene-jump"><a href="#cross-validation">↑ 回到互動動畫：資料分割與 K 折交叉驗證</a></p><img src="./assets/images/03_data_splitting.png" alt="數據集標準三大劃分規範與數據洩漏防範" loading="lazy"><a href="./assets/images/03_data_splitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>機器學習的基石：獨立同分佈假設 (I.I.D.)</h3>
 <p>機器學習算法能夠有效泛化的數學前提，是假設所有樣本均滿足<strong>獨立同分佈 (Independent and Identically Distributed, I.I.D.)</strong> —— 即訓練數據、驗證數據與未來的生產數據，都是從同一個客觀世界的總體概率分佈 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="P(X, Y)"><mrow><mi>P</mi><mo>(</mo><mi>X</mi><mo>,</mo><mi>Y</mi><mo>)</mo></mrow></math> 中獨立採樣而來的。</p>
 <blockquote>
@@ -174,7 +174,7 @@
 <p class="scene-result" id="result-improve-generalization" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="提升泛化播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="提升泛化動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：提升模型泛化能力的四大維度工程實戰體系</summary><img src="./assets/images/05_improve_generalization.png" alt="提升模型泛化能力的四大維度工程實戰體系" loading="lazy"><a href="./assets/images/05_improve_generalization.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：提升模型泛化能力的四大維度工程實戰體系</summary><p class="scene-jump"><a href="#improve-generalization">↑ 回到互動動畫：提升泛化</a></p><img src="./assets/images/05_improve_generalization.png" alt="提升模型泛化能力的四大維度工程實戰體系" loading="lazy"><a href="./assets/images/05_improve_generalization.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>維度一：數據端 (Data-Centric Strategies)</h3>
 <ol>
 <li><strong>擴充樣本規模</strong>：大數據定律證明，訓練樣本越龐大、分佈覆蓋越全面，隨機噪聲對模型的干擾就越弱。</li>
