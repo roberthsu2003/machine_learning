@@ -55,10 +55,10 @@ demo('unsupervised','非監督式：聚類與降維',[select('mode','學習任�
  const data=M.points(s.params.seed,30),a=G.axes(c,{xmin:-2,xmax:2,ymin:-1.5,ymax:2,xlabel:'特徵 X₁',ylabel:'特徵 X₂'});
  if(s.params.mode==='projection'){const angle=s.params.angle*Math.PI/180,ux=Math.cos(angle),uy=Math.sin(angle);G.line(c,a.X(-2*ux),a.Y(-2*uy),a.X(2*ux),a.Y(2*uy),C.orange,3);data.forEach(p=>{const v=p.x*ux+p.y*uy,tx=v*ux,ty=v*uy;G.line(c,a.X(p.x),a.Y(p.y),a.X(tx),a.Y(ty),C.line,1);G.circle(c,a.X(M.lerp(p.x,tx,s.progress)),a.Y(M.lerp(p.y,ty,s.progress)),5,C.green);});G.heading(c,'把二維座標投影到一條軸','投影方向可手動旋轉；不是自動 PCA 求解');return {message:`目前投影角 ${s.params.angle}°。每個點變成一個投影座標，垂直方向的資訊會被捨棄。`,metrics:{angle:s.params.angle}};}
  const result=M.kmeans(data,s.params.k,s.step,s.params.seed);G.dots(c,a,result.assigned,'group');result.centers.forEach((p,i)=>{G.diamond(c,a.X(p.x),a.Y(p.y),13,G.palette[i]);G.text(c,`C${i+1}`,a.X(p.x),a.Y(p.y)-22,13,G.palette[i]);});G.heading(c,'K-Means：指派群組，再移動中心',`第 ${s.step} 次中心更新`);return {message:`圓點未使用真實標籤。每一步先找最近中心，再以群內平均更新中心；目前 ${s.params.k} 群。`,metrics:{centers:result.centers,iteration:s.step}};
-},undefined,{steps:10,resample:true}),
+},undefined,{steps:10,resample:true,guide:['圓點是未標示類別的資料，菱形 C1～C3 是群中心。','按一次「下一步」：先把每點指派給最近中心，再以群內平均移動中心。','切換「2D → 1D 投影」：拖動時間軸看圓點移向投影軸，垂直方向資訊被捨棄。','改群數 k 或按重抽資料會重新開始；也可播放完整過程。']}),
 demo('paradigm-comparison','學習類型比較',[select('mode','比較學習類型',[['supervised','監督式'],['unsupervised','非監督式'],['semi','半監督式（示意）'],['rl','強化學習（示意）']])],(c,s)=>{
  const m=s.params.mode;const labels=m==='rl'?['智能體','行動','環境','獎勵']:['樣本 X',m==='unsupervised'?'無標籤':m==='semi'?'少量 y':'完整 y','學習模型','輸出'];G.flow(c,labels,s.progress*3.99);
  for(let i=0;i<12;i++){G.cell(c,80+(i%6)*28,320+Math.floor(i/6)*28,(m==='unsupervised'||(m==='semi'&&i>2))?'?':i%2,i%2?'#f1e0ca':C.mint,22,22);}
  if(m==='rl'){G.arrow(c,660,260,100,260,C.orange);G.text(c,'由行動結果回饋獎勵',380,315,19,C.orange);}
  G.heading(c,'比較「模型得到什麼資訊」');const messages={supervised:'監督式提供 X 與 y，學習預測答案。',unsupervised:'非監督式只有 X，尋找資料結構。',semi:'半監督式結合少量標籤與大量無標籤資料；此處僅示意資訊來源。',rl:'強化學習觀察行動與環境回饋；這是回饋流程示意，並非已訓練策略。'};return {message:messages[m],metrics:{mode:m}};
-},undefined,{steps:4})];
+},undefined,{steps:4,guide:['上方管線是資訊流程，下方 12 格是同一批樣本（? 表示無標籤）。','按「下一步」：看樣本沿管線流入模型，對照模型拿到什麼資訊。','切換學習類型：比較第二格是完整 y、無標籤或少量 y。','強化學習多一條橘色回饋箭頭，表示行動後的環境獎勵。']})];
