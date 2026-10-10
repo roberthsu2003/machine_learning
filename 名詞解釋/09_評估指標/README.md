@@ -28,6 +28,7 @@
 混淆矩陣是一個二維交叉統計表，精確總結了分類模型的預測結果與真實情況，是所有分類衍生指標的基石。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[混淆矩陣](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix)
 ![二元混淆矩陣結構與四象限圖解](images/01_confusion_matrix.png)
 
 ### 四象限組成概念
@@ -48,6 +49,7 @@
 ### 分類四大衍生指標體系
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[分類指標與 ROC](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#classification-metrics)
 ![分類指標體系：公式、適用場景與權衡關係](images/02_classification_metrics.png)
 
 ---
@@ -113,6 +115,7 @@
 回歸任務的輸出為連續數值（如房價、氣溫、營收）。我們透過評估真實值 $y$ 與預測值 $\hat{y}$ 之間的殘差來衡量擬合品質。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[MAE、MSE、RMSE](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors)
 ![回歸誤差三大指標對比](images/03_regression_metrics_errors.png)
 
 ---
@@ -133,6 +136,7 @@
 $R^2$ 衡量回歸模型**「能夠解釋數據中總變異性 (Variance) 的百分比」**。它是無量綱（無單位）的標準化指標，以「直接猜母體平均數 $\bar{y}$ 的基準笨模型」為對照組。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[R²](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#r-squared)
 ![決定係數 R² 原理：衡量模型解釋資料變異的能力](images/04_r_squared.png)
 
 #### 數學公式

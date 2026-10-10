@@ -26,6 +26,7 @@
 一個真實世界的機器學習專案，遠遠不只是呼叫 `model.fit()` 那麼簡單。如下圖所示，真正的機器學習系統是一個涵蓋六大演進階段、且具備持續回饋修正的工程閉環：
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[端到端生命週期](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#lifecycle)
 ![機器學習端到端全流程架構](images/01_ml_lifecycle_pipeline.png)
 
 ---
@@ -34,7 +35,7 @@
 
 | 階段序號 | 階段名稱 | 核心任務 | 對應前續章節 | 實戰產出物 |
 | :---: | :--- | :--- | :---: | :--- |
-| **01** | **問題定義與目標拆解** | • 明確商業目標與成功指標（KPI）<br>• 確定機器學習類型（監督 vs 非監督、分類 vs 回歸）<br>• 定立基準線（Baseline Model）以衡量後續成效 | [01_機器學習的類型](../01_學習範式/README.md) | 專案規格書、核心評估指標清單 |
+| **01** | **問題定義與目標拆解** | • 明確商業目標與成功指標（KPI）<br>• 確定機器學習類型（監督 vs 非監督、分類 vs 回歸）<br>• 定立基準線（Baseline Model）以衡量後續成效 | [01_機器學習的類型](../01_機器學習的類型/README.md) | 專案規格書、核心評估指標清單 |
 | **02** | **數據收集與探索 (EDA)** | • 數據清洗、去重與缺失值/異常值過濾<br>• 探索特徵分佈與關聯性矩陣<br>• 驗證標籤品質，確保無人為標註錯誤 | [02_數據結構](../02_數據結構/README.md) | 探索性分析報告、清洗後乾淨數據集 |
 | **03** | **特徵工程與數據切分** | • 執行特徵縮放（標準化/正規化）<br>• 類別特徵編碼（One-Hot / 標籤編碼）<br>• 嚴格依照時間或分層抽樣劃分 Train / Val / Test<br>• **嚴防數據洩漏 (Data Leakage)** | [03_數據分割](../03_數據分割/README.md)<br>[04_特徵工程](../04_特徵工程/README.md) | 特徵矩陣 $X$、標籤向量 $y$、切分後的三大子集 |
 | **04** | **模型選型與反覆訓練** | • 挑選候選演算法（樹模型、SVM、神經網絡等）<br>• 執行微觀訓練迴圈（前向傳播、計算損失、梯度反傳）<br>• 利用集成學習（Random Forest、XGBoost）強化實力 | [06_優化算法](../06_優化算法/README.md)<br>[07_常見算法](../07_常見算法/README.md)<br>[08_集成學習](../08_集成學習/README.md) | 候選模型權重檔案 |
@@ -48,6 +49,7 @@
 當我們在「階段 04」啟動模型訓練時，演算法內部正在高速執行以數據批次為單位的微觀迭代循環：
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[訓練迭代與 Epoch／Batch／Iteration](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#inner-loop)
 ![模型訓練微觀運作迴圈](images/02_model_training_iteration_loop.png)
 
 ### 訓練迴圈的四步舞曲
@@ -86,6 +88,7 @@ $$\text{1 個 Epoch 所需的 Iterations} = \left\lceil \frac{\text{訓練集總
 在反覆迭代的過程中，模型會經歷不同的擬合狀態。我們必須隨時觀察學習曲線，確保模型落在黃金平衡點上：
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[健康度與檢查清單](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#training-health)
 ![模型擬合能力光譜](images/03_underfitting_overfitting_spectrum.png)
 
 ### 訓練狀態健康度速查表

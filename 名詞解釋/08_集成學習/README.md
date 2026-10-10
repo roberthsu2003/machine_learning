@@ -33,6 +33,7 @@ Bagging 透過「自助抽樣 (Bootstrap)」從原始數據中有放回地隨機
 > 這種並行獨立表決，能有效過濾掉單一醫生因一時疏忽造成的誤診。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[Bagging](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#bagging)
 ![Bagging裝袋法原理與隨機森林流程](images/01_bagging.png)
 
 ### 代表算法：隨機森林 (Random Forest)
@@ -57,6 +58,7 @@ Boosting 是一種**串行 (Sequential，循序推進)** 迭代的集成技術�
 > 如此反覆迭代，知識盲區被逐一消滅，最終成為全能考霸！
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[Boosting](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#boosting)
 ![Boosting提升法原理與殘差學習](images/02_boosting.png)
 
 ### 代表算法
@@ -81,6 +83,7 @@ Stacking 是一種多層次（Multi-level）的異質模型融合技術。它在
 > 他們各自提交一份審判意見書給「主任法官（元學習器）」。主任法官根據過往案件經驗，評估各位專家的可信度，最終敲下法槌完成定讞判決。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[Stacking](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#stacking)
 ![Stacking堆疊法原理與元學習架構](images/03_stacking.png)
 
 ### 核心運作要點

@@ -6,7 +6,7 @@
       "number": 1,
       "slug": "01-learning-paradigms",
       "title": "機器學習的類型",
-      "source_readme": "名詞解釋/01_學習範式/README.md",
+      "source_readme": "名詞解釋/01_機器學習的類型/README.md",
       "path": "docs/glossary/01-learning-paradigms/index.html",
       "url": "https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/",
       "status": "implemented",
@@ -17,7 +17,7 @@
           "geometry": "以房屋面積 X₁ 為特徵，房屋類型或成交價為標籤 y；先看資料，再建立模型，最後用紫色菱形顯示新房屋的預測 ŷ。",
           "controls": "切換分類／回歸、顯示／隱藏標籤、加入新樣本",
           "source_images": [
-            "名詞解釋/01_學習範式/images/01_supervised_learning.png"
+            "名詞解釋/01_機器學習的類型/images/01_supervised_learning.png"
           ]
         },
         {
@@ -26,7 +26,7 @@
           "geometry": "無標籤圓點逐輪分群，中心點移動；另以投影線展示 2D → 1D 的降維。",
           "controls": "一步分群、重設中心、旋轉投影方向",
           "source_images": [
-            "名詞解釋/01_學習範式/images/02_unsupervised_learning.png"
+            "名詞解釋/01_機器學習的類型/images/02_unsupervised_learning.png"
           ]
         },
         {
@@ -35,7 +35,7 @@
           "geometry": "同一批資料在「有標籤／無標籤」兩條管線移動，對照模型接收的資訊。",
           "controls": "切換學習類型、逐步播放；半監督與強化學習以補充示意呈現",
           "source_images": [
-            "名詞解釋/01_學習範式/images/03_comparison.png"
+            "名詞解釋/01_機器學習的類型/images/03_comparison.png"
           ]
         }
       ]

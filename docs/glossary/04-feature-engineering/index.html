@@ -25,6 +25,8 @@
 <li><strong>提升可解釋性</strong>：讓工程師與領域專家更容易理解決策的核心依據。</li>
 </ul>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#selection">特徵選擇</a>
 <section class="scene" id="selection" data-scene="selection" aria-labelledby="title-selection">
 <div class="scene-head"><h3 id="title-selection">特徵選擇</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">多欄方塊矩陣中，無關特徵淡出；過濾、包裝與嵌入方法用不同選取流程對照。</p>
@@ -33,7 +35,8 @@
 <p class="scene-result" id="result-selection" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵選擇播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵選擇動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：特徵選擇圖解</summary><p class="scene-jump"><a href="#selection">↑ 回到互動動畫：特徵選擇</a></p><img src="./assets/images/01_feature_selection.png" alt="特徵選擇圖解" loading="lazy"><a href="./assets/images/01_feature_selection.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：特徵選擇圖解</summary><p class="scene-jump"><a href="#selection">↑ 回到互動動畫：特徵選擇</a></p><img src="./assets/images/01_feature_selection.png" alt="特徵選擇圖解" loading="lazy"><a href="./assets/images/01_feature_selection.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <hr />
 <h3>特徵選擇三大流派對比</h3>
 <div class="table-scroll"><table>
@@ -85,6 +88,8 @@
 <p>如果直接計算樣本間的距離（例如歐氏距離 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sqrt{(A_1 - A_2)^2 + (B_1 - B_2)^2}"><mrow><msqrt><mrow><mo>(</mo><msub><mi>A</mi><mn>1</mn></msub><mo>-</mo><msub><mi>A</mi><mn>2</mn></msub><msup><mo>)</mo><mn>2</mn></msup><mo>+</mo><mo>(</mo><msub><mi>B</mi><mn>1</mn></msub><mo>-</mo><msub><mi>B</mi><mn>2</mn></msub><msup><mo>)</mo><mn>2</mn></msup></mrow></msqrt></mrow></math>），面積的差距動輒數百數千，<strong>其平方值將徹底淹沒房屋年齡的貢獻</strong>！模型會誤以為年齡無關緊要。</p>
 <p>此外，在梯度下降優化中，尺度懸殊會使損失函數等高線變成狹長橢圓，參數更新呈現劇烈的左右鋸齒反彈，收斂緩慢甚至發散；而縮放後等高線接近正圓，梯度能直接指向谷底！</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#scaling">特徵縮放</a>
 <section class="scene" id="scaling" data-scene="scaling" aria-labelledby="title-scaling">
 <div class="scene-head"><h3 id="title-scaling">特徵縮放</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">散點與座標軸從尺度懸殊變成縮放後的空間；距離線與數值同步更新。</p>
@@ -93,7 +98,8 @@
 <p class="scene-result" id="result-scaling" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵縮放播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵縮放動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：特徵縮放圖解</summary><p class="scene-jump"><a href="#scaling">↑ 回到互動動畫：特徵縮放</a></p><img src="./assets/images/02_feature_scaling.png" alt="特徵縮放圖解" loading="lazy"><a href="./assets/images/02_feature_scaling.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：特徵縮放圖解</summary><p class="scene-jump"><a href="#scaling">↑ 回到互動動畫：特徵縮放</a></p><img src="./assets/images/02_feature_scaling.png" alt="特徵縮放圖解" loading="lazy"><a href="./assets/images/02_feature_scaling.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <hr />
 <h3>兩大主流縮放技術：標準化 vs 正規化</h3>
 <div class="table-scroll"><table>
@@ -145,6 +151,8 @@
 <h2 id="section-4">3. 類別特徵編碼 (Categorical Encoding)</h2>
 <p>電腦只看得懂數字，無法直接將「台北、台中、高雄」或「男、女」丟進矩陣進行代數運算。</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#encoding">類別編碼</a>
 <section class="scene" id="encoding" data-scene="encoding" aria-labelledby="title-encoding">
 <div class="scene-head"><h3 id="title-encoding">類別編碼</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">顏色方塊分別變成整數標籤或 One-Hot 向量；對照有序與無序資料。</p>
@@ -153,7 +161,8 @@
 <p class="scene-result" id="result-encoding" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="類別編碼播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="類別編碼動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：類別特徵編碼方式圖解</summary><p class="scene-jump"><a href="#encoding">↑ 回到互動動畫：類別編碼</a></p><img src="./assets/images/03_categorical_encoding.png" alt="類別特徵編碼方式圖解" loading="lazy"><a href="./assets/images/03_categorical_encoding.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：類別特徵編碼方式圖解</summary><p class="scene-jump"><a href="#encoding">↑ 回到互動動畫：類別編碼</a></p><img src="./assets/images/03_categorical_encoding.png" alt="類別特徵編碼方式圖解" loading="lazy"><a href="./assets/images/03_categorical_encoding.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <hr />
 <h3>1. 標籤編碼 (Label Encoding / Ordinal Encoding)</h3>
 <ul>

@@ -34,6 +34,7 @@ flowchart TD
 ```
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[訓練／測試分割](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#train-test)
 ![訓練集與測試集圖解](./images/01_train_test_split.png)
 
 ---
@@ -47,6 +48,8 @@ flowchart TD
 | **測試集** | **Test Set** | 10% ~ 20% | **業務與專案負責人** | 在模型完全定型後，做為**終極泛化能力的客觀考卷**。此數據集在訓練與調優過程中必須被「封裝鎖死」，絕對不能參與任何學習或調參！ |
 
 #### 📊 訓練集、驗證集與測試集三階段劃分圖解
+> 🎬 互動動畫：[三份資料的角色](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#train-validation-test)
+> 🎬 互動動畫：[隨機、分層與時間切分](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#split-strategies)
 ![三階段劃分圖解](./images/02_three_way_split_validation.png)
 
 ---
@@ -74,6 +77,7 @@ flowchart TD
 在切分數據後，模型在訓練集與測試集上的誤差表現，直接揭示了模型的健康狀態：
 
 #### 📊 數據分割實戰流程與表現診斷分析矩陣
+> 🎬 互動動畫：[資料洩漏與診斷](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#leakage)
 ![數據分割實戰流程與誤差分析矩陣](./images/03_split_workflow_and_overfitting.png)
 
 ### 模型診斷速查指南

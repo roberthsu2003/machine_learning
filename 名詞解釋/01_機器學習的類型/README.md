@@ -31,6 +31,7 @@
 > 學生每做完一題，就翻到最後一頁對答案（計算誤差 Loss），答錯了就修正自己的解題思考（調整權重參數），直到錯誤率降到最低為止。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[監督式：分類與回歸](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#supervised)
 ![監督式學習圖解](./images/01_supervised_learning.png)
 
 ### 兩大主要任務類型
@@ -59,6 +60,7 @@
 > 小朋友會憑直覺把「圓形的積木放在一起」、「紅色的積木分到同一堆」。雖然他並不知道這些積木的專有名詞，但他成功抓住了積木之間的「相似性特徵」。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[非監督式：聚類與降維](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#unsupervised)
 ![非監督式學習圖解](./images/02_unsupervised_learning.png)
 
 ### 兩大主要任務類型
@@ -73,6 +75,7 @@
 ## 3. 學習類型全景對照
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[學習類型比較](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#paradigm-comparison)
 ![學習類型總結比較圖解](./images/03_comparison.png)
 
 ### 核心對照矩陣

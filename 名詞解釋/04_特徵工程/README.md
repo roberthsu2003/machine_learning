@@ -33,6 +33,7 @@
 - **提升可解釋性**：讓工程師與領域專家更容易理解決策的核心依據。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[特徵選擇](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#selection)
 ![特徵選擇圖解](./images/01_feature_selection.png)
 
 ---
@@ -59,6 +60,7 @@
 此外，在梯度下降優化中，尺度懸殊會使損失函數等高線變成狹長橢圓，參數更新呈現劇烈的左右鋸齒反彈，收斂緩慢甚至發散；而縮放後等高線接近正圓，梯度能直接指向谷底！
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[特徵縮放](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#scaling)
 ![特徵縮放圖解](./images/02_feature_scaling.png)
 
 ---
@@ -88,6 +90,7 @@
 電腦只看得懂數字，無法直接將「台北、台中、高雄」或「男、女」丟進矩陣進行代數運算。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[類別編碼](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#encoding)
 ![類別特徵編碼方式圖解](./images/03_categorical_encoding.png)
 
 ---

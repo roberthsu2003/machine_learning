@@ -15,6 +15,8 @@
 <h2 id="section-2">1. 欠擬合 (Underfitting / 高偏差 High Bias)</h2>
 <h3>描述</h3>
 <p><strong>欠擬合</strong>是指模型結構過於簡單、表達能力不足，無法有效捕捉訓練數據中的潛在規律與特徵關係。此時模型甚至連訓練集本身的規律都學不會，導致在<strong>訓練數據和測試數據上的預測表現均極為糟糕</strong>。</p>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#fit-spectrum">欠擬合、良好擬合與過度擬合</a>
 <section class="scene" id="fit-spectrum" data-scene="fit-spectrum" aria-labelledby="title-fit-spectrum">
 <div class="scene-head"><h3 id="title-fit-spectrum">欠擬合、良好擬合與過度擬合</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">同一批散點上，直線、平滑曲線與追逐雜訊的曲線逐步切換。</p>
@@ -23,7 +25,8 @@
 <p class="scene-result" id="result-fit-spectrum" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="欠擬合、良好擬合與過度擬合播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="欠擬合、良好擬合與過度擬合動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：欠擬合原理與特徵圖解</summary><p class="scene-jump"><a href="#fit-spectrum">↑ 回到互動動畫：欠擬合、良好擬合與過度擬合</a></p><img src="./assets/images/01_underfitting.png" alt="欠擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/01_underfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：欠擬合原理與特徵圖解</summary><p class="scene-jump"><a href="#fit-spectrum">↑ 回到互動動畫：欠擬合、良好擬合與過度擬合</a></p><img src="./assets/images/01_underfitting.png" alt="欠擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/01_underfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>核心本質：高偏差 (High Bias)</h3>
 <ul>
 <li><strong>偏差 (Bias)</strong> 衡量的是模型預測的期望值與真實值之間的差距。</li>
@@ -51,7 +54,10 @@
 <h2 id="section-3">2. 過度擬合 (Overfitting / 高變異數 High Variance)</h2>
 <h3>描述</h3>
 <p><strong>過度擬合</strong>是指模型過於複雜、參數量過於龐大，以至於「用力過猛」，不僅學習了真實的規律，還把訓練數據中的隨機雜訊、測量誤差與偶發異常個例全盤死記硬背下來。這會導致模型在訓練集上表現近乎完美，但在未見過的測試數據上<strong>泛化能力徹底崩潰</strong>。</p>
-<details class="original"><summary>對照原教材圖解：過度擬合原理與特徵圖解</summary><img src="./assets/images/02_overfitting.png" alt="過度擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/02_overfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#fit-spectrum">欠擬合、良好擬合與過度擬合</a>
+<details class="original"><summary>對照原教材圖解：過度擬合原理與特徵圖解</summary><img src="./assets/images/02_overfitting.png" alt="過度擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/02_overfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>核心本質：高變異數 (High Variance)</h3>
 <ul>
 <li><strong>變異數 (Variance)</strong> 衡量的是當訓練數據發生微小擾動時，模型預測結果的震盪幅度。</li>
@@ -79,6 +85,8 @@
 <hr />
 <h2 id="section-4">3. 偏差-變異數權衡 (Bias-Variance Tradeoff)</h2>
 <p>機器學習的核心任務，實質上就是在<strong>偏差 (Bias)</strong> 與 <strong>變異數 (Variance)</strong> 之間尋找最佳平衡點。</p>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#bias-variance">偏差與變異數</a>
 <section class="scene" id="bias-variance" data-scene="bias-variance" aria-labelledby="title-bias-variance">
 <div class="scene-head"><h3 id="title-bias-variance">偏差與變異數</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">用固定資料生成機制重抽訓練樣本，多條模型線比較平均偏差與模型波動。</p>
@@ -87,7 +95,8 @@
 <p class="scene-result" id="result-bias-variance" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="偏差與變異數播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="偏差與變異數動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：偏差-變異數權衡與擬合光譜全貌</summary><p class="scene-jump"><a href="#bias-variance">↑ 回到互動動畫：偏差與變異數</a></p><img src="./assets/images/03_bias_variance_tradeoff.png" alt="偏差-變異數權衡與擬合光譜全貌" loading="lazy"><a href="./assets/images/03_bias_variance_tradeoff.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：偏差-變異數權衡與擬合光譜全貌</summary><p class="scene-jump"><a href="#bias-variance">↑ 回到互動動畫：偏差與變異數</a></p><img src="./assets/images/03_bias_variance_tradeoff.png" alt="偏差-變異數權衡與擬合光譜全貌" loading="lazy"><a href="./assets/images/03_bias_variance_tradeoff.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>泛化誤差的數學分解</h3>
 <p>統計學習理論證明，對於任何監督式學習回歸問題，模型的<strong>總預期泛化誤差 (Total Expected Error)</strong> 可以嚴格分解為三部分：</p>
 <div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{Total Error} = \text{Bias}^2 + \text{Variance} + \sigma^2"><mrow><mtext>Total Error</mtext><mo>=</mo><msup><mtext>Bias</mtext><mn>2</mn></msup><mo>+</mo><mtext>Variance</mtext><mo>+</mo><msup><mi>σ</mi><mn>2</mn></msup></mrow></math></div><ul>
@@ -145,6 +154,8 @@
 <hr />
 <h2 id="section-5">4. 學習曲線與性能診斷 (Learning Curves &amp; Diagnosis)</h2>
 <p>如何判斷目前訓練的模型到底是「欠擬合」還是「過擬合」？最實用、最直觀的工程診斷工具就是<strong>學習曲線 (Learning Curves)</strong>。</p>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#learning-curves">學習曲線與早停</a>
 <section class="scene" id="learning-curves" data-scene="learning-curves" aria-labelledby="title-learning-curves">
 <div class="scene-head"><h3 id="title-learning-curves">學習曲線與早停</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">訓練／驗證曲線隨時間延伸，游標走過驗證最佳點，顯示繼續訓練的變化。</p>
@@ -153,7 +164,8 @@
 <p class="scene-result" id="result-learning-curves" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="學習曲線與早停播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="學習曲線與早停動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：學習曲線走勢與模型性能動態診斷</summary><p class="scene-jump"><a href="#learning-curves">↑ 回到互動動畫：學習曲線與早停</a></p><img src="./assets/images/04_learning_curves.png" alt="學習曲線走勢與模型性能動態診斷" loading="lazy"><a href="./assets/images/04_learning_curves.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：學習曲線走勢與模型性能動態診斷</summary><p class="scene-jump"><a href="#learning-curves">↑ 回到互動動畫：學習曲線與早停</a></p><img src="./assets/images/04_learning_curves.png" alt="學習曲線走勢與模型性能動態診斷" loading="lazy"><a href="./assets/images/04_learning_curves.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>學習曲線的觀測維度</h3>
 <p>學習曲線繪製了模型的<strong>訓練損失 (Training Loss)</strong> 與<strong>驗證損失 (Validation Loss)</strong> 隨著「訓練輪數 (Epochs)」或「訓練樣本量」推進的動態走勢：</p>
 <h4>階段 1：欠擬合階段 (Underfitting Zone)</h4>
@@ -177,6 +189,8 @@
 <hr />
 <h2 id="section-6">5. 模型性能問題全景應對策略 (Solutions &amp; Prevention)</h2>
 <p>針對欠擬合與過度擬合這兩種截然相反的病症，必須對症下藥。以下是工業界最完備的解決對策體系：</p>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#solutions">改善方式</a>
 <section class="scene" id="solutions" data-scene="solutions" aria-labelledby="title-solutions">
 <div class="scene-head"><h3 id="title-solutions">改善方式</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">新增資料、減少容量或正則化後，模型線與誤差對照更新。</p>
@@ -185,7 +199,8 @@
 <p class="scene-result" id="result-solutions" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="改善方式播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="改善方式動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：模型性能問題全景應對策略全貌</summary><p class="scene-jump"><a href="#solutions">↑ 回到互動動畫：改善方式</a></p><img src="./assets/images/05_solutions_overview.png" alt="模型性能問題全景應對策略全貌" loading="lazy"><a href="./assets/images/05_solutions_overview.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：模型性能問題全景應對策略全貌</summary><p class="scene-jump"><a href="#solutions">↑ 回到互動動畫：改善方式</a></p><img src="./assets/images/05_solutions_overview.png" alt="模型性能問題全景應對策略全貌" loading="lazy"><a href="./assets/images/05_solutions_overview.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>欠擬合急救箱：提升容量 · 降低偏差</h3>
 <p>當模型陷入欠擬合時，首要目標是<strong>給模型「鬆綁與充能」</strong>，全面增強其表達能力：</p>
 <ol>

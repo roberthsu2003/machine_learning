@@ -31,6 +31,7 @@
 > 只要**每一次都朝著腳下最陡的斜坡向下跨出一小步（沿負梯度前進）**，持續反覆這一步驟，最終就能抵達山谷盆地！
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[梯度下降](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#gradient-descent)
 ![梯度下降法原理與變體對比](images/01_gradient_descent.png)
 
 ---
@@ -60,6 +61,7 @@ $$\theta_{\text{new}} = \theta_{\text{old}} - \alpha \cdot \nabla J(\theta)$$
 學習率是優化算法中最核心、最敏感的超參數。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[學習率](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#learning-rate)
 ![學習率大小對訓練收斂的影響](images/02_learning_rate.png)
 
 ### 步長大小引發的性能光譜
@@ -82,6 +84,7 @@ flowchart LR
 ## 3. 批次大小 (Batch Size)
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[Batch／SGD／Mini-batch](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#batch-size)
 ![批次大小權衡與民調抽樣比喻](images/03_batch_size_comparison.png)
 
 ### 💡 直觀理解：民調抽樣的比喻

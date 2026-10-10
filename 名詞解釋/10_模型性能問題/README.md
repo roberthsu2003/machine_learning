@@ -26,6 +26,7 @@
 ### 描述
 **欠擬合**是指模型結構過於簡單、表達能力不足，無法有效捕捉訓練數據中的潛在規律與特徵關係。此時模型甚至連訓練集本身的規律都學不會，導致在**訓練數據和測試數據上的預測表現均極為糟糕**。
 
+> 🎬 互動動畫：[欠擬合、良好擬合與過度擬合](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#fit-spectrum)
 ![欠擬合原理與特徵圖解](images/01_underfitting.png)
 
 ### 核心本質：高偏差 (High Bias)
@@ -54,6 +55,7 @@
 ### 描述
 **過度擬合**是指模型過於複雜、參數量過於龐大，以至於「用力過猛」，不僅學習了真實的規律，還把訓練數據中的隨機雜訊、測量誤差與偶發異常個例全盤死記硬背下來。這會導致模型在訓練集上表現近乎完美，但在未見過的測試數據上**泛化能力徹底崩潰**。
 
+> 🎬 互動動畫：[欠擬合、良好擬合與過度擬合](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#fit-spectrum)
 ![過度擬合原理與特徵圖解](images/02_overfitting.png)
 
 ### 核心本質：高變異數 (High Variance)
@@ -82,6 +84,7 @@
 
 機器學習的核心任務，實質上就是在**偏差 (Bias)** 與 **變異數 (Variance)** 之間尋找最佳平衡點。
 
+> 🎬 互動動畫：[偏差與變異數](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#bias-variance)
 ![偏差-變異數權衡與擬合光譜全貌](images/03_bias_variance_tradeoff.png)
 
 ### 泛化誤差的數學分解
@@ -114,6 +117,7 @@ $$\text{Total Error} = \text{Bias}^2 + \text{Variance} + \sigma^2$$
 
 如何判斷目前訓練的模型到底是「欠擬合」還是「過擬合」？最實用、最直觀的工程診斷工具就是**學習曲線 (Learning Curves)**。
 
+> 🎬 互動動畫：[學習曲線與早停](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#learning-curves)
 ![學習曲線走勢與模型性能動態診斷](images/04_learning_curves.png)
 
 ### 學習曲線的觀測維度
@@ -140,6 +144,7 @@ $$\text{Total Error} = \text{Bias}^2 + \text{Variance} + \sigma^2$$
 
 針對欠擬合與過度擬合這兩種截然相反的病症，必須對症下藥。以下是工業界最完備的解決對策體系：
 
+> 🎬 互動動畫：[改善方式](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#solutions)
 ![模型性能問題全景應對策略全貌](images/05_solutions_overview.png)
 
 ### 欠擬合急救箱：提升容量 · 降低偏差

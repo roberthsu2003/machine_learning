@@ -16,6 +16,8 @@
 <h3>混淆矩陣 (Confusion Matrix)</h3>
 <p>混淆矩陣是一個二維交叉統計表，精確總結了分類模型的預測結果與真實情況，是所有分類衍生指標的基石。</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix">混淆矩陣</a>
 <section class="scene" id="confusion-matrix" data-scene="confusion-matrix" aria-labelledby="title-confusion-matrix">
 <div class="scene-head"><h3 id="title-confusion-matrix">混淆矩陣</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">每個樣本按真實類別與預測類別移進 TP／FP／FN／TN 四格，數量同步增加。</p>
@@ -24,7 +26,8 @@
 <p class="scene-result" id="result-confusion-matrix" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="混淆矩陣播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="混淆矩陣動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：二元混淆矩陣結構與四象限圖解</summary><p class="scene-jump"><a href="#confusion-matrix">↑ 回到互動動畫：混淆矩陣</a></p><img src="./assets/images/01_confusion_matrix.png" alt="二元混淆矩陣結構與四象限圖解" loading="lazy"><a href="./assets/images/01_confusion_matrix.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：二元混淆矩陣結構與四象限圖解</summary><p class="scene-jump"><a href="#confusion-matrix">↑ 回到互動動畫：混淆矩陣</a></p><img src="./assets/images/01_confusion_matrix.png" alt="二元混淆矩陣結構與四象限圖解" loading="lazy"><a href="./assets/images/01_confusion_matrix.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>四象限組成概念</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -77,6 +80,8 @@
 <hr />
 <h3>分類四大衍生指標體系</h3>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#classification-metrics">分類指標與 ROC</a>
 <section class="scene" id="classification-metrics" data-scene="classification-metrics" aria-labelledby="title-classification-metrics">
 <div class="scene-head"><h3 id="title-classification-metrics">分類指標與 ROC</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">改變門檻後，圓點重新落格，Accuracy／Precision／Recall／F1 及 ROC 游標同步更新。</p>
@@ -85,7 +90,8 @@
 <p class="scene-result" id="result-classification-metrics" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="分類指標與 ROC播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="分類指標與 ROC動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：分類指標體系：公式、適用場景與權衡關係</summary><p class="scene-jump"><a href="#classification-metrics">↑ 回到互動動畫：分類指標與 ROC</a></p><img src="./assets/images/02_classification_metrics.png" alt="分類指標體系：公式、適用場景與權衡關係" loading="lazy"><a href="./assets/images/02_classification_metrics.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：分類指標體系：公式、適用場景與權衡關係</summary><p class="scene-jump"><a href="#classification-metrics">↑ 回到互動動畫：分類指標與 ROC</a></p><img src="./assets/images/02_classification_metrics.png" alt="分類指標體系：公式、適用場景與權衡關係" loading="lazy"><a href="./assets/images/02_classification_metrics.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <hr />
 <h3>1. 準確率 (Accuracy)</h3>
 <ul>
@@ -148,6 +154,8 @@
 <h2 id="section-3">2. 回歸評估指標 (Regression Metrics)</h2>
 <p>回歸任務的輸出為連續數值（如房價、氣溫、營收）。我們透過評估真實值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 與預測值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\hat{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math> 之間的殘差來衡量擬合品質。</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors">MAE、MSE、RMSE</a>
 <section class="scene" id="regression-errors" data-scene="regression-errors" aria-labelledby="title-regression-errors">
 <div class="scene-head"><h3 id="title-regression-errors">MAE、MSE、RMSE</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">殘差線段展開為絕對長度與平方色塊，加入離群點後比較各種誤差變化。</p>
@@ -156,7 +164,8 @@
 <p class="scene-result" id="result-regression-errors" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="MAE、MSE、RMSE播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="MAE、MSE、RMSE動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：回歸誤差三大指標對比</summary><p class="scene-jump"><a href="#regression-errors">↑ 回到互動動畫：MAE、MSE、RMSE</a></p><img src="./assets/images/03_regression_metrics_errors.png" alt="回歸誤差三大指標對比" loading="lazy"><a href="./assets/images/03_regression_metrics_errors.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：回歸誤差三大指標對比</summary><p class="scene-jump"><a href="#regression-errors">↑ 回到互動動畫：MAE、MSE、RMSE</a></p><img src="./assets/images/03_regression_metrics_errors.png" alt="回歸誤差三大指標對比" loading="lazy"><a href="./assets/images/03_regression_metrics_errors.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <hr />
 <h3>三大誤差指標對照</h3>
 <div class="table-scroll"><table>
@@ -198,6 +207,8 @@
 <h4>核心定義</h4>
 <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 衡量回歸模型**「能夠解釋數據中總變異性 (Variance) 的百分比」**。它是無量綱（無單位）的標準化指標，以「直接猜母體平均數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math> 的基準笨模型」為對照組。</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#r-squared">R²</a>
 <section class="scene" id="r-squared" data-scene="r-squared" aria-labelledby="title-r-squared">
 <div class="scene-head"><h3 id="title-r-squared">R²</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">同時顯示平均值基準線與模型線，對照 SST／SSE 平方塊大小。</p>
@@ -206,7 +217,8 @@
 <p class="scene-result" id="result-r-squared" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="R²播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="R²動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：決定係數 R² 原理：衡量模型解釋資料變異的能力</summary><p class="scene-jump"><a href="#r-squared">↑ 回到互動動畫：R²</a></p><img src="./assets/images/04_r_squared.png" alt="決定係數 R² 原理：衡量模型解釋資料變異的能力" loading="lazy"><a href="./assets/images/04_r_squared.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：決定係數 R² 原理：衡量模型解釋資料變異的能力</summary><p class="scene-jump"><a href="#r-squared">↑ 回到互動動畫：R²</a></p><img src="./assets/images/04_r_squared.png" alt="決定係數 R² 原理：衡量模型解釋資料變異的能力" loading="lazy"><a href="./assets/images/04_r_squared.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h4>數學公式</h4>
 <div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover><msup><mo>)</mo><mn>2</mn></msup></mrow></mfrac></mrow></math></div><ul>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）：模型沒能解釋的預測殘差平方和。</li>

@@ -1,5 +1,5 @@
 <!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 01 章 機器學習的類型：完整教材、原圖對照與互動 2D 幾何動畫。"><title>01 機器學習的類型｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
-<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%E5%AD%B8%E7%BF%92%E7%AF%84%E5%BC%8F/README.md">GitHub 原文 ↗</a></nav></header>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E7%9A%84%E9%A1%9E%E5%9E%8B/README.md">GitHub 原文 ↗</a></nav></header>
 <main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 01 / 12 · INTERACTIVE LESSON</div><h1>機器學習的類型</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#supervised">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
 <noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
 <div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#supervised">監督式：分類與回歸</a><a href="#unsupervised">非監督式：聚類與降維</a><a href="#paradigm-comparison">學習類型比較</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 監督式學習 (Supervised Learning)</a><a href="#section-3">2. 非監督式學習 (Unsupervised Learning)</a><a href="#section-4">3. 學習類型全景對照</a><a href="#section-5">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>機器學習（Machine Learning, ML）本質上是<strong>讓電腦從數據中自動尋找規律，而非依賴人工程式碼一條條寫死規則</strong>的科學。</p>
@@ -21,6 +21,8 @@
 學生每做完一題，就翻到最後一頁對答案（計算誤差 Loss），答錯了就修正自己的解題思考（調整權重參數），直到錯誤率降到最低為止。</p>
 </blockquote>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#supervised">監督式：分類與回歸</a>
 <section class="scene" id="supervised" data-scene="supervised" aria-labelledby="title-supervised">
 <div class="scene-head"><h3 id="title-supervised">監督式：分類與回歸</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">以房屋面積 X₁ 為特徵，房屋類型或成交價為標籤 y；先看資料，再建立模型，最後用紫色菱形顯示新房屋的預測 ŷ。</p>
@@ -29,7 +31,8 @@
 <p class="scene-result" id="result-supervised" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="監督式：分類與回歸播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="監督式：分類與回歸動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：監督式學習圖解</summary><p class="scene-jump"><a href="#supervised">↑ 回到互動動畫：監督式：分類與回歸</a></p><img src="./assets/images/01_supervised_learning.png" alt="監督式學習圖解" loading="lazy"><a href="./assets/images/01_supervised_learning.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：監督式學習圖解</summary><p class="scene-jump"><a href="#supervised">↑ 回到互動動畫：監督式：分類與回歸</a></p><img src="./assets/images/01_supervised_learning.png" alt="監督式學習圖解" loading="lazy"><a href="./assets/images/01_supervised_learning.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>兩大主要任務類型</h3>
 <p>監督式學習依據預測目標的數據型態，分為兩大主要任務：</p>
 <div class="table-scroll"><table>
@@ -76,6 +79,8 @@
 小朋友會憑直覺把「圓形的積木放在一起」、「紅色的積木分到同一堆」。雖然他並不知道這些積木的專有名詞，但他成功抓住了積木之間的「相似性特徵」。</p>
 </blockquote>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#unsupervised">非監督式：聚類與降維</a>
 <section class="scene" id="unsupervised" data-scene="unsupervised" aria-labelledby="title-unsupervised">
 <div class="scene-head"><h3 id="title-unsupervised">非監督式：聚類與降維</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">無標籤圓點逐輪分群，中心點移動；另以投影線展示 2D → 1D 的降維。</p>
@@ -84,7 +89,8 @@
 <p class="scene-result" id="result-unsupervised" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="非監督式：聚類與降維播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="非監督式：聚類與降維動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：非監督式學習圖解</summary><p class="scene-jump"><a href="#unsupervised">↑ 回到互動動畫：非監督式：聚類與降維</a></p><img src="./assets/images/02_unsupervised_learning.png" alt="非監督式學習圖解" loading="lazy"><a href="./assets/images/02_unsupervised_learning.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：非監督式學習圖解</summary><p class="scene-jump"><a href="#unsupervised">↑ 回到互動動畫：非監督式：聚類與降維</a></p><img src="./assets/images/02_unsupervised_learning.png" alt="非監督式學習圖解" loading="lazy"><a href="./assets/images/02_unsupervised_learning.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>兩大主要任務類型</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -116,6 +122,8 @@
 <hr />
 <h2 id="section-4">3. 學習類型全景對照</h2>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#paradigm-comparison">學習類型比較</a>
 <section class="scene" id="paradigm-comparison" data-scene="paradigm-comparison" aria-labelledby="title-paradigm-comparison">
 <div class="scene-head"><h3 id="title-paradigm-comparison">學習類型比較</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">同一批資料在「有標籤／無標籤」兩條管線移動，對照模型接收的資訊。</p>
@@ -124,7 +132,8 @@
 <p class="scene-result" id="result-paradigm-comparison" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="學習類型比較播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="學習類型比較動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：學習類型總結比較圖解</summary><p class="scene-jump"><a href="#paradigm-comparison">↑ 回到互動動畫：學習類型比較</a></p><img src="./assets/images/03_comparison.png" alt="學習類型總結比較圖解" loading="lazy"><a href="./assets/images/03_comparison.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：學習類型總結比較圖解</summary><p class="scene-jump"><a href="#paradigm-comparison">↑ 回到互動動畫：學習類型比較</a></p><img src="./assets/images/03_comparison.png" alt="學習類型總結比較圖解" loading="lazy"><a href="./assets/images/03_comparison.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>核心對照矩陣</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -180,4 +189,4 @@
 </ol>
 <hr />
 <p><a href="../">📑 返回目錄</a> | <a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/02_%25E6%2595%25B8%25E6%2593%259A%25E7%25B5%2590%25E6%25A7%258B/README.md">⏭️ 下一章：02_數據結構</a></p>
-<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%E5%AD%B8%E7%BF%92%E7%AF%84%E5%BC%8F/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><span>第一章</span><a href="../">返回 12 章目錄</a><a href="../02-data-structures/">02 數據結構 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E7%9A%84%E9%A1%9E%E5%9E%8B/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><span>第一章</span><a href="../">返回 12 章目錄</a><a href="../02-data-structures/">02 數據結構 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

@@ -31,6 +31,7 @@ K-NN 是一種基於「幾何距離度量」的非參數化算法。其核心哲
 > 你不需要研究房地產大盤趨勢，只要**敲開左鄰右舍最近的 5 戶人家大門（$k=5$），問問他們每個月付多少租金，然後取個平均數**即可！
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[KNN](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#knn)
 ![K-近鄰算法原理：少數服從多數的鄰居表決](images/01_knn.png)
 
 ### 關鍵超參數與幾何特點
@@ -53,6 +54,7 @@ K-NN 是一種基於「幾何距離度量」的非參數化算法。其核心哲
 > 這種層層遞進的 if-else 邏輯樹，就是決策樹的本質。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[決策樹](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#decision-tree)
 ![決策樹原理：階層式條件規則與空間軸向劃分](images/02_decision_tree.png)
 
 ### 幾何視角與核心特點
@@ -75,6 +77,7 @@ SVM 是一種追求**「最大化間隔（Maximum Margin）」**的經典演算�
 > 兩側最靠近邊緣的那幾輛車（支援向量），直接決定了分隔島能建得多寬。遠處停在停車場的車輛怎麼移動，都不會影響這條隔離帶的位置！
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[SVM](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#svm)
 ![支援向量機原理：最大間隔超平面與核技巧](images/03_svm.png)
 
 ### 核心法寶與關鍵超參數
@@ -101,6 +104,7 @@ $$P(C \mid X) = \frac{P(C) \cdot P(X \mid C)}{P(X)}$$
 （例如：預測一封信是否為垃圾郵件時，假設「免費」和「中獎」這兩個單詞出現的機率完全無關）。雖然這個假設看似天真幼稚，但在實務上（特別是文本與高維特徵）運算極度簡化，且分類效果出奇優異！
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[樸素貝氏](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#naive-bayes)
 ![樸素貝氏分類原理：機率推斷與三大常見模型](images/04_naive_bayes.png)
 
 ### 三大常見模型類型

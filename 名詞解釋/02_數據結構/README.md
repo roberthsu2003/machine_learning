@@ -34,6 +34,7 @@
 > 這些用來量化或描述這個對象各個面向的具體資訊指標，就是這筆資料的**特徵 (Features)**。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[特徵與資料型態](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#features)
 ![特徵圖解](./images/01_features.png)
 
 ### 常見特徵資料型態
@@ -61,6 +62,7 @@
 > 若是預測對方工作三年後的「具體存款金額（85 萬元）」——這就是**回歸問題的標籤**。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[標籤與任務](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#labels)
 ![標籤圖解](./images/02_labels.png)
 
 ### 標籤的任務型態區分
@@ -79,6 +81,7 @@ flowchart LR
 ## 3. 數據結構的標準數學組織
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[特徵矩陣 X 與標籤 y](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#matrix)
 ![數據結構綜合圖解](./images/03_data_structure_example.png)
 
 在實務中，機器學習數據集（Dataset）通常以二維表格或矩陣形式儲存：
@@ -128,4 +131,4 @@ y_N
 
 ---
 
-[⏮️ 上一章：01_機器學習的類型](../01_學習範式/README.md) | [📑 返回目錄](../README.md) | [⏭️ 下一章：03_數據分割](../03_數據分割/README.md)
+[⏮️ 上一章：01_機器學習的類型](../01_機器學習的類型/README.md) | [📑 返回目錄](../README.md) | [⏭️ 下一章：03_數據分割](../03_數據分割/README.md)

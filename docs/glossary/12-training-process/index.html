@@ -15,6 +15,8 @@
 <h2 id="section-2">1. 宏觀全景：機器學習端到端生命週期</h2>
 <p>一個真實世界的機器學習專案，遠遠不只是呼叫 <code>model.fit()</code> 那麼簡單。如下圖所示，真正的機器學習系統是一個涵蓋六大演進階段、且具備持續回饋修正的工程閉環：</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#lifecycle">端到端生命週期</a>
 <section class="scene" id="lifecycle" data-scene="lifecycle" aria-labelledby="title-lifecycle">
 <div class="scene-head"><h3 id="title-lifecycle">端到端生命週期</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">資料包沿六大階段前進，在部署監控處形成回饋閉環，必要時回到前面重訓。</p>
@@ -23,7 +25,8 @@
 <p class="scene-result" id="result-lifecycle" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="端到端生命週期播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="端到端生命週期動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：機器學習端到端全流程架構</summary><p class="scene-jump"><a href="#lifecycle">↑ 回到互動動畫：端到端生命週期</a></p><img src="./assets/images/01_ml_lifecycle_pipeline.png" alt="機器學習端到端全流程架構" loading="lazy"><a href="./assets/images/01_ml_lifecycle_pipeline.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：機器學習端到端全流程架構</summary><p class="scene-jump"><a href="#lifecycle">↑ 回到互動動畫：端到端生命週期</a></p><img src="./assets/images/01_ml_lifecycle_pipeline.png" alt="機器學習端到端全流程架構" loading="lazy"><a href="./assets/images/01_ml_lifecycle_pipeline.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <hr />
 <h3>六大核心演進階段詳解</h3>
 <div class="table-scroll"><table>
@@ -41,7 +44,7 @@
   <td style="text-align:center"><strong>01</strong></td>
   <td style="text-align:left"><strong>問題定義與目標拆解</strong></td>
   <td style="text-align:left">• 明確商業目標與成功指標（KPI）<br>• 確定機器學習類型（監督 vs 非監督、分類 vs 回歸）<br>• 定立基準線（Baseline Model）以衡量後續成效</td>
-  <td style="text-align:center"><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%25E5%25AD%25B8%25E7%25BF%2592%25E7%25AF%2584%25E5%25BC%258F/README.md">01_機器學習的類型</a></td>
+  <td style="text-align:center"><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%25E6%25A9%259F%25E5%2599%25A8%25E5%25AD%25B8%25E7%25BF%2592%25E7%259A%2584%25E9%25A1%259E%25E5%259E%258B/README.md">01_機器學習的類型</a></td>
   <td style="text-align:left">專案規格書、核心評估指標清單</td>
 </tr>
 <tr>
@@ -85,6 +88,8 @@
 <h2 id="section-3">2. 微觀深潛：模型訓練迭代核心迴圈 (The Inner Loop)</h2>
 <p>當我們在「階段 04」啟動模型訓練時，演算法內部正在高速執行以數據批次為單位的微觀迭代循環：</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#inner-loop">訓練迭代與 Epoch／Batch／Iteration</a>
 <section class="scene" id="inner-loop" data-scene="inner-loop" aria-labelledby="title-inner-loop">
 <div class="scene-head"><h3 id="title-inner-loop">訓練迭代與 Epoch／Batch／Iteration</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">樣本隊列逐批進入模型，循環走過前向、損失、反傳與更新；計數器同步增加。</p>
@@ -93,7 +98,8 @@
 <p class="scene-result" id="result-inner-loop" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="訓練迭代與 Epoch／Batch／Iteration播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="訓練迭代與 Epoch／Batch／Iteration動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：模型訓練微觀運作迴圈</summary><p class="scene-jump"><a href="#inner-loop">↑ 回到互動動畫：訓練迭代與 Epoch／Batch／Iteration</a></p><img src="./assets/images/02_model_training_iteration_loop.png" alt="模型訓練微觀運作迴圈" loading="lazy"><a href="./assets/images/02_model_training_iteration_loop.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：模型訓練微觀運作迴圈</summary><p class="scene-jump"><a href="#inner-loop">↑ 回到互動動畫：訓練迭代與 Epoch／Batch／Iteration</a></p><img src="./assets/images/02_model_training_iteration_loop.png" alt="模型訓練微觀運作迴圈" loading="lazy"><a href="./assets/images/02_model_training_iteration_loop.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>訓練迴圈的四步舞曲</h3>
 <ol>
 <li><strong>第一步：前向傳播 (Forward Pass)</strong><br />
@@ -126,6 +132,8 @@
 <h2 id="section-4">3. 訓練健康度診斷與擬合光譜對照</h2>
 <p>在反覆迭代的過程中，模型會經歷不同的擬合狀態。我們必須隨時觀察學習曲線，確保模型落在黃金平衡點上：</p>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#training-health">健康度與檢查清單</a>
 <section class="scene" id="training-health" data-scene="training-health" aria-labelledby="title-training-health">
 <div class="scene-head"><h3 id="title-training-health">健康度與檢查清單</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">模型線與驗證曲線對照變動；在流程關卡檢查資料切分、洩漏與最終評估。</p>
@@ -134,7 +142,8 @@
 <p class="scene-result" id="result-training-health" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="健康度與檢查清單播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="健康度與檢查清單動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：模型擬合能力光譜</summary><p class="scene-jump"><a href="#training-health">↑ 回到互動動畫：健康度與檢查清單</a></p><img src="./assets/images/03_underfitting_overfitting_spectrum.png" alt="模型擬合能力光譜" loading="lazy"><a href="./assets/images/03_underfitting_overfitting_spectrum.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：模型擬合能力光譜</summary><p class="scene-jump"><a href="#training-health">↑ 回到互動動畫：健康度與檢查清單</a></p><img src="./assets/images/03_underfitting_overfitting_spectrum.png" alt="模型擬合能力光譜" loading="lazy"><a href="./assets/images/03_underfitting_overfitting_spectrum.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>訓練狀態健康度速查表</h3>
 <div class="table-scroll"><table>
 <thead>

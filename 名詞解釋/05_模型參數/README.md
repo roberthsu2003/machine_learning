@@ -33,6 +33,7 @@
 > 這些**大腦內部自發形成的微觀突觸變化**，完全由大腦自動完成，這就是**模型參數**。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[模型參數](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#parameters)
 ![模型參數圖解](./images/01_model_parameters.png)
 
 ### 經典算法中的具體參數
@@ -58,6 +59,7 @@
 > 這些外部設定決定了學習的環境與節奏，這就是**超參數**。
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[超參數](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#hyperparameters)
 ![超參數圖解](./images/02_hyperparameters.png)
 
 ### 實務常見的核心超參數清單
@@ -85,6 +87,7 @@ flowchart TD
 ## 3. 參數 vs 超參數 終極對照
 
 #### 📊 觀念圖解
+> 🎬 互動動畫：[比較與搜尋](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#parameter-search)
 ![參數與超參數對照圖解](./images/03_parameters_vs_hyperparameters.png)
 
 ### 核心對照表

@@ -23,6 +23,8 @@
 這些用來量化或描述這個對象各個面向的具體資訊指標，就是這筆資料的<strong>特徵 (Features)</strong>。</p>
 </blockquote>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#features">特徵與資料型態</a>
 <section class="scene" id="features" data-scene="features" aria-labelledby="title-features">
 <div class="scene-head"><h3 id="title-features">特徵與資料型態</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">房屋卡片的欄位拆成彩色方塊；連續值、計數、次序、名義與非結構化資料以不同形狀展示。</p>
@@ -31,7 +33,8 @@
 <p class="scene-result" id="result-features" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵與資料型態播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵與資料型態動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：特徵圖解</summary><p class="scene-jump"><a href="#features">↑ 回到互動動畫：特徵與資料型態</a></p><img src="./assets/images/01_features.png" alt="特徵圖解" loading="lazy"><a href="./assets/images/01_features.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：特徵圖解</summary><p class="scene-jump"><a href="#features">↑ 回到互動動畫：特徵與資料型態</a></p><img src="./assets/images/01_features.png" alt="特徵圖解" loading="lazy"><a href="./assets/images/01_features.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>常見特徵資料型態</h3>
 <div class="table-scroll"><table>
 <thead>
@@ -87,6 +90,8 @@
 若是預測對方工作三年後的「具體存款金額（85 萬元）」——這就是<strong>回歸問題的標籤</strong>。</p>
 </blockquote>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#labels">標籤與任務</a>
 <section class="scene" id="labels" data-scene="labels" aria-labelledby="title-labels">
 <div class="scene-head"><h3 id="title-labels">標籤與任務</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">成交價或類別標籤從樣本卡片抽出，移到 y 欄；分類用離散色塊，回歸用數線。</p>
@@ -95,11 +100,14 @@
 <p class="scene-result" id="result-labels" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="標籤與任務播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="標籤與任務動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：標籤圖解</summary><p class="scene-jump"><a href="#labels">↑ 回到互動動畫：標籤與任務</a></p><img src="./assets/images/02_labels.png" alt="標籤圖解" loading="lazy"><a href="./assets/images/02_labels.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：標籤圖解</summary><p class="scene-jump"><a href="#labels">↑ 回到互動動畫：標籤與任務</a></p><img src="./assets/images/02_labels.png" alt="標籤圖解" loading="lazy"><a href="./assets/images/02_labels.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <h3>標籤的任務型態區分</h3>
 <div class="flow-summary"><strong>流程與概念摘要</strong><ul><li>標籤 y 的型態</li><li>離散型類別</li><li>連續型數值</li><li>二元分類 (是/否, 0/1)</li><li>多元分類 (貓/狗/鳥)</li><li>回歸預測 (房價, 氣溫, 股價)</li></ul></div><hr />
 <h2 id="section-4">3. 數據結構的標準數學組織</h2>
 <h4>📊 觀念圖解</h4>
+<blockquote>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#matrix">特徵矩陣 X 與標籤 y</a>
 <section class="scene" id="matrix" data-scene="matrix" aria-labelledby="title-matrix">
 <div class="scene-head"><h3 id="title-matrix">特徵矩陣 X 與標籤 y</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">三筆原教材房屋資料重排為 3×4 矩陣與長度 3 的向量，樣本列與特徵欄逐一亮起。</p>
@@ -108,7 +116,8 @@
 <p class="scene-result" id="result-matrix" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵矩陣 X 與標籤 y播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵矩陣 X 與標籤 y動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：數據結構綜合圖解</summary><p class="scene-jump"><a href="#matrix">↑ 回到互動動畫：特徵矩陣 X 與標籤 y</a></p><img src="./assets/images/03_data_structure_example.png" alt="數據結構綜合圖解" loading="lazy"><a href="./assets/images/03_data_structure_example.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+</section><details class="original"><summary>對照原教材圖解：數據結構綜合圖解</summary><p class="scene-jump"><a href="#matrix">↑ 回到互動動畫：特徵矩陣 X 與標籤 y</a></p><img src="./assets/images/03_data_structure_example.png" alt="數據結構綜合圖解" loading="lazy"><a href="./assets/images/03_data_structure_example.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</blockquote>
 <p>在實務中，機器學習數據集（Dataset）通常以二維表格或矩陣形式儲存：</p>
 <ul>
 <li>每一<strong>列 (Row)</strong> 代表一個獨立的<strong>樣本點 (Sample / Instance / Example)</strong>。</li>

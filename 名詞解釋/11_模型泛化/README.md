@@ -26,6 +26,7 @@
 ### 描述
 **模型泛化**是指機器學習模型對未見過的新樣本（測試數據或真實生產環境數據）表現出優異預測能力的綜合素養。換言之，模型不僅能有效擬合歷史訓練數據，更能從容應對未來帶有噪聲、角度變化或分佈微調的獨立新數據點。
 
+> 🎬 互動動畫：[未見資料與泛化](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#unseen-data)
 ![模型泛化核心本質圖解](images/01_generalization_concept.png)
 
 ### 本質剖析：死記硬背 vs 融會貫通
@@ -49,6 +50,7 @@
 
 在統計學習理論中，評估泛化能力有著明確的數學量化指標。
 
+> 🎬 互動動畫：[泛化鴻溝](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#generalization-gap)
 ![泛化誤差與泛化鴻溝圖解](images/02_generalization_gap.png)
 
 ### 經驗風險 vs 期望風險
@@ -77,6 +79,7 @@ $$\text{Generalization Gap} = E_{\text{test}} - E_{\text{train}}$$
 
 為了客觀檢驗模型的真實泛化能力，必須遵循嚴謹的數據劃分規範。
 
+> 🎬 互動動畫：[資料分割與 K 折交叉驗證](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#cross-validation)
 ![數據集標準三大劃分規範與數據洩漏防範](images/03_data_splitting.png)
 
 ### 機器學習的基石：獨立同分佈假設 (I.I.D.)
@@ -106,6 +109,7 @@ $$\text{Generalization Gap} = E_{\text{test}} - E_{\text{train}}$$
 
 如果手頭的樣本總量有限，單純切出固定的驗證集會浪費寶貴的訓練數據，且容易因為「單次隨機切分的運氣好壞」導致評估結果失真。這時**K-折交叉驗證 (K-Fold Cross Validation)** 是業界公認最穩健的評估手法。
 
+> 🎬 互動動畫：[資料分割與 K 折交叉驗證](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#cross-validation)
 ![K-折交叉驗證機制與流程圖解](images/04_cross_validation.png)
 
 ### 運作流程 (以 5-Fold 為例)
@@ -128,6 +132,7 @@ $$\text{Generalization Gap} = E_{\text{test}} - E_{\text{train}}$$
 
 想要在實務競賽與工業生產中打造泛化能力頂尖的模型，必須從「數據、模型、正則、優化」四大維度全方位協同推進：
 
+> 🎬 互動動畫：[提升泛化](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#improve-generalization)
 ![提升模型泛化能力的四大維度工程實戰體系](images/05_improve_generalization.png)
 
 ### 維度一：數據端 (Data-Centric Strategies)

@@ -1,6 +1,6 @@
 # 01 機器學習的類型：互動網頁規劃
 
-原教材：[章節 README](../../../名詞解釋/01_學習範式/README.md)。
+原教材：[章節 README](../../../名詞解釋/01_機器學習的類型/README.md)。
 網頁檔案：`docs/glossary/01-learning-paradigms/index.html`。
 發布網址：`https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/`。
 
