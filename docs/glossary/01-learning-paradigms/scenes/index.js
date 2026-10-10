@@ -52,7 +52,7 @@ demo('supervised','監督式：分類與回歸',[
  guide:['圓點是已知資料：橫向看面積 X₁，縱向看標籤 y。','按一次「下一步」：顯示由 X 與 y 建立的模型。','再按一次「下一步」：紫色菱形代表新房屋，顯示預測 ŷ。','改面積或切換任務會回到起點；再按兩次「下一步」。也可播放完整過程。']
 }),
 demo('unsupervised','非監督式：聚類與降維',[select('mode','學習任務',[['cluster','K-Means 分群'],['projection','2D → 1D 投影示意']]),range('k','群數 k',2,4,3),range('angle','投影角度（度）',0,180,30)],(c,s)=>{
- const data=M.points(s.params.seed,30),a=G.axes(c,{xmin:-2,xmax:2,ymin:-1.5,ymax:2});
+ const data=M.points(s.params.seed,30),a=G.axes(c,{xmin:-2,xmax:2,ymin:-1.5,ymax:2,xlabel:'特徵 X₁',ylabel:'特徵 X₂'});
  if(s.params.mode==='projection'){const angle=s.params.angle*Math.PI/180,ux=Math.cos(angle),uy=Math.sin(angle);G.line(c,a.X(-2*ux),a.Y(-2*uy),a.X(2*ux),a.Y(2*uy),C.orange,3);data.forEach(p=>{const v=p.x*ux+p.y*uy,tx=v*ux,ty=v*uy;G.line(c,a.X(p.x),a.Y(p.y),a.X(tx),a.Y(ty),C.line,1);G.circle(c,a.X(M.lerp(p.x,tx,s.progress)),a.Y(M.lerp(p.y,ty,s.progress)),5,C.green);});G.heading(c,'把二維座標投影到一條軸','投影方向可手動旋轉；不是自動 PCA 求解');return {message:`目前投影角 ${s.params.angle}°。每個點變成一個投影座標，垂直方向的資訊會被捨棄。`,metrics:{angle:s.params.angle}};}
  const result=M.kmeans(data,s.params.k,s.step,s.params.seed);G.dots(c,a,result.assigned,'group');result.centers.forEach((p,i)=>{G.diamond(c,a.X(p.x),a.Y(p.y),13,G.palette[i]);G.text(c,`C${i+1}`,a.X(p.x),a.Y(p.y)-22,13,G.palette[i]);});G.heading(c,'K-Means：指派群組，再移動中心',`第 ${s.step} 次中心更新`);return {message:`圓點未使用真實標籤。每一步先找最近中心，再以群內平均更新中心；目前 ${s.params.k} 群。`,metrics:{centers:result.centers,iteration:s.step}};
 },undefined,{steps:10,resample:true}),
