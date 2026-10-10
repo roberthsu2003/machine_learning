@@ -14,7 +14,7 @@
         {
           "id": "supervised",
           "title": "監督式：分類與回歸",
-          "geometry": "帶標籤的圓點流入模型；切換後分別顯示分類邊界與回歸線。",
+          "geometry": "以房屋面積 X₁ 為特徵，房屋類型或成交價為標籤 y；先看資料，再建立模型，最後用紫色菱形顯示新房屋的預測 ŷ。",
           "controls": "切換分類／回歸、顯示／隱藏標籤、加入新樣本",
           "source_images": [
             "名詞解釋/01_學習範式/images/01_supervised_learning.png"

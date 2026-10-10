@@ -14,7 +14,7 @@ function fieldControl(field,state,element){
 export function mountScenes(definitions){
   definitions.forEach(def=>{
     const panel=document.querySelector(`[data-scene="${def.id}"]`);if(!panel)return;
-    panel.classList.add('ready');if(def.note)panel.querySelector('.scene-note').textContent=def.note+' '+panel.querySelector('.scene-note').textContent;const canvas=panel.querySelector('canvas'),ctx=canvas.getContext('2d');
+    panel.classList.add('ready');if(def.guide){const guide=document.createElement('div');guide.className='scene-guide';const title=document.createElement('strong');title.textContent='怎麼操作與閱讀';guide.append(title);const list=document.createElement('ol');def.guide.forEach(instruction=>{const item=document.createElement('li');item.textContent=instruction;list.append(item);});guide.append(list);panel.querySelector('.scene-description').after(guide);}if(def.note)panel.querySelector('.scene-note').textContent=def.note+' '+panel.querySelector('.scene-note').textContent;const canvas=panel.querySelector('canvas'),ctx=canvas.getContext('2d');
     if(!ctx){panel.querySelector('.scene-description').textContent='此瀏覽器不支援 Canvas 2D，請參考本節文字與原圖。';return;}
     const state={def,panel,canvas,ctx,time:0,playing:false,visible:false,speed:1,params:Object.fromEntries((def.fields||[]).map(f=>[f.key,f.value])),lastResult:null};
     state.params.seed=42;

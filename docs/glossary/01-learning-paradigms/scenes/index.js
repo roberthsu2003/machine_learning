@@ -3,13 +3,53 @@ import * as M from '../../shared/math.js';
 import * as G from '../../shared/geometry.js';
 const C=G.colors;
 export const definitions=[
-demo('supervised','監督式：分類與回歸',[select('task','預測任務',[['class','分類'],['reg','回歸']]),check('labels','顯示真實標籤',true),range('query','新樣本的 x',-1,1,.5,.05)],(c,s)=>{
- const data=M.samples(42,18),a=G.axes(c,{ymax:2.7}),p=s.progress;
- if(s.params.task==='reg'){const fit=M.linear(data),w=M.lerp(0,fit.w,p),b=M.lerp(0,fit.b,p);G.curve(c,a,x=>w*x+b);G.dots(c,a,data);G.diamond(c,a.X(s.params.query),a.Y(w*s.params.query+b));G.heading(c,'回歸：預測連續數值',`目前 ŷ = ${M.fmt(w,2)}x + ${M.fmt(b,2)}`);return {message:`x = ${s.params.query}，目前預測 ŷ = ${M.fmt(w*s.params.query+b)}。橘線以參數插值展示擬合；終點是最小平方法解。`,metrics:{prediction:w*s.params.query+b}};}
- const points=M.points(42,24).map(p=>({...p,label:p.x>0?1:0})),plot=G.axes(c,{xmin:-2,xmax:2,ymin:-1.5,ymax:2});
- const boundary=M.lerp(-1,0,p);G.line(c,plot.X(boundary),plot.Y(-1.5),plot.X(boundary),plot.Y(2),C.purple,3);
- points.forEach((q,i)=>{const color=s.params.labels?G.palette[q.label]:C.muted;G.circle(c,plot.X(q.x),plot.Y(q.y),6,color);if(s.params.labels&&i%4===0)G.text(c,q.label?'B':'A',plot.X(q.x),plot.Y(q.y)-15,11,color);});G.diamond(c,plot.X(s.params.query),plot.Y(.2),9,s.params.query>boundary?C.orange:C.green);
- G.heading(c,'分類：預測離散類別','示意分界線逐步移到 x = 0');return {message:`新樣本 x = ${s.params.query} → 預測 ${s.params.query>boundary?'B':'A'}。圓點是有標籤的範例，菱形是新樣本；此分界線為機制示意。`,metrics:{boundary,prediction:s.params.query>boundary?'B':'A'}};
+demo('supervised','監督式：分類與回歸',[
+ select('task','① 選擇要預測的標籤 y',[['class','分類：房屋類型'],['reg','回歸：成交價']]),
+ range('query','② 新房屋的面積 X₁（坪）',20,80,50,5)
+],(c,s)=>{
+ const areas=[20,30,40,60,70,80],query=s.params.query,p=s.progress;
+ const learned=p>=.5,revealed=p>=1,move=M.clamp((p-.5)*2);
+ const stage=p===0?0:p<.5?1:revealed?3:2;
+ const titles=['先看已知的 X 與 y','由已知資料建立模型','模型已建立，準備預測','用新 X 得到預測 ŷ'];
+ G.heading(c,titles[stage]);
+ ['1 看資料','2 學模型','3 預測新房屋'].forEach((v,i)=>{
+  G.rect(c,80+i*225,62,205,36,(i===0&&p===0)||(i===1&&p>0&&p<=.5)||(i===2&&p>.5)?C.mint:C.white,C.line);
+  G.text(c,v,182+i*225,80,15);
+ });
+ const x=v=>155+(v-20)/60*500;
+ let prediction,model;
+ if(s.params.task==='class'){
+  const labels=areas.map(v=>v<=40?'小坪數':'大坪數');
+  const boundary=(Math.max(...areas.filter((v,i)=>labels[i]==='小坪數'))+Math.min(...areas.filter((v,i)=>labels[i]==='大坪數')))/2;
+  model={boundary};prediction=query<=boundary?'小坪數':'大坪數';
+  G.text(c,'標籤 y：房屋類型',90,122,15,C.ink,'left');
+  [[180,'大坪數',C.orange],[290,'小坪數',C.green]].forEach(([y,label,color])=>{
+   G.line(c,145,y,675,y);G.text(c,label,130,y,16,color,'right');
+  });
+  areas.forEach((v,i)=>{const y=labels[i]==='小坪數'?290:180;G.circle(c,x(v),y,8,labels[i]==='小坪數'?C.green:C.orange);G.text(c,`${v} 坪`,x(v),y-22,13);});
+  if(p>0){c.globalAlpha=Math.min(1,p*2);G.line(c,x(boundary),145,x(boundary),322,C.purple,2,[5,4]);G.text(c,'模型門檻：50 坪',x(boundary),135,14,C.purple);c.globalAlpha=1;}
+  if(learned){const y=M.lerp(235,prediction==='小坪數'?290:180,move);G.diamond(c,x(query),y,11,C.purple);G.text(c,revealed?`ŷ = ${prediction}`:'新房屋：y 未知',x(query),y+27,14,C.purple);}
+  G.text(c,learned?'模型規則：X₁ ≤ 50 → 小坪數；X₁ > 50 → 大坪數':'每個圓點的位置是 X₁，所屬的房屋類型是 y',380,410,15,learned?C.ink:C.muted);
+ }else{
+  const prices=[1000,1550,1950,3050,3450,4000],data=areas.map((v,i)=>({x:v,y:prices[i]})),fit=M.linear(data);
+  model=fit;prediction=fit.w*query+fit.b;
+  const plot=G.axes(c,{xmin:20,xmax:80,ymin:0,ymax:4500,x:155,y:155,w:500,h:175,xlabel:'特徵 X₁：面積（坪）',ylabel:'標籤 y：成交價（萬元）'});
+  data.forEach(q=>G.circle(c,plot.X(q.x),plot.Y(q.y),7,C.green));
+  if(p>0){const end=20+60*Math.min(1,p*2);c.save();c.beginPath();c.rect(plot.x,plot.y,plot.w,plot.h);c.clip();G.line(c,plot.X(20),plot.Y(fit.w*20+fit.b),plot.X(end),plot.Y(fit.w*end+fit.b),C.orange,3);c.restore();}
+  if(learned){G.diamond(c,plot.X(query),M.lerp(plot.Y(0),plot.Y(prediction),move),11,C.purple);G.line(c,plot.X(query),plot.Y(0),plot.X(query),plot.Y(prediction),C.purple,1,[4,4]);}
+  G.text(c,learned?`模型：ŷ = ${M.fmt(fit.w,2)} × X₁ + ${M.fmt(fit.b,2)}`:'綠圓是已知面積與成交價的房屋',380,410,15);
+ }
+ if(s.params.task==='class'){
+  G.line(c,155,350,655,350);
+  areas.forEach(v=>G.text(c,v,x(v),368,12,C.muted));
+  G.text(c,'特徵 X₁：面積（坪）',405,390,14,C.muted);
+ }
+ const answer=s.params.task==='class'?prediction:`${M.fmt(prediction,0)} 萬元`;
+ const message=p===0?'先看圓點：每筆訓練資料都有特徵 X₁（面積）與已知標籤 y。按一次「下一步」建立模型。':!learned?'正在展示模型；這段動畫呈現模型建立結果，不是訓練迭代紀錄。':!revealed?'已建立模型。紫色菱形是新房屋，它的 y 未知。再按一次「下一步」查看預測 ŷ。':`新房屋的 X₁ = ${query} 坪 → 預測 ŷ = ${answer}。這是模型的預測，並非已知的真實標籤 y。可調整面積，再按兩次「下一步」比較。`;
+ return {message,metrics:{stage,feature:query,prediction:revealed?prediction:null,model:learned?model:null}};
+},'X 是整份特徵矩陣；此例只有一欄面積，以 X₁ 標示。y 是已知標籤，ŷ 是模型預測。資料為教學示例；分類門檻取兩類最近樣本的中點，回歸線用最小平方法計算。',{
+ steps:2,
+ guide:['圓點是已知資料：橫向看面積 X₁，縱向看標籤 y。','按一次「下一步」：顯示由 X 與 y 建立的模型。','再按一次「下一步」：紫色菱形代表新房屋，顯示預測 ŷ。','改面積或切換任務會回到起點；再按兩次「下一步」。也可播放完整過程。']
 }),
 demo('unsupervised','非監督式：聚類與降維',[select('mode','學習任務',[['cluster','K-Means 分群'],['projection','2D → 1D 投影示意']]),range('k','群數 k',2,4,3),range('angle','投影角度（度）',0,180,30)],(c,s)=>{
  const data=M.points(s.params.seed,30),a=G.axes(c,{xmin:-2,xmax:2,ymin:-1.5,ymax:2});
