@@ -1,0 +1,161 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 08 章 集成學習：完整教材、原圖對照與互動 2D 幾何動畫。"><title>08 集成學習｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/08_%E9%9B%86%E6%88%90%E5%AD%B8%E7%BF%92/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 08 / 12 · INTERACTIVE LESSON</div><h1>集成學習</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#bagging">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#bagging">Bagging</a><a href="#boosting">Boosting</a><a href="#stacking">Stacking</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. Bagging (裝袋法 / Bootstrap Aggregating)</a><a href="#section-3">2. Boosting (提升法)</a><a href="#section-4">3. Stacking (堆疊融合法)</a><a href="#section-5">4. 集成學習三大巨頭終極比較</a><a href="#section-6">📌 本章精華速記</a></nav></aside><article class="lesson-content"><blockquote>
+<p><strong>「三個臭皮匠，勝過一個諸葛亮。」</strong><br />
+—— 集成學習的核心哲學</p>
+</blockquote>
+<p>集成學習（Ensemble Learning）是一種「結合眾人智慧」的強大機器學習策略。其核心思想是：<strong>將多個弱學習器（Weak Learners，如多棵簡單決策樹）組合起來，構成一個預測能力極強的強學習器（Strong Learner）</strong>，以獲得比任何單一模型都更優異、更穩健的泛化表現。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>掌握集成學習三大核心架構：<strong>Bagging</strong>、<strong>Boosting</strong> 與 <strong>Stacking</strong> 的底層原理。</li>
+<li>理解為什麼 <strong>Bagging 降變異數 (Variance)</strong>，而 <strong>Boosting 降偏差 (Bias)</strong>。</li>
+<li>熟悉工業界三大殺手級工具（Random Forest, XGBoost, LightGBM）的選型考量。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. Bagging (裝袋法 / Bootstrap Aggregating)</h2>
+<h3>核心定義</h3>
+<p>Bagging 透過「自助抽樣 (Bootstrap)」從原始數據中有放回地隨機抽取多個子集，<strong>並行 (Parallel)</strong> 訓練多個互不干擾的同質基礎模型，最後將所有模型的預測結果進行「多數投票（分類）」或「平均計算（回歸）」來完成最終決策。</p>
+<h3>💡 生活直觀比喻：群眾智慧專家會診</h3>
+<blockquote>
+<p>一位病患拿著病歷，同時掛號了 10 位不同科別但資歷相同的醫生（各自看過部分檢查報告）。<br />
+每位醫生獨立給出診斷，最後全體投票：「若 8 位醫生說有病，2 位說沒病，則最終判定為有病」。<br />
+這種並行獨立表決，能有效過濾掉單一醫生因一時疏忽造成的誤診。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="bagging" data-scene="bagging" aria-labelledby="title-bagging">
+<div class="scene-head"><h3 id="title-bagging">Bagging</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">樣本有放回抽取到不同模型；多個預測標記移向投票或平均結果。</p>
+<canvas width="760" height="450" role="img" aria-label="Bagging幾何動畫" aria-describedby="result-bagging">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-bagging" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="Bagging播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="Bagging動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：Bagging裝袋法原理與隨機森林流程</summary><img src="./assets/images/01_bagging.png" alt="Bagging裝袋法原理與隨機森林流程" loading="lazy"><a href="./assets/images/01_bagging.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>代表算法：隨機森林 (Random Forest)</h3>
+<p>隨機森林在標準 Bagging 基礎上更進一步：除了對**「樣本進行隨機抽樣 (Bootstrap)」<strong>外，在每個樹節點分裂時還對</strong>「特徵進行隨機挑選 (Feature Subsampling)」**！<br />
+雙重隨機性使得森林中的每一棵樹風格迥異，極大增加了模型的多樣性。</p>
+<h3>核心特點</h3>
+<ul>
+<li><strong>降變異數 (Reduce Variance)</strong>：單棵未剪枝決策樹極易過擬合，但百棵樹平均之後，決策邊界變得極度平滑穩健。</li>
+<li><strong>支援極速平行運算</strong>：每棵樹完全獨立，能直接吃滿多核心 CPU / GPU。</li>
+<li><strong>對異常值與噪聲具備強大抗性</strong>。</li>
+</ul>
+<hr />
+<h2 id="section-3">2. Boosting (提升法)</h2>
+<h3>核心定義</h3>
+<p>Boosting 是一種<strong>串行 (Sequential，循序推進)</strong> 迭代的集成技術。新模型並非獨立訓練，而是專門針對前一個模型「預測錯誤或殘差較大」的樣本進行針對性強化訓練，步步為營，將多個弱學習器依序提升為頂尖強學習器。</p>
+<h3>💡 生活直觀比喻：學霸的「錯題本複習法」</h3>
+<blockquote>
+<p>學生做完第一次模擬考，把所有寫錯的題目圈起來抄入「錯題本」。<br />
+第二輪複習時，將 80% 的精力專門攻克錯題本中的難題；第三輪再針對前兩輪依舊搞不懂的死角加強練習……<br />
+如此反覆迭代，知識盲區被逐一消滅，最終成為全能考霸！</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="boosting" data-scene="boosting" aria-labelledby="title-boosting">
+<div class="scene-head"><h3 id="title-boosting">Boosting</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">弱模型依序出現，殘差線段進入下一輪；模型曲線逐輪加總。</p>
+<canvas width="760" height="450" role="img" aria-label="Boosting幾何動畫" aria-describedby="result-boosting">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-boosting" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="Boosting播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="Boosting動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：Boosting提升法原理與殘差學習</summary><img src="./assets/images/02_boosting.png" alt="Boosting提升法原理與殘差學習" loading="lazy"><a href="./assets/images/02_boosting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>代表算法</h3>
+<ul>
+<li><strong>AdaBoost</strong>：主動調高上一輪被預測錯誤樣本的權重，強制後續模型關注困難點。</li>
+<li><strong>梯度提升機 (GBDT)</strong>：每一輪建立新樹，直接去擬合上一輪模型的「殘差 (Residuals)」。</li>
+<li><strong>XGBoost / LightGBM / CatBoost</strong>：現代工業界霸主，在 GBDT 基礎上加入二階泰勒展開、正則化項與直方圖優化，效率與精度達到巔峰。</li>
+</ul>
+<h3>核心特點</h3>
+<ul>
+<li><strong>降偏差 (Reduce Bias)</strong>：模型持續攻克極限難題，在競賽與實務中往往具備超越 Bagging 的最高預測精度。</li>
+<li><strong>訓練相依無法平行</strong>：後一棵樹依賴前一棵樹的殘差輸出，訓練必須串行等待。</li>
+<li><strong>對噪聲異常值敏感</strong>：若標籤存在人工輸入錯誤，Boosting 容易走火入魔硬背錯誤。</li>
+</ul>
+<hr />
+<h2 id="section-4">3. Stacking (堆疊融合法)</h2>
+<h3>核心定義</h3>
+<p>Stacking 是一種多層次（Multi-level）的異質模型融合技術。它在第一層集合多種**不同演算法機制（如 SVM、KNN、隨機森林、神經網絡）**的基礎學習器，再由第二層的「元學習器 (Meta-Learner)」來學習如何分配權重並做出終極判決。</p>
+<h3>💡 生活直觀比喻：法院的陪審團與主任法官</h3>
+<blockquote>
+<p>法庭上有 5 位性格與專長完全不同的陪審團員（一位精通法條細節、一位擅長心理學、一位看重物證）。<br />
+他們各自提交一份審判意見書給「主任法官（元學習器）」。主任法官根據過往案件經驗，評估各位專家的可信度，最終敲下法槌完成定讞判決。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="stacking" data-scene="stacking" aria-labelledby="title-stacking">
+<div class="scene-head"><h3 id="title-stacking">Stacking</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">基礎模型的 OOF 預測方塊重排為新矩陣，再流入元模型。</p>
+<canvas width="760" height="450" role="img" aria-label="Stacking幾何動畫" aria-describedby="result-stacking">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-stacking" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="Stacking播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="Stacking動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：Stacking堆疊法原理與元學習架構</summary><img src="./assets/images/03_stacking.png" alt="Stacking堆疊法原理與元學習架構" loading="lazy"><a href="./assets/images/03_stacking.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>核心運作要點</h3>
+<ul>
+<li><strong>第一層 (Level-0 基礎學習器)</strong>：盡量挑選<strong>不同原理</strong>的異質模型，互補短板。</li>
+<li><strong>第二層 (Level-1 元學習器)</strong>：通常使用簡單、不易過擬合的模型（如邏輯回歸 Logistic Regression）。</li>
+<li><strong>🚨 防資料洩漏機制</strong>：產生第一層預測特徵時，<strong>必須採用嚴格的 K-Fold Out-of-Fold 交叉驗證</strong>，絕不可讓第二層模型直接接觸訓練集的原始標籤！</li>
+</ul>
+<hr />
+<h2 id="section-5">4. 集成學習三大巨頭終極比較</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">比較維度</th>
+  <th style="text-align:left">Bagging (裝袋法)</th>
+  <th style="text-align:left">Boosting (提升法)</th>
+  <th style="text-align:left">Stacking (堆疊法)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>基礎模型關係</strong></td>
+  <td style="text-align:left"><strong>並行獨立 (Parallel)</strong></td>
+  <td style="text-align:left"><strong>串行相依 (Sequential)</strong></td>
+  <td style="text-align:left"><strong>分層堆疊 (Layered)</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>基礎模型多樣性</strong></td>
+  <td style="text-align:left">同質模型（通常為深度決策樹）</td>
+  <td style="text-align:left">同質模型（通常為淺層弱決策樹）</td>
+  <td style="text-align:left"><strong>異質模型</strong>（SVM, KNN, 樹模型混搭）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>核心優化目標</strong></td>
+  <td style="text-align:left"><strong>降低變異數 (Variance)</strong>，防過擬合</td>
+  <td style="text-align:left"><strong>降低偏差 (Bias)</strong>，提升擬合精度</td>
+  <td style="text-align:left"><strong>博採眾長</strong>，消除單一演算法盲點</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>結合輸出方式</strong></td>
+  <td style="text-align:left">簡單多數表決 / 平均值</td>
+  <td style="text-align:left">加權累加組合 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sum \alpha_t h_t(x)"><mrow><mo>∑</mo><msub><mi>α</mi><mi>t</mi></msub><msub><mi>h</mi><mi>t</mi></msub><mo>(</mo><mi>x</mi><mo>)</mo></mrow></math>)</td>
+  <td style="text-align:left">透過元模型 (Meta-Learner) 再次訓練</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>計算效率</strong></td>
+  <td style="text-align:left">極高（天然多核心平行加速）</td>
+  <td style="text-align:left">較慢（無法完全並行）</td>
+  <td style="text-align:left">慢（需維護與訓練多套框架）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>工業界代表</strong></td>
+  <td style="text-align:left"><strong>隨機森林 (Random Forest)</strong></td>
+  <td style="text-align:left"><strong>XGBoost / LightGBM</strong></td>
+  <td style="text-align:left"><strong>Kaggle 數據競賽王牌組合</strong></td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-6">📌 本章精華速記</h2>
+<ol>
+<li><strong>Bagging 降變異數</strong>：自助抽樣、並行訓練、多數決，以隨機森林為代表。</li>
+<li><strong>Boosting 降偏差</strong>：錯題本逐輪補殘差，精度最高，以 XGBoost、LightGBM 為代表。</li>
+<li><strong>Stacking 融百家</strong>：利用元學習器整合異質算法長處，競賽衝分利器但工程維護重。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/08_%E9%9B%86%E6%88%90%E5%AD%B8%E7%BF%92/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../07-common-algorithms/">← 07 常見算法</a><a href="../">返回 12 章目錄</a><a href="../09-evaluation-metrics/">09 評估指標 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

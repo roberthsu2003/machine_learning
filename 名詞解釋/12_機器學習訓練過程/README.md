@@ -1,5 +1,13 @@
 # 12. 機器學習訓練過程 (End-to-End Machine Learning Pipeline)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/)**
+
+動畫場景：[端到端生命週期](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#lifecycle) · [訓練迭代與 Epoch／Batch／Iteration](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#inner-loop) · [健康度與檢查清單](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#training-health)
+
+<!-- interactive-glossary:end -->
+
 在學習了前面的數據結構、特徵工程、優化算法、評估指標與模型泛化之後，我們已經掌握了機器學習大廈的所有基石模組。
 
 **本章是全書的集大成篇**。我們將把所有零散的概念串聯起來，從宏觀視角一覽一個專業機器學習專案從「業務問題出發」到「模型訓練調優」再到「落地部署與閉環監控」的完整生命週期（End-to-End ML Pipeline）。

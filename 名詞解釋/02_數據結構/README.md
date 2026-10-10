@@ -1,5 +1,13 @@
 # 2. 數據結構 (Data Structures: Features & Labels)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/)**
+
+動畫場景：[特徵與資料型態](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#features) · [標籤與任務](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#labels) · [特徵矩陣 X 與標籤 y](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#matrix)
+
+<!-- interactive-glossary:end -->
+
 在機器學習中，演算法並不能直接理解現實世界中的真實物體（如一張房屋照片、一封商業信件或一位病患），而是必須將現實世界的對象抽象化為由**特徵 (Features)** 與 **標籤 (Labels)** 構成的結構化矩陣數據。
 
 理解特徵與標籤的數學形式與組織架構，是進入機器學習建模的第一步。

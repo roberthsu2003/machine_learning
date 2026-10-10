@@ -1,0 +1,209 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 12 章 機器學習訓練過程：完整教材、原圖對照與互動 2D 幾何動畫。"><title>12 機器學習訓練過程｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/12_%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E8%A8%93%E7%B7%B4%E9%81%8E%E7%A8%8B/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 12 / 12 · INTERACTIVE LESSON</div><h1>機器學習訓練過程</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#lifecycle">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#lifecycle">端到端生命週期</a><a href="#inner-loop">訓練迭代與 Epoch／Batch／Iteration</a><a href="#training-health">健康度與檢查清單</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 宏觀全景：機器學習端到端生命週期</a><a href="#section-3">2. 微觀深潛：模型訓練迭代核心迴圈 (The Inner Loop)</a><a href="#section-4">3. 訓練健康度診斷與擬合光譜對照</a><a href="#section-5">4. 機器學習工程師實戰黃金檢查清單 (Practitioner&#x27;s Checklist)</a><a href="#section-6">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在學習了前面的數據結構、特徵工程、優化算法、評估指標與模型泛化之後，我們已經掌握了機器學習大廈的所有基石模組。</p>
+<p><strong>本章是全書的集大成篇</strong>。我們將把所有零散的概念串聯起來，從宏觀視角一覽一個專業機器學習專案從「業務問題出發」到「模型訓練調優」再到「落地部署與閉環監控」的完整生命週期（End-to-End ML Pipeline）。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>掌握機器學習專案的<strong>宏觀六大階段生命週期</strong>，理解各階段的承接關係。</li>
+<li>搞懂模型訓練的<strong>微觀運作迴圈 (Inner Training Loop)</strong>，精確計算 Epoch、Iteration 與 Batch Size。</li>
+<li>建立全域工程思維，熟記機器學習實戰的<strong>黃金檢查清單 (Practitioner's Checklist)</strong>。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 宏觀全景：機器學習端到端生命週期</h2>
+<p>一個真實世界的機器學習專案，遠遠不只是呼叫 <code>model.fit()</code> 那麼簡單。如下圖所示，真正的機器學習系統是一個涵蓋六大演進階段、且具備持續回饋修正的工程閉環：</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="lifecycle" data-scene="lifecycle" aria-labelledby="title-lifecycle">
+<div class="scene-head"><h3 id="title-lifecycle">端到端生命週期</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">資料包沿六大階段前進，在部署監控處形成回饋閉環，必要時回到前面重訓。</p>
+<canvas width="760" height="450" role="img" aria-label="端到端生命週期幾何動畫" aria-describedby="result-lifecycle">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-lifecycle" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="端到端生命週期播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="端到端生命週期動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：機器學習端到端全流程架構</summary><img src="./assets/images/01_ml_lifecycle_pipeline.png" alt="機器學習端到端全流程架構" loading="lazy"><a href="./assets/images/01_ml_lifecycle_pipeline.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>六大核心演進階段詳解</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:center">階段序號</th>
+  <th style="text-align:left">階段名稱</th>
+  <th style="text-align:left">核心任務</th>
+  <th style="text-align:center">對應前續章節</th>
+  <th style="text-align:left">實戰產出物</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center"><strong>01</strong></td>
+  <td style="text-align:left"><strong>問題定義與目標拆解</strong></td>
+  <td style="text-align:left">• 明確商業目標與成功指標（KPI）<br>• 確定機器學習範式（監督 vs 非監督、分類 vs 回歸）<br>• 定立基準線（Baseline Model）以衡量後續成效</td>
+  <td style="text-align:center"><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%25E5%25AD%25B8%25E7%25BF%2592%25E7%25AF%2584%25E5%25BC%258F/README.md">01_學習範式</a></td>
+  <td style="text-align:left">專案規格書、核心評估指標清單</td>
+</tr>
+<tr>
+  <td style="text-align:center"><strong>02</strong></td>
+  <td style="text-align:left"><strong>數據收集與探索 (EDA)</strong></td>
+  <td style="text-align:left">• 數據清洗、去重與缺失值/異常值過濾<br>• 探索特徵分佈與關聯性矩陣<br>• 驗證標籤品質，確保無人為標註錯誤</td>
+  <td style="text-align:center"><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/02_%25E6%2595%25B8%25E6%2593%259A%25E7%25B5%2590%25E6%25A7%258B/README.md">02_數據結構</a></td>
+  <td style="text-align:left">探索性分析報告、清洗後乾淨數據集</td>
+</tr>
+<tr>
+  <td style="text-align:center"><strong>03</strong></td>
+  <td style="text-align:left"><strong>特徵工程與數據切分</strong></td>
+  <td style="text-align:left">• 執行特徵縮放（標準化/正規化）<br>• 類別特徵編碼（One-Hot / 標籤編碼）<br>• 嚴格依照時間或分層抽樣劃分 Train / Val / Test<br>• <strong>嚴防數據洩漏 (Data Leakage)</strong></td>
+  <td style="text-align:center"><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/03_%25E6%2595%25B8%25E6%2593%259A%25E5%2588%2586%25E5%2589%25B2/README.md">03_數據分割</a><br><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/04_%25E7%2589%25B9%25E5%25BE%25B5%25E5%25B7%25A5%25E7%25A8%258B/README.md">04_特徵工程</a></td>
+  <td style="text-align:left">特徵矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math>、標籤向量 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math>、切分後的三大子集</td>
+</tr>
+<tr>
+  <td style="text-align:center"><strong>04</strong></td>
+  <td style="text-align:left"><strong>模型選型與反覆訓練</strong></td>
+  <td style="text-align:left">• 挑選候選演算法（樹模型、SVM、神經網絡等）<br>• 執行微觀訓練迴圈（前向傳播、計算損失、梯度反傳）<br>• 利用集成學習（Random Forest、XGBoost）強化實力</td>
+  <td style="text-align:center"><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/06_%25E5%2584%25AA%25E5%258C%2596%25E7%25AE%2597%25E6%25B3%2595/README.md">06_優化算法</a><br><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/07_%25E5%25B8%25B8%25E8%25A6%258B%25E7%25AE%2597%25E6%25B3%2595/README.md">07_常見算法</a><br><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/08_%25E9%259B%2586%25E6%2588%2590%25E5%25AD%25B8%25E7%25BF%2592/README.md">08_集成學習</a></td>
+  <td style="text-align:left">候選模型權重檔案</td>
+</tr>
+<tr>
+  <td style="text-align:center"><strong>05</strong></td>
+  <td style="text-align:left"><strong>評估診斷與超參數調優</strong></td>
+  <td style="text-align:left">• 透過學習曲線診斷欠擬合或過度擬合<br>• 利用驗證集進行網格/隨機/貝氏搜尋超參數<br>• 最終由鎖定的測試集給出無偏的客觀泛化評估</td>
+  <td style="text-align:center"><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/05_%25E6%25A8%25A1%25E5%259E%258B%25E5%258F%2583%25E6%2595%25B8/README.md">05_模型參數</a><br><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%25E8%25A9%2595%25E4%25BC%25B0%25E6%258C%2587%25E6%25A8%2599/README.md">09_評估指標</a><br><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/10_%25E6%25A8%25A1%25E5%259E%258B%25E6%2580%25A7%25E8%2583%25BD%25E5%2595%258F%25E9%25A1%258C/README.md">10_模型性能問題</a><br><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/11_%25E6%25A8%25A1%25E5%259E%258B%25E6%25B3%259B%25E5%258C%2596/README.md">11_模型泛化</a></td>
+  <td style="text-align:left">最佳超參數組合、終極測試評估報告</td>
+</tr>
+<tr>
+  <td style="text-align:center"><strong>06</strong></td>
+  <td style="text-align:left"><strong>模型部署與持續監控</strong></td>
+  <td style="text-align:left">• 將模型封裝為 REST API、微服務或邊緣推論模組<br>• 監控系統推論延遲、記憶體用量與吞吐量<br>• <strong>追蹤數據漂移 (Data Drift)</strong>，觸發動態重訓更新</td>
+  <td style="text-align:center">全書貫通</td>
+  <td style="text-align:left">生產環境服務、即時監控儀表板</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-3">2. 微觀深潛：模型訓練迭代核心迴圈 (The Inner Loop)</h2>
+<p>當我們在「階段 04」啟動模型訓練時，演算法內部正在高速執行以數據批次為單位的微觀迭代循環：</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="inner-loop" data-scene="inner-loop" aria-labelledby="title-inner-loop">
+<div class="scene-head"><h3 id="title-inner-loop">訓練迭代與 Epoch／Batch／Iteration</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">樣本隊列逐批進入模型，循環走過前向、損失、反傳與更新；計數器同步增加。</p>
+<canvas width="760" height="450" role="img" aria-label="訓練迭代與 Epoch／Batch／Iteration幾何動畫" aria-describedby="result-inner-loop">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-inner-loop" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="訓練迭代與 Epoch／Batch／Iteration播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="訓練迭代與 Epoch／Batch／Iteration動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：模型訓練微觀運作迴圈</summary><img src="./assets/images/02_model_training_iteration_loop.png" alt="模型訓練微觀運作迴圈" loading="lazy"><a href="./assets/images/02_model_training_iteration_loop.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>訓練迴圈的四步舞曲</h3>
+<ol>
+<li><strong>第一步：前向傳播 (Forward Pass)</strong><br />
+輸入一批特徵數據 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math>，通過當前的模型參數矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="W"><mrow><mi>W</mi></mrow></math> 與偏置 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="b"><mrow><mi>b</mi></mrow></math>，計算出模型的預測輸出 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\hat{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math>。</li>
+<li><strong>第二步：計算損失 (Compute Loss)</strong><br />
+將預測值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\hat{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math> 與真實標籤 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 傳入損失函數（如 MSE、Cross-Entropy），算出當前猜測的差距數值。</li>
+<li><strong>第三步：反向傳播 (Backpropagation)</strong><br />
+利用微積分連鎖律，計算損失函數對各層參數的偏微分梯度 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\nabla J(\theta)"><mrow><mo>∇</mo><mi>J</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow></math>。</li>
+<li><strong>第四步：參數更新 (Parameter Update)</strong><br />
+優化器（如 Adam、SGD）依照更新規則 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\theta \leftarrow \theta - \alpha \nabla J(\theta)"><mrow><mi>θ</mi><mo>←</mo><mi>θ</mi><mo>-</mo><mi>α</mi><mo>∇</mo><mi>J</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow></math> 調整權重，完成一次經驗學習。</li>
+</ol>
+<hr />
+<h3>💡 關鍵術語數學關係：Epoch vs Batch Size vs Iteration</h3>
+<p>很多初學者經常混淆這三個術語，請牢記以下定義與公式：</p>
+<ul>
+<li><strong>Batch Size（批次大小）</strong>：每次參數更新時，模型「一口吞下」的樣本數量（如 64 筆）。</li>
+<li><strong>Iteration（迭代步數）</strong>：參數更新發生的<strong>次數</strong>（完成一個 Batch 的四步舞曲就是 1 次 Iteration）。</li>
+<li><strong>Epoch（訓練輪數）</strong>：模型<strong>將「整個訓練數據集」完整看過一遍</strong>的週期。</li>
+</ul>
+<h4>核心換算公式</h4>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{1 個 Epoch 所需的 Iterations} = \left\lceil \frac{\text{訓練集總樣本數 } N}{\text{Batch Size}} \right\rceil"><mrow><mtext>1 個 Epoch 所需的 Iterations</mtext><mo>=</mo><mo>⌈</mo><mfrac><mrow><mtext>訓練集總樣本數 </mtext><mi>N</mi></mrow><mrow><mtext>Batch Size</mtext></mrow></mfrac><mo>⌉</mo></mrow></math></div><blockquote>
+<p><strong>實戰算術題</strong>：<br />
+假設訓練集共有 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="10,000"><mrow><mn>10</mn><mo>,</mo><mn>000</mn></mrow></math> 筆數據，設定 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{Batch Size} = 64"><mrow><mtext>Batch Size</mtext><mo>=</mo><mn>64</mn></mrow></math>：</p>
+<ul>
+<li>每個 Epoch 需要進行 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\lceil 10,000 / 64 \rceil = 157"><mrow><mo>⌈</mo><mn>10</mn><mo>,</mo><mn>000</mn><mo>/</mo><mn>64</mn><mo>⌉</mo><mo>=</mo><mn>157</mn></mrow></math> 次參數更新迭代 (Iterations)。</li>
+<li>若訓練設定 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="10"><mrow><mn>10</mn></mrow></math> 個 Epochs，則模型總共會經歷 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="157 \times 10 = 1,570"><mrow><mn>157</mn><mo>×</mo><mn>10</mn><mo>=</mo><mn>1</mn><mo>,</mo><mn>570</mn></mrow></math> 次迭代更新！</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="section-4">3. 訓練健康度診斷與擬合光譜對照</h2>
+<p>在反覆迭代的過程中，模型會經歷不同的擬合狀態。我們必須隨時觀察學習曲線，確保模型落在黃金平衡點上：</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="training-health" data-scene="training-health" aria-labelledby="title-training-health">
+<div class="scene-head"><h3 id="title-training-health">健康度與檢查清單</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">模型線與驗證曲線對照變動；在流程關卡檢查資料切分、洩漏與最終評估。</p>
+<canvas width="760" height="450" role="img" aria-label="健康度與檢查清單幾何動畫" aria-describedby="result-training-health">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-training-health" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="健康度與檢查清單播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="健康度與檢查清單動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：模型擬合能力光譜</summary><img src="./assets/images/03_underfitting_overfitting_spectrum.png" alt="模型擬合能力光譜" loading="lazy"><a href="./assets/images/03_underfitting_overfitting_spectrum.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>訓練狀態健康度速查表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">診斷指標</th>
+  <th style="text-align:left">欠擬合 (Underfitting)</th>
+  <th style="text-align:left">良好擬合 (Good Fit / 最佳泛化)</th>
+  <th style="text-align:left">過度擬合 (Overfitting)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>幾何視角</strong></td>
+  <td style="text-align:left">用僵硬直線擬合彎曲數據（如一次多項式）</td>
+  <td style="text-align:left">用平滑曲線貼合主要真實結構（如二次多項式）</td>
+  <td style="text-align:left">用瘋狂震盪曲線穿過所有噪聲點（如十五次多項式）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>數學本質</strong></td>
+  <td style="text-align:left"><strong>高偏差 (High Bias)</strong></td>
+  <td style="text-align:left"><strong>偏差與變異數達到最佳平衡</strong></td>
+  <td style="text-align:left"><strong>高變異數 (High Variance)</strong></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>訓練集誤差</strong></td>
+  <td style="text-align:left">❌ 很高（連看過的題目都不會）</td>
+  <td style="text-align:left">✅ 低且平穩</td>
+  <td style="text-align:left">✅ 極低（甚至完美 0 誤差）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>驗證集誤差</strong></td>
+  <td style="text-align:left">❌ 很高（新題目同樣考砸）</td>
+  <td style="text-align:left">✅ 低且非常接近訓練誤差</td>
+  <td style="text-align:left">❌ 嚴重飆高（面對新題目原形畢露）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>診斷結論</strong></td>
+  <td style="text-align:left">模型太笨、特徵太少、沒學會知識</td>
+  <td style="text-align:left"><strong>理想境界，具備強大泛化能力</strong></td>
+  <td style="text-align:left">模型用力過猛、死記硬背雜訊</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>對策處方</strong></td>
+  <td style="text-align:left">• 換用更強大的非線性模型<br>• 擴充新特徵與交互維度<br>• 調低正則化懲罰 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\lambda"><mrow><mi>λ</mi></mrow></math></td>
+  <td style="text-align:left">• 保持當前架構<br>• 執行最終測試集驗收</td>
+  <td style="text-align:left">• 引入 L1/L2 正則化與 Dropout<br>• 擴充數據集與 Data Augmentation<br>• 設置早停法 (Early Stopping)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-5">4. 機器學習工程師實戰黃金檢查清單 (Practitioner's Checklist)</h2>
+<p>在啟動任何機器學習專案時，請依序核對以下 8 項關鍵準則：</p>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>1. 明確問題本質</strong>：確認是監督式（分類/回歸）還是非監督式任務，定義量化商業 KPI。</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>2. 鎖定第一道防火牆</strong>：第一時間乾淨劃分訓練集、驗證集與測試集；<strong>測試集封裝至上線前才開啟</strong>。</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>3. 杜絕數據洩漏</strong>：所有標準化 Scaler、編碼器與特徵選擇器，<strong>嚴格僅在訓練集上 <code>fit()</code></strong>。</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>4. 檢查類別平衡</strong>：面對不平衡數據，切分時務必採用分層抽樣 (Stratified Split)，評估指標捨棄 Accuracy 改用 F1 / PR-AUC。</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>5. 搭建 Baseline 模型</strong>：先用最簡單的線性模型或隨機森林建立效能基準線，作為後續複雜調優的對照組。</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>6. 特徵縮放與演算法適配</strong>：若選用 KNN、SVM 或神經網絡，務必先完成特徵標準化。</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>7. 監控驗證集損失曲線</strong>：嚴格配置 Early Stopping 早停機制，防止模型訓練過頭滑入過擬合深淵。</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><strong>8. 監控生產環境數據漂移</strong>：上線後持續追蹤輸入數據分佈與業務反饋，建立持續自動化重訓管線。</li>
+</ul>
+<hr />
+<h2 id="section-6">📌 本章精華速記</h2>
+<ol>
+<li>機器學習專案是從<strong>問題定義、數據探索、特徵工程、模型選型、評估調優到部署監控</strong>的六大階段閉環。</li>
+<li>訓練微觀核心是<strong>前向傳播 ➔ 算 Loss ➔ 反向傳播算梯度 ➔ 優化器更新權重</strong>的反覆迭代。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{Iterations per Epoch} = \lceil N / \text{Batch Size} \rceil"><mrow><mtext>Iterations per Epoch</mtext><mo>=</mo><mo>⌈</mo><mi>N</mi><mo>/</mo><mtext>Batch Size</mtext><mo>⌉</mo></mrow></math>；Epoch 是全體看一遍，Iteration 是更新一次。</li>
+<li>始終以<strong>驗證集</strong>引導超參數調優與早停，以<strong>測試集</strong>完成最終泛化評估，嚴守防資料洩漏底線。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/12_%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E8%A8%93%E7%B7%B4%E9%81%8E%E7%A8%8B/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../11-generalization/">← 11 模型泛化</a><a href="../">返回 12 章目錄</a><span>已到最後一章</span></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

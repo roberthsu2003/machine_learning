@@ -1,0 +1,300 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 10 章 模型性能問題：完整教材、原圖對照與互動 2D 幾何動畫。"><title>10 模型性能問題｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/10_%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%95%8F%E9%A1%8C/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 10 / 12 · INTERACTIVE LESSON</div><h1>模型性能問題</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#fit-spectrum">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#fit-spectrum">欠擬合、良好擬合與過度擬合</a><a href="#bias-variance">偏差與變異數</a><a href="#learning-curves">學習曲線與早停</a><a href="#solutions">改善方式</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 欠擬合 (Underfitting / 高偏差 High Bias)</a><a href="#section-3">2. 過度擬合 (Overfitting / 高變異數 High Variance)</a><a href="#section-4">3. 偏差-變異數權衡 (Bias-Variance Tradeoff)</a><a href="#section-5">4. 學習曲線與性能診斷 (Learning Curves &amp;amp; Diagnosis)</a><a href="#section-6">5. 模型性能問題全景應對策略 (Solutions &amp;amp; Prevention)</a><a href="#section-7">6. 總結速查對照表</a><a href="#section-8">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在機器學習專案中，我們訓練模型的終極目標不是在「已知的訓練集」上考 100 分，而是讓模型具備優異的<strong>泛化能力 (Generalization Ability)</strong> —— 能夠準確預測現實世界中從未見過的全新數據。</p>
+<p>在模型訓練與調優的過程中，最常見且最具挑戰性的兩大性能陷阱就是<strong>欠擬合 (Underfitting)</strong> 與 <strong>過度擬合 (Overfitting)</strong>。理解這兩種狀態的本質、數學機理與診斷手法，是每位機器學習工程師的必修基本功。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>掌握<strong>欠擬合 (高偏差)</strong> 與 <strong>過度擬合 (高變異數)</strong> 的數學本質與生活比喻。</li>
+<li>理解<strong>偏差-變異數權衡 (Bias-Variance Tradeoff)</strong> 的平衡藝術。</li>
+<li>學會透過<strong>學習曲線 (Learning Curves)</strong> 診斷模型健康度，並熟練運用抑制過擬合的五大武器。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 欠擬合 (Underfitting / 高偏差 High Bias)</h2>
+<h3>描述</h3>
+<p><strong>欠擬合</strong>是指模型結構過於簡單、表達能力不足，無法有效捕捉訓練數據中的潛在規律與特徵關係。此時模型甚至連訓練集本身的規律都學不會，導致在<strong>訓練數據和測試數據上的預測表現均極為糟糕</strong>。</p>
+<section class="scene" id="fit-spectrum" data-scene="fit-spectrum" aria-labelledby="title-fit-spectrum">
+<div class="scene-head"><h3 id="title-fit-spectrum">欠擬合、良好擬合與過度擬合</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">同一批散點上，直線、平滑曲線與追逐雜訊的曲線逐步切換。</p>
+<canvas width="760" height="450" role="img" aria-label="欠擬合、良好擬合與過度擬合幾何動畫" aria-describedby="result-fit-spectrum">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-fit-spectrum" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="欠擬合、良好擬合與過度擬合播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="欠擬合、良好擬合與過度擬合動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：欠擬合原理與特徵圖解</summary><img src="./assets/images/01_underfitting.png" alt="欠擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/01_underfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>核心本質：高偏差 (High Bias)</h3>
+<ul>
+<li><strong>偏差 (Bias)</strong> 衡量的是模型預測的期望值與真實值之間的差距。</li>
+<li>欠擬合代表模型存在嚴重的<strong>先入為主偏見</strong>（例如：數據本質為二次曲線，模型卻硬性假設它是一條死板的直線）。這種剛性結構限制了學習上限，即使給予再多數據也無濟於事。</li>
+</ul>
+<h3>標誌性特徵</h3>
+<ul>
+<li><strong>訓練誤差 (Training Error) 居高不下</strong>：連看過無數次的題目都做不對。</li>
+<li><strong>測試誤差 (Testing Error) 同樣極高</strong>：新題目自然更是一塌糊塗。</li>
+<li>模型在「已知」與「未知」數據上表現皆不及格。</li>
+</ul>
+<h3>直觀範例與生活比喻</h3>
+<ul>
+<li><strong>數學範例</strong>：欲擬合具備非線性關係的數據 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y = x^2"><mrow><mi>y</mi><mo>=</mo><msup><mi>x</mi><mn>2</mn></msup></mrow></math>。若強行採用簡單線性回歸模型 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y = wx + b"><mrow><mi>y</mi><mo>=</mo><mi>w</mi><mi>x</mi><mo>+</mo><mi>b</mi></mrow></math>，一條直線永遠無法貼合拋物線的彎曲趨勢，兩端與中央必然產生巨大的殘差。</li>
+<li><strong>生活比喻</strong>：學生只背熟了國小的「九九乘法表」，就被直接推上考場應試大學「高等微積分」—— 因為知識體系容量嚴重不足，連題目的符號都看不懂。</li>
+</ul>
+<h3>常見誘發原因</h3>
+<ol>
+<li><strong>模型容量不足 (Insufficient Capacity)</strong>：算法過於簡陋（如線性模型處理複雜非線性問題、神經網絡層數過淺）。</li>
+<li><strong>特徵維度不足 (Lack of Features)</strong>：輸入的特徵太少，缺少能有效區分目標的關鍵預測維度。</li>
+<li><strong>正則化懲罰過重</strong>：正則化係數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\lambda"><mrow><mi>λ</mi></mrow></math> 設定過大，過度束縛了模型的權重調整空間。</li>
+<li><strong>訓練不充分</strong>：迭代輪數 (Epochs) 太少，或學習率設置過小導致權重尚未收斂。</li>
+</ol>
+<hr />
+<h2 id="section-3">2. 過度擬合 (Overfitting / 高變異數 High Variance)</h2>
+<h3>描述</h3>
+<p><strong>過度擬合</strong>是指模型過於複雜、參數量過於龐大，以至於「用力過猛」，不僅學習了真實的規律，還把訓練數據中的隨機雜訊、測量誤差與偶發異常個例全盤死記硬背下來。這會導致模型在訓練集上表現近乎完美，但在未見過的測試數據上<strong>泛化能力徹底崩潰</strong>。</p>
+<details class="original"><summary>對照原教材圖解：過度擬合原理與特徵圖解</summary><img src="./assets/images/02_overfitting.png" alt="過度擬合原理與特徵圖解" loading="lazy"><a href="./assets/images/02_overfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>核心本質：高變異數 (High Variance)</h3>
+<ul>
+<li><strong>變異數 (Variance)</strong> 衡量的是當訓練數據發生微小擾動時，模型預測結果的震盪幅度。</li>
+<li>過擬合模型對訓練數據的細節過度敏感。如果換一批稍有不同的訓練樣本，模型訓練出的參數曲線就會劇烈改變，呈現極高的不穩定性。</li>
+</ul>
+<h3>標誌性特徵</h3>
+<ul>
+<li><strong>訓練誤差 (Training Error) 極低</strong>：幾乎為 0，能完美命中每一個訓練點。</li>
+<li><strong>測試誤差 (Testing Error) 嚴重飆高</strong>：面對真實世界新樣本時預測錯得離譜。</li>
+<li>訓練誤差與測試誤差之間形成巨大的<strong>泛化鴻溝 (Generalization Gap)</strong>。</li>
+</ul>
+<h3>直觀範例與生活比喻</h3>
+<ul>
+<li><strong>數學範例</strong>：對 10 個稍微帶有高斯噪聲的數據點，使用高達 10 階的多項式回歸。模型為了強行穿過每一個噪點，生成了一條劇烈上下震盪的瘋狂曲線。當新測試點輸入時，曲線預測值可能飛向無窮大或極小值。</li>
+<li><strong>生活比喻</strong>：學生考前死記硬背歷屆考古題，連「題目序號、排版逗號與印刷瑕疵」都硬背成答案的一部分。真正大考時，題目只稍微抽換了一個數字，該生立刻腦袋空白交白卷。</li>
+</ul>
+<h3>常見誘發原因</h3>
+<ol>
+<li><strong>模型過度複雜 (Excessive Complexity)</strong>：模型自由度過高（例如神經網絡參數量遠大於樣本數、決策樹未設深度限制）。</li>
+<li><strong>訓練樣本量不足 (Small Dataset)</strong>：樣本過少，無法代表總體的真實統計分佈，模型容易將個案誤認成通則。</li>
+<li><strong>數據雜訊過多 (Noisy Data)</strong>：標籤錯誤或測量噪聲被高複雜度模型當成規律硬記。</li>
+<li><strong>缺乏正則化約束</strong>：權重數值被允許隨意膨脹震盪。</li>
+<li><strong>訓練迭代過多 (Over-training)</strong>：神經網絡訓練輪數過長，越過最佳泛化點後繼續死背細節。</li>
+</ol>
+<hr />
+<h2 id="section-4">3. 偏差-變異數權衡 (Bias-Variance Tradeoff)</h2>
+<p>機器學習的核心任務，實質上就是在<strong>偏差 (Bias)</strong> 與 <strong>變異數 (Variance)</strong> 之間尋找最佳平衡點。</p>
+<section class="scene" id="bias-variance" data-scene="bias-variance" aria-labelledby="title-bias-variance">
+<div class="scene-head"><h3 id="title-bias-variance">偏差與變異數</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">用固定資料生成機制重抽訓練樣本，多條模型線比較平均偏差與模型波動。</p>
+<canvas width="760" height="450" role="img" aria-label="偏差與變異數幾何動畫" aria-describedby="result-bias-variance">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-bias-variance" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="偏差與變異數播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="偏差與變異數動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：偏差-變異數權衡與擬合光譜全貌</summary><img src="./assets/images/03_bias_variance_tradeoff.png" alt="偏差-變異數權衡與擬合光譜全貌" loading="lazy"><a href="./assets/images/03_bias_variance_tradeoff.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>泛化誤差的數學分解</h3>
+<p>統計學習理論證明，對於任何監督式學習回歸問題，模型的<strong>總預期泛化誤差 (Total Expected Error)</strong> 可以嚴格分解為三部分：</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{Total Error} = \text{Bias}^2 + \text{Variance} + \sigma^2"><mrow><mtext>Total Error</mtext><mo>=</mo><msup><mtext>Bias</mtext><mn>2</mn></msup><mo>+</mo><mtext>Variance</mtext><mo>+</mo><msup><mi>σ</mi><mn>2</mn></msup></mrow></math></div><ul>
+<li><strong>偏差平方 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{Bias}^2"><mrow><msup><mtext>Bias</mtext><mn>2</mn></msup></mrow></math>)</strong>：源自模型簡化假設所帶來的系統性誤差。模型越簡單，偏差越大。</li>
+<li><strong>變異數 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{Variance}"><mrow><mtext>Variance</mtext></mrow></math>)</strong>：源自模型對特定訓練集隨機波動的敏感性。模型越複雜，變異數越大。</li>
+<li><strong>不可約減誤差 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sigma^2"><mrow><msup><mi>σ</mi><mn>2</mn></msup></mrow></math>, Irreducible Error)</strong>：數據採集過程本身無法消除的本底噪聲與客觀隨機性，這是任何算法都不可能跨越的誤差底限。</li>
+</ul>
+<h3>擬合光譜三態對比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">擬合狀態</th>
+  <th style="text-align:center">偏差 (Bias)</th>
+  <th style="text-align:center">變異數 (Variance)</th>
+  <th style="text-align:center">訓練集表現</th>
+  <th style="text-align:center">測試集表現</th>
+  <th style="text-align:left">根本癥結</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>欠擬合 (Underfitting)</strong></td>
+  <td style="text-align:center"><strong>高 (High)</strong></td>
+  <td style="text-align:center">低 (Low)</td>
+  <td style="text-align:center">❌ 差</td>
+  <td style="text-align:center">❌ 差</td>
+  <td style="text-align:left">智商/容量不足，學不會</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>最佳擬合 (Optimal Fit)</strong></td>
+  <td style="text-align:center"><strong>低 (Low)</strong></td>
+  <td style="text-align:center"><strong>低 (Low)</strong></td>
+  <td style="text-align:center">✅ 好</td>
+  <td style="text-align:center">✅ 好</td>
+  <td style="text-align:left">抓到本質規律，黃金平衡</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>過度擬合 (Overfitting)</strong></td>
+  <td style="text-align:center">低 (Low)</td>
+  <td style="text-align:center"><strong>高 (High)</strong></td>
+  <td style="text-align:center">✅ 極佳 (過好)</td>
+  <td style="text-align:center">❌ 差</td>
+  <td style="text-align:left">死背硬記雜訊，無法舉一反三</td>
+</tr>
+</tbody>
+</table></div>
+<h3>權衡曲線走勢啟示 (U 型曲線)</h3>
+<p>如圖所示：</p>
+<ol>
+<li>當模型複雜度由「簡單」向「複雜」提升時，模型表達力增強，<strong>偏差平方 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{Bias}^2"><mrow><msup><mtext>Bias</mtext><mn>2</mn></msup></mrow></math>) 迅速衰減</strong>。</li>
+<li>與此同時，模型對數據波動的敏感度開始升高，<strong>變異數 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{Variance}"><mrow><mtext>Variance</mtext></mrow></math>) 單調遞增</strong>。</li>
+<li>兩者疊加後的「總泛化誤差」呈現經典的 <strong>U 型曲線</strong>。</li>
+<li><strong>甜蜜點 (Sweet Spot)</strong>：總誤差最低的頂點。機器學習調參（如網格搜尋、超參數優化）的實質目的就是推動模型落入此處。</li>
+</ol>
+<hr />
+<h2 id="section-5">4. 學習曲線與性能診斷 (Learning Curves &amp; Diagnosis)</h2>
+<p>如何判斷目前訓練的模型到底是「欠擬合」還是「過擬合」？最實用、最直觀的工程診斷工具就是<strong>學習曲線 (Learning Curves)</strong>。</p>
+<section class="scene" id="learning-curves" data-scene="learning-curves" aria-labelledby="title-learning-curves">
+<div class="scene-head"><h3 id="title-learning-curves">學習曲線與早停</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">訓練／驗證曲線隨時間延伸，游標走過驗證最佳點，顯示繼續訓練的變化。</p>
+<canvas width="760" height="450" role="img" aria-label="學習曲線與早停幾何動畫" aria-describedby="result-learning-curves">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-learning-curves" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="學習曲線與早停播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="學習曲線與早停動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：學習曲線走勢與模型性能動態診斷</summary><img src="./assets/images/04_learning_curves.png" alt="學習曲線走勢與模型性能動態診斷" loading="lazy"><a href="./assets/images/04_learning_curves.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>學習曲線的觀測維度</h3>
+<p>學習曲線繪製了模型的<strong>訓練損失 (Training Loss)</strong> 與<strong>驗證損失 (Validation Loss)</strong> 隨著「訓練輪數 (Epochs)」或「訓練樣本量」推進的動態走勢：</p>
+<h4>階段 1：欠擬合階段 (Underfitting Zone)</h4>
+<ul>
+<li><strong>曲線特徵</strong>：在訓練初期，Training Loss 與 Validation Loss <strong>雙雙居高不下</strong>，且下降趨勢明顯。</li>
+<li><strong>診斷結論</strong>：模型尚未充分收斂，或者模型架構表達力太薄弱，根本未掌握數據特徵規律。</li>
+<li><strong>處方箋</strong>：繼續給予訓練迭代次數、增強網絡深度或補充有效特徵。</li>
+</ul>
+<h4>階段 2：最佳擬合甜蜜點 (Optimal / Early Stopping Point)</h4>
+<ul>
+<li><strong>曲線特徵</strong>：Validation Loss 抵達全局最低谷，且與 Training Loss 保持適度、健康的微小差距。</li>
+<li><strong>診斷結論</strong>：模型此時完美捕捉到了母體數據的真實概率分佈，泛化能力達到峰值。</li>
+<li><strong>工程落地</strong>：<strong>早停法 (Early Stopping)</strong> 正是依賴此處機制，在驗證損失不再改善時自動存檔最佳權重並安全停機。</li>
+</ul>
+<h4>階段 3：過度擬合階段 (Overfitting Zone)</h4>
+<ul>
+<li><strong>曲線特徵</strong>：Training Loss 依然勢如破竹地向下滑落（甚至接近 0），但 Validation Loss 卻<strong>觸底反彈、逆勢飆升</strong>。</li>
+<li><strong>診斷結論</strong>：兩條曲線之間的差距演變成巨大的<strong>泛化鴻溝 (Generalization Gap)</strong>。這代表模型已經開始把算力浪費在硬背訓練集特有的雜訊上，在新數據上的泛化能力急劇惡化。</li>
+<li><strong>處方箋</strong>：立即停機、引入正則化 (L1/L2)、加入 Dropout 或進行數據擴增。</li>
+</ul>
+<hr />
+<h2 id="section-6">5. 模型性能問題全景應對策略 (Solutions &amp; Prevention)</h2>
+<p>針對欠擬合與過度擬合這兩種截然相反的病症，必須對症下藥。以下是工業界最完備的解決對策體系：</p>
+<section class="scene" id="solutions" data-scene="solutions" aria-labelledby="title-solutions">
+<div class="scene-head"><h3 id="title-solutions">改善方式</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">新增資料、減少容量或正則化後，模型線與誤差對照更新。</p>
+<canvas width="760" height="450" role="img" aria-label="改善方式幾何動畫" aria-describedby="result-solutions">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-solutions" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="改善方式播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="改善方式動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：模型性能問題全景應對策略全貌</summary><img src="./assets/images/05_solutions_overview.png" alt="模型性能問題全景應對策略全貌" loading="lazy"><a href="./assets/images/05_solutions_overview.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>欠擬合急救箱：提升容量 · 降低偏差</h3>
+<p>當模型陷入欠擬合時，首要目標是<strong>給模型「鬆綁與充能」</strong>，全面增強其表達能力：</p>
+<ol>
+<li><strong>提升模型架構複雜度</strong>：<ul>
+<li>將簡單的線性模型升級為多項式回歸、決策樹、隨機森林、GBDT 等非線性算法。</li>
+<li>在深度神經網絡中增加網絡深度（層數）與寬度（隱藏單元數）。</li>
+</ul>
+</li>
+<li><strong>豐富特徵工程 (Feature Engineering)</strong>：<ul>
+<li>挖掘更多與業務強相關的領域特徵。</li>
+<li>進行特徵交叉 (Feature Crossing) 或多項式特徵衍生，賦予模型更多維度的辨識依據。</li>
+</ul>
+</li>
+<li><strong>減弱或放寬正則化約束</strong>：<ul>
+<li>縮小正則化係數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\lambda"><mrow><mi>λ</mi></mrow></math>（如調小 Ridge/Lasso 懲罰強度）。</li>
+<li>調低神經網絡中 Dropout 的隨機丟棄比率，給模型足夠的自由度擬合數據。</li>
+</ul>
+</li>
+<li><strong>充分訓練與調整學習率</strong>：<ul>
+<li>增加訓練輪數 (Epochs)，防止在未收斂前過早終止。</li>
+<li>優化學習率排程 (Learning Rate Scheduler)，避免因學習率過小陷入停滯或過大而震盪無法前進。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h3>過度擬合降妖杵：抑制雜訊 · 降低變異數</h3>
+<p>當模型陷入過度擬合時，首要目標是<strong>給模型「戴上緊箍咒」</strong>，強力遏制其硬背雜訊的能力：</p>
+<ol>
+<li><strong>權重正則化 (L1 / L2 Regularization)</strong>：<ul>
+<li><strong>L1 正則化 (Lasso 回歸)</strong>：在損失函數中加入權重絕對值和 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\lambda \sum |w_i|"><mrow><mi>λ</mi><mo>∑</mo><mo>|</mo><msub><mi>w</mi><mi>i</mi></msub><mo>|</mo></mrow></math>。其幾何特性會迫使許多不重要特徵的權重精確歸零，實現<strong>自動特徵篩選 (Sparsity)</strong>。</li>
+<li><strong>L2 正則化 (Ridge 回歸 / 權重衰減 Weight Decay)</strong>：在損失函數中加入權重平方和 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\frac{1}{2}\lambda \sum w_i^2"><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mn>2</mn></mrow></mfrac><mi>λ</mi><mo>∑</mo><msubsup><mi>w</mi><mi>i</mi><mn>2</mn></msubsup></mrow></math>。它會嚴厲懲罰過大的權重值，促使模型參數分佈平滑，抑制曲線劇烈震盪。</li>
+</ul>
+</li>
+<li><strong>隨機失活 (Dropout) 與結構剪枝</strong>：<ul>
+<li><strong>Dropout (深度學習專屬)</strong>：在每次前向傳播訓練時，隨機以一定概率 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="p"><mrow><mi>p</mi></mrow></math>「切斷」部分神經元的連接。迫使每個神經元獨立學習穩健特徵，打破神經元之間的惡性共適應性 (Co-adaptation)。</li>
+<li><strong>決策樹剪枝 (Pruning)</strong>：設置最大樹深 (<code>max_depth</code>)、最小葉子節點樣本數 (<code>min_samples_leaf</code>) 進行預剪枝，或在樹生長完成後依複雜度進行事後剪枝。</li>
+</ul>
+</li>
+<li><strong>擴充訓練數據與數據擴增 (Data Augmentation)</strong>：<ul>
+<li><strong>增加真實數據</strong>：數據越多，雜訊所佔的比例越小，真實的統計規律就越清晰。</li>
+<li><strong>數據增強</strong>：在電腦視覺中運用圖像旋轉、隨機裁剪、水平翻轉、顏色微調；在自然語言處理中運用同義詞替換、隨機插入等，在不增加標註成本的前提下人為製造多樣性。</li>
+</ul>
+</li>
+<li><strong>早停法 (Early Stopping)</strong>：<ul>
+<li>在訓練過程中即時監控獨立驗證集的損失。一旦驗證損失在連續多個輪數（耐心值 Patience）內不再下降並開始反彈，立即中止訓練並恢復驗證損失最低時的模型權重。</li>
+</ul>
+</li>
+<li><strong>交叉驗證 (K-Fold Cross Validation)</strong>：<ul>
+<li>將訓練數據平均切分為 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="K"><mrow><mi>K</mi></mrow></math> 份，輪流以 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="K-1"><mrow><mi>K</mi><mo>-</mo><mn>1</mn></mrow></math> 份訓練、1 份驗證。</li>
+<li>能有效消除單次切分數據所帶來的隨機偏差，確保模型超參數評估客觀真實。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="section-7">6. 總結速查對照表</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">診斷維度</th>
+  <th style="text-align:left">欠擬合 (Underfitting)</th>
+  <th style="text-align:left">良好擬合 (Good Fit)</th>
+  <th style="text-align:left">過度擬合 (Overfitting)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>數學本質</strong></td>
+  <td style="text-align:left">高偏差 (High Bias)、低變異數</td>
+  <td style="text-align:left">偏差與變異數取得最佳平衡</td>
+  <td style="text-align:left">低偏差、高變異數 (High Variance)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>訓練集誤差</strong></td>
+  <td style="text-align:left">❌ 很高</td>
+  <td style="text-align:left">✅ 低且穩定</td>
+  <td style="text-align:left">✅ 極低（甚至為 0）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>測試集誤差</strong></td>
+  <td style="text-align:left">❌ 很高</td>
+  <td style="text-align:left">✅ 低且接近訓練誤差</td>
+  <td style="text-align:left">❌ 嚴重飆高</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>學習曲線特徵</strong></td>
+  <td style="text-align:left">兩條損失線均在高處徘徊不降</td>
+  <td style="text-align:left">兩條線均平穩滑落且差距微小</td>
+  <td style="text-align:left">訓練線持續探底，驗證線逆勢回彈飆升</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>主要成因</strong></td>
+  <td style="text-align:left">模型太簡單、特徵太少、正則化過強</td>
+  <td style="text-align:left">複雜度適中、數據充分、正規化得宜</td>
+  <td style="text-align:left">模型太複雜、樣本太少、訓練過度、欠缺約束</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>核心處方</strong></td>
+  <td style="text-align:left">• 加深網絡/增加參數<br>• 擴充新特徵與特徵交叉<br>• 減小正則化係數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\lambda"><mrow><mi>λ</mi></mrow></math><br>• 增加訓練輪數</td>
+  <td style="text-align:left">持續監控並部署上線</td>
+  <td style="text-align:left">• 引入 L1/L2 正則化<br>• 加入 Dropout / 限制樹深<br>• 擴充數據集 / Data Augmentation<br>• 早停法 (Early Stopping)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-8">📌 本章精華速記</h2>
+<ol>
+<li><strong>欠擬合（學不會）</strong>：高偏差，模型太笨或特徵太少，連訓練集都做不好；對策是加深模型、豐富特徵。</li>
+<li><strong>過度擬合（死記硬背）</strong>：高變異數，把雜訊當真理，訓練滿分但大考掛科；對策是正則化、Dropout、擴充數據、早停。</li>
+<li>機器學習的終極目標是<strong>在偏差與變異數之間找到最佳平衡點</strong>，讓總泛化誤差最小化。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/10_%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%95%8F%E9%A1%8C/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../09-evaluation-metrics/">← 09 評估指標</a><a href="../">返回 12 章目錄</a><a href="../11-generalization/">11 模型泛化 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

@@ -1,5 +1,13 @@
 # 4. 特徵工程 (Feature Engineering)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/)**
+
+動畫場景：[特徵選擇](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#selection) · [特徵縮放](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#scaling) · [類別編碼](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#encoding)
+
+<!-- interactive-glossary:end -->
+
 > **「數據和特徵決定了機器學習的上限，而模型和演算法只是逼近這個上限而已。」**  
 > —— 機器學習業界名言 (Garbage In, Garbage Out)
 

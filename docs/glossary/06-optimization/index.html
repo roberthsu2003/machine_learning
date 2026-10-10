@@ -1,0 +1,147 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 06 章 優化算法：完整教材、原圖對照與互動 2D 幾何動畫。"><title>06 優化算法｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/06_%E5%84%AA%E5%8C%96%E7%AE%97%E6%B3%95/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 06 / 12 · INTERACTIVE LESSON</div><h1>優化算法</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#gradient-descent">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#gradient-descent">梯度下降</a><a href="#learning-rate">學習率</a><a href="#batch-size">Batch／SGD／Mini-batch</a><a href="#optimizers">優化器補充</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 梯度下降法 (Gradient Descent)</a><a href="#section-3">2. 學習率 (Learning Rate, α)</a><a href="#section-4">3. 批次大小 (Batch Size)</a><a href="#section-5">4. 拓展視野：現代優化器家族演進</a><a href="#section-6">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在機器學習中，模型一開始的參數通常是隨機初始化的（預測結果往往荒腔走板）。<br />
+<strong>優化算法（Optimizer）就是引導模型參數從「一無所知」走向「精準預測」的導航儀</strong>，它的任務是沿著損失函數的地形，找到讓預測誤差最小化的一組最佳參數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\theta^*"><mrow><msup><mi>θ</mi><mo>*</mo></msup></mrow></math>。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>掌握<strong>梯度下降法 (Gradient Descent)</strong> 的數學直覺與幾何物理意義。</li>
+<li>搞懂<strong>學習率 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\alpha"><mrow><mi>α</mi></mrow></math>)</strong> 的步長效應，理解震盪與發散的原因。</li>
+<li>熟悉 <strong>Batch Size（批次大小）</strong> 的性能與泛化權衡，通曉常用優化器的演進脈絡。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 梯度下降法 (Gradient Descent)</h2>
+<h3>核心定義</h3>
+<p>梯度下降法是一種基於一階導數的數值迭代優化算法。它計算損失函數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="J(\theta)"><mrow><mi>J</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow></math> 對參數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\theta"><mrow><mi>θ</mi></mrow></math> 的<strong>梯度向量 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\nabla J(\theta)"><mrow><mo>∇</mo><mi>J</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow></math></strong>，並沿著**負梯度方向（局部最陡峭下降方向）**更新參數，步步逼近損失函數的極小值點。</p>
+<h3>💡 生活直觀比喻：濃霧中盲眼摸索下山</h3>
+<blockquote>
+<p>想像你被蒙上雙眼、置身於濃霧瀰漫的群山之中，任務是走到地勢最低的山谷底部。<br />
+雖然你看不到全貌，但你可以用腳感受腳下地面的傾斜坡度（計算梯度）。<br />
+只要<strong>每一次都朝著腳下最陡的斜坡向下跨出一小步（沿負梯度前進）</strong>，持續反覆這一步驟，最終就能抵達山谷盆地！</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="gradient-descent" data-scene="gradient-descent" aria-labelledby="title-gradient-descent">
+<div class="scene-head"><h3 id="title-gradient-descent">梯度下降</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">小球沿 2D 損失曲線移動，切線與負梯度箭頭隨位置更新。</p>
+<canvas width="760" height="450" role="img" aria-label="梯度下降幾何動畫" aria-describedby="result-gradient-descent">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-gradient-descent" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="梯度下降播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="梯度下降動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：梯度下降法原理與變體對比</summary><img src="./assets/images/01_gradient_descent.png" alt="梯度下降法原理與變體對比" loading="lazy"><a href="./assets/images/01_gradient_descent.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>核心參數更新公式</h3>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\theta_{\text{new}} = \theta_{\text{old}} - \alpha \cdot \nabla J(\theta)"><mrow><msub><mi>θ</mi><mrow><mtext>new</mtext></mrow></msub><mo>=</mo><msub><mi>θ</mi><mrow><mtext>old</mtext></mrow></msub><mo>-</mo><mi>α</mi><mo>·</mo><mo>∇</mo><mi>J</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow></math></div><ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\theta"><mrow><mi>θ</mi></mrow></math>：模型參數（如權重 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="w"><mrow><mi>w</mi></mrow></math> 與偏置 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="b"><mrow><mi>b</mi></mrow></math>）。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\nabla J(\theta)"><mrow><mo>∇</mo><mi>J</mi><mo>(</mo><mi>θ</mi><mo>)</mo></mrow></math>：損失函數對參數的偏微分梯度（決定<strong>前進方向</strong>，數值為正表示向右上升，減去它即向左下降）。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\alpha"><mrow><mi>α</mi></mrow></math>：<strong>學習率 (Learning Rate)</strong>，決定每次更新的<strong>步伐大小 (Step Size)</strong>。</li>
+</ul>
+<hr />
+<h3>梯度下降的三大實戰變體</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">變體名稱</th>
+  <th style="text-align:left">每次更新使用的數據量</th>
+  <th style="text-align:left">💡 比喻</th>
+  <th style="text-align:left">優點</th>
+  <th style="text-align:left">缺點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>批次梯度下降 (Batch GD, BGD)</strong></td>
+  <td style="text-align:left"><strong>全部訓練樣本 (100%)</strong></td>
+  <td style="text-align:left">收集全校所有學生意見後才做決定</td>
+  <td style="text-align:left">梯度估算精準，路徑平滑直達極值點。</td>
+  <td style="text-align:left">當數據量龐大（數百萬筆）時，單步計算極其緩慢且耗盡記憶體。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>隨機梯度下降 (Stochastic GD, SGD)</strong></td>
+  <td style="text-align:left"><strong>僅隨機抽取單一筆樣本 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="N=1"><mrow><mi>N</mi><mo>=</mo><mn>1</mn></mrow></math>)</strong></td>
+  <td style="text-align:left">走在路上隨機抓一個路人問話就做決定</td>
+  <td style="text-align:left">每步計算極快，具強烈隨機噪聲，容易跳出局部鞍點。</td>
+  <td style="text-align:left">更新路徑劇烈劇烈震盪，難以平穩收斂在最低點。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>小批次梯度下降 (Mini-Batch GD)</strong></td>
+  <td style="text-align:left"><strong>隨機抽取一小批樣本 (如 32, 64, 128)</strong></td>
+  <td style="text-align:left">每次抽樣一個小組（如 32 人）開會定案</td>
+  <td style="text-align:left"><strong>兼具 BGD 的穩定度與 SGD 的高速度</strong>，能充分利用 GPU 並行加速。</td>
+  <td style="text-align:left">需要額外調整 Batch Size 超參數。當前深度學習絕對標準首選！</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-3">2. 學習率 (Learning Rate, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\alpha"><mrow><mi>α</mi></mrow></math>)</h2>
+<p>學習率是優化算法中最核心、最敏感的超參數。</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="learning-rate" data-scene="learning-rate" aria-labelledby="title-learning-rate">
+<div class="scene-head"><h3 id="title-learning-rate">學習率</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">三個小球並排顯示緩慢下降、穩定收斂與震盪／發散。</p>
+<canvas width="760" height="450" role="img" aria-label="學習率幾何動畫" aria-describedby="result-learning-rate">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-learning-rate" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="學習率播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="學習率動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：學習率大小對訓練收斂的影響</summary><img src="./assets/images/02_learning_rate.png" alt="學習率大小對訓練收斂的影響" loading="lazy"><a href="./assets/images/02_learning_rate.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>步長大小引發的性能光譜</h3>
+<div class="flow-summary"><strong>流程與概念摘要</strong><ul><li>學習率過小 (α = 0.00001)</li><li>訓練極慢 卡在局部極值</li><li>學習率適中 (α = 0.001)</li><li>快速平穩收斂至最優解</li><li>學習率過大 (α = 10.0)</li><li>兩壁劇烈震盪甚至數值發散 NaN</li></ul></div><h3>實務調優策略</h3>
+<ol>
+<li><strong>典型初始值</strong>：常見的嘗試起點為 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.001"><mrow><mn>0.001</mn></mrow></math>、<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.01"><mrow><mn>0.01</mn></mrow></math>。</li>
+<li><strong>學習率衰減 (Learning Rate Decay / Scheduling)</strong>：<ul>
+<li>訓練初期（離谷底尚遠）：使用較大學習率大步快跑。</li>
+<li>訓練後期（接近最優點）：動態調小學習率（如 Cosine Annealing），細緻落入谷底最深處。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h2 id="section-4">3. 批次大小 (Batch Size)</h2>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="batch-size" data-scene="batch-size" aria-labelledby="title-batch-size">
+<div class="scene-head"><h3 id="title-batch-size">Batch／SGD／Mini-batch</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">樣本方塊分批進入模型，所選樣本的梯度箭頭加總，更新路徑隨批次大小改變。</p>
+<canvas width="760" height="450" role="img" aria-label="Batch／SGD／Mini-batch幾何動畫" aria-describedby="result-batch-size">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-batch-size" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="Batch／SGD／Mini-batch播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="Batch／SGD／Mini-batch動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：批次大小權衡與民調抽樣比喻</summary><img src="./assets/images/03_batch_size_comparison.png" alt="批次大小權衡與民調抽樣比喻" loading="lazy"><a href="./assets/images/03_batch_size_comparison.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>💡 直觀理解：民調抽樣的比喻</h3>
+<ul>
+<li><strong>大批次（如 512, 1024 / 大規模民調）</strong>：問話人次多，誤差小，決策方向穩如泰山；但耗費大量記憶體 (VRAM)。有時過於「拘謹」，容易跌入尖銳的局部不良極值（泛化稍差）。</li>
+<li><strong>小批次（如 16, 32 / 街頭隨機抽問幾人）</strong>：問話速度極快，記憶體佔用極低。雖然每次更新的方向有些搖晃震盪，但<strong>適度的噪聲反而能將模型震出平庸的淺坑（鞍點），尋找到更寬廣、泛化更好的全局平坦最優谷底</strong>！</li>
+</ul>
+<blockquote>
+<blockquote>
+<p><strong>GPU 硬體加速法則</strong>：<br />
+在配置 Batch Size 時，幾乎總是設定為 <strong>2 的次方數</strong>（如 16, 32, 64, 128, 256, 512）。這是因為 GPU 的硬體計算單元（CUDA Cores / Tensor Cores）在 2 的次方記憶體對齊下吞吐效率最高！</p>
+</blockquote>
+</blockquote>
+<hr />
+<h2 id="section-5">4. 拓展視野：現代優化器家族演進</h2>
+<p>從純粹的梯度下降到現代頂尖優化器，演算法經歷了以下演進：</p>
+<div class="flow-summary"><strong>流程與概念摘要</strong><ul><li>標準 SGD (純負梯度前進)</li><li>Momentum 動量法 ／ 加入物理慣性，加速衝過平緩區</li><li>AdaGrad / RMSprop ／ 依歷史梯度動態調整獨立步長</li><li>Adam 優化器 ／ 動量 + 自適應步長雙劍合璧</li></ul></div><ul>
+<li><strong>為什麼大家愛用 Adam？</strong>：<br />
+Adam (Adaptive Moment Estimation) 同時保留了「慣性衝力（避免卡在鞍點）」與「自適應步長（頻繁變動的特徵小步走、罕見變動的特徵大步走）」，是目前大多數機器學習與深度學習任務中表現最魯棒、最省心的默認選擇！</li>
+</ul>
+<hr />
+<section class="scene" id="optimizers" data-scene="optimizers" aria-labelledby="title-optimizers">
+<div class="scene-head"><h3 id="title-optimizers">優化器補充</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">在同一個教學損失地形上對照 SGD、Momentum 與 Adam 的運動路徑。</p>
+<canvas width="760" height="450" role="img" aria-label="優化器補充幾何動畫" aria-describedby="result-optimizers">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-optimizers" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="優化器補充播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="優化器補充動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><h2 id="section-6">📌 本章精華速記</h2>
+<ol>
+<li><strong>梯度下降</strong>沿著損失函數最陡峭的反方向下山，推動參數持續走向最小誤差。</li>
+<li><strong>學習率</strong>決定前進步長；太小收斂牛步，太大震盪發散，適度配合衰減策略效果最佳。</li>
+<li><strong>小批次 (Mini-batch)</strong> 是現代工業界標準，兼顧計算效率、GPU 平行吞吐與噪聲泛化優勢。</li>
+<li>現代專案若不知從何選起，首選 <strong>Adam 優化器</strong> 作為穩健的強力起步基準。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/06_%E5%84%AA%E5%8C%96%E7%AE%97%E6%B3%95/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../05-model-parameters/">← 05 模型參數</a><a href="../">返回 12 章目錄</a><a href="../07-common-algorithms/">07 常見算法 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

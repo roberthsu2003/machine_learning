@@ -1,5 +1,13 @@
 # 11. 模型泛化 (Model Generalization)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/)**
+
+動畫場景：[未見資料與泛化](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#unseen-data) · [泛化鴻溝](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#generalization-gap) · [資料分割與 K 折交叉驗證](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#cross-validation) · [提升泛化](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#improve-generalization)
+
+<!-- interactive-glossary:end -->
+
 在機器學習專案中，我們衡量一個模型好壞的唯一終極標準，不是看它在「看過的訓練數據」上能考幾分，而是看它面對「從未見過的現實新數據」時，是否依然能做出準確、穩定且可靠的預測。
 
 這種**將在訓練集上學到的規律知識，成功推廣並應用到未知新環境的能力**，就稱為**模型泛化 (Generalization)**。泛化是機器學習有別於傳統「資料庫查詢與硬編碼規則」的最核心靈魂。

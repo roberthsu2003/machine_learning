@@ -1,5 +1,13 @@
 # 8. 集成學習 (Ensemble Learning)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/)**
+
+動畫場景：[Bagging](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#bagging) · [Boosting](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#boosting) · [Stacking](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#stacking)
+
+<!-- interactive-glossary:end -->
+
 > **「三個臭皮匠，勝過一個諸葛亮。」**  
 > —— 集成學習的核心哲學
 

@@ -1,5 +1,13 @@
 # 10. 模型性能問題 (Model Performance Issues)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/)**
+
+動畫場景：[欠擬合、良好擬合與過度擬合](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#fit-spectrum) · [偏差與變異數](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#bias-variance) · [學習曲線與早停](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#learning-curves) · [改善方式](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#solutions)
+
+<!-- interactive-glossary:end -->
+
 在機器學習專案中，我們訓練模型的終極目標不是在「已知的訓練集」上考 100 分，而是讓模型具備優異的**泛化能力 (Generalization Ability)** —— 能夠準確預測現實世界中從未見過的全新數據。
 
 在模型訓練與調優的過程中，最常見且最具挑戰性的兩大性能陷阱就是**欠擬合 (Underfitting)** 與 **過度擬合 (Overfitting)**。理解這兩種狀態的本質、數學機理與診斷手法，是每位機器學習工程師的必修基本功。

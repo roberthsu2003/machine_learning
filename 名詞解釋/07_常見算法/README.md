@@ -1,5 +1,13 @@
 # 7. 常見算法 (Common ML Algorithms)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/)**
+
+動畫場景：[KNN](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#knn) · [決策樹](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#decision-tree) · [SVM](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#svm) · [樸素貝氏](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#naive-bayes)
+
+<!-- interactive-glossary:end -->
+
 在經典機器學習領域中，有四種極具代表性、哲學思想各異且歷久彌新的核心演算法：**K-近鄰 (K-NN)**、**決策樹 (Decision Tree)**、**支援向量機 (SVM)** 與 **樸素貝氏 (Naive Bayes)**。
 
 理解它們各自背後的數學哲學、空間劃分幾何直覺以及適用邊界，是構建演算法直覺與面試選型的必修課。

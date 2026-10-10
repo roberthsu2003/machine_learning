@@ -1,0 +1,30 @@
+// Small deterministic numerical examples used by the teaching scenes.
+export const mean=a=>a.reduce((s,x)=>s+x,0)/a.length;
+export const sum=a=>a.reduce((s,x)=>s+x,0);
+export const clamp=(x,a=0,b=1)=>Math.max(a,Math.min(b,x));
+export const lerp=(a,b,t)=>a+(b-a)*clamp(t);
+export function rng(seed=42){return()=>{seed=(1664525*seed+1013904223)>>>0;return seed/4294967296;};}
+export function shuffle(a,seed=42){const r=rng(seed),b=[...a];for(let i=b.length-1;i>0;i--){const j=Math.floor(r()*(i+1));[b[i],b[j]]=[b[j],b[i]];}return b;}
+export function linear(data){const mx=mean(data.map(p=>p.x)),my=mean(data.map(p=>p.y));const den=sum(data.map(p=>(p.x-mx)**2));const w=den?sum(data.map(p=>(p.x-mx)*(p.y-my)))/den:0;return {w,b:my-w*mx};}
+export function solve(A,b){A=A.map((r,i)=>[...r,b[i]]);const n=b.length;for(let i=0;i<n;i++){let pivot=i;for(let j=i+1;j<n;j++)if(Math.abs(A[j][i])>Math.abs(A[pivot][i]))pivot=j;[A[i],A[pivot]]=[A[pivot],A[i]];if(Math.abs(A[i][i])<1e-12)return Array(n).fill(0);const v=A[i][i];for(let k=i;k<=n;k++)A[i][k]/=v;for(let j=0;j<n;j++)if(j!==i){const v=A[j][i];for(let k=i;k<=n;k++)A[j][k]-=v*A[i][k];}}return A.map(row=>row[n]);}
+export function leastSquares(X,y,lambda=1e-6){const d=X[0].length;return solve(Array.from({length:d},(_,j)=>Array.from({length:d},(_,k)=>sum(X.map(row=>row[j]*row[k]))+(j===k&&j>0?lambda:0))),Array.from({length:d},(_,j)=>sum(X.map((row,i)=>row[j]*y[i]))));}
+export const dot=(a,b)=>sum(a.map((x,i)=>x*b[i]));
+export const basis=(x,degree)=>Array.from({length:degree+1},(_,i)=>x**i);
+export const polynomial=(data,degree,lambda=1e-6)=>leastSquares(data.map(p=>basis(p.x,degree)),data.map(p=>p.y),lambda);
+export const predict=(weights,x)=>dot(weights,basis(x,weights.length-1));
+export const mse=(data,fn)=>mean(data.map(p=>(p.y-fn(p.x))**2));
+export function regressionMetrics(data,fn){const errors=data.map(p=>p.y-fn(p.x)),m=mean(data.map(p=>p.y)),sse=sum(errors.map(e=>e*e)),sst=sum(data.map(p=>(p.y-m)**2));return {mae:mean(errors.map(Math.abs)),mse:sse/data.length,rmse:Math.sqrt(sse/data.length),r2:sst?sse===0?1:1-sse/sst:null,sse,sst};}
+export function samples(seed=42,n=24,noise=.15){const r=rng(seed);return Array.from({length:n},(_,i)=>{const x=-.95+1.9*i/(n-1);return {x,y:truth(x)+(r()-.5)*noise*2};});}
+export const truth=x=>.3+1.8*x*x+.35*x;
+export function points(seed=42,n=30){const r=rng(seed);return Array.from({length:n},(_,i)=>{const cls=i%3;return {x:[-1.2,1.1,.1][cls]+(r()-.5)*1.1,y:[-.7,-.5,1.1][cls]+(r()-.5)*1.1,label:cls};});}
+export const distance=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
+export function knn(data,q,k=3){const nearest=data.map(p=>({...p,distance:distance(p,q)})).sort((a,b)=>a.distance-b.distance).slice(0,k);const votes=[0,0,0];nearest.forEach(p=>votes[p.label]++);return {nearest,votes,label:votes.indexOf(Math.max(...votes))};}
+export function kmeans(data,k=3,steps=0,seed=42){let centers=shuffle(data,seed).slice(0,k).map(p=>({x:p.x,y:p.y}));let assigned=[];for(let s=0;s<=steps;s++){assigned=data.map(p=>({...p,group:centers.map(c=>distance(p,c)).reduce((best,d,i,a)=>d<a[best]?i:best,0)}));if(s<steps)centers=centers.map((c,i)=>{const group=assigned.filter(p=>p.group===i);return group.length?{x:mean(group.map(p=>p.x)),y:mean(group.map(p=>p.y))}:c;});}return {centers,assigned};}
+export function split(data,ratio=.7,mode='random',seed=42){const count=Math.floor(data.length*ratio);let train,test;if(mode==='time'){train=data.slice(0,count);test=data.slice(count);}else if(mode==='stratified'){train=[];test=[];for(const label of [...new Set(data.map(p=>p.label))]){const group=shuffle(data.filter(p=>p.label===label),seed+label);const n=Math.round(group.length*ratio);train.push(...group.slice(0,n));test.push(...group.slice(n));}}else{const all=shuffle(data,seed);train=all.slice(0,count);test=all.slice(count);}return {train,test};}
+export function scored(n=30,positive=.3){const r=rng(27);return Array.from({length:n},(_,i)=>{const y=i<Math.round(n*positive)?1:0;return {id:i,y,score:clamp((y?.35:.02)+r()*.65)};});}
+export function metrics(data,threshold=.5){let tp=0,tn=0,fp=0,fn=0;data.forEach(p=>{if(p.score>=threshold)p.y?tp++:fp++;else p.y?fn++:tn++;});return {tp,tn,fp,fn,accuracy:(tp+tn)/data.length,precision:tp+fp?tp/(tp+fp):null,recall:tp+fn?tp/(tp+fn):null,f1:2*tp+fp+fn?2*tp/(2*tp+fp+fn):null,fpr:fp+tn?fp/(fp+tn):null};}
+export function roc(data){const thresholds=[Infinity,...new Set(data.map(p=>p.score).sort((a,b)=>b-a)),-Infinity];const curve=thresholds.map(t=>metrics(data,t));let auc=0;for(let i=1;i<curve.length;i++)auc+=(curve[i].fpr-curve[i-1].fpr)*(curve[i].recall+curve[i-1].recall)/2;return {curve,auc};}
+export const fmt=(v,d=3)=>v===null||!Number.isFinite(v)?'未定義':v.toFixed(d);
+export function descent(alpha=.15,start=3,steps=0,method='sgd'){let x=start,v=0,m=0,v2=0;const history=[x];for(let i=1;i<=steps;i++){const g=2*x;if(method==='momentum'){v=.7*v+g;x-=alpha*v;}else if(method==='adam'){m=.9*m+.1*g;v2=.999*v2+.001*g*g;x-=alpha*(m/(1-.9**i))/(Math.sqrt(v2/(1-.999**i))+1e-8);}else x-=alpha*g;if(!Number.isFinite(x)||Math.abs(x)>1e6){history.push(Math.sign(x)*1e6);break;}history.push(x);}return history;}
+export function tree(data,depth=2){if(depth===0||data.length<2||data.every(p=>p.label===data[0].label)){const n=data.filter(p=>p.label).length;return {label:n>=data.length/2?1:0};}let best=null;const impurity=a=>{if(!a.length)return 0;const p=a.filter(q=>q.label).length/a.length;return 2*p*(1-p)*a.length;};for(const axis of ['x','y']){const vals=[...new Set(data.map(p=>p[axis]))].sort((a,b)=>a-b);for(let i=0;i<vals.length-1;i++){const value=(vals[i]+vals[i+1])/2,left=data.filter(p=>p[axis]<=value),right=data.filter(p=>p[axis]>value),score=impurity(left)+impurity(right);if(!best||score<best.score)best={axis,value,left,right,score};}}if(!best)return {label:0};return {axis:best.axis,value:best.value,left:tree(best.left,depth-1),right:tree(best.right,depth-1)};}
+export const treePredict=(node,p)=>node.axis?treePredict(p[node.axis]<=node.value?node.left:node.right,p):node.label;

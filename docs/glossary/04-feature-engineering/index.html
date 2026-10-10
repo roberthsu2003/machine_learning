@@ -1,0 +1,191 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 04 章 特徵工程：完整教材、原圖對照與互動 2D 幾何動畫。"><title>04 特徵工程｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/04_%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 04 / 12 · INTERACTIVE LESSON</div><h1>特徵工程</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#selection">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#selection">特徵選擇</a><a href="#scaling">特徵縮放</a><a href="#encoding">類別編碼</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 特徵選擇 (Feature Selection)</a><a href="#section-3">2. 特徵縮放 (Feature Scaling)</a><a href="#section-4">3. 類別特徵編碼 (Categorical Encoding)</a><a href="#section-5">📌 本章精華速記</a></nav></aside><article class="lesson-content"><blockquote>
+<p><strong>「數據和特徵決定了機器學習的上限，而模型和演算法只是逼近這個上限而已。」</strong><br />
+—— 機器學習業界名言 (Garbage In, Garbage Out)</p>
+</blockquote>
+<p>特徵工程是將原始數據轉化為更適合機器學習演算法消化、能更有效展現問題本質結構的特徵表示過程。即使使用最先進的模型架構，若輸入的特徵粗糙雜亂，模型也無法得到理想的預測效果。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>掌握<strong>特徵選擇</strong>的三大核心流派（過濾法、包裝法、嵌入法）及其直觀原理。</li>
+<li>徹底搞懂<strong>特徵縮放</strong>（標準化 vs 正規化）的幾何原理，明白哪些模型必須縮放、哪些完全免疫。</li>
+<li>熟悉類別特徵處理：掌握<strong>標籤編碼</strong>與<strong>獨熱編碼</strong>的適用場景與潛在陷阱。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 特徵選擇 (Feature Selection)</h2>
+<h3>核心定義</h3>
+<p>特徵選擇是從原始數據龐大的特徵維度中，挑選出與目標標籤相關性最高、資訊量最豐富且冗餘度最低的子集，同時剔除無關雜訊特徵。</p>
+<h3>核心價值</h3>
+<ul>
+<li><strong>克服維度災難</strong>：特徵維度過高會導致樣本空間極度稀疏，模型極易過擬合。</li>
+<li><strong>加速訓練與推論</strong>：減少特徵數量能成倍縮減計算時間與記憶體開銷。</li>
+<li><strong>提升可解釋性</strong>：讓工程師與領域專家更容易理解決策的核心依據。</li>
+</ul>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="selection" data-scene="selection" aria-labelledby="title-selection">
+<div class="scene-head"><h3 id="title-selection">特徵選擇</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">多欄方塊矩陣中，無關特徵淡出；過濾、包裝與嵌入方法用不同選取流程對照。</p>
+<canvas width="760" height="450" role="img" aria-label="特徵選擇幾何動畫" aria-describedby="result-selection">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-selection" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵選擇播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵選擇動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：特徵選擇圖解</summary><img src="./assets/images/01_feature_selection.png" alt="特徵選擇圖解" loading="lazy"><a href="./assets/images/01_feature_selection.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>特徵選擇三大流派對比</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">流派</th>
+  <th style="text-align:left">英文名</th>
+  <th style="text-align:left">💡 直觀生活比喻</th>
+  <th style="text-align:left">運作機制</th>
+  <th style="text-align:left">代表方法</th>
+  <th style="text-align:left">優缺點評價</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>過濾法</strong></td>
+  <td style="text-align:left"><strong>Filter Methods</strong></td>
+  <td style="text-align:left"><strong>履歷海選初篩</strong><br>（未見面試官前先按學歷、年資硬指標過濾）</td>
+  <td style="text-align:left">不依賴任何機器學習模型，純粹依據各特徵與標籤的統計指標（如相關係數、變異數）獨立評分淘汰。</td>
+  <td style="text-align:left">• 變異數閾值 (低方差過濾)<br>• 皮爾森相關係數 (Pearson)<br>• 卡方檢定 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\chi^2"><mrow><msup><mi>χ</mi><mn>2</mn></msup></mrow></math> Test)<br>• 互資訊法 (Mutual Info)</td>
+  <td style="text-align:left"><strong>優點</strong>：運算飛快，適合超高維海選。<br><strong>缺點</strong>：忽略了特徵之間的交互組合作用。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>包裝法</strong></td>
+  <td style="text-align:left"><strong>Wrapper Methods</strong></td>
+  <td style="text-align:left"><strong>實戰面試淘汰賽</strong><br>（換不同的五人小隊上場實測，看哪組配合得分最高）</td>
+  <td style="text-align:left">將特定模型作為黑盒子評估器，嘗試不同的特徵組合，直接以模型預測成敗來決定特徵留存。</td>
+  <td style="text-align:left">• 遞歸特徵消除 (RFE)<br>• 前向搜尋 (Forward Selection)<br>• 後向淘汰 (Backward Elimination)</td>
+  <td style="text-align:left"><strong>優點</strong>：特徵組合效果最好、針對性強。<br><strong>缺點</strong>：計算成本極高（需反覆訓練模型數百次）。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>嵌入法</strong></td>
+  <td style="text-align:left"><strong>Embedded Methods</strong></td>
+  <td style="text-align:left"><strong>在日常工作中自動晉陞</strong><br>（在工作訓練中直接讓實力強的權重變大、無能的被淘汰）</td>
+  <td style="text-align:left">特徵選擇與模型訓練融為一體，模型在學習權重時自動對不重要的特徵進行懲罰或降權。</td>
+  <td style="text-align:left">• L1 正則化 (Lasso 回歸)<br>• 樹模型的特徵重要性 (Random Forest / GBDT Feature Importance)</td>
+  <td style="text-align:left"><strong>優點</strong>：在特徵組合表現與計算效率間取得完美平衡。<br><strong>缺點</strong>：高度相依於特定模型架構。</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-3">2. 特徵縮放 (Feature Scaling)</h2>
+<h3>為什麼特徵縮放至關重要？</h3>
+<p>假設我們要預測房價，輸入兩項特徵：</p>
+<ul>
+<li>特徵 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="A"><mrow><mi>A</mi></mrow></math>：<strong>房屋年齡</strong>（範圍 1 ~ 30 年）</li>
+<li>特徵 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="B"><mrow><mi>B</mi></mrow></math>：<strong>建坪面積</strong>（範圍 100 ~ 5,000 平方公尺）</li>
+</ul>
+<p>如果直接計算樣本間的距離（例如歐氏距離 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sqrt{(A_1 - A_2)^2 + (B_1 - B_2)^2}"><mrow><msqrt><mrow><mo>(</mo><msub><mi>A</mi><mn>1</mn></msub><mo>-</mo><msub><mi>A</mi><mn>2</mn></msub><msup><mo>)</mo><mn>2</mn></msup><mo>+</mo><mo>(</mo><msub><mi>B</mi><mn>1</mn></msub><mo>-</mo><msub><mi>B</mi><mn>2</mn></msub><msup><mo>)</mo><mn>2</mn></msup></mrow></msqrt></mrow></math>），面積的差距動輒數百數千，<strong>其平方值將徹底淹沒房屋年齡的貢獻</strong>！模型會誤以為年齡無關緊要。</p>
+<p>此外，在梯度下降優化中，尺度懸殊會使損失函數等高線變成狹長橢圓，參數更新呈現劇烈的左右鋸齒反彈，收斂緩慢甚至發散；而縮放後等高線接近正圓，梯度能直接指向谷底！</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="scaling" data-scene="scaling" aria-labelledby="title-scaling">
+<div class="scene-head"><h3 id="title-scaling">特徵縮放</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">散點與座標軸從尺度懸殊變成縮放後的空間；距離線與數值同步更新。</p>
+<canvas width="760" height="450" role="img" aria-label="特徵縮放幾何動畫" aria-describedby="result-scaling">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-scaling" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵縮放播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵縮放動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：特徵縮放圖解</summary><img src="./assets/images/02_feature_scaling.png" alt="特徵縮放圖解" loading="lazy"><a href="./assets/images/02_feature_scaling.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>兩大主流縮放技術：標準化 vs 正規化</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">比較項目</th>
+  <th style="text-align:left">標準化 (Standardization / Z-score)</th>
+  <th style="text-align:left">正規化 (Normalization / Min-Max Scaling)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>數學公式</strong></td>
+  <td style="text-align:left"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="z = \frac{x - \mu}{\sigma}"><mrow><mi>z</mi><mo>=</mo><mfrac><mrow><mi>x</mi><mo>-</mo><mi>μ</mi></mrow><mrow><mi>σ</mi></mrow></mfrac></mrow></math></div></td>
+  <td style="text-align:left"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="x_{\text{scaled}} = \frac{x - x_{\min}}{x_{\max} - x_{\min}}"><mrow><msub><mi>x</mi><mrow><mtext>scaled</mtext></mrow></msub><mo>=</mo><mfrac><mrow><mi>x</mi><mo>-</mo><msub><mi>x</mi><mrow><mo>min</mo></mrow></msub></mrow><mrow><msub><mi>x</mi><mrow><mo>max</mo></mrow></msub><mo>-</mo><msub><mi>x</mi><mrow><mo>min</mo></mrow></msub></mrow></mfrac></mrow></math></div></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>轉換後分佈</strong></td>
+  <td style="text-align:left">平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\mu = 0"><mrow><mi>μ</mi><mo>=</mo><mn>0</mn></mrow></math>，標準差 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sigma = 1"><mrow><mi>σ</mi><mo>=</mo><mn>1</mn></mrow></math>（無固定邊界）</td>
+  <td style="text-align:left">嚴格縮放到特定區間，通常為 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="[0, 1]"><mrow><mo>[</mo><mn>0</mn><mo>,</mo><mn>1</mn><mo>]</mo></mrow></math></td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>對離群值敏感度</strong></td>
+  <td style="text-align:left"><strong>仍會受離群值影響</strong>：保留了極端值的相對位置，不會擠壓主要數據</td>
+  <td style="text-align:left"><strong>極度敏感</strong>：只要出現一個極端特大值，所有正常數據都會被壓縮擠在 0 附近</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>適用場景</strong></td>
+  <td style="text-align:left">• 特徵大致呈常態分佈<br>• 大多數依賴梯度下降的神經網絡、SVM、線性模型</td>
+  <td style="text-align:left">• 明確知道數據有硬性邊界（如像素 0~255）<br>• K-NN 距離度量、影像處理特徵</td>
+</tr>
+</tbody>
+</table></div>
+<h3>💡 關鍵演算法免疫指南</h3>
+<ul>
+<li><strong>必須做特徵縮放的演算法 ⚠️</strong>：<ul>
+<li><strong>基於距離度量者</strong>：K-NN、K-Means 聚類、支援向量機 (SVM)。</li>
+<li><strong>依賴梯度下降者</strong>：線性回歸、邏輯回歸、深層類神經網路 (ANN/CNN/RNN)。</li>
+<li><strong>依賴變異數計算者</strong>：主成分分析 (PCA)。</li>
+</ul>
+</li>
+<li><strong>完全免疫、不需縮放的演算法 🛡️</strong>：<ul>
+<li><strong>樹狀模型家族</strong>：決策樹 (Decision Tree)、隨機森林 (Random Forest)、XGBoost、LightGBM。<br />
+<em>(原因：樹模型的劃分只關心該特徵數值的「前後排序相對位置」，不關心具體絕對數值的大小)</em></li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="section-4">3. 類別特徵編碼 (Categorical Encoding)</h2>
+<p>電腦只看得懂數字，無法直接將「台北、台中、高雄」或「男、女」丟進矩陣進行代數運算。</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="encoding" data-scene="encoding" aria-labelledby="title-encoding">
+<div class="scene-head"><h3 id="title-encoding">類別編碼</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">顏色方塊分別變成整數標籤或 One-Hot 向量；對照有序與無序資料。</p>
+<canvas width="760" height="450" role="img" aria-label="類別編碼幾何動畫" aria-describedby="result-encoding">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-encoding" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="類別編碼播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="類別編碼動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：類別特徵編碼方式圖解</summary><img src="./assets/images/03_categorical_encoding.png" alt="類別特徵編碼方式圖解" loading="lazy"><a href="./assets/images/03_categorical_encoding.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>1. 標籤編碼 (Label Encoding / Ordinal Encoding)</h3>
+<ul>
+<li><strong>原理</strong>：將每個文字類別對應到一個獨立整數（例如：高中=0, 大學=1, 碩士=2, 博士=3）。</li>
+<li><strong>唯一適用情境</strong>：<strong>有序類別特徵 (Ordinal Categories)</strong>，即類別之間本身存在明確大小順序。</li>
+<li><strong>🚨 致命陷阱</strong>：<blockquote>
+<blockquote>
+<p><strong>嚴禁在無序特徵上使用標籤編碼！</strong><br />
+若將「紅色=0, 藍色=1, 綠色=2」，線性模型或神經網路會誤以為「綠色 (2) &gt; 藍色 (1) &gt; 紅色 (0)」，甚至認為「紅加綠等於藍（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0 + 2 \approx 2 \times 1"><mrow><mn>0</mn><mo>+</mo><mn>2</mn><mo>≈</mo><mn>2</mn><mo>×</mo><mn>1</mn></mrow></math>）」，給模型注入虛假的數學大小關係！</p>
+</blockquote>
+</blockquote>
+</li>
+</ul>
+<h3>2. 獨熱編碼 (One-Hot Encoding)</h3>
+<ul>
+<li><strong>原理</strong>：為每個無序類別創建一個專屬的二進位特徵（0 或 1），讓類別在幾何空間中互相正交垂直。</li>
+<li><strong>範例</strong>：<ul>
+<li>「紅」➔ <code>[1, 0, 0]</code></li>
+<li>「綠」➔ <code>[0, 1, 0]</code></li>
+<li>「藍」➔ <code>[0, 0, 1]</code></li>
+</ul>
+</li>
+<li><strong>適用場景</strong>：<strong>無序類別特徵 (Nominal Categories)</strong>（如血型、縣市、性別）。</li>
+<li><strong>注意事項</strong>：若類別種類過多（如郵遞區號有 300 種），會導致特徵矩陣極度稀疏（High Cardinality），此時需考慮 Target Encoding 或嵌入向量 (Embedding)。</li>
+</ul>
+<hr />
+<h2 id="section-5">📌 本章精華速記</h2>
+<ol>
+<li><strong>特徵工程</strong>決定模型天花板，包含特徵提取、選擇、縮放與編碼。</li>
+<li><strong>特徵縮放</strong>能平衡各維度權重並加速梯度下降；距離模型（KNN/SVM）與神經網絡必做，樹模型免疫。</li>
+<li><strong>標籤編碼</strong>僅限用於「有序等級」（如教育程度），<strong>無序類別</strong>（如顏色）一律使用<strong>獨熱編碼 (One-Hot)</strong> 避免虛假大小誤導。</li>
+<li>特徵選擇能降維去噪，首選在計算效率與組合表現間取得平衡的<strong>嵌入法 (Embedded)</strong>。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/04_%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../03-data-splitting/">← 03 數據分割</a><a href="../">返回 12 章目錄</a><a href="../05-model-parameters/">05 模型參數 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

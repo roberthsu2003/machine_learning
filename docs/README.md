@@ -19,3 +19,7 @@ PDF 與 PowerPoint 下載檔案放在 `docs/downloads/`，會隨網頁一起發�
 第 5、6、7、11、12、14 章加入 Canvas 2D 幾何動畫：資料流入模型、神經網路前向傳播、線條與零件組合、反向傳播與權重更新、回歸直線收斂示意，以及多特徵推論。支援播放、暫停、重播、步驟、速度與時間軸控制；畫面移出可視範圍或切換分頁時會暫停。動畫預設停止，可按播放開始。
 
 `motion.css` 與 `motion.js` 請隨網站發布。幾何動畫用來解釋機制，回歸動畫使用參數插值到最小平方法解，網路動畫為概念示意，並非完整模型訓練的運算軌跡。
+
+## 名詞解釋互動網頁
+
+12 章、42 個互動 2D 幾何場景已完成，章節順序與原教材一致。入口：[名詞解釋互動目錄](./glossary/index.html)。正式網址：<https://roberthsu2003.github.io/machine_learning/glossary/>。維護說明：[glossary/README.md](./glossary/README.md)。

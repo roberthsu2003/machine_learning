@@ -1,0 +1,189 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 02 章 數據結構：完整教材、原圖對照與互動 2D 幾何動畫。"><title>02 數據結構｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/02_%E6%95%B8%E6%93%9A%E7%B5%90%E6%A7%8B/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 02 / 12 · INTERACTIVE LESSON</div><h1>數據結構</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#features">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#features">特徵與資料型態</a><a href="#labels">標籤與任務</a><a href="#matrix">特徵矩陣 X 與標籤 y</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 特徵 (Features, X)</a><a href="#section-3">2. 標籤 (Labels, y)</a><a href="#section-4">3. 數據結構的標準數學組織</a><a href="#section-5">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在機器學習中，演算法並不能直接理解現實世界中的真實物體（如一張房屋照片、一封商業信件或一位病患），而是必須將現實世界的對象抽象化為由<strong>特徵 (Features)</strong> 與 <strong>標籤 (Labels)</strong> 構成的結構化矩陣數據。</p>
+<p>理解特徵與標籤的數學形式與組織架構，是進入機器學習建模的第一步。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>深入理解<strong>特徵 (Features)</strong> 的本質，掌握常見的特徵資料型態。</li>
+<li>清楚界定<strong>標籤 (Labels)</strong> 的定義，理解其在不同任務中的角色。</li>
+<li>掌握機器學習標準數學表示法：特徵矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 與標籤向量 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 的組織形態。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 特徵 (Features, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math>)</h2>
+<h3>核心定義</h3>
+<p>特徵是用來描述每一個樣本對象客觀屬性、性質或測量維度的變量。在統計學中通常被稱為<strong>自變量 (Independent Variables)</strong> 或<strong>輸入變量</strong>，在數學上以符號 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 表示。</p>
+<p>模型就是透過觀察與分析特徵的數值組合，來捕捉隱藏在特徵背後的規律與趨勢。</p>
+<h3>💡 生活直觀比喻：相親對象的個人履歷表</h3>
+<blockquote>
+<p>當你參加相親活動時，介紹人遞給你的個人基本資料卡：<br />
+「年齡 28 歲、身高 175 cm、職業 工程師、年收入 120 萬、是否養寵物 是」——<br />
+這些用來量化或描述這個對象各個面向的具體資訊指標，就是這筆資料的<strong>特徵 (Features)</strong>。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="features" data-scene="features" aria-labelledby="title-features">
+<div class="scene-head"><h3 id="title-features">特徵與資料型態</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">房屋卡片的欄位拆成彩色方塊；連續值、計數、次序、名義與非結構化資料以不同形狀展示。</p>
+<canvas width="760" height="450" role="img" aria-label="特徵與資料型態幾何動畫" aria-describedby="result-features">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-features" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵與資料型態播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵與資料型態動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：特徵圖解</summary><img src="./assets/images/01_features.png" alt="特徵圖解" loading="lazy"><a href="./assets/images/01_features.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>常見特徵資料型態</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">特徵類型</th>
+  <th style="text-align:left">特點說明</th>
+  <th style="text-align:left">經典範例</th>
+  <th style="text-align:left">演算法處理要點</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>連續數值型 (Continuous)</strong></td>
+  <td style="text-align:left">數值具有連續性與度量衡意義，可進行加減乘除</td>
+  <td style="text-align:left">房屋坪數、體重、氣溫、商品售價</td>
+  <td style="text-align:left">通常需要進行特徵縮放（標準化/正規化）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>離散數值型 (Discrete)</strong></td>
+  <td style="text-align:left">以整數計數形式呈現的數值</td>
+  <td style="text-align:left">房間數量、家庭成員人數、造訪次數</td>
+  <td style="text-align:left">視模型而定，大多可直接作為數值輸入</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>次序型 (Ordinal)</strong></td>
+  <td style="text-align:left">具有明確大小或等級先後順序的類別</td>
+  <td style="text-align:left">學歷（高中 &lt; 大學 &lt; 碩士）、顧客滿意度評級</td>
+  <td style="text-align:left">適合採用標籤編碼 (Label Encoding) 保留順序</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>名義型 (Nominal)</strong></td>
+  <td style="text-align:left">單純的類別名稱，類別之間無高低大小之分</td>
+  <td style="text-align:left">顏色（紅/藍/綠）、居住縣市、性別</td>
+  <td style="text-align:left">必須使用獨熱編碼 (One-Hot Encoding) 避免誤導大小關係</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>非結構化型 (Unstructured)</strong></td>
+  <td style="text-align:left">文字、圖像、語音、影片等非表格形態資料</td>
+  <td style="text-align:left">客服評論文字、X 光醫療影像</td>
+  <td style="text-align:left">需透過特徵提取（如 TF-IDF、CNN、Embedding）轉為數值向量</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-3">2. 標籤 (Labels, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math>)</h2>
+<h3>核心定義</h3>
+<p>標籤是我們希望模型預測的最終目標輸出或結果答案。在統計學中被稱為<strong>因變量 (Dependent Variables)</strong>、<strong>目標變量 (Target)</strong> 或<strong>真實答案 (Ground Truth)</strong>，在數學上以符號 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 表示。</p>
+<p>標籤通常僅在<strong>監督式學習</strong>中存在，模型在訓練期間透過比對自己的猜測 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\hat{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math> 與真實標籤 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 之間的差距來自我調整。</p>
+<h3>💡 生活直觀比喻：大考成績與錄取通知</h3>
+<blockquote>
+<p>接續上述履歷表的比喻，當你讀完對方的各項條件特徵後，最後所做的決定：<br />
+「是否願意進一步交往？（願意 / 不願意）」——這就是<strong>分類問題的標籤</strong>。<br />
+若是預測對方工作三年後的「具體存款金額（85 萬元）」——這就是<strong>回歸問題的標籤</strong>。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="labels" data-scene="labels" aria-labelledby="title-labels">
+<div class="scene-head"><h3 id="title-labels">標籤與任務</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">成交價或類別標籤從樣本卡片抽出，移到 y 欄；分類用離散色塊，回歸用數線。</p>
+<canvas width="760" height="450" role="img" aria-label="標籤與任務幾何動畫" aria-describedby="result-labels">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-labels" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="標籤與任務播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="標籤與任務動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：標籤圖解</summary><img src="./assets/images/02_labels.png" alt="標籤圖解" loading="lazy"><a href="./assets/images/02_labels.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>標籤的任務型態區分</h3>
+<div class="flow-summary"><strong>流程與概念摘要</strong><ul><li>標籤 y 的型態</li><li>離散型類別</li><li>連續型數值</li><li>二元分類 (是/否, 0/1)</li><li>多元分類 (貓/狗/鳥)</li><li>回歸預測 (房價, 氣溫, 股價)</li></ul></div><hr />
+<h2 id="section-4">3. 數據結構的標準數學組織</h2>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="matrix" data-scene="matrix" aria-labelledby="title-matrix">
+<div class="scene-head"><h3 id="title-matrix">特徵矩陣 X 與標籤 y</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">三筆原教材房屋資料重排為 3×4 矩陣與長度 3 的向量，樣本列與特徵欄逐一亮起。</p>
+<canvas width="760" height="450" role="img" aria-label="特徵矩陣 X 與標籤 y幾何動畫" aria-describedby="result-matrix">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-matrix" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="特徵矩陣 X 與標籤 y播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="特徵矩陣 X 與標籤 y動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：數據結構綜合圖解</summary><img src="./assets/images/03_data_structure_example.png" alt="數據結構綜合圖解" loading="lazy"><a href="./assets/images/03_data_structure_example.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<p>在實務中，機器學習數據集（Dataset）通常以二維表格或矩陣形式儲存：</p>
+<ul>
+<li>每一<strong>列 (Row)</strong> 代表一個獨立的<strong>樣本點 (Sample / Instance / Example)</strong>。</li>
+<li>每一<strong>行 (Column)</strong> 代表一個特定的<strong>特徵 (Feature)</strong>。</li>
+<li>最後一欄（通常情況下）為目標<strong>標籤 (Label / Target)</strong>。</li>
+</ul>
+<h3>數學矩陣表達式</h3>
+<p>假設我們有 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="N"><mrow><mi>N</mi></mrow></math> 個樣本，每個樣本包含 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="D"><mrow><mi>D</mi></mrow></math> 個特徵，則：</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="X = \begin{bmatrix}
+x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1D} \\
+x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2D} \\
+\vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+x_{N1} &amp; x_{N2} &amp; \cdots &amp; x_{ND}
+\end{bmatrix} \in \mathbb{R}^{N \times D}, \quad
+y = \begin{bmatrix}
+y_1 \\
+y_2 \\
+\vdots \\
+y_N
+\end{bmatrix} \in \mathbb{R}^N"><mrow><mi>X</mi><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mrow><msub><mi>x</mi><mrow><mn>11</mn></mrow></msub></mrow></mtd><mtd><mrow><msub><mi>x</mi><mrow><mn>12</mn></mrow></msub></mrow></mtd><mtd><mrow><mo>⋯</mo></mrow></mtd><mtd><mrow><msub><mi>x</mi><mrow><mn>1</mn><mi>D</mi></mrow></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>x</mi><mrow><mn>21</mn></mrow></msub></mrow></mtd><mtd><mrow><msub><mi>x</mi><mrow><mn>22</mn></mrow></msub></mrow></mtd><mtd><mrow><mo>⋯</mo></mrow></mtd><mtd><mrow><msub><mi>x</mi><mrow><mn>2</mn><mi>D</mi></mrow></msub></mrow></mtd></mtr><mtr><mtd><mrow><mo>⋮</mo></mrow></mtd><mtd><mrow><mo>⋮</mo></mrow></mtd><mtd><mrow><mo>⋱</mo></mrow></mtd><mtd><mrow><mo>⋮</mo></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>x</mi><mrow><mi>N</mi><mn>1</mn></mrow></msub></mrow></mtd><mtd><mrow><msub><mi>x</mi><mrow><mi>N</mi><mn>2</mn></mrow></msub></mrow></mtd><mtd><mrow><mo>⋯</mo></mrow></mtd><mtd><mrow><msub><mi>x</mi><mrow><mi>N</mi><mi>D</mi></mrow></msub></mrow></mtd></mtr></mtable><mo>]</mo></mrow><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mrow><mi>N</mi><mo>×</mo><mi>D</mi></mrow></msup><mo>,</mo><mspace width="1em"/><mi>y</mi><mo>=</mo><mrow><mo>[</mo><mtable><mtr><mtd><mrow><msub><mi>y</mi><mn>1</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>y</mi><mn>2</mn></msub></mrow></mtd></mtr><mtr><mtd><mrow><mo>⋮</mo></mrow></mtd></mtr><mtr><mtd><mrow><msub><mi>y</mi><mi>N</mi></msub></mrow></mtd></mtr></mtable><mo>]</mo></mrow><mo>∈</mo><msup><mi mathvariant="double-struck">R</mi><mi>N</mi></msup></mrow></math></div><h3>實戰範例：房價預測數據集</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:center">樣本編號 (ID)</th>
+  <th style="text-align:center">面積（坪）[<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X_1"><mrow><msub><mi>X</mi><mn>1</mn></msub></mrow></math>]</th>
+  <th style="text-align:center">房數（間）[<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X_2"><mrow><msub><mi>X</mi><mn>2</mn></msub></mrow></math>]</th>
+  <th style="text-align:center">屋齡（年）[<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X_3"><mrow><msub><mi>X</mi><mn>3</mn></msub></mrow></math>]</th>
+  <th style="text-align:center">捷運距離（公尺）[<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X_4"><mrow><msub><mi>X</mi><mn>4</mn></msub></mrow></math>]</th>
+  <th style="text-align:center"><strong>成交價格（萬元）[<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math>]</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center">1</td>
+  <td style="text-align:center">32.5</td>
+  <td style="text-align:center">3</td>
+  <td style="text-align:center">5</td>
+  <td style="text-align:center">180</td>
+  <td style="text-align:center"><strong>1,850</strong></td>
+</tr>
+<tr>
+  <td style="text-align:center">2</td>
+  <td style="text-align:center">21.0</td>
+  <td style="text-align:center">2</td>
+  <td style="text-align:center">18</td>
+  <td style="text-align:center">650</td>
+  <td style="text-align:center"><strong>920</strong></td>
+</tr>
+<tr>
+  <td style="text-align:center">3</td>
+  <td style="text-align:center">45.2</td>
+  <td style="text-align:center">4</td>
+  <td style="text-align:center">2</td>
+  <td style="text-align:center">80</td>
+  <td style="text-align:center"><strong>2,680</strong></td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li><strong>特徵矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math></strong>：形狀為 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="(3, 4)"><mrow><mo>(</mo><mn>3</mn><mo>,</mo><mn>4</mn><mo>)</mo></mrow></math> 的二維陣列（3 筆樣本，4 個特徵）。</li>
+<li><strong>標籤向量 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math></strong>：形狀為 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="(3,)"><mrow><mo>(</mo><mn>3</mn><mo>,</mo><mo>)</mo></mrow></math> 的一維向量。</li>
+</ul>
+<blockquote>
+<blockquote>
+<p><strong>常見陷阱：數據洩漏 (Data Leakage)</strong><br />
+絕對不能把「未來的資訊」或「與標籤高度等價的代用特徵」放入特徵矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 中！<br />
+例如：想預測「病患住院天數」，卻把特徵放進「出院結帳發票總金額」——因為只有在出院後才能得知結帳金額，這會導致模型在訓練時虛高 100 分，上線實戰卻完全無法預測！</p>
+</blockquote>
+</blockquote>
+<hr />
+<h2 id="section-5">📌 本章精華速記</h2>
+<ol>
+<li><strong>特徵 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math>)</strong> 是輸入資訊，是模型認識世界、推演結論的依據（自變量）。</li>
+<li><strong>標籤 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math>)</strong> 是輸出答案，是監督式學習用來指引模型修正誤差的目標（因變量）。</li>
+<li>數據組織的標準架構為 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="N"><mrow><mi>N</mi></mrow></math> 個樣本列 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\times D"><mrow><mo>×</mo><mi>D</mi></mrow></math> 個特徵行</strong> 的特徵矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 搭配一維長度的標籤向量 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math>。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/02_%E6%95%B8%E6%93%9A%E7%B5%90%E6%A7%8B/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../01-learning-paradigms/">← 01 學習範式</a><a href="../">返回 12 章目錄</a><a href="../03-data-splitting/">03 數據分割 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

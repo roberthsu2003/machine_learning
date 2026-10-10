@@ -1,5 +1,13 @@
 # 3. 數據分割 (Data Splitting)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/)**
+
+動畫場景：[訓練／測試分割](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#train-test) · [三份資料的角色](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#train-validation-test) · [隨機、分層與時間切分](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#split-strategies) · [資料洩漏與診斷](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#leakage)
+
+<!-- interactive-glossary:end -->
+
 在機器學習專案中，**「用訓練過的數據來評估模型好壞」是最大的禁忌**。  
 就像讓學生在考試前提前背熟了期末考卷的題目與答案一樣，即使考出滿分 100 分，也完全無法證明學生真正理解了知識，更無法預測他面對新題目時的能力。
 

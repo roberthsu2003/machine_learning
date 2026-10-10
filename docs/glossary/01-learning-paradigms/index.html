@@ -1,0 +1,183 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 01 章 學習範式：完整教材、原圖對照與互動 2D 幾何動畫。"><title>01 學習範式｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%E5%AD%B8%E7%BF%92%E7%AF%84%E5%BC%8F/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 01 / 12 · INTERACTIVE LESSON</div><h1>學習範式</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#supervised">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#supervised">監督式：分類與回歸</a><a href="#unsupervised">非監督式：聚類與降維</a><a href="#paradigm-comparison">範式比較</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 監督式學習 (Supervised Learning)</a><a href="#section-3">2. 非監督式學習 (Unsupervised Learning)</a><a href="#section-4">3. 學習範式全景對照</a><a href="#section-5">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>機器學習（Machine Learning, ML）本質上是<strong>讓電腦從數據中自動尋找規律，而非依賴人工程式碼一條條寫死規則</strong>的科學。</p>
+<p>依據「是否有標準答案提供給模型學習」以及「回饋機制的不同」，機器學習主要分為兩大主流範式：<strong>監督式學習</strong>與<strong>非監督式學習</strong>；在進階實務中，亦常結合<strong>半監督式學習</strong>與<strong>強化學習</strong>。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>掌握<strong>監督式學習</strong>的核心機制，能精準區分<strong>分類任務</strong>與<strong>回歸任務</strong>。</li>
+<li>理解<strong>非監督式學習</strong>的探索本質，掌握<strong>聚類</strong>與<strong>降維</strong>的應用場景。</li>
+<li>能從資料特性（有無標籤）與商業需求出發，正確選定合適的學習範式。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 監督式學習 (Supervised Learning)</h2>
+<h3>核心定義</h3>
+<p>監督式學習是指使用**帶有標籤（Ground Truth Label）**的訓練數據來訓練模型。模型透過學習輸入特徵 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 與對應標籤 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 之間的對應映射關係 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="f(X) \approx y"><mrow><mi>f</mi><mo>(</mo><mi>X</mi><mo>)</mo><mo>≈</mo><mi>y</mi></mrow></math>，進而能夠對從未見過的新數據做出準確預測。</p>
+<h3>💡 生活直觀比喻：名師出高徒與刷題附詳解</h3>
+<blockquote>
+<p>監督式學習就像一位學生在做<strong>附有詳細解答與正確答案的歷屆考題本</strong>。<br />
+學生每做完一題，就翻到最後一頁對答案（計算誤差 Loss），答錯了就修正自己的解題思考（調整權重參數），直到錯誤率降到最低為止。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="supervised" data-scene="supervised" aria-labelledby="title-supervised">
+<div class="scene-head"><h3 id="title-supervised">監督式：分類與回歸</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">帶標籤的圓點流入模型；切換後分別顯示分類邊界與回歸線。</p>
+<canvas width="760" height="450" role="img" aria-label="監督式：分類與回歸幾何動畫" aria-describedby="result-supervised">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-supervised" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="監督式：分類與回歸播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="監督式：分類與回歸動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：監督式學習圖解</summary><img src="./assets/images/01_supervised_learning.png" alt="監督式學習圖解" loading="lazy"><a href="./assets/images/01_supervised_learning.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>兩大主要任務類型</h3>
+<p>監督式學習依據預測目標的數據型態，分為兩大主要任務：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">任務類型</th>
+  <th style="text-align:left">標籤型態</th>
+  <th style="text-align:left">預測目標特點</th>
+  <th style="text-align:left">經典生活實例</th>
+  <th style="text-align:left">常用代表算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>分類 (Classification)</strong></td>
+  <td style="text-align:left">離散類別 (Discrete)</td>
+  <td style="text-align:left">預測數據屬於哪一個類別標籤（二分類或多分類）</td>
+  <td style="text-align:left">• 判斷信件是否為垃圾郵件<br>• 醫療影像診斷是否罹癌<br>• 信用卡交易是否為盜刷</td>
+  <td style="text-align:left">• 邏輯回歸 (Logistic Regression)<br>• 決策樹 (Decision Tree)<br>• 支援向量機 (SVM)<br>• 隨機森林 (Random Forest)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>回歸 (Regression)</strong></td>
+  <td style="text-align:left">連續數值 (Continuous)</td>
+  <td style="text-align:left">預測一個可以在數線上連續變動的具體數量值</td>
+  <td style="text-align:left">• 根據地段坪數預測房價<br>• 預測明日氣溫與降雨量<br>• 預測下季度公司銷售額</td>
+  <td style="text-align:left">• 線性回歸 (Linear Regression)<br>• 脊回歸 / Lasso 回歸<br>• 回歸樹 / GBDT<br>• 神經網絡 (Neural Networks)</td>
+</tr>
+</tbody>
+</table></div>
+<h3>經典範例解說</h3>
+<p>假設我們要預測房屋價格：</p>
+<ul>
+<li><strong>輸入特徵 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math></strong>：建物面積 = 100 平方公尺，房間數 = 2，距捷運站距離 = 300 公尺。</li>
+<li><strong>目標標籤 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math></strong>：成交價格 = 1,800 萬元。</li>
+<li><strong>模型任務</strong>：找出 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 與 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 之間的函數映射。當市場出現一間全新房屋（面積 120 平方公尺，房間數 3）時，模型能精準推估其合理售價。</li>
+</ul>
+<hr />
+<h2 id="section-3">2. 非監督式學習 (Unsupervised Learning)</h2>
+<h3>核心定義</h3>
+<p>非監督式學習是指在**完全沒有標籤（無標準答案）**的數據上進行學習。模型不依賴外界給予的正確答案，而是透過自主統計與幾何計算，發掘數據內部潛藏的內在結構、相似族群或低維流形模式。</p>
+<h3>💡 生活直觀比喻：讓小朋友分類彩色積木</h3>
+<blockquote>
+<p>想像把一大箱形狀各異、五顏六色的積木倒在地上，<strong>不給任何指示或說明書</strong>，讓小朋友自己整理。<br />
+小朋友會憑直覺把「圓形的積木放在一起」、「紅色的積木分到同一堆」。雖然他並不知道這些積木的專有名詞，但他成功抓住了積木之間的「相似性特徵」。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="unsupervised" data-scene="unsupervised" aria-labelledby="title-unsupervised">
+<div class="scene-head"><h3 id="title-unsupervised">非監督式：聚類與降維</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">無標籤圓點逐輪分群，中心點移動；另以投影線展示 2D → 1D 的降維。</p>
+<canvas width="760" height="450" role="img" aria-label="非監督式：聚類與降維幾何動畫" aria-describedby="result-unsupervised">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-unsupervised" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="非監督式：聚類與降維播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="非監督式：聚類與降維動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：非監督式學習圖解</summary><img src="./assets/images/02_unsupervised_learning.png" alt="非監督式學習圖解" loading="lazy"><a href="./assets/images/02_unsupervised_learning.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>兩大主要任務類型</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">任務類型</th>
+  <th style="text-align:left">核心目標</th>
+  <th style="text-align:left">實務價值</th>
+  <th style="text-align:left">經典實例</th>
+  <th style="text-align:left">代表算法</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>聚類 (Clustering)</strong></td>
+  <td style="text-align:left">將相似的數據點自動聚集為同一群，群內相似度高、群間差異大</td>
+  <td style="text-align:left">探索未知的用戶分群或數據分佈</td>
+  <td style="text-align:left">• 電商顧客消費偏好分群<br>• 新聞主題自動分堆<br>• 基因表達譜分型</td>
+  <td style="text-align:left">• K-Means 聚類<br>• DBSCAN 密度聚類<br>• 階層聚類 (Hierarchical)</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>降維 (Dimensionality Reduction)</strong></td>
+  <td style="text-align:left">在盡可能保留原始資訊的前提下，壓縮特徵維度</td>
+  <td style="text-align:left">解決維度災難、消除特徵冗餘、資料視覺化</td>
+  <td style="text-align:left">• 將 100 維的基因特徵壓縮為 2 維以繪圖呈現<br>• 圖像壓縮與去噪</td>
+  <td style="text-align:left">• 主成分分析 (PCA)<br>• t-SNE / UMAP<br>• 自編碼器 (Autoencoder)</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-4">3. 學習範式全景對照</h2>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="paradigm-comparison" data-scene="paradigm-comparison" aria-labelledby="title-paradigm-comparison">
+<div class="scene-head"><h3 id="title-paradigm-comparison">範式比較</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">同一批資料在「有標籤／無標籤」兩條管線移動，對照模型接收的資訊。</p>
+<canvas width="760" height="450" role="img" aria-label="範式比較幾何動畫" aria-describedby="result-paradigm-comparison">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-paradigm-comparison" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="範式比較播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="範式比較動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：學習範式總結比較圖解</summary><img src="./assets/images/03_comparison.png" alt="學習範式總結比較圖解" loading="lazy"><a href="./assets/images/03_comparison.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>核心對照矩陣</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">比較維度</th>
+  <th style="text-align:left">監督式學習 (Supervised)</th>
+  <th style="text-align:left">非監督式學習 (Unsupervised)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>訓練數據組成</strong></td>
+  <td style="text-align:left">特徵矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> + <strong>標準標籤 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math></strong></td>
+  <td style="text-align:left">僅有特徵矩陣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math>（<strong>無標籤</strong>）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>學習目標</strong></td>
+  <td style="text-align:left">預測未知樣本的輸出值（求對應）</td>
+  <td style="text-align:left">發現數據自身的結構、分佈與族群（求規律）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>人工作業成本</strong></td>
+  <td style="text-align:left"><strong>高</strong>（需要大量人工標註數據）</td>
+  <td style="text-align:left"><strong>低</strong>（可直接利用未經整理的原始數據）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>模型評估方式</strong></td>
+  <td style="text-align:left">客觀明確（準確率、召回率、MSE 等）</td>
+  <td style="text-align:left">較具主觀性（輪廓係數、重構誤差、領域專家解讀）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>常見應用領域</strong></td>
+  <td style="text-align:left">疾病診斷、人臉識別、股價走勢預測</td>
+  <td style="text-align:left">潛在客群輪廓分析、異常詐欺交易偵測、圖像特徵壓縮</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<blockquote>
+<p><strong>拓展視野：其他現代學習範式</strong></p>
+</blockquote>
+<ul>
+<li><strong>半監督式學習 (Semi-Supervised Learning)</strong>：擁有大量未標記數據，但只有極少量昂貴的人工標籤。利用少量標籤引導大量未標籤數據，大幅降低標註成本。</li>
+<li><strong>強化學習 (Reinforcement Learning, RL)</strong>：沒有固定的數據集，智慧體（Agent）透過與環境互動試錯（Trial-and-Error），依據獲得的獎勵（Reward）或懲罰最大化長期累積回報（如 AlphaGo、自動駕駛）。</li>
+</ul>
+</blockquote>
+<hr />
+<h2 id="section-5">📌 本章精華速記</h2>
+<ol>
+<li><strong>監督式學習</strong>看重「對齊答案」，核心是輸入到輸出的對應映射，分為<strong>預測類別的分類</strong>與<strong>預測數值的回歸</strong>。</li>
+<li><strong>非監督式學習</strong>看重「自發探索」，核心是資料內在結構的解析，主要代表為<strong>分群聚類</strong>與<strong>特徵降維</strong>。</li>
+<li>在真實機器學習專案中，通常先以非監督式方法（如 PCA、聚類）進行探索性數據分析（EDA），再透過監督式模型執行精準預測。</li>
+</ol>
+<hr />
+<p><a href="../">📑 返回目錄</a> | <a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/02_%25E6%2595%25B8%25E6%2593%259A%25E7%25B5%2590%25E6%25A7%258B/README.md">⏭️ 下一章：02_數據結構</a></p>
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%E5%AD%B8%E7%BF%92%E7%AF%84%E5%BC%8F/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><span>第一章</span><a href="../">返回 12 章目錄</a><a href="../02-data-structures/">02 數據結構 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

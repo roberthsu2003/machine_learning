@@ -1,5 +1,13 @@
 # 9. 評估指標 (Performance Metrics)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/)**
+
+動畫場景：[混淆矩陣](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix) · [分類指標與 ROC](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#classification-metrics) · [MAE、MSE、RMSE](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors) · [R²](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#r-squared)
+
+<!-- interactive-glossary:end -->
+
 在機器學習專案中，**評估指標（Evaluation Metrics）是用來客觀衡量模型品質、診斷學習盲點與推動模型調優的指南針**。
 
 不同的任務型態（分類 vs 回歸）以及不同的商業場景代價（如漏報代價 vs 誤報代價），必須選用相應的指標。如果選錯了指標，即使模型分數看似高達 99%，在真實業務落地時也可能帶來災難性的虧損！

@@ -1,0 +1,238 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 09 章 評估指標：完整教材、原圖對照與互動 2D 幾何動畫。"><title>09 評估指標｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 09 / 12 · INTERACTIVE LESSON</div><h1>評估指標</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#confusion-matrix">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#confusion-matrix">混淆矩陣</a><a href="#classification-metrics">分類指標與 ROC</a><a href="#regression-errors">MAE、MSE、RMSE</a><a href="#r-squared">R²</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 分類評估指標 (Classification Metrics)</a><a href="#section-3">2. 回歸評估指標 (Regression Metrics)</a><a href="#section-4">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在機器學習專案中，<strong>評估指標（Evaluation Metrics）是用來客觀衡量模型品質、診斷學習盲點與推動模型調優的指南針</strong>。</p>
+<p>不同的任務型態（分類 vs 回歸）以及不同的商業場景代價（如漏報代價 vs 誤報代價），必須選用相應的指標。如果選錯了指標，即使模型分數看似高達 99%，在真實業務落地時也可能帶來災難性的虧損！</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>徹底理解<strong>混淆矩陣 (Confusion Matrix)</strong> 的四象限組成與雙字母記憶口訣。</li>
+<li>搞懂分類四大指標（Accuracy, Precision, Recall, F1）的核心關注點與取捨權衡（Tradeoff）。</li>
+<li>掌握回歸任務的核心量化指標（MAE, MSE, RMSE, <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math>）的幾何意義與單位特點。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 分類評估指標 (Classification Metrics)</h2>
+<h3>混淆矩陣 (Confusion Matrix)</h3>
+<p>混淆矩陣是一個二維交叉統計表，精確總結了分類模型的預測結果與真實情況，是所有分類衍生指標的基石。</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="confusion-matrix" data-scene="confusion-matrix" aria-labelledby="title-confusion-matrix">
+<div class="scene-head"><h3 id="title-confusion-matrix">混淆矩陣</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">每個樣本按真實類別與預測類別移進 TP／FP／FN／TN 四格，數量同步增加。</p>
+<canvas width="760" height="450" role="img" aria-label="混淆矩陣幾何動畫" aria-describedby="result-confusion-matrix">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-confusion-matrix" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="混淆矩陣播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="混淆矩陣動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：二元混淆矩陣結構與四象限圖解</summary><img src="./assets/images/01_confusion_matrix.png" alt="二元混淆矩陣結構與四象限圖解" loading="lazy"><a href="./assets/images/01_confusion_matrix.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>四象限組成概念</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">象限名詞</th>
+  <th style="text-align:left">英文全稱</th>
+  <th style="text-align:center">真實情況</th>
+  <th style="text-align:center">模型預測</th>
+  <th style="text-align:left">💡 生活實例（醫療檢測）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>真正例 (TP)</strong></td>
+  <td style="text-align:left">True Positive</td>
+  <td style="text-align:center"><strong>陽性 (+)</strong></td>
+  <td style="text-align:center"><strong>陽性 (+)</strong></td>
+  <td style="text-align:left">病患確實染病，檢測結果精確抓出為陽性（成功確診）。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>真負例 (TN)</strong></td>
+  <td style="text-align:left">True Negative</td>
+  <td style="text-align:center"><strong>陰性 (-)</strong></td>
+  <td style="text-align:center"><strong>陰性 (-)</strong></td>
+  <td style="text-align:left">受檢者完全健康，檢測結果回報為陰性（平安無事）。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>假正例 (FP)</strong></td>
+  <td style="text-align:left">False Positive<br><em>(Type I Error 第一型錯誤 / 誤報)</em></td>
+  <td style="text-align:center"><strong>陰性 (-)</strong></td>
+  <td style="text-align:center"><strong>陽性 (+)</strong></td>
+  <td style="text-align:left">受檢者明明健康，檢測卻誤判為陽性（虛驚一場、冤枉好人）。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>假負例 (FN)</strong></td>
+  <td style="text-align:left">False Negative<br><em>(Type II Error 第二型錯誤 / 漏報)</em></td>
+  <td style="text-align:center"><strong>陽性 (+)</strong></td>
+  <td style="text-align:center"><strong>陰性 (-)</strong></td>
+  <td style="text-align:left">病患確實染病，檢測卻漏判為陰性（<strong>致命漏網之魚！</strong>）。</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>💡 <strong>雙字母記憶口訣</strong>：</p>
+<ul>
+<li><strong>第一個字母 (True / False)</strong>：代表模型「<strong>猜得對不對</strong>」（T = 猜對，F = 猜錯）。</li>
+<li><strong>第二個字母 (Positive / Negative)</strong>：代表模型「<strong>預測它是哪一類</strong>」（P = 猜正類，N = 猜負類）。</li>
+</ul>
+</blockquote>
+<hr />
+<h3>分類四大衍生指標體系</h3>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="classification-metrics" data-scene="classification-metrics" aria-labelledby="title-classification-metrics">
+<div class="scene-head"><h3 id="title-classification-metrics">分類指標與 ROC</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">改變門檻後，圓點重新落格，Accuracy／Precision／Recall／F1 及 ROC 游標同步更新。</p>
+<canvas width="760" height="450" role="img" aria-label="分類指標與 ROC幾何動畫" aria-describedby="result-classification-metrics">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-classification-metrics" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="分類指標與 ROC播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="分類指標與 ROC動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：分類指標體系：公式、適用場景與權衡關係</summary><img src="./assets/images/02_classification_metrics.png" alt="分類指標體系：公式、適用場景與權衡關係" loading="lazy"><a href="./assets/images/02_classification_metrics.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>1. 準確率 (Accuracy)</h3>
+<ul>
+<li><strong>數學公式</strong>：<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{Accuracy} = \frac{TP + TN}{TP + TN + FP + FN}"><mrow><mtext>Accuracy</mtext><mo>=</mo><mfrac><mrow><mi>T</mi><mi>P</mi><mo>+</mo><mi>T</mi><mi>N</mi></mrow><mrow><mi>T</mi><mi>P</mi><mo>+</mo><mi>T</mi><mi>N</mi><mo>+</mo><mi>F</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>N</mi></mrow></mfrac></mrow></math></div></li>
+<li><strong>含義</strong>：所有樣本中，被模型精確猜對的總比例。</li>
+<li><strong>🚨 致命陷阱：類別不平衡盲點</strong><blockquote>
+<p>假設某種罕見癌症在人口中患病率為 0.1%（1,000 人中只有 1 人得病）。<br />
+一個完全沒學習能力的「無腦模型」，不管誰來都全猜「健康 (Negative)」，其準確率依然高達 <strong>99.9%</strong>！但此模型對抓出病患毫無貢獻。因此<strong>面對不平衡數據，絕對不能只看 Accuracy</strong>！</p>
+</blockquote>
+</li>
+</ul>
+<hr />
+<h3>2. 精確率 (Precision / 查準率)</h3>
+<ul>
+<li><strong>數學公式</strong>：<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{Precision} = \frac{TP}{TP + FP}"><mrow><mtext>Precision</mtext><mo>=</mo><mfrac><mrow><mi>T</mi><mi>P</mi></mrow><mrow><mi>T</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>P</mi></mrow></mfrac></mrow></math></div></li>
+<li><strong>含義</strong>：在所有<strong>被模型猜測為正類</strong>的樣本中，實際上真正為正類的比例。</li>
+<li><strong>關注焦點</strong>：<strong>極力消滅 FP（誤報）</strong>！寧可少猜，也絕不能冤枉好人。</li>
+<li><strong>經典應用場景</strong>：<ul>
+<li><strong>垃圾郵件過濾</strong>：把重要工作通知或銀行驗證碼信件當垃圾郵件丟掉（FP）的代價無法承受。</li>
+<li><strong>法庭宣判定罪</strong>：寧可放過嫌疑犯，絕不可冤枉無辜好人入獄。</li>
+<li><strong>精準電商推薦</strong>：推薦清單必須精準切中用戶喜好，避免打擾顧客。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3>3. 召回率 (Recall / 查全率 / Sensitivity)</h3>
+<ul>
+<li><strong>數學公式</strong>：<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{Recall} = \frac{TP}{TP + FN}"><mrow><mtext>Recall</mtext><mo>=</mo><mfrac><mrow><mi>T</mi><mi>P</mi></mrow><mrow><mi>T</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>N</mi></mrow></mfrac></mrow></math></div></li>
+<li><strong>含義</strong>：在所有<strong>真實為正類</strong>的樣本中，被模型成功抓出的比例。</li>
+<li><strong>關注焦點</strong>：<strong>極力消滅 FN（漏報）</strong>！寧可抓錯十個，也絕不能漏放一個。</li>
+<li><strong>經典應用場景</strong>：<ul>
+<li><strong>惡性腫瘤篩檢</strong>：若病患得癌卻被誤判為健康（FN），將延誤就醫導致喪命！</li>
+<li><strong>信用卡盜刷風控</strong>：寧可暫時凍結可疑交易打電話確認，也絕不讓盜刷成功。</li>
+<li><strong>防空預警雷達</strong>：寧可把大批海鳥誤判為敵機，也絕不能漏掉一枚真實飛彈。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h3>4. F1 分數 (F1-Score)</h3>
+<ul>
+<li><strong>數學公式</strong>：<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{F1} = 2 \times \frac{\text{Precision} \times \text{Recall}}{\text{Precision} + \text{Recall}} = \frac{2TP}{2TP + FP + FN}"><mrow><mtext>F1</mtext><mo>=</mo><mn>2</mn><mo>×</mo><mfrac><mrow><mtext>Precision</mtext><mo>×</mo><mtext>Recall</mtext></mrow><mrow><mtext>Precision</mtext><mo>+</mo><mtext>Recall</mtext></mrow></mfrac><mo>=</mo><mfrac><mrow><mn>2</mn><mi>T</mi><mi>P</mi></mrow><mrow><mn>2</mn><mi>T</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>P</mi><mo>+</mo><mi>F</mi><mi>N</mi></mrow></mfrac></mrow></math></div></li>
+<li><strong>含義</strong>：精確率與召回率的<strong>調和平均數 (Harmonic Mean)</strong>。</li>
+<li><strong>為什麼用調和平均，不用算術平均？</strong><br />
+調和平均數會對極端微小值施加嚴厲懲罰。如果 Precision 高達 99% 但 Recall 只有 1%，其算術平均為 50%，但 F1 分數會直接跌落至接近 2%！只有在兩者皆優異時，F1 才會高。</li>
+<li><strong>適用場景</strong>：數據不平衡，且業務上同時需要兼顧準確性與覆蓋面的綜合評估。</li>
+</ul>
+<hr />
+<h3>5. ROC-AUC (受試者工作特徵曲線與曲線下面積)</h3>
+<p>在實務中，分類模型輸出的往往是「屬於正類的機率值」（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.78"><mrow><mn>0.78</mn></mrow></math>）。我們通常以 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.5"><mrow><mn>0.5</mn></mrow></math> 作為門檻（Threshold），大於 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.5"><mrow><mn>0.5</mn></mrow></math> 判為正類。但如果把門檻調低（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.2"><mrow><mn>0.2</mn></mrow></math>）或調高（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.8"><mrow><mn>0.8</mn></mrow></math>），Precision 與 Recall 就會此消彼長。</p>
+<ul>
+<li><strong>ROC 曲線</strong>：以假正例率 (FPR) 為橫軸、真正例率 (TPR / Recall) 為縱軸，描繪門檻從 1 變動到 0 時模型的表現軌跡。</li>
+<li><strong>AUC (Area Under Curve)</strong>：ROC 曲線下方的面積（介於 0 到 1 之間；低於 0.5 可能表示排序方向反轉）。<ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{AUC} = 1.0"><mrow><mtext>AUC</mtext><mo>=</mo><mn>1.0</mn></mrow></math>：完美無瑕的頂級模型。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{AUC} = 0.5"><mrow><mtext>AUC</mtext><mo>=</mo><mn>0.5</mn></mrow></math>：等同於盲猜拋硬幣。</li>
+<li><strong>最大優點</strong>：<strong>衡量跨門檻的排序能力，但類別不平衡時仍應搭配 PR 指標與情境分析</strong>，且能客觀評價模型跨越所有可能門檻的綜合排序能力！</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="section-3">2. 回歸評估指標 (Regression Metrics)</h2>
+<p>回歸任務的輸出為連續數值（如房價、氣溫、營收）。我們透過評估真實值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 與預測值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\hat{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math> 之間的殘差來衡量擬合品質。</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="regression-errors" data-scene="regression-errors" aria-labelledby="title-regression-errors">
+<div class="scene-head"><h3 id="title-regression-errors">MAE、MSE、RMSE</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">殘差線段展開為絕對長度與平方色塊，加入離群點後比較各種誤差變化。</p>
+<canvas width="760" height="450" role="img" aria-label="MAE、MSE、RMSE幾何動畫" aria-describedby="result-regression-errors">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-regression-errors" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="MAE、MSE、RMSE播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="MAE、MSE、RMSE動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：回歸誤差三大指標對比</summary><img src="./assets/images/03_regression_metrics_errors.png" alt="回歸誤差三大指標對比" loading="lazy"><a href="./assets/images/03_regression_metrics_errors.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>三大誤差指標對照</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">指標名稱</th>
+  <th style="text-align:center">數學公式</th>
+  <th style="text-align:center">單位尺度</th>
+  <th style="text-align:center">對極端離群值敏感度</th>
+  <th style="text-align:left">特性與適用場景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>MAE</strong><br>(平均絕對誤差)</td>
+  <td style="text-align:center"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\frac{1}{n}\sum_{i=1}^{n}\|y_i - \hat{y}_i\|"><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><mo>|</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><mo>|</mo></mrow></math></div></td>
+  <td style="text-align:center">原始單位<br>(如: 萬元)</td>
+  <td style="text-align:center"><strong>低 (Robust)</strong><br>線性權重，抗干擾強</td>
+  <td style="text-align:left">最直觀好懂（平均猜錯多少錢），適合數據中存在偶發異常雜訊時使用。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>MSE</strong><br>(均方誤差)</td>
+  <td style="text-align:center"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2"><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow></math></div></td>
+  <td style="text-align:center">平方單位<br>(如: 萬元<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="^2"><mrow><mo>^</mo><mn>2</mn></mrow></math>)</td>
+  <td style="text-align:center"><strong>極高</strong><br>平方放大極端大誤差</td>
+  <td style="text-align:left">數學性質極佳（處處可導），是梯度下降優化器最經典的損失函數；但缺乏物理直觀性。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>RMSE</strong><br>(均方根誤差)</td>
+  <td style="text-align:center"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\sqrt{\text{MSE}}"><mrow><msqrt><mrow><mtext>MSE</mtext></mrow></msqrt></mrow></math></div></td>
+  <td style="text-align:center">原始單位<br>(如: 萬元)</td>
+  <td style="text-align:center"><strong>高</strong><br>兼具平方重罰懲罰性</td>
+  <td style="text-align:left"><strong>對 MSE 開根號還原回原始物理尺度</strong>，同時保留對大誤差的懲罰，工業界競賽最愛指標！</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h3>決定係數 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 分數 / R-Squared)</h3>
+<h4>核心定義</h4>
+<p><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 衡量回歸模型**「能夠解釋數據中總變異性 (Variance) 的百分比」**。它是無量綱（無單位）的標準化指標，以「直接猜母體平均數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math> 的基準笨模型」為對照組。</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="r-squared" data-scene="r-squared" aria-labelledby="title-r-squared">
+<div class="scene-head"><h3 id="title-r-squared">R²</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">同時顯示平均值基準線與模型線，對照 SST／SSE 平方塊大小。</p>
+<canvas width="760" height="450" role="img" aria-label="R²幾何動畫" aria-describedby="result-r-squared">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-r-squared" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="R²播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="R²動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：決定係數 R² 原理：衡量模型解釋資料變異的能力</summary><img src="./assets/images/04_r_squared.png" alt="決定係數 R² 原理：衡量模型解釋資料變異的能力" loading="lazy"><a href="./assets/images/04_r_squared.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h4>數學公式</h4>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover><msup><mo>)</mo><mn>2</mn></msup></mrow></mfrac></mrow></math></div><ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）：模型沒能解釋的預測殘差平方和。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和）：數據本身的原始總波動平方和。</li>
+</ul>
+<h4><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 數值解讀光譜</h4>
+<ul>
+<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 1.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1.0</mn></mrow></math> (100%)</strong>：完美預測！所有樣本點分毫不差落在回歸線上。</li>
+<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0 &lt; R^2 &lt; 1.0"><mrow><mn>0</mn><mo>&lt;</mo><msup><mi>R</mi><mn>2</mn></msup><mo>&lt;</mo><mn>1.0</mn></mrow></math></strong>：一般正常模型（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.85</mn></mrow></math> 表示模型解釋了數據中 85% 的波動）。</li>
+<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.0</mn></mrow></math></strong>：等同瞎猜。模型水平跟直接猜平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math> 完全一樣。</li>
+<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 &lt; 0.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>&lt;</mo><mn>0.0</mn></mrow></math> (負數！)</strong>：模型預測誤差比直接猜均值還要離譜，可能與模型、資料品質或分布改變有關，需進一步診斷。</li>
+</ul>
+<hr />
+<h2 id="section-4">📌 本章精華速記</h2>
+<ol>
+<li><strong>分類評估</strong>：<ul>
+<li>類別不平衡千萬別看 Accuracy。</li>
+<li>怕誤報（冤枉好人）看 <strong>Precision</strong>；怕漏報（漏網之魚）看 <strong>Recall</strong>。</li>
+<li>綜合平衡選 <strong>F1-Score</strong>；門檻無關排序能力選 <strong>ROC-AUC</strong>。</li>
+</ul>
+</li>
+<li><strong>回歸評估</strong>：<ul>
+<li>講求直觀抗噪選 <strong>MAE</strong>；懲罰大誤差且具備物理單位選 <strong>RMSE</strong>。</li>
+<li>跨專案橫向比較擬合能力選無量綱的 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 分數</strong>。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../08-ensemble-learning/">← 08 集成學習</a><a href="../">返回 12 章目錄</a><a href="../10-model-performance/">10 模型性能問題 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

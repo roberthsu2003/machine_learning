@@ -1,0 +1,13 @@
+import {demo,range,select,check} from '../../shared/scene.js';
+import * as M from '../../shared/math.js';import * as G from '../../shared/geometry.js';const C=G.colors;
+const houses=[[32.5,3,5,180,1850],[21,2,18,650,920],[45.2,4,2,80,2680]],names=['面積','房數','屋齡','捷運距離','成交價 y'];
+export const definitions=[
+demo('features','特徵與資料型態',[select('type','資料型態',[['continuous','連續數值'],['discrete','離散計數'],['ordinal','有序類別'],['nominal','無序類別'],['unstructured','非結構化']]),range('column','選取特徵欄位',1,4,1)],(c,s)=>{
+ G.heading(c,'把樣本卡片拆成輸入特徵');const p=s.progress;houses[0].slice(0,4).forEach((v,i)=>{const x=M.lerp(210+(i%2)*65,110+i*175,p),y=M.lerp(170+Math.floor(i/2)*65,210,p);G.rect(c,x-55,y-35,110,70,i===s.params.column-1?C.mint:C.white,i===s.params.column-1?C.green:C.line);G.text(c,names[i],x,y-12,14);G.text(c,v,x,y+15,19);});const info={continuous:'面積：32.5，可以是連續測量值。',discrete:'房間數：3，以整數計數。',ordinal:'學歷：高中 < 大學 < 碩士，具有次序。',nominal:'城市或顏色：沒有自然大小次序。',unstructured:'影像、文字、語音：需轉為模型可用的表示。'};G.text(c,info[s.params.type],380,330,18,C.green);return {message:`已選 ${names[s.params.column-1]}。${info[s.params.type]}`,metrics:{type:s.params.type,column:s.params.column}};
+}),
+demo('labels','標籤與任務',[select('task','標籤型態',[['regression','回歸：成交價'],['classification','分類：價格區間']]),check('answer','顯示標籤答案',true)],(c,s)=>{
+ G.heading(c,'X 是輸入，y 是要預測的答案');houses.forEach((h,i)=>{G.rect(c,55,95+i*88,410,62,C.white,C.line);G.text(c,`${h[0]} 坪 · ${h[1]} 房 · ${h[2]} 年 · ${h[3]} 公尺`,260,126+i*88,16);const value=s.params.answer?(s.params.task==='regression'?h[4]+' 萬元':h[4]>1500?'高價':'一般'):'?';G.cell(c,M.lerp(420,625,s.progress),126+i*88,value,i%2?'#f1e0ca':C.mint,140,50);});G.text(c,'特徵 X',260,390,20,C.green);G.text(c,'標籤 y',625,390,20,C.purple);return {message:s.params.task==='regression'?'成交價是連續數值標籤，單位為萬元。':'為演示分類，把成交價 > 1500 萬元定義為高價類，其餘為一般類。',metrics:{task:s.params.task,labels:houses.map(h=>s.params.task==='regression'?h[4]:h[4]>1500?1:0)}};
+}),
+demo('matrix','特徵矩陣 X 與標籤 y',[range('row','選取樣本列',1,3,1),range('col','選取特徵欄',1,4,1)],(c,s)=>{
+ G.heading(c,'3 筆樣本 × 4 個特徵 → X 的形狀 (3, 4)');houses.forEach((h,i)=>h.forEach((v,j)=>{const sx=90+j*115,sy=125+i*85,tx=j===4?655:125+j*105,ty=130+i*85;G.cell(c,M.lerp(sx,tx,s.progress),M.lerp(sy,ty,s.progress),v,j===4?'#eadff3':(i===s.params.row-1||j===s.params.col-1)?C.mint:C.white,88,52);}));names.forEach((name,i)=>G.text(c,name,i===4?655:125+i*105,83,13,i===4?C.purple:C.green));G.text(c,'X：每列是一個樣本，每欄是一個特徵',330,384,17,C.green);G.text(c,'y：(3,)',655,384,17,C.purple);return {message:`X[${s.params.row-1}, ${s.params.col-1}] = ${houses[s.params.row-1][s.params.col-1]}；同一列的 y = ${houses[s.params.row-1][4]}。`,metrics:{shape:[3,4],selected:houses[s.params.row-1][s.params.col-1],label:houses[s.params.row-1][4]}};
+})];

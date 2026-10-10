@@ -1,0 +1,195 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 07 章 常見算法：完整教材、原圖對照與互動 2D 幾何動畫。"><title>07 常見算法｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/07_%E5%B8%B8%E8%A6%8B%E7%AE%97%E6%B3%95/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 07 / 12 · INTERACTIVE LESSON</div><h1>常見算法</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#knn">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#knn">KNN</a><a href="#decision-tree">決策樹</a><a href="#svm">SVM</a><a href="#naive-bayes">樸素貝氏</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. K-近鄰 (K-NN, K-Nearest Neighbors)</a><a href="#section-3">2. 決策樹 (Decision Tree)</a><a href="#section-4">3. 支援向量機 (SVM, Support Vector Machine)</a><a href="#section-5">4. 樸素貝氏 (Naive Bayes)</a><a href="#section-6">5. 四大演算法特性速查矩陣</a><a href="#section-7">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在經典機器學習領域中，有四種極具代表性、哲學思想各異且歷久彌新的核心演算法：<strong>K-近鄰 (K-NN)</strong>、<strong>決策樹 (Decision Tree)</strong>、<strong>支援向量機 (SVM)</strong> 與 <strong>樸素貝氏 (Naive Bayes)</strong>。</p>
+<p>理解它們各自背後的數學哲學、空間劃分幾何直覺以及適用邊界，是構建演算法直覺與面試選型的必修課。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>掌握四大經典演算法（KNN、決策樹、SVM、樸素貝氏）的底層核心直覺。</li>
+<li>搞懂各演算法的關鍵超參數與防範過擬合策略。</li>
+<li>具備演算法選型直覺，能透過特性速查表針對特定任務挑選最適模型。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. K-近鄰 (K-NN, K-Nearest Neighbors)</h2>
+<h3>核心定義</h3>
+<p>K-NN 是一種基於「幾何距離度量」的非參數化算法。其核心哲學是**「物以類聚，人以群分」**——當需要預測一個未知新樣本的類別時，找出特徵空間中離它最近的 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="K"><mrow><mi>K</mi></mrow></math> 個鄰居，並以「少數服從多數」的投票表決（分類）或鄰居平均值（回歸）作為預測輸出。</p>
+<h3>💡 生活直觀比喻：問路過的街坊鄰居</h3>
+<blockquote>
+<p>你剛搬進一個新社區，想知道這棟房子的租金行情。<br />
+你不需要研究房地產大盤趨勢，只要<strong>敲開左鄰右舍最近的 5 戶人家大門（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k=5"><mrow><mi>k</mi><mo>=</mo><mn>5</mn></mrow></math>），問問他們每個月付多少租金，然後取個平均數</strong>即可！</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="knn" data-scene="knn" aria-labelledby="title-knn">
+<div class="scene-head"><h3 id="title-knn">KNN</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">拖曳待分類點，距離線依序連向最近 k 個點，鄰居投票後改變預測標記。</p>
+<canvas width="760" height="450" role="img" aria-label="KNN幾何動畫" aria-describedby="result-knn">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-knn" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="KNN播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="KNN動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：K-近鄰算法原理：少數服從多數的鄰居表決</summary><img src="./assets/images/01_knn.png" alt="K-近鄰算法原理：少數服從多數的鄰居表決" loading="lazy"><a href="./assets/images/01_knn.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>關鍵超參數與幾何特點</h3>
+<ul>
+<li><strong>懶惰學習 (Lazy Learning)</strong>：模型在訓練階段完全不做任何計算（只把數據存入記憶體），所有計算全推遲到「預測推論時」才計算距離。</li>
+<li><strong>超參數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 值的權衡</strong>：<ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 太小（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k=1"><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow></math>）：只要最近的鄰居剛好是異常雜訊點，預測立刻出錯，<strong>極易過擬合 (Overfitting)</strong>，決策邊界破碎支離。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 太大（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k=100"><mrow><mi>k</mi><mo>=</mo><mn>100</mn></mrow></math>）：納入了太多遠處無關的鄰居，決策邊界過於平滑，<strong>極易欠擬合 (Underfitting)</strong>，且受樣本類別不平衡嚴重干擾。</li>
+</ul>
+</li>
+<li><strong>🚨 關鍵預處理</strong>：<strong>必須做特徵縮放</strong>！否則尺度大的特徵將完全主宰幾何距離。</li>
+</ul>
+<hr />
+<h2 id="section-3">2. 決策樹 (Decision Tree)</h2>
+<h3>核心定義</h3>
+<p>決策樹是一種基於樹狀階層結構的預測模型。模型從根節點（Root）出發，透過對特徵進行一系列「若條件成立則走左分支，否則走右分支」的二元規則判斷，逐步將樣本劃分至純度更高的子集，最終在葉節點（Leaf）輸出結果。</p>
+<h3>💡 生活直觀比喻：二十個問題 (20 Questions) 與流程圖</h3>
+<blockquote>
+<p>就像玩「二十個問題」猜謎遊戲：<br />
+「它是活的嗎？➔ 是」➔「它是哺乳動物嗎？➔ 是」➔「它會汪汪叫嗎？➔ 是」➔ 結論：「它是狗！」<br />
+這種層層遞進的 if-else 邏輯樹，就是決策樹的本質。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="decision-tree" data-scene="decision-tree" aria-labelledby="title-decision-tree">
+<div class="scene-head"><h3 id="title-decision-tree">決策樹</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">座標平面逐次出現水平／垂直切割線，同步亮起樹狀圖的判斷路徑。</p>
+<canvas width="760" height="450" role="img" aria-label="決策樹幾何動畫" aria-describedby="result-decision-tree">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-decision-tree" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="決策樹播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="決策樹動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：決策樹原理：階層式條件規則與空間軸向劃分</summary><img src="./assets/images/02_decision_tree.png" alt="決策樹原理：階層式條件規則與空間軸向劃分" loading="lazy"><a href="./assets/images/02_decision_tree.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>幾何視角與核心特點</h3>
+<ul>
+<li><strong>正交超平面切割</strong>：在幾何特徵空間中，決策樹的每一次條件分支，都相當於<strong>畫出一條平行於座標軸的正交切線</strong>，將空間切割為許多長方形區塊。</li>
+<li><strong>白盒模型 (White-box Model)</strong>：可解釋性極高，規則可直接轉譯為業務業務邏輯（如銀行核貸審核流程）。</li>
+<li><strong>完全免疫特徵縮放</strong>：只在乎特徵數值的相對大小排列，不需要做標準化或歸一化。</li>
+<li><strong>防過擬合關鍵超參數</strong>：<ul>
+<li><code>max_depth</code>：限制樹的最大深度，防止樹無止境生長直到記住所有訓練點。</li>
+<li><code>min_samples_split</code> / <code>min_samples_leaf</code>：限制分裂與葉節點所需的最低樣本數。</li>
+</ul>
+</li>
+</ul>
+<hr />
+<h2 id="section-4">3. 支援向量機 (SVM, Support Vector Machine)</h2>
+<h3>核心定義</h3>
+<p>SVM 是一種追求**「最大化間隔（Maximum Margin）」<strong>的經典演算法。它的目標是在特徵空間中尋找一個最佳的決策超平面（Hyperplane），使得兩類樣本距離該超平面最近的點（即</strong>支援向量**）之間的幾何安全邊界距離達到最大。</p>
+<h3>💡 生活直觀比喻：鋪設最寬的安全中央分隔島</h3>
+<blockquote>
+<p>在分隔兩向車道的道路時，你希望在兩側車流之間<strong>留出最寬的安全隔離帶</strong>。<br />
+兩側最靠近邊緣的那幾輛車（支援向量），直接決定了分隔島能建得多寬。遠處停在停車場的車輛怎麼移動，都不會影響這條隔離帶的位置！</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="svm" data-scene="svm" aria-labelledby="title-svm">
+<div class="scene-head"><h3 id="title-svm">SVM</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">分界線與兩側間隔帶移動，支援向量以外框圈起；非線性資料切換核方法示意。</p>
+<canvas width="760" height="450" role="img" aria-label="SVM幾何動畫" aria-describedby="result-svm">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-svm" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="SVM播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="SVM動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：支援向量機原理：最大間隔超平面與核技巧</summary><img src="./assets/images/03_svm.png" alt="支援向量機原理：最大間隔超平面與核技巧" loading="lazy"><a href="./assets/images/03_svm.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>核心法寶與關鍵超參數</h3>
+<ul>
+<li><strong>支援向量 (Support Vectors)</strong>：只有緊貼安全間隔邊緣的少數幾個關鍵樣本點決定了超平面的位置，這賦予了 SVM 極高的數學穩定性（Robust）。</li>
+<li><strong>核技巧 (Kernel Trick)</strong>：當低維數據線性不可分（如環狀分佈）時，透過核函數（如高斯核 RBF、多項式核 Poly）<strong>隱式將數據投影至高維特徵空間</strong>，在高維空間中輕鬆一刀切開！</li>
+<li><strong>超參數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> (容錯懲罰項)</strong>：<ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> 很大：嚴格容錯（Hard Margin），不准任何樣本越界，邊界極窄，易過擬合。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> 很小：寬鬆容錯（Soft Margin），允許部分樣本稍微越過間隔，邊界較寬，泛化能力較強。</li>
+</ul>
+</li>
+<li><strong>🚨 關鍵預處理</strong>：<strong>必須做特徵縮放</strong>！</li>
+</ul>
+<hr />
+<h2 id="section-5">4. 樸素貝氏 (Naive Bayes)</h2>
+<h3>核心定義</h3>
+<p>樸素貝氏是一種基於貝氏定理（Bayes' Theorem）與**「特徵條件獨立性大膽假設」**的機率生成分類演算法。它計算未知樣本屬於各類別的後驗機率 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="P(C \mid X)"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>X</mi><mo>)</mo></mrow></math>，並推選機率最高者作為最終預測。</p>
+<h3>核心公式</h3>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="P(C \mid X) = \frac{P(C) \cdot P(X \mid C)}{P(X)}"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>X</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>)</mo><mo>·</mo><mi>P</mi><mo>(</mo><mi>X</mi><mo>|</mo><mi>C</mi><mo>)</mo></mrow><mrow><mi>P</mi><mo>(</mo><mi>X</mi><mo>)</mo></mrow></mfrac></mrow></math></div><h3>為什麼叫做「樸素 (Naive)」？</h3>
+<p>它大膽做了一個在現實中幾乎不成立的假設：<strong>在給定類別的條件下，所有特徵之間彼此互相獨立、互不影響</strong>。<br />
+（例如：預測一封信是否為垃圾郵件時，假設「免費」和「中獎」這兩個單詞出現的機率完全無關）。雖然這個假設看似天真幼稚，但在實務上（特別是文本與高維特徵）運算極度簡化，且分類效果出奇優異！</p>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="naive-bayes" data-scene="naive-bayes" aria-labelledby="title-naive-bayes">
+<div class="scene-head"><h3 id="title-naive-bayes">樸素貝氏</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">代表詞彙的方塊流入兩個類別容器，依條件機率更新相對分數。</p>
+<canvas width="760" height="450" role="img" aria-label="樸素貝氏幾何動畫" aria-describedby="result-naive-bayes">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-naive-bayes" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="樸素貝氏播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="樸素貝氏動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：樸素貝氏分類原理：機率推斷與三大常見模型</summary><img src="./assets/images/04_naive_bayes.png" alt="樸素貝氏分類原理：機率推斷與三大常見模型" loading="lazy"><a href="./assets/images/04_naive_bayes.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>三大常見模型類型</h3>
+<ol>
+<li><strong>高斯樸素貝氏 (GaussianNB)</strong>：特徵為連續數值（如身高、血壓、體溫），假設服從常態高斯分佈。</li>
+<li><strong>多項式樸素貝氏 (MultinomialNB)</strong>：特徵為離散計數值（如單詞在文章中出現的次數），文本分類與垃圾郵件過濾首選。</li>
+<li><strong>伯努利樸素貝氏 (BernoulliNB)</strong>：特徵為二元布林值（0 或 1，僅關心單詞「有出現」或「沒出現」）。</li>
+</ol>
+<hr />
+<h2 id="section-6">5. 四大演算法特性速查矩陣</h2>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">演算法</th>
+  <th style="text-align:center">模型類型</th>
+  <th style="text-align:center">可解釋性</th>
+  <th style="text-align:center">訓練速度</th>
+  <th style="text-align:center">推論速度</th>
+  <th style="text-align:center">必須特徵縮放？</th>
+  <th style="text-align:center">抵抗過擬合能力</th>
+  <th style="text-align:left">經典擅長場景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>K-NN</strong></td>
+  <td style="text-align:center">距離幾何 / 懶惰學習</td>
+  <td style="text-align:center">中</td>
+  <td style="text-align:center"><strong>極快</strong>（無訓練）</td>
+  <td style="text-align:center"><strong>極慢</strong>（逐筆算距離）</td>
+  <td style="text-align:center"><strong>是 ⚠️</strong></td>
+  <td style="text-align:center">差（依賴 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 調優）</td>
+  <td style="text-align:left">小樣本、多分類、推薦系統</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>決策樹</strong></td>
+  <td style="text-align:center">規則樹狀 / 白盒模型</td>
+  <td style="text-align:center"><strong>極高</strong></td>
+  <td style="text-align:center">快</td>
+  <td style="text-align:center">極快</td>
+  <td style="text-align:center"><strong>否 🛡️</strong></td>
+  <td style="text-align:center">差（極易無節制生長）</td>
+  <td style="text-align:left">業務決策、風控審核、特徵探索</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>SVM</strong></td>
+  <td style="text-align:center">最大間隔 / 黑盒模型</td>
+  <td style="text-align:center">低</td>
+  <td style="text-align:center">慢（高維大樣本耗時）</td>
+  <td style="text-align:center">快</td>
+  <td style="text-align:center"><strong>是 ⚠️</strong></td>
+  <td style="text-align:center"><strong>強</strong>（依賴核函數與 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math>）</td>
+  <td style="text-align:left">高維數據、文本分類、小樣本精準預測</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>樸素貝氏</strong></td>
+  <td style="text-align:center">機率生成 / 統計模型</td>
+  <td style="text-align:center">高</td>
+  <td style="text-align:center"><strong>極快</strong></td>
+  <td style="text-align:center"><strong>極快</strong></td>
+  <td style="text-align:center"><strong>否 🛡️</strong></td>
+  <td style="text-align:center">良好</td>
+  <td style="text-align:left">垃圾郵件過濾、情感分析、新聞分類</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-7">📌 本章精華速記</h2>
+<ol>
+<li><strong>K-NN</strong>：物以類聚少數服從多數，推論慢、依賴距離縮放。</li>
+<li><strong>決策樹</strong>：階層規則軸向切割，可解釋性滿分，無需縮放但須限制樹深防過擬合。</li>
+<li><strong>SVM</strong>：追求最大幾何安全隔離帶，核技巧解決非線性，對高維數據極度強悍。</li>
+<li><strong>樸素貝氏</strong>：條件獨立性假設簡化聯合機率，計算飛快，文字分類的性價比之王。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/07_%E5%B8%B8%E8%A6%8B%E7%AE%97%E6%B3%95/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../06-optimization/">← 06 優化算法</a><a href="../">返回 12 章目錄</a><a href="../08-ensemble-learning/">08 集成學習 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

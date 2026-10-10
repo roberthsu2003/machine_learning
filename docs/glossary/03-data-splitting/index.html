@@ -1,0 +1,170 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 03 章 數據分割：完整教材、原圖對照與互動 2D 幾何動畫。"><title>03 數據分割｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/03_%E6%95%B8%E6%93%9A%E5%88%86%E5%89%B2/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 03 / 12 · INTERACTIVE LESSON</div><h1>數據分割</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#train-test">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#train-test">訓練／測試分割</a><a href="#train-validation-test">三份資料的角色</a><a href="#split-strategies">隨機、分層與時間切分</a><a href="#leakage">資料洩漏與診斷</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 核心數據集劃分體系</a><a href="#section-3">2. 數據分割的核心實務原則</a><a href="#section-4">3. 工作流程與常見表現診斷</a><a href="#section-5">4. 實戰致命禁忌：數據洩漏 (Data Leakage)</a><a href="#section-6">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在機器學習專案中，<strong>「用訓練過的數據來評估模型好壞」是最大的禁忌</strong>。<br />
+就像讓學生在考試前提前背熟了期末考卷的題目與答案一樣，即使考出滿分 100 分，也完全無法證明學生真正理解了知識，更無法預測他面對新題目時的能力。</p>
+<p>因此，在模型接觸任何數據之前，我們必須將原始數據集科學地劃分為互不重疊的多個子集。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>深入理解<strong>訓練集 (Train)</strong>、<strong>驗證集 (Validation)</strong> 與 <strong>測試集 (Test)</strong> 的職責劃分與核心機制。</li>
+<li>搞懂「為什麼需要驗證集」以及「為什麼測試集只能看一次」。</li>
+<li>掌握<strong>隨機劃分</strong>、<strong>分層抽樣 (Stratified)</strong> 與 <strong>時間序列切分</strong> 的適用情境與防坑守則。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 核心數據集劃分體系</h2>
+<h3>💡 生活直觀比喻：求學考試三部曲</h3>
+<div class="flow-summary"><strong>流程與概念摘要</strong><ul><li>原始數據集 100%</li><li>訓練集 60%~70% ／ 平時課堂作業與練習題</li><li>驗證集 15%~20% ／ 考前模擬考：調整讀書策略</li><li>測試集 15%~20% ／ 升學期末大考：最終實力檢驗</li></ul></div><h4>📊 觀念圖解</h4>
+<section class="scene" id="train-test" data-scene="train-test" aria-labelledby="title-train-test">
+<div class="scene-head"><h3 id="title-train-test">訓練／測試分割</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">帶 ID 的樣本方塊打散，再移入互不重疊的訓練與測試容器。</p>
+<canvas width="760" height="450" role="img" aria-label="訓練／測試分割幾何動畫" aria-describedby="result-train-test">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-train-test" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="訓練／測試分割播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="訓練／測試分割動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：訓練集與測試集圖解</summary><img src="./assets/images/01_train_test_split.png" alt="訓練集與測試集圖解" loading="lazy"><a href="./assets/images/01_train_test_split.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h3>三大子集的詳細職責定義</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">數據集種類</th>
+  <th style="text-align:left">英文稱呼</th>
+  <th style="text-align:center">典型比例</th>
+  <th style="text-align:center">誰在使用？</th>
+  <th style="text-align:left">具體任務與角色</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>訓練集</strong></td>
+  <td style="text-align:left"><strong>Training Set</strong></td>
+  <td style="text-align:center">60% ~ 80%</td>
+  <td style="text-align:center"><strong>模型算法</strong></td>
+  <td style="text-align:left">用於擬合模型，透過優化算法不斷調整內部<strong>模型參數</strong>（如神經網路權重 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="W"><mrow><mi>W</mi></mrow></math>、偏置 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="b"><mrow><mi>b</mi></mrow></math>）。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>驗證集</strong></td>
+  <td style="text-align:left"><strong>Validation Set</strong></td>
+  <td style="text-align:center">10% ~ 20%</td>
+  <td style="text-align:center"><strong>工程師</strong></td>
+  <td style="text-align:left">用於<strong>調整模型超參數</strong>（如決策樹深度、學習率、正則化強度），並在訓練過程中監控是否發生過擬合，決定何時提早停止訓練（Early Stopping）。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>測試集</strong></td>
+  <td style="text-align:left"><strong>Test Set</strong></td>
+  <td style="text-align:center">10% ~ 20%</td>
+  <td style="text-align:center"><strong>業務與專案負責人</strong></td>
+  <td style="text-align:left">在模型完全定型後，做為<strong>終極泛化能力的客觀考卷</strong>。此數據集在訓練與調優過程中必須被「封裝鎖死」，絕對不能參與任何學習或調參！</td>
+</tr>
+</tbody>
+</table></div>
+<h4>📊 訓練集、驗證集與測試集三階段劃分圖解</h4>
+<section class="scene" id="train-validation-test" data-scene="train-validation-test" aria-labelledby="title-train-validation-test">
+<div class="scene-head"><h3 id="title-train-validation-test">三份資料的角色</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">資料移入 Train／Validation／Test；只有 Train 流入模型，Validation 流向調參旋鈕，Test 保持封存。</p>
+<canvas width="760" height="450" role="img" aria-label="三份資料的角色幾何動畫" aria-describedby="result-train-validation-test">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-train-validation-test" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="三份資料的角色播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="三份資料的角色動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><section class="scene" id="split-strategies" data-scene="split-strategies" aria-labelledby="title-split-strategies">
+<div class="scene-head"><h3 id="title-split-strategies">隨機、分層與時間切分</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">切換抽樣方式後，兩類樣本在各容器的比例改變；時間模式按先後排列方塊。</p>
+<canvas width="760" height="450" role="img" aria-label="隨機、分層與時間切分幾何動畫" aria-describedby="result-split-strategies">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-split-strategies" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="隨機、分層與時間切分播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="隨機、分層與時間切分動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：三階段劃分圖解</summary><img src="./assets/images/02_three_way_split_validation.png" alt="三階段劃分圖解" loading="lazy"><a href="./assets/images/02_three_way_split_validation.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<hr />
+<h2 id="section-3">2. 數據分割的核心實務原則</h2>
+<h3>1. 隨機劃分 (Random Split)</h3>
+<ul>
+<li><strong>原理</strong>：將所有數據隨機打亂（Shuffle）後，依指定比例（如 80:20）切分。</li>
+<li><strong>適用場景</strong>：樣本量充足、各類別分佈均勻、且各樣本點彼此獨立的標準數據集。</li>
+</ul>
+<h3>2. 分層抽樣劃分 (Stratified Split)</h3>
+<ul>
+<li><strong>原理</strong>：切分時保持各個子集中的<strong>目標類別比例盡量接近原始數據集（受整數樣本數限制）</strong>。</li>
+<li><strong>適用場景</strong>：**類別高度不平衡（Imbalanced Data）**的分類任務。</li>
+<li><strong>實例</strong>：若罕見疾病在母體中僅佔 2%，分層切分能保證訓練集、驗證集與測試集中，罕見疾病樣本盡量維持約 2%（受樣本數限制），避免測試集完全沒分到罕見病人的極端偏差。</li>
+</ul>
+<h3>3. 時間序列切分 (Time-Series Split / Walk-Forward)</h3>
+<ul>
+<li><strong>原理</strong>：<strong>嚴格禁止隨機打亂</strong>！必須按照時間先後順序切分，以過去的歷史數據為訓練集，未來的數據為測試集。</li>
+<li><strong>適用場景</strong>：股票價格、氣象預測、銷售額預測等具有時序相依性的數據。</li>
+<li><strong>核心守則</strong>：嚴禁「拿明天的數據去訓練模型預測昨天的走勢」（防止時間穿越）。</li>
+</ul>
+<hr />
+<h2 id="section-4">3. 工作流程與常見表現診斷</h2>
+<p>在切分數據後，模型在訓練集與測試集上的誤差表現，直接揭示了模型的健康狀態：</p>
+<h4>📊 數據分割實戰流程與表現診斷分析矩陣</h4>
+<section class="scene" id="leakage" data-scene="leakage" aria-labelledby="title-leakage">
+<div class="scene-head"><h3 id="title-leakage">資料洩漏與診斷</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">對照「全資料 fit」與「只用 Train fit」；測試資訊以橘色路徑表示是否流入預處理。</p>
+<canvas width="760" height="450" role="img" aria-label="資料洩漏與診斷幾何動畫" aria-describedby="result-leakage">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-leakage" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="資料洩漏與診斷播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="資料洩漏與診斷動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：數據分割實戰流程與誤差分析矩陣</summary><img src="./assets/images/03_split_workflow_and_overfitting.png" alt="數據分割實戰流程與誤差分析矩陣" loading="lazy"><a href="./assets/images/03_split_workflow_and_overfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>模型診斷速查指南</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:center">訓練集表現 (Train)</th>
+  <th style="text-align:center">測試集表現 (Test)</th>
+  <th style="text-align:center">模型當前狀態</th>
+  <th style="text-align:left">核心本質</th>
+  <th style="text-align:left">處方對策</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:center"><strong>差</strong>（高誤差）</td>
+  <td style="text-align:center"><strong>差</strong>（高誤差）</td>
+  <td style="text-align:center"><strong>欠擬合 (Underfitting)</strong></td>
+  <td style="text-align:left">模型太笨，沒學會規律（高偏差）</td>
+  <td style="text-align:left">增加模型複雜度、補充關鍵特徵、減少正則化約束</td>
+</tr>
+<tr>
+  <td style="text-align:center"><strong>極佳</strong>（零誤差）</td>
+  <td style="text-align:center"><strong>差</strong>（高誤差）</td>
+  <td style="text-align:center"><strong>過度擬合 (Overfitting)</strong></td>
+  <td style="text-align:left">模型死記硬背雜訊（高變異數）</td>
+  <td style="text-align:left">增加訓練數據量、加入正則化、提早停止訓練、簡化模型</td>
+</tr>
+<tr>
+  <td style="text-align:center"><strong>良好</strong>（低誤差）</td>
+  <td style="text-align:center"><strong>良好</strong>（低誤差）</td>
+  <td style="text-align:center"><strong>理想泛化 (Good Generalization)</strong></td>
+  <td style="text-align:left">成功學會通用規律</td>
+  <td style="text-align:left">可以準備模型封裝與上線部署</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-5">4. 實戰致命禁忌：數據洩漏 (Data Leakage)</h2>
+<blockquote>
+<blockquote>
+<p><strong>絕對禁止的致命錯誤：先做特徵縮放，才做數據分割！</strong></p>
+</blockquote>
+<p><strong>錯誤作法 ❌</strong>：<br />
+<code>原始數據集 100 筆</code> ➔ 直接計算整個數據集的「平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\mu"><mrow><mi>μ</mi></mrow></math>」與「標準差 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sigma"><mrow><mi>σ</mi></mrow></math>」並進行標準化 ➔ 再切分為訓練集與測試集。<br />
+<em>(後果：測試集的統計分佈資訊已經提前洩漏進訓練過程，導致測試評估虛高！)</em></p>
+<p><strong>正確標準作法 ✅</strong>：<br />
+先將數據乾淨切分為 <code>Train</code> 與 <code>Test</code> ➔ <strong>僅使用 <code>Train</code> 計算平均值與標準差</strong> ➔ 用訓練集的參數去轉換 <code>Train</code>，並用相同的參數去轉換 <code>Test</code>！</p>
+</blockquote>
+<hr />
+<h2 id="section-6">📌 本章精華速記</h2>
+<ol>
+<li><strong>數據分割</strong>是客觀評估模型真實實力、預防「死記硬背作弊」的基礎防火牆。</li>
+<li><strong>訓練集</strong>負責學參數，<strong>驗證集</strong>負責調超參，<strong>測試集</strong>留作最後大考且只能測一次。</li>
+<li>類別不平衡務必採用<strong>分層抽樣 (Stratified)</strong>；時序數據切忌隨機打亂，必須遵循<strong>時間因果順序</strong>。</li>
+<li>所有特徵工程與預處理計算，<strong>嚴格限於訓練集完成後再應用於測試集</strong>，嚴防數據洩漏。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/03_%E6%95%B8%E6%93%9A%E5%88%86%E5%89%B2/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../02-data-structures/">← 02 數據結構</a><a href="../">返回 12 章目錄</a><a href="../04-feature-engineering/">04 特徵工程 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>

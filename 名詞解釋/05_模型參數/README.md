@@ -1,5 +1,13 @@
 # 5. 模型參數 (Model Parameters & Hyperparameters)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/)**
+
+動畫場景：[模型參數](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#parameters) · [超參數](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#hyperparameters) · [比較與搜尋](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#parameter-search)
+
+<!-- interactive-glossary:end -->
+
 在機器學習中，常常聽到工程師在討論「調參」、「模型權重」或「學習率」。許多初學者常將**參數 (Parameters)** 與 **超參數 (Hyperparameters)** 混為一談。
 
 事實上，這兩者在機制的控制主體、決定時機以及調校方式上有著根本性的天壤之別。

@@ -1,5 +1,13 @@
 # 1. 學習範式 (Learning Paradigms)
 
+<!-- interactive-glossary:start -->
+
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/)**
+
+動畫場景：[監督式：分類與回歸](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#supervised) · [非監督式：聚類與降維](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#unsupervised) · [範式比較](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#paradigm-comparison)
+
+<!-- interactive-glossary:end -->
+
 機器學習（Machine Learning, ML）本質上是**讓電腦從數據中自動尋找規律，而非依賴人工程式碼一條條寫死規則**的科學。
 
 依據「是否有標準答案提供給模型學習」以及「回饋機制的不同」，機器學習主要分為兩大主流範式：**監督式學習**與**非監督式學習**；在進階實務中，亦常結合**半監督式學習**與**強化學習**。

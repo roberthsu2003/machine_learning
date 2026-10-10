@@ -1,0 +1,178 @@
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 05 章 模型參數：完整教材、原圖對照與互動 2D 幾何動畫。"><title>05 模型參數｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/05_%E6%A8%A1%E5%9E%8B%E5%8F%83%E6%95%B8/README.md">GitHub 原文 ↗</a></nav></header>
+<main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 05 / 12 · INTERACTIVE LESSON</div><h1>模型參數</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#parameters">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
+<noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#parameters">模型參數</a><a href="#hyperparameters">超參數</a><a href="#parameter-search">比較與搜尋</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. 模型參數 (Model Parameters)</a><a href="#section-3">2. 超參數 (Hyperparameters)</a><a href="#section-4">3. 參數 vs 超參數 終極對照</a><a href="#section-5">4. 如何尋找最佳超參數？(Hyperparameter Tuning)</a><a href="#section-6">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在機器學習中，常常聽到工程師在討論「調參」、「模型權重」或「學習率」。許多初學者常將<strong>參數 (Parameters)</strong> 與 <strong>超參數 (Hyperparameters)</strong> 混為一談。</p>
+<p>事實上，這兩者在機制的控制主體、決定時機以及調校方式上有著根本性的天壤之別。</p>
+<hr />
+<h2 id="section-1">🎯 本章學習目標</h2>
+<ol>
+<li>深刻理解<strong>模型參數 (Parameters)</strong> 的內在特性與自主學習本質。</li>
+<li>掌握<strong>超參數 (Hyperparameters)</strong> 作為外部控制旋鈕的功能與常見種類。</li>
+<li>熟悉實務上調校超參數的經典搜尋策略（網格搜尋、隨機搜尋等）。</li>
+</ol>
+<hr />
+<h2 id="section-2">1. 模型參數 (Model Parameters)</h2>
+<h3>核心定義</h3>
+<p>模型參數是指<strong>模型在訓練過程中，根據訓練數據透過演算法自動學習與更新的內部變數</strong>。工程師無法、也不應該手動去硬編碼這些參數的數值；它們是模型擬合數據經驗的直接載體。</p>
+<p>模型訓練完成後，我們所保存下來的「模型檔（如 <code>.pkl</code>, <code>.pt</code>, <code>.onnx</code>）」，本質上就是這些海量參數數值的陣列集合！</p>
+<h3>💡 生活直觀比喻：學生大腦的神經突觸強度</h3>
+<blockquote>
+<p>學生在日復一日解題時，大腦神經元之間會自發建立連結與信號傳遞強度。<br />
+這些<strong>大腦內部自發形成的微觀突觸變化</strong>，完全由大腦自動完成，這就是<strong>模型參數</strong>。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="parameters" data-scene="parameters" aria-labelledby="title-parameters">
+<div class="scene-head"><h3 id="title-parameters">模型參數</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">直線隨 w 旋轉、隨 b 上下平移；神經網路連線粗細隨權重改變。</p>
+<canvas width="760" height="450" role="img" aria-label="模型參數幾何動畫" aria-describedby="result-parameters">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-parameters" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="模型參數播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="模型參數動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：模型參數圖解</summary><img src="./assets/images/01_model_parameters.png" alt="模型參數圖解" loading="lazy"><a href="./assets/images/01_model_parameters.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>經典算法中的具體參數</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">演算法模型</th>
+  <th style="text-align:left">具體參數名稱</th>
+  <th style="text-align:center">數學符號</th>
+  <th style="text-align:left">物理意義</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>線性回歸 / 邏輯回歸</strong></td>
+  <td style="text-align:left">權重 (Weights) 與 截距偏置 (Bias)</td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="w, b"><mrow><mi>w</mi><mo>,</mo><mi>b</mi></mrow></math></td>
+  <td style="text-align:left">決定回歸直線或分類超平面的斜率與上下平移位置</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>支援向量機 (SVM)</strong></td>
+  <td style="text-align:left">支援向量的權重與偏置</td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\alpha_i, b"><mrow><msub><mi>α</mi><mi>i</mi></msub><mo>,</mo><mi>b</mi></mrow></math></td>
+  <td style="text-align:left">決定最大間隔決策邊界</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>神經網路 / 深度學習</strong></td>
+  <td style="text-align:left">權重矩陣與偏置向量</td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="W^{[l]}, b^{[l]}"><mrow><msup><mi>W</mi><mrow><mo>[</mo><mi>l</mi><mo>]</mo></mrow></msup><mo>,</mo><msup><mi>b</mi><mrow><mo>[</mo><mi>l</mi><mo>]</mo></mrow></msup></mrow></math></td>
+  <td style="text-align:left">數百萬至數千億個浮點數，決定神經信號前向傳播的放大與抑制</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-3">2. 超參數 (Hyperparameters)</h2>
+<h3>核心定義</h3>
+<p>超參數是指<strong>在模型開始訓練之前，必須由工程師手動指定或演算法外圍設定的控制參數</strong>。模型在訓練過程中<strong>無法自動學習這些超參數</strong>，它們決定了模型的結構容量、訓練節奏與約束邊界。</p>
+<p>「調參俠（Tuning）」在日常工作中所微調的，99% 指的都是超參數！</p>
+<h3>💡 生活直觀比喻：老師安排的課表與複習計畫</h3>
+<blockquote>
+<p>學生自己不能決定今天上幾小時課。<br />
+是<strong>老師與家長手動設定</strong>了「每週刷幾回題本、每天自習 2 小時、設定鬧鐘間隔」——<br />
+這些外部設定決定了學習的環境與節奏，這就是<strong>超參數</strong>。</p>
+</blockquote>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="hyperparameters" data-scene="hyperparameters" aria-labelledby="title-hyperparameters">
+<div class="scene-head"><h3 id="title-hyperparameters">超參數</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">學習率控制步長、樹深度控制分支數；設定旋鈕與學出的權重以位置和形狀區別。</p>
+<canvas width="760" height="450" role="img" aria-label="超參數幾何動畫" aria-describedby="result-hyperparameters">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-hyperparameters" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="超參數播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="超參數動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：超參數圖解</summary><img src="./assets/images/02_hyperparameters.png" alt="超參數圖解" loading="lazy"><a href="./assets/images/02_hyperparameters.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>實務常見的核心超參數清單</h3>
+<div class="flow-summary"><strong>流程與概念摘要</strong><ul><li>常見模型超參數</li><li>模型架構結構類</li><li>優化與學習節奏類</li><li>正則化防過擬合類</li><li>決策樹最大深度 max_depth</li><li>K-NN 鄰居數 k</li><li>神經網絡層數與神經元數量</li><li>學習率 Learning Rate (α)</li><li>批次大小 Batch Size</li><li>訓練輪數 Epochs</li><li>L2 正則係數 (λ / weight_decay)</li><li>Dropout 機率</li></ul></div><hr />
+<h2 id="section-4">3. 參數 vs 超參數 終極對照</h2>
+<h4>📊 觀念圖解</h4>
+<section class="scene" id="parameter-search" data-scene="parameter-search" aria-labelledby="title-parameter-search">
+<div class="scene-head"><h3 id="title-parameter-search">比較與搜尋</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<p class="scene-description">參數在訓練中變動；超參數網格依序亮起，每次試驗的驗證分數顯示在點上。</p>
+<canvas width="760" height="450" role="img" aria-label="比較與搜尋幾何動畫" aria-describedby="result-parameter-search">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-parameter-search" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
+<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="比較與搜尋播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="比較與搜尋動畫時間軸"><span class="time-label">0%</span></div>
+<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+</section><details class="original"><summary>對照原教材圖解：參數與超參數對照圖解</summary><img src="./assets/images/03_parameters_vs_hyperparameters.png" alt="參數與超參數對照圖解" loading="lazy"><a href="./assets/images/03_parameters_vs_hyperparameters.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<h3>核心對照表</h3>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">比較維度</th>
+  <th style="text-align:left">模型參數 (Parameters)</th>
+  <th style="text-align:left">超參數 (Hyperparameters)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>誰來決定數值？</strong></td>
+  <td style="text-align:left"><strong>模型演算法</strong>（透過數據自動優化）</td>
+  <td style="text-align:left"><strong>機器學習工程師</strong>（人工經驗或搜尋腳本）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>決定的時機點</strong></td>
+  <td style="text-align:left"><strong>訓練期間 (During Training)</strong> 動態迭代更新</td>
+  <td style="text-align:left"><strong>訓練開始前 (Before Training)</strong> 必須預先確定</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>可否由數據直接學出？</strong></td>
+  <td style="text-align:left"><strong>可以</strong>（最小化 Loss Function）</td>
+  <td style="text-align:left"><strong>不行</strong>（無法透過單純的訓練集求導得出）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>儲存位置</strong></td>
+  <td style="text-align:left">固化於模型檔案（構成模型結構權重）</td>
+  <td style="text-align:left">寫在配置檔、程式碼建構子引數中</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>主要功能</strong></td>
+  <td style="text-align:left">描述數據規律，完成從輸入到輸出的映射</td>
+  <td style="text-align:left">控制模型複雜度，引導訓練收斂，防範過擬合</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-5">4. 如何尋找最佳超參數？(Hyperparameter Tuning)</h2>
+<p>由於超參數無法靠梯度下降自動求出，實務上我們依賴<strong>驗證集 (Validation Set)</strong> 評估不同超參數組合的效果：</p>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">調優策略</th>
+  <th style="text-align:left">運作機制</th>
+  <th style="text-align:left">💡 直觀比喻</th>
+  <th style="text-align:left">優缺點評價</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>網格搜尋 (Grid Search)</strong></td>
+  <td style="text-align:left">窮舉排列組合。例如學習率試 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="[0.1, 0.01]"><mrow><mo>[</mo><mn>0.1</mn><mo>,</mo><mn>0.01</mn><mo>]</mo></mrow></math>、樹深度試 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="[3, 5, 7]"><mrow><mo>[</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>7</mn><mo>]</mo></mrow></math>，逐一暴力嘗試全部 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="2 \times 3 = 6"><mrow><mn>2</mn><mo>×</mo><mn>3</mn><mo>=</mo><mn>6</mn></mrow></math> 種組合。</td>
+  <td style="text-align:left">網格地毯式地表搜索</td>
+  <td style="text-align:left"><strong>優點</strong>：不遺漏設定範圍內的任何點。<br><strong>缺點</strong>：維度稍多時計算量指數級爆炸。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>隨機搜尋 (Random Search)</strong></td>
+  <td style="text-align:left">在指定的超參數分佈區間內隨機抽樣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="N"><mrow><mi>N</mi></mrow></math> 組進行評估。</td>
+  <td style="text-align:left">隨機投擲飛鏢抽查</td>
+  <td style="text-align:left"><strong>優點</strong>：通常比網格搜尋更有效率，能在有限運算預算內探索更廣的連續空間。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>貝氏優化 (Bayesian Optimization)</strong></td>
+  <td style="text-align:left">根據前幾次嘗試的成敗結果，建立代理機率模型（如 Optuna），智慧推測下一個最可能帶來突破的參數點。</td>
+  <td style="text-align:left">經驗豐富的老獵人循跡追蹤</td>
+  <td style="text-align:left"><strong>優點</strong>：當前工業界最推崇的高效調參方案，極大節省運算成本。</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+<h2 id="section-6">📌 本章精華速記</h2>
+<ol>
+<li><strong>參數是「學」出來的</strong>：由數據透過損失函數驅動自動調整（如權重 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="W"><mrow><mi>W</mi></mrow></math>、偏置 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="b"><mrow><mi>b</mi></mrow></math>）。</li>
+<li><strong>超參數是「定」出來的</strong>：由工程師在訓練前預先設定的外部旋鈕（如學習率、樹深度、Batch Size）。</li>
+<li>調校超參數的唯一客觀法庭是<strong>驗證集 (Validation)</strong>，切忌使用測試集調參。</li>
+<li>在實務調參時，推薦優先使用<strong>隨機搜尋 (Random Search)</strong> 或 <strong>貝氏優化 (Optuna)</strong> 取代笨重的網格窮舉。</li>
+</ol>
+<hr />
+<p class="source-note">教材來源：<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/05_%E6%A8%A1%E5%9E%8B%E5%8F%83%E6%95%B8/README.md">原章節 README</a>。動畫示例的假設與計算方式，標示於各場景下方。</p><nav class="chapter-nav" aria-label="章節導覽"><a href="../04-feature-engineering/">← 04 特徵工程</a><a href="../">返回 12 章目錄</a><a href="../06-optimization/">06 優化算法 →</a></nav></article></div></main><footer>徐國堂 Python 實作應用班 · 機器學習互動教材 · Light Mode</footer></body></html>
