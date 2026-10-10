@@ -8,8 +8,9 @@
 ## 🗺️ 學習路線圖與四大知識模組
 
 ```mermaid
-flowchart TD
+flowchart LR
     subgraph G1 ["模組一：數據與特徵基石"]
+        direction TB
         M1["01 機器學習的類型<br>(監督 vs 非監督)"]
         M2["02 數據結構<br>(特徵 X 與標籤 y)"]
         M3["03 數據分割<br>(Train / Val / Test)"]
@@ -20,18 +21,21 @@ flowchart TD
     end
 
     subgraph G2 ["模組二：模型與優化機制"]
+        direction TB
         M5["05 模型參數<br>(參數 vs 超參數)"]
         M6["06 優化算法<br>(梯度下降、學習率、Batch Size)"]
         M5 --> M6
     end
 
     subgraph G3 ["模組三：經典演算法與集成"]
+        direction TB
         M7["07 常見算法<br>(KNN、決策樹、SVM、樸素貝氏)"]
         M8["08 集成學習<br>(Bagging、Boosting、Stacking)"]
         M7 --> M8
     end
 
     subgraph G4 ["模組四：評估診斷與實戰落地"]
+        direction TB
         M9["09 評估指標<br>(混淆矩陣、F1、RMSE、R²)"]
         M10["10 模型性能問題<br>(欠擬合 vs 過度擬合)"]
         M11["11 模型泛化<br>(交叉驗證、提升泛化實戰)"]
