@@ -35,7 +35,7 @@
           "geometry": "同一批資料在「有標籤／無標籤」兩條管線移動，對照模型接收的資訊。",
           "controls": "切換學習類型、逐步播放；半監督與強化學習以補充示意呈現",
           "source_images": [
-            "名詞解釋/01_機器學習的類型/images/03_comparison.png"
+            "名詞解釋/01_機器學習的類型/images/03_comparison.svg"
           ]
         }
       ]
@@ -73,7 +73,7 @@
           "geometry": "三筆原教材房屋資料重排為 3×4 矩陣與長度 3 的向量，樣本列與特徵欄逐一亮起。",
           "controls": "選樣本、選欄位、重播資料重排",
           "source_images": [
-            "名詞解釋/02_數據結構/images/03_data_structure_example.png"
+            "名詞解釋/02_數據結構/images/03_data_structure_example.svg"
           ]
         }
       ]
@@ -93,7 +93,7 @@
           "geometry": "帶 ID 的樣本方塊打散，再移入互不重疊的訓練與測試容器。",
           "controls": "調整比例、固定種子重新分割",
           "source_images": [
-            "名詞解釋/03_數據分割/images/01_train_test_split.png"
+            "名詞解釋/03_數據分割/images/01_train_test_split.svg"
           ]
         },
         {
@@ -102,7 +102,7 @@
           "geometry": "資料移入 Train／Validation／Test；只有 Train 流入模型，Validation 流向調參旋鈕，Test 保持封存。",
           "controls": "切換訓練／調參／最終評估、調整比例",
           "source_images": [
-            "名詞解釋/03_數據分割/images/02_three_way_split_validation.png"
+            "名詞解釋/03_數據分割/images/02_three_way_split_validation.svg"
           ]
         },
         {
@@ -111,7 +111,7 @@
           "geometry": "切換抽樣方式後，兩類樣本在各容器的比例改變；時間模式按先後排列方塊。",
           "controls": "切換切分方式、顯示各類數量",
           "source_images": [
-            "名詞解釋/03_數據分割/images/02_three_way_split_validation.png"
+            "名詞解釋/03_數據分割/images/02_three_way_split_validation.svg"
           ]
         },
         {
@@ -120,7 +120,7 @@
           "geometry": "對照「全資料 fit」與「只用 Train fit」；測試資訊以橘色路徑表示是否流入預處理。",
           "controls": "正確／錯誤流程對照、顯示訓練與驗證誤差",
           "source_images": [
-            "名詞解釋/03_數據分割/images/03_split_workflow_and_overfitting.png"
+            "名詞解釋/03_數據分割/images/03_split_workflow_and_overfitting.svg"
           ]
         }
       ]
@@ -140,7 +140,7 @@
           "geometry": "多欄方塊矩陣中，無關特徵淡出；過濾、包裝與嵌入方法用不同選取流程對照。",
           "controls": "切換方法、保留／移除特徵",
           "source_images": [
-            "名詞解釋/04_特徵工程/images/01_feature_selection.png"
+            "名詞解釋/04_特徵工程/images/01_feature_selection.svg"
           ]
         },
         {
@@ -158,7 +158,7 @@
           "geometry": "顏色方塊分別變成整數標籤或 One-Hot 向量；對照有序與無序資料。",
           "controls": "切換編碼、選類別、展開向量",
           "source_images": [
-            "名詞解釋/04_特徵工程/images/03_categorical_encoding.png"
+            "名詞解釋/04_特徵工程/images/03_categorical_encoding.svg"
           ]
         }
       ]
@@ -187,7 +187,7 @@
           "geometry": "學習率控制步長、樹深度控制分支數；設定旋鈕與學出的權重以位置和形狀區別。",
           "controls": "調整學習率、樹深度、重新訓練",
           "source_images": [
-            "名詞解釋/05_模型參數/images/02_hyperparameters.png"
+            "名詞解釋/05_模型參數/images/02_hyperparameters.svg"
           ]
         },
         {
@@ -196,7 +196,7 @@
           "geometry": "參數在訓練中變動；超參數網格依序亮起，每次試驗的驗證分數顯示在點上。",
           "controls": "參數／超參數對照、網格／隨機搜尋；貝氏搜尋標示概念示意",
           "source_images": [
-            "名詞解釋/05_模型參數/images/03_parameters_vs_hyperparameters.png"
+            "名詞解釋/05_模型參數/images/03_parameters_vs_hyperparameters.svg"
           ]
         }
       ]
@@ -234,7 +234,7 @@
           "geometry": "樣本方塊分批進入模型，所選樣本的梯度箭頭加總，更新路徑隨批次大小改變。",
           "controls": "切換方式、調整 Batch Size、固定隨機種子",
           "source_images": [
-            "名詞解釋/06_優化算法/images/03_batch_size_comparison.png"
+            "名詞解釋/06_優化算法/images/03_batch_size_comparison.svg"
           ]
         },
         {
@@ -288,7 +288,7 @@
           "geometry": "代表詞彙的方塊流入兩個類別容器，依條件機率更新相對分數。",
           "controls": "選擇詞彙、顯示先驗與條件機率",
           "source_images": [
-            "名詞解釋/07_常見算法/images/04_naive_bayes.png"
+            "名詞解釋/07_常見算法/images/04_naive_bayes.svg"
           ]
         }
       ]
@@ -308,7 +308,7 @@
           "geometry": "樣本有放回抽取到不同模型；多個預測標記移向投票或平均結果。",
           "controls": "重新抽樣、顯示重複樣本、逐模型投票",
           "source_images": [
-            "名詞解釋/08_集成學習/images/01_bagging.png"
+            "名詞解釋/08_集成學習/images/01_bagging.svg"
           ]
         },
         {
@@ -317,7 +317,7 @@
           "geometry": "弱模型依序出現，殘差線段進入下一輪；模型曲線逐輪加總。",
           "controls": "新增一輪、顯示殘差、調整步長",
           "source_images": [
-            "名詞解釋/08_集成學習/images/02_boosting.png"
+            "名詞解釋/08_集成學習/images/02_boosting.svg"
           ]
         },
         {
@@ -326,7 +326,7 @@
           "geometry": "基礎模型的 OOF 預測方塊重排為新矩陣，再流入元模型。",
           "controls": "逐折產生 OOF、組成新特徵、執行元模型",
           "source_images": [
-            "名詞解釋/08_集成學習/images/03_stacking.png"
+            "名詞解釋/08_集成學習/images/03_stacking.svg"
           ]
         }
       ]
@@ -346,7 +346,7 @@
           "geometry": "每個樣本按真實類別與預測類別移進 TP／FP／FN／TN 四格，數量同步增加。",
           "controls": "逐樣本分類、調整分類門檻",
           "source_images": [
-            "名詞解釋/09_評估指標/images/01_confusion_matrix.png"
+            "名詞解釋/09_評估指標/images/01_confusion_matrix.svg"
           ]
         },
         {
@@ -355,7 +355,7 @@
           "geometry": "改變門檻後，圓點重新落格，Accuracy／Precision／Recall／F1 及 ROC 游標同步更新。",
           "controls": "門檻滑桿、正類比例、查看指標分母",
           "source_images": [
-            "名詞解釋/09_評估指標/images/02_classification_metrics.png"
+            "名詞解釋/09_評估指標/images/02_classification_metrics.svg"
           ]
         },
         {
@@ -421,7 +421,7 @@
           "geometry": "新增資料、減少容量或正則化後，模型線與誤差對照更新。",
           "controls": "比較改善方法、顯示適用條件",
           "source_images": [
-            "名詞解釋/10_模型性能問題/images/05_solutions_overview.png"
+            "名詞解釋/10_模型性能問題/images/05_solutions_overview.svg"
           ]
         }
       ]
@@ -441,7 +441,7 @@
           "geometry": "先用圓點呈現訓練樣本，再逐一投入菱形新樣本，觀察模型是否適用。",
           "controls": "揭露新樣本、切換記憶型／規律型模型",
           "source_images": [
-            "名詞解釋/11_模型泛化/images/01_generalization_concept.png"
+            "名詞解釋/11_模型泛化/images/01_generalization_concept.svg"
           ]
         },
         {
@@ -459,8 +459,8 @@
           "geometry": "先封存測試方塊；剩餘資料分成 K 份，驗證份逐輪換位並累計分數。",
           "controls": "設定 K、下一折、顯示平均與標準差",
           "source_images": [
-            "名詞解釋/11_模型泛化/images/03_data_splitting.png",
-            "名詞解釋/11_模型泛化/images/04_cross_validation.png"
+            "名詞解釋/11_模型泛化/images/03_data_splitting.svg",
+            "名詞解釋/11_模型泛化/images/04_cross_validation.svg"
           ]
         },
         {
@@ -469,7 +469,7 @@
           "geometry": "分別操作資料量、模型容量、正則化與訓練策略，對照新資料誤差。",
           "controls": "選擇改善策略、查看假設與限制",
           "source_images": [
-            "名詞解釋/11_模型泛化/images/05_improve_generalization.png"
+            "名詞解釋/11_模型泛化/images/05_improve_generalization.svg"
           ]
         }
       ]
@@ -489,7 +489,7 @@
           "geometry": "資料包沿六大階段前進，在部署監控處形成回饋閉環，必要時回到前面重訓。",
           "controls": "逐階段播放、點選階段、查看產出",
           "source_images": [
-            "名詞解釋/12_機器學習訓練過程/images/01_ml_lifecycle_pipeline.png"
+            "名詞解釋/12_機器學習訓練過程/images/01_ml_lifecycle_pipeline.svg"
           ]
         },
         {
@@ -498,7 +498,7 @@
           "geometry": "樣本隊列逐批進入模型，循環走過前向、損失、反傳與更新；計數器同步增加。",
           "controls": "設定 N／Batch Size／Epoch、播放一批／一輪",
           "source_images": [
-            "名詞解釋/12_機器學習訓練過程/images/02_model_training_iteration_loop.png"
+            "名詞解釋/12_機器學習訓練過程/images/02_model_training_iteration_loop.svg"
           ]
         },
         {

@@ -29,7 +29,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[混淆矩陣](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix)
-![二元混淆矩陣結構與四象限圖解](images/01_confusion_matrix.png)
+![二元混淆矩陣結構與四象限圖解](images/01_confusion_matrix.svg)
+
+[查看原始 PNG 圖片](images/01_confusion_matrix.png)
 
 ### 四象限組成概念
 
@@ -50,7 +52,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[分類指標與 ROC](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#classification-metrics)
-![分類指標體系：公式、適用場景與權衡關係](images/02_classification_metrics.png)
+![分類指標體系：公式、適用場景與權衡關係](images/02_classification_metrics.svg)
+
+[查看原始 PNG 圖片](images/02_classification_metrics.png)
 
 ---
 

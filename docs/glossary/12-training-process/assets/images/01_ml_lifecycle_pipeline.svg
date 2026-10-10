@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="678" viewBox="0 0 1200 678" role="img" aria-labelledby="title desc">
+<title id="title">機器學習專案的六個階段</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="678" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">機器學習專案的六個階段</text>
+<rect x="40.0" y="85" width="357.3333333333333" height="245" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60.0" y="120" font-size="24" class="heading" style="fill:#2563eb">1. 問題定義</text>
+<text x="60.0" y="162" font-size="22">確認學習類型與商業目標。</text>
+<text x="60.0" y="207" font-size="22">定義 KPI 與 Baseline。</text>
+<rect x="421.3333333333333" y="85" width="357.3333333333333" height="245" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="441.3333333333333" y="120" font-size="24" class="heading" style="fill:#16834a">2. 資料收集與探索</text>
+<text x="441.3333333333333" y="162" font-size="22">清洗、去重、檢查缺失。</text>
+<text x="441.3333333333333" y="207" font-size="22">探索分布與標籤品質。</text>
+<rect x="802.6666666666666" y="85" width="357.3333333333333" height="245" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="822.6666666666666" y="120" font-size="24" class="heading" style="fill:#b86a10">3. 切分與特徵工程</text>
+<text x="822.6666666666666" y="162" font-size="22">先分 Train／Val／Test。</text>
+<text x="822.6666666666666" y="207" font-size="22">縮放、編碼與特徵選擇。</text>
+<text x="822.6666666666666" y="252" font-size="22">所有 fit 僅用 Train。</text>
+<rect x="40.0" y="354" width="357.3333333333333" height="245" rx="12" fill="#faf5ff" stroke="#8053bc" stroke-width="2"/>
+<text x="60.0" y="389" font-size="24" class="heading" style="fill:#8053bc">4. 模型選型與訓練</text>
+<text x="60.0" y="431" font-size="22">選擇模型或集成方法。</text>
+<text x="60.0" y="476" font-size="22">執行訓練與參數更新。</text>
+<rect x="421.3333333333333" y="354" width="357.3333333333333" height="245" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="441.3333333333333" y="389" font-size="24" class="heading" style="fill:#2563eb">5. 評估與調整</text>
+<text x="441.3333333333333" y="431" font-size="22">Validation：診斷與調參。</text>
+<text x="441.3333333333333" y="476" font-size="22">Test：最後的泛化驗收。</text>
+<rect x="802.6666666666666" y="354" width="357.3333333333333" height="245" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="822.6666666666666" y="389" font-size="24" class="heading" style="fill:#16834a">6. 部署與監控</text>
+<text x="822.6666666666666" y="431" font-size="22">API、服務或裝置推論。</text>
+<text x="822.6666666666666" y="476" font-size="22">監控效能與資料漂移。</text>
+<text x="822.6666666666666" y="521" font-size="22">必要時回到資料與訓練。</text>
+<text x="600" y="655" font-size="20" text-anchor="middle">依編號順序進行；部署後的監控會回饋到新一輪資料與訓練。</text>
+<path d="M399.3333333333333 207.5 L419.3333333333333 207.5" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M780.6666666666666 207.5 L800.6666666666666 207.5" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M399.3333333333333 476.5 L419.3333333333333 476.5" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M780.6666666666666 476.5 L800.6666666666666 476.5" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+</svg>

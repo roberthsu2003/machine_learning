@@ -105,7 +105,9 @@ $$P(C \mid X) = \frac{P(C) \cdot P(X \mid C)}{P(X)}$$
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[樸素貝氏](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#naive-bayes)
-![樸素貝氏分類原理：機率推斷與三大常見模型](images/04_naive_bayes.png)
+![樸素貝氏分類原理：機率推斷與三大常見模型](images/04_naive_bayes.svg)
+
+[查看原始 PNG 圖片](images/04_naive_bayes.png)
 
 ### 三大常見模型類型
 1. **高斯樸素貝氏 (GaussianNB)**：特徵為連續數值（如身高、血壓、體溫），假設服從常態高斯分佈。

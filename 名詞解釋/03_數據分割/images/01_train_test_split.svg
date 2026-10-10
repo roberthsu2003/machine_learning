@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="454" viewBox="0 0 1200 454" role="img" aria-labelledby="title desc">
+<title id="title">訓練集與測試集：學習和驗收分開</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="454" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">訓練集與測試集：學習和驗收分開</text>
+<rect x="40.0" y="85" width="548.0" height="290" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60.0" y="120" font-size="24" class="heading" style="fill:#2563eb">訓練集 Train：80%（比例示例）</text>
+<text x="60.0" y="162" font-size="22">用途：讓模型學習規律、調整參數。</text>
+<text x="60.0" y="207" font-size="22">生活比喻：平時作業與練習題。</text>
+<text x="60.0" y="252" font-size="22">可反覆使用：更新權重 w 與偏置 b。</text>
+<text x="60.0" y="297" font-size="22">注意：訓練表現好，不代表能預測新資料。</text>
+<rect x="612.0" y="85" width="548.0" height="290" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="632.0" y="120" font-size="24" class="heading" style="fill:#16834a">測試集 Test：20%（比例示例）</text>
+<text x="632.0" y="162" font-size="22">用途：模型定型後，評估未見資料的表現。</text>
+<text x="632.0" y="207" font-size="22">生活比喻：最後的期末考。</text>
+<text x="632.0" y="252" font-size="22">不可用於訓練、挑模型或調超參數。</text>
+<text x="632.0" y="297" font-size="22">注意：不得把測試資訊洩漏進訓練。</text>
+<text x="600" y="431" font-size="20" text-anchor="middle">兩份資料的樣本不重疊；實際比例依資料量與任務決定。</text>
+</svg>

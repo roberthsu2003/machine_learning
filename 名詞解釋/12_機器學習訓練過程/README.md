@@ -27,7 +27,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[端到端生命週期](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#lifecycle)
-![機器學習端到端全流程架構](images/01_ml_lifecycle_pipeline.png)
+![機器學習端到端全流程架構](images/01_ml_lifecycle_pipeline.svg)
+
+[查看原始 PNG 圖片](images/01_ml_lifecycle_pipeline.png)
 
 ---
 
@@ -50,7 +52,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[訓練迭代與 Epoch／Batch／Iteration](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#inner-loop)
-![模型訓練微觀運作迴圈](images/02_model_training_iteration_loop.png)
+![模型訓練微觀運作迴圈](images/02_model_training_iteration_loop.svg)
+
+[查看原始 PNG 圖片](images/02_model_training_iteration_loop.png)
 
 ### 訓練迴圈的四步舞曲
 1. **第一步：前向傳播 (Forward Pass)**  

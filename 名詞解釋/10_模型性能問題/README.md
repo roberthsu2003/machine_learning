@@ -145,7 +145,9 @@ $$\text{Total Error} = \text{Bias}^2 + \text{Variance} + \sigma^2$$
 針對欠擬合與過度擬合這兩種截然相反的病症，必須對症下藥。以下是工業界最完備的解決對策體系：
 
 > 🎬 互動動畫：[改善方式](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#solutions)
-![模型性能問題全景應對策略全貌](images/05_solutions_overview.png)
+![模型性能問題全景應對策略全貌](images/05_solutions_overview.svg)
+
+[查看原始 PNG 圖片](images/05_solutions_overview.png)
 
 ### 欠擬合急救箱：提升容量 · 降低偏差
 

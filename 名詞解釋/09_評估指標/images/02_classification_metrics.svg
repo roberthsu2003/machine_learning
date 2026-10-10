@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="678" viewBox="0 0 1200 678" role="img" aria-labelledby="title desc">
+<title id="title">分類指標：四種不同的觀察角度</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="678" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">分類指標：四種不同的觀察角度</text>
+<rect x="40.0" y="85" width="548.0" height="245" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60.0" y="120" font-size="24" class="heading" style="fill:#2563eb">Accuracy：準確率</text>
+<text x="60.0" y="162" font-size="22">(TP + TN) / (TP + TN + FP + FN)</text>
+<text x="60.0" y="207" font-size="22">全部樣本中，有多少比例猜對？</text>
+<text x="60.0" y="252" font-size="22">類別不平衡時，需搭配其他指標。</text>
+<rect x="612.0" y="85" width="548.0" height="245" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="632.0" y="120" font-size="24" class="heading" style="fill:#16834a">Precision：精確率</text>
+<text x="632.0" y="162" font-size="22">TP / (TP + FP)</text>
+<text x="632.0" y="207" font-size="22">預測為正類的樣本中，有多少是真的？</text>
+<text x="632.0" y="252" font-size="22">關注誤報 FP。</text>
+<rect x="40.0" y="354" width="548.0" height="245" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="60.0" y="389" font-size="24" class="heading" style="fill:#b86a10">Recall：召回率</text>
+<text x="60.0" y="431" font-size="22">TP / (TP + FN)</text>
+<text x="60.0" y="476" font-size="22">真正的正類中，有多少被找出？</text>
+<text x="60.0" y="521" font-size="22">關注漏報 FN。</text>
+<rect x="612.0" y="354" width="548.0" height="245" rx="12" fill="#faf5ff" stroke="#8053bc" stroke-width="2"/>
+<text x="632.0" y="389" font-size="24" class="heading" style="fill:#8053bc">F1：精確率與召回率的調和平均</text>
+<text x="632.0" y="431" font-size="22">2 × Precision × Recall / (Precision + Recall)</text>
+<text x="632.0" y="476" font-size="22">也可寫成 2TP / (2TP + FP + FN)。</text>
+<text x="632.0" y="521" font-size="22">需依任務成本評估，不能只看單一分數。</text>
+<text x="600" y="655" font-size="20" text-anchor="middle">分母為零時，指標未定義；使用工具的預設處理方式須另行確認。</text>
+</svg>

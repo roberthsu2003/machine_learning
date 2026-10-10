@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800" role="img" aria-labelledby="title desc">
+<title id="title">模型訓練迴圈：一個批次完成四個步驟</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="800" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">模型訓練迴圈：一個批次完成四個步驟</text>
+<rect x="40" y="95" width="520" height="195" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60" y="130" font-size="24" class="heading" style="fill:#2563eb">1. 前向傳播 Forward Pass</text>
+<text x="60" y="172" font-size="22">輸入批次特徵 X 與目前參數。</text>
+<text x="60" y="217" font-size="22">計算模型預測 ŷ。</text>
+<rect x="640" y="95" width="520" height="195" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="660" y="130" font-size="24" class="heading" style="fill:#16834a">2. 計算損失 Compute Loss</text>
+<text x="660" y="172" font-size="22">比較預測 ŷ 與真實標籤 y。</text>
+<text x="660" y="217" font-size="22">例如：MSE 或 Cross-Entropy。</text>
+<rect x="640" y="370" width="520" height="195" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="660" y="405" font-size="24" class="heading" style="fill:#b86a10">3. 反向傳播 Backpropagation</text>
+<text x="660" y="447" font-size="22">以連鎖律計算損失對參數的梯度。</text>
+<text x="660" y="492" font-size="22">求得 ∇J(θ)。</text>
+<rect x="40" y="370" width="520" height="195" rx="12" fill="#faf5ff" stroke="#8053bc" stroke-width="2"/>
+<text x="60" y="405" font-size="24" class="heading" style="fill:#8053bc">4. 參數更新 Parameter Update</text>
+<text x="60" y="447" font-size="22">依優化器規則更新權重。</text>
+<text x="60" y="492" font-size="22">例如 SGD：θ ← θ − α∇J(θ)。</text>
+<path d="M565 195 L635 195" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M900 295 L900 365" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M635 465 L565 465" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M300 365 L300 295" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="600" y="635" font-size="22" text-anchor="middle">Iteration：完成一批資料的參數更新；Batch Size：這一批的樣本數。</text>
+<text x="600" y="685" font-size="22" text-anchor="middle">Epoch：走過一次訓練資料；保留最後不足一批時，更新次數 = ceil(N / Batch Size)。</text>
+<text x="600" y="735" font-size="22" text-anchor="middle">例：N = 10,000、Batch Size = 64 → 每 Epoch 157 次；10 Epochs 共 1,570 次。</text>
+</svg>

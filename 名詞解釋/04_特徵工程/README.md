@@ -34,7 +34,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[特徵選擇](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#selection)
-![特徵選擇圖解](./images/01_feature_selection.png)
+![特徵選擇圖解](./images/01_feature_selection.svg)
+
+[查看原始 PNG 圖片](./images/01_feature_selection.png)
 
 ---
 
@@ -91,7 +93,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[類別編碼](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#encoding)
-![類別特徵編碼方式圖解](./images/03_categorical_encoding.png)
+![類別特徵編碼方式圖解](./images/03_categorical_encoding.svg)
+
+[查看原始 PNG 圖片](./images/03_categorical_encoding.png)
 
 ---
 

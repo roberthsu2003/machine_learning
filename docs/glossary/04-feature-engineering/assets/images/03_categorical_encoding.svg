@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="499" viewBox="0 0 1200 499" role="img" aria-labelledby="title desc">
+<title id="title">類別特徵編碼：有順序與沒有順序</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="499" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">類別特徵編碼：有順序與沒有順序</text>
+<rect x="40.0" y="85" width="548.0" height="335" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60.0" y="120" font-size="24" class="heading" style="fill:#2563eb">有序類別 → 順序編碼</text>
+<text x="60.0" y="162" font-size="22">尺寸：Small → 0，Medium → 1，Large → 2。</text>
+<text x="60.0" y="207" font-size="22">保留原本存在的先後順序。</text>
+<text x="60.0" y="252" font-size="22">注意：整數間距不一定等於實際程度差。</text>
+<text x="60.0" y="297" font-size="22">模型如何使用這些數值，仍需依任務確認。</text>
+<rect x="612.0" y="85" width="548.0" height="335" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="632.0" y="120" font-size="24" class="heading" style="fill:#16834a">無序類別 → One-Hot</text>
+<text x="632.0" y="162" font-size="22">欄位依序為：紅、綠、藍。</text>
+<text x="632.0" y="207" font-size="22">紅 → [1, 0, 0]；綠 → [0, 1, 0]。</text>
+<text x="632.0" y="252" font-size="22">藍 → [0, 0, 1]。</text>
+<text x="632.0" y="297" font-size="22">各欄只表示是否屬於某個類別。</text>
+<text x="632.0" y="342" font-size="22">避免讓模型誤以為顏色有大小關係。</text>
+<text x="600" y="476" font-size="20" text-anchor="middle">類別很多時，要考量稀疏矩陣、記憶體與替代編碼方式。</text>
+</svg>

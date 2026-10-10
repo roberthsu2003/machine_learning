@@ -82,7 +82,9 @@ flowchart LR
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[特徵矩陣 X 與標籤 y](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#matrix)
-![數據結構綜合圖解](./images/03_data_structure_example.png)
+![數據結構綜合圖解](./images/03_data_structure_example.svg)
+
+[查看原始 PNG 圖片](./images/03_data_structure_example.png)
 
 在實務中，機器學習數據集（Dataset）通常以二維表格或矩陣形式儲存：
 - 每一**列 (Row)** 代表一個獨立的**樣本點 (Sample / Instance / Example)**。

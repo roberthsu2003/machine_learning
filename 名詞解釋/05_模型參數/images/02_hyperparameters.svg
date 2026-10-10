@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="588" viewBox="0 0 1200 588" role="img" aria-labelledby="title desc">
+<title id="title">超參數：控制模型結構與訓練方式</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="588" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">超參數：控制模型結構與訓練方式</text>
+<rect x="40.0" y="85" width="548.0" height="200" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60.0" y="120" font-size="24" class="heading" style="fill:#2563eb">學習率 Learning Rate</text>
+<text x="60.0" y="162" font-size="22">控制一次參數更新的步幅。</text>
+<text x="60.0" y="207" font-size="22">太小可能收斂慢；太大可能震盪或發散。</text>
+<rect x="612.0" y="85" width="548.0" height="200" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="632.0" y="120" font-size="24" class="heading" style="fill:#16834a">最大深度 Max Depth</text>
+<text x="632.0" y="162" font-size="22">控制決策樹可切分到多深。</text>
+<text x="632.0" y="207" font-size="22">影響模型容量；需搭配驗證表現選擇。</text>
+<rect x="40.0" y="309" width="548.0" height="200" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="60.0" y="344" font-size="24" class="heading" style="fill:#b86a10">批次大小 Batch Size</text>
+<text x="60.0" y="386" font-size="22">控制一次更新使用多少筆樣本。</text>
+<text x="60.0" y="431" font-size="22">常見例子：32、64、128。</text>
+<rect x="612.0" y="309" width="548.0" height="200" rx="12" fill="#faf5ff" stroke="#8053bc" stroke-width="2"/>
+<text x="632.0" y="344" font-size="24" class="heading" style="fill:#8053bc">正則化強度 λ</text>
+<text x="632.0" y="386" font-size="22">限制模型權重或複雜度。</text>
+<text x="632.0" y="431" font-size="22">太強可能欠擬合；太弱可能過度擬合。</text>
+<text x="600" y="565" font-size="20" text-anchor="middle">使用驗證集或交叉驗證搜尋設定；不要用測試集調參。</text>
+</svg>

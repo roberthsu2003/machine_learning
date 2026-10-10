@@ -26,8 +26,9 @@
 <p class="scene-result" id="result-train-test" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="訓練／測試分割播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="訓練／測試分割動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：訓練集與測試集圖解</summary><p class="scene-jump"><a href="#train-test">↑ 回到互動動畫：訓練／測試分割</a></p><img src="./assets/images/01_train_test_split.png" alt="訓練集與測試集圖解" loading="lazy"><a href="./assets/images/01_train_test_split.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</section><details class="original"><summary>對照原教材圖解：訓練集與測試集圖解</summary><p class="scene-jump"><a href="#train-test">↑ 回到互動動畫：訓練／測試分割</a></p><img src="./assets/images/01_train_test_split.svg" alt="訓練集與測試集圖解" loading="lazy"><a href="./assets/images/01_train_test_split.svg" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
+<p><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/03_%E6%95%B8%E6%93%9A%E5%88%86%E5%89%B2/images/01_train_test_split.png">查看原始 PNG 圖片</a></p>
 <hr />
 <h3>三大子集的詳細職責定義</h3>
 <div class="table-scroll"><table>
@@ -84,8 +85,9 @@
 <p class="scene-result" id="result-split-strategies" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="隨機、分層與時間切分播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="隨機、分層與時間切分動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：三階段劃分圖解</summary><p class="scene-jump"><a href="#train-validation-test">↑ 回到互動動畫：三份資料的角色</a><a href="#split-strategies">↑ 回到互動動畫：隨機、分層與時間切分</a></p><img src="./assets/images/02_three_way_split_validation.png" alt="三階段劃分圖解" loading="lazy"><a href="./assets/images/02_three_way_split_validation.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</section><details class="original"><summary>對照原教材圖解：三階段劃分圖解</summary><p class="scene-jump"><a href="#train-validation-test">↑ 回到互動動畫：三份資料的角色</a><a href="#split-strategies">↑ 回到互動動畫：隨機、分層與時間切分</a></p><img src="./assets/images/02_three_way_split_validation.svg" alt="三階段劃分圖解" loading="lazy"><a href="./assets/images/02_three_way_split_validation.svg" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
+<p><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/03_%E6%95%B8%E6%93%9A%E5%88%86%E5%89%B2/images/02_three_way_split_validation.png">查看原始 PNG 圖片</a></p>
 <hr />
 <h2 id="section-3">2. 數據分割的核心實務原則</h2>
 <h3>1. 隨機劃分 (Random Split)</h3>
@@ -119,8 +121,9 @@
 <p class="scene-result" id="result-leakage" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="資料洩漏與診斷播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="資料洩漏與診斷動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：數據分割實戰流程與誤差分析矩陣</summary><p class="scene-jump"><a href="#leakage">↑ 回到互動動畫：資料洩漏與診斷</a></p><img src="./assets/images/03_split_workflow_and_overfitting.png" alt="數據分割實戰流程與誤差分析矩陣" loading="lazy"><a href="./assets/images/03_split_workflow_and_overfitting.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</section><details class="original"><summary>對照原教材圖解：數據分割實戰流程與誤差分析矩陣</summary><p class="scene-jump"><a href="#leakage">↑ 回到互動動畫：資料洩漏與診斷</a></p><img src="./assets/images/03_split_workflow_and_overfitting.svg" alt="數據分割實戰流程與誤差分析矩陣" loading="lazy"><a href="./assets/images/03_split_workflow_and_overfitting.svg" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
+<p><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/03_%E6%95%B8%E6%93%9A%E5%88%86%E5%89%B2/images/03_split_workflow_and_overfitting.png">查看原始 PNG 圖片</a></p>
 <h3>模型診斷速查指南</h3>
 <div class="table-scroll"><table>
 <thead>

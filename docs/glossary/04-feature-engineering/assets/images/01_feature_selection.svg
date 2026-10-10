@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="547" viewBox="0 0 1200 547" role="img" aria-labelledby="title desc">
+<title id="title">特徵選擇：三種方法的差別</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="547" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">特徵選擇：三種方法的差別</text>
+<rect x="40.0" y="85" width="357.3333333333333" height="383" rx="12" fill="#eff6ff" stroke="#2563eb" stroke-width="2"/>
+<text x="60.0" y="120" font-size="24" class="heading" style="fill:#2563eb">過濾法 Filter</text>
+<text x="60.0" y="162" font-size="22">不先訓練模型，以統計指標評分。</text>
+<text x="60.0" y="207" font-size="22">方法：變異數、相關係數、卡方、</text>
+<text x="60.0" y="238" font-size="22">互資訊。</text>
+<text x="60.0" y="283" font-size="22">優點：快，適合大量特徵初篩。</text>
+<text x="60.0" y="328" font-size="22">限制：容易忽略特徵間的交互作</text>
+<text x="60.0" y="359" font-size="22">用。</text>
+<rect x="421.3333333333333" y="85" width="357.3333333333333" height="383" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="441.3333333333333" y="120" font-size="24" class="heading" style="fill:#16834a">包裝法 Wrapper</text>
+<text x="441.3333333333333" y="162" font-size="22">反覆訓練模型，評估不同特徵組</text>
+<text x="441.3333333333333" y="193" font-size="22">合。</text>
+<text x="441.3333333333333" y="238" font-size="22">方法：RFE、前向搜尋、後向淘</text>
+<text x="441.3333333333333" y="269" font-size="22">汰。</text>
+<text x="441.3333333333333" y="314" font-size="22">優點：針對模型評估組合效果。</text>
+<text x="441.3333333333333" y="359" font-size="22">限制：計算成本高，也須防止過</text>
+<text x="441.3333333333333" y="390" font-size="22">度擬合。</text>
+<rect x="802.6666666666666" y="85" width="357.3333333333333" height="383" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="822.6666666666666" y="120" font-size="24" class="heading" style="fill:#b86a10">嵌入法 Embedded</text>
+<text x="822.6666666666666" y="162" font-size="22">在模型訓練過程中選擇特徵。</text>
+<text x="822.6666666666666" y="207" font-size="22">方法：L1／Lasso、樹模型特徵</text>
+<text x="822.6666666666666" y="238" font-size="22">重要性。</text>
+<text x="822.6666666666666" y="283" font-size="22">優點：將訓練與特徵選擇結合。</text>
+<text x="822.6666666666666" y="328" font-size="22">限制：結果依賴模型與重要性定</text>
+<text x="822.6666666666666" y="359" font-size="22">義。</text>
+<text x="600" y="524" font-size="20" text-anchor="middle">特徵選擇必須在訓練資料內進行，避免資料洩漏。</text>
+</svg>

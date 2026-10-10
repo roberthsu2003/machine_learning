@@ -34,7 +34,9 @@ Bagging 透過「自助抽樣 (Bootstrap)」從原始數據中有放回地隨機
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[Bagging](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#bagging)
-![Bagging裝袋法原理與隨機森林流程](images/01_bagging.png)
+![Bagging裝袋法原理與隨機森林流程](images/01_bagging.svg)
+
+[查看原始 PNG 圖片](images/01_bagging.png)
 
 ### 代表算法：隨機森林 (Random Forest)
 隨機森林在標準 Bagging 基礎上更進一步：除了對**「樣本進行隨機抽樣 (Bootstrap)」**外，在每個樹節點分裂時還對**「特徵進行隨機挑選 (Feature Subsampling)」**！  
@@ -59,7 +61,9 @@ Boosting 是一種**串行 (Sequential，循序推進)** 迭代的集成技術�
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[Boosting](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#boosting)
-![Boosting提升法原理與殘差學習](images/02_boosting.png)
+![Boosting提升法原理與殘差學習](images/02_boosting.svg)
+
+[查看原始 PNG 圖片](images/02_boosting.png)
 
 ### 代表算法
 - **AdaBoost**：主動調高上一輪被預測錯誤樣本的權重，強制後續模型關注困難點。
@@ -84,7 +88,9 @@ Stacking 是一種多層次（Multi-level）的異質模型融合技術。它在
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[Stacking](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#stacking)
-![Stacking堆疊法原理與元學習架構](images/03_stacking.png)
+![Stacking堆疊法原理與元學習架構](images/03_stacking.svg)
+
+[查看原始 PNG 圖片](images/03_stacking.png)
 
 ### 核心運作要點
 - **第一層 (Level-0 基礎學習器)**：盡量挑選**不同原理**的異質模型，互補短板。

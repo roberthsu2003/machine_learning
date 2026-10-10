@@ -85,7 +85,9 @@ flowchart LR
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[Batch／SGD／Mini-batch](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#batch-size)
-![批次大小權衡與民調抽樣比喻](images/03_batch_size_comparison.png)
+![批次大小權衡與民調抽樣比喻](images/03_batch_size_comparison.svg)
+
+[查看原始 PNG 圖片](images/03_batch_size_comparison.png)
 
 ### 💡 直觀理解：民調抽樣的比喻
 - **大批次（如 512, 1024 / 大規模民調）**：問話人次多，誤差小，決策方向穩如泰山；但耗費大量記憶體 (VRAM)。有時過於「拘謹」，容易跌入尖銳的局部不良極值（泛化稍差）。

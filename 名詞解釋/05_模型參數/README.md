@@ -60,7 +60,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[超參數](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#hyperparameters)
-![超參數圖解](./images/02_hyperparameters.png)
+![超參數圖解](./images/02_hyperparameters.svg)
+
+[查看原始 PNG 圖片](./images/02_hyperparameters.png)
 
 ### 實務常見的核心超參數清單
 
@@ -88,7 +90,9 @@ flowchart TD
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[比較與搜尋](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#parameter-search)
-![參數與超參數對照圖解](./images/03_parameters_vs_hyperparameters.png)
+![參數與超參數對照圖解](./images/03_parameters_vs_hyperparameters.svg)
+
+[查看原始 PNG 圖片](./images/03_parameters_vs_hyperparameters.png)
 
 ### 核心對照表
 

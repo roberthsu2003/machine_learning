@@ -116,8 +116,9 @@
 <p class="scene-result" id="result-batch-size" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="Batch／SGD／Mini-batch播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="Batch／SGD／Mini-batch動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：批次大小權衡與民調抽樣比喻</summary><p class="scene-jump"><a href="#batch-size">↑ 回到互動動畫：Batch／SGD／Mini-batch</a></p><img src="./assets/images/03_batch_size_comparison.png" alt="批次大小權衡與民調抽樣比喻" loading="lazy"><a href="./assets/images/03_batch_size_comparison.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</section><details class="original"><summary>對照原教材圖解：批次大小權衡與民調抽樣比喻</summary><p class="scene-jump"><a href="#batch-size">↑ 回到互動動畫：Batch／SGD／Mini-batch</a></p><img src="./assets/images/03_batch_size_comparison.svg" alt="批次大小權衡與民調抽樣比喻" loading="lazy"><a href="./assets/images/03_batch_size_comparison.svg" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
+<p><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/06_%E5%84%AA%E5%8C%96%E7%AE%97%E6%B3%95/images/03_batch_size_comparison.png">查看原始 PNG 圖片</a></p>
 <h3>💡 直觀理解：民調抽樣的比喻</h3>
 <ul>
 <li><strong>大批次（如 512, 1024 / 大規模民調）</strong>：問話人次多，誤差小，決策方向穩如泰山；但耗費大量記憶體 (VRAM)。有時過於「拘謹」，容易跌入尖銳的局部不良極值（泛化稍差）。</li>

@@ -85,7 +85,9 @@
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[學習類型比較](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#paradigm-comparison)
-![學習類型總結比較圖解](./images/03_comparison.png)
+![學習類型總結比較圖解](./images/03_comparison.svg)
+
+[查看原始 PNG 圖片](./images/03_comparison.png)
 
 ### 核心對照矩陣
 

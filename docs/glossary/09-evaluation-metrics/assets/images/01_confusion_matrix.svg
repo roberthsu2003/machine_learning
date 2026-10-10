@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
+<title id="title">混淆矩陣：真實標籤 y 與預測類別 ŷ</title>
+<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
+<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
+<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
+<rect width="1200" height="620" fill="#fff"/>
+<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">混淆矩陣：真實標籤 y 與預測類別 ŷ</text>
+<text x="730" y="100" font-size="25" text-anchor="middle" class="heading">預測類別 ŷ</text>
+<text x="515" y="145" font-size="22" text-anchor="middle">預測正類（+）</text>
+<text x="925" y="145" font-size="22" text-anchor="middle">預測負類（−）</text>
+<text x="125" y="280" font-size="22" text-anchor="middle">真實正類（+）</text>
+<text x="125" y="460" font-size="22" text-anchor="middle">真實負類（−）</text>
+<rect x="300" y="170" width="390" height="160" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="320" y="205" font-size="24" class="heading" style="fill:#16834a">TP：真正例</text>
+<text x="320" y="247" font-size="22">猜正類，實際也是正類。</text>
+<text x="320" y="292" font-size="22">例如：患病者被判定患病。</text>
+<rect x="710" y="170" width="390" height="160" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="730" y="205" font-size="24" class="heading" style="fill:#b86a10">FN：偽負例／漏報</text>
+<text x="730" y="247" font-size="22">猜負類，實際是正類。</text>
+<text x="730" y="292" font-size="22">例如：患病者被判定健康。</text>
+<rect x="300" y="350" width="390" height="160" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="320" y="385" font-size="24" class="heading" style="fill:#b86a10">FP：偽正例／誤報</text>
+<text x="320" y="427" font-size="22">猜正類，實際是負類。</text>
+<text x="320" y="472" font-size="22">例如：健康者被判定患病。</text>
+<rect x="710" y="350" width="390" height="160" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="730" y="385" font-size="24" class="heading" style="fill:#16834a">TN：真負例</text>
+<text x="730" y="427" font-size="22">猜負類，實際也是負類。</text>
+<text x="730" y="472" font-size="22">例如：健康者被判定健康。</text>
+<text x="600" y="570" font-size="21" text-anchor="middle">本圖以列表示真實類別、欄表示預測類別；正類的定義由任務決定。</text>
+</svg>
