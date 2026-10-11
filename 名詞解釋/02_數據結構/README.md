@@ -68,12 +68,13 @@
 ### 標籤的任務型態區分
 
 ```mermaid
-flowchart LR
+%%{init: {"flowchart": {"htmlLabels": false, "padding": 20}}}%%
+flowchart TD
     Label["標籤 y 的型態"] --> Discrete["離散型類別"]
     Label --> Continuous["連續型數值"]
-    Discrete --> Binary["二元分類 (是/否, 0/1)"]
-    Discrete --> MultiClass["多元分類 (貓/狗/鳥)"]
-    Continuous --> Reg["回歸預測 (房價, 氣溫, 股價)"]
+    Discrete --> Binary["二元分類<br/>（是／否、0／1）"]
+    Discrete --> MultiClass["多元分類<br/>（貓／狗／鳥）"]
+    Continuous --> Reg["回歸預測<br/>（房價、氣溫、股價）"]
 ```
 
 ---
