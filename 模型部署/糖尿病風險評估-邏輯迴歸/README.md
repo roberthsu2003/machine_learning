@@ -18,13 +18,26 @@
 
 ```text
 糖尿病風險評估-邏輯迴歸/
-├── app.py                     # FastAPI + Gradio 混合服務（啟動主程式）
-├── train_save.py              # 模型訓練、標準化與元數據序列化腳本
-├── diabetes_model.joblib      # 序列化二進位模型檔（包含 scaler 與 metadata）
-├── Diabetes_Data.csv          # 臨床糖尿病數據集
-├── requirements.txt           # 相依套件清單
-└── README.md                  # 本教學講義文件
+├── app.py                             # FastAPI + Gradio 混合服務（啟動主程式）
+├── train_save.py                      # 模型訓練、標準化與元數據序列化腳本
+├── practice_train_api_answer.ipynb    # 🎓 拆解範例 1：模型訓練、標準化與 /train API 端點
+├── practice_predict_api_answer.ipynb  # 🎓 拆解範例 2：病患指標驗證、風險機率與 /predict API 端點
+├── practice_gradio_ui_answer.ipynb    # 🎓 拆解範例 3：Gradio 網頁 UI 與勝算比圖表整合
+├── diabetes_model.joblib              # 序列化二進位模型檔（包含 scaler 與 metadata）
+├── Diabetes_Data.csv                  # 臨床糖尿病數據集
+├── requirements.txt                   # 相依套件清單
+└── README.md                          # 本教學講義文件
 ```
+
+> [!TIP]
+> **💡 給學生的學習提醒：從步驟拆解 Jupyter Notebook 入手**
+> 
+> 主程式 `app.py` 整合了模型訓練、FastAPI RESTful 端點以及 Gradio Web 介面，程式碼架構完整。為降低學習門檻，本專案特別提供了 **3 個步驟式拆解範例 (`.ipynb`)**，建議學生可先開啟並依序學習：
+> 1. **[practice_train_api_answer.ipynb](./practice_train_api_answer.ipynb)**：拆解學習如何訓練邏輯迴歸模型、特徵標準化 (StandardScaler) 與實作 `/train` API。
+> 2. **[practice_predict_api_answer.ipynb](./practice_predict_api_answer.ipynb)**：拆解學習病患生理數據檢驗、患病機率計算與實作 `/predict` API。
+> 3. **[practice_gradio_ui_answer.ipynb](./practice_gradio_ui_answer.ipynb)**：拆解學習如何單獨建構 Gradio 醫療儀表板介面（含勝算比水平長條圖）並與後端 API 串接。
+> 
+> 先透過 Notebook 掌握各模組細節後，再閱讀完整融合的主程式 `app.py`，會更容易融會貫通！
 
 ---
 

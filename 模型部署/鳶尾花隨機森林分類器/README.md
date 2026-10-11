@@ -1,6 +1,6 @@
 # 🌸 機器學習模型部署：FastAPI + Gradio 雙介面全生命週期教學講義
 
-本專案是一個特別為機器學習教學設計的**實務部署範例**。它展示了從**模型訓練、序列化儲存、建立 RESTful API，到設計網頁互動 UI**，最後一鍵部署至免費雲端平台（如 Render / Hugging Face Spaces）的完整生命週期。
+本專案延伸自核心教學章節 [01_random_forest_5trees.ipynb](../../決策樹集成模型/01_random_forest_5trees.ipynb)（隨機森林集成演算法實作），是一個特別為機器學習教學設計的**實務部署範例**。它展示了從**模型訓練、序列化儲存、建立 RESTful API，到設計網頁互動 UI**，最後一鍵部署至免費雲端平台（如 Render / Hugging Face Spaces）的完整生命週期。
 
 ---
 
@@ -37,9 +37,9 @@
 > 主程式 `app.py` 整合了模型訓練、FastAPI RESTful 端點以及 Gradio Web 介面，程式碼架構完整且檔案較大，初學者可能較難一口氣理解全貌。
 > 
 > 為降低學習門檻，本專案特別提供了 **3 個步驟式拆解範例 (`.ipynb`)**，建議學生可先開啟並依序學習：
-> 1. **`practice_train_api_answer.ipynb`**：拆解學習如何訓練隨機森林分類器、序列化保存模型與實作 `/train` API。
-> 2. **`practice_predict_api_answer.ipynb`**：拆解學習花朵特徵輸入驗證、機率計算（`predict_proba`）與實作 `/predict` API。
-> 3. **`practice_gradio_ui_answer.ipynb`**：拆解學習如何單獨建構 Gradio 互動式 UI 介面（含品種預測卡片與機率分析）並與後端 API 串接。
+> 1. **[practice_train_api_answer.ipynb](./practice_train_api_answer.ipynb)**：拆解學習如何訓練隨機森林分類器、序列化保存模型與實作 `/train` API。
+> 2. **[practice_predict_api_answer.ipynb](./practice_predict_api_answer.ipynb)**：拆解學習花朵特徵輸入驗證、機率計算（`predict_proba`）與實作 `/predict` API。
+> 3. **[practice_gradio_ui_answer.ipynb](./practice_gradio_ui_answer.ipynb)**：拆解學習如何單獨建構 Gradio 互動式 UI 介面（含品種預測卡片與機率分析）並與後端 API 串接。
 > 
 > 先透過 Notebook 掌握各模組細節後，再閱讀完整融合的主程式 `app.py`，會更容易融會貫通！
 
