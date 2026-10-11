@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 360" font-family="'Noto Sans CJK TC','PingFang TC','Microsoft JhengHei',sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#5f6368"/>
+    </marker>
+  </defs>
+
+  <!-- Titles -->
+  <text x="305" y="28" text-anchor="middle" font-size="20" font-weight="700" fill="#1a73e8">特徵矩陣 X (Features)</text>
+  <text x="770" y="28" text-anchor="middle" font-size="20" font-weight="700" fill="#e8710a">預測答案 y (Label)</text>
+
+  <!-- X outer box -->
+  <rect x="20" y="50" width="570" height="250" rx="8" fill="#e8f0fe" stroke="#1a73e8" stroke-width="2"/>
+  <!-- y outer box -->
+  <rect x="660" y="50" width="220" height="250" rx="8" fill="#fef7e0" stroke="#f29900" stroke-width="2"/>
+
+  <!-- X header background -->
+  <path d="M 20 58 Q 20 50 28 50 L 590 50 L 590 120 L 20 120 Z" fill="#1a73e8"/>
+  <!-- y header background -->
+  <path d="M 660 50 L 872 50 Q 880 50 880 58 L 880 120 L 660 120 Z" fill="#f29900"/>
+
+  <!-- X header text -->
+  <text x="91" y="92" text-anchor="middle" font-size="15" fill="#ffffff">[ 第 1 欄 ]</text>
+  <text x="233" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">身高</text>
+  <text x="376" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">體重</text>
+  <text x="518" y="92" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">年齡</text>
+  <text x="91" y="110" text-anchor="middle" font-size="12" fill="#d2e3fc">筆數</text>
+  <text x="233" y="110" text-anchor="middle" font-size="12" fill="#d2e3fc">欄位 1</text>
+  <text x="376" y="110" text-anchor="middle" font-size="12" fill="#d2e3fc">欄位 2</text>
+  <text x="518" y="110" text-anchor="middle" font-size="12" fill="#d2e3fc">欄位 3</text>
+
+  <!-- y header text -->
+  <text x="770" y="88" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">類別：性別 / 數值：薪資</text>
+  <text x="770" y="108" text-anchor="middle" font-size="12" fill="#fff3d6">每筆資料的標準答案</text>
+
+  <!-- grid lines X -->
+  <line x1="20" y1="120" x2="590" y2="120" stroke="#1a73e8" stroke-width="1.5"/>
+  <line x1="20" y1="180" x2="590" y2="180" stroke="#aecbfa" stroke-width="1"/>
+  <line x1="20" y1="240" x2="590" y2="240" stroke="#aecbfa" stroke-width="1"/>
+  <line x1="162" y1="50" x2="162" y2="300" stroke="#aecbfa" stroke-width="1"/>
+  <line x1="305" y1="50" x2="305" y2="300" stroke="#aecbfa" stroke-width="1"/>
+  <line x1="447" y1="50" x2="447" y2="300" stroke="#aecbfa" stroke-width="1"/>
+
+  <!-- grid lines y -->
+  <line x1="660" y1="120" x2="880" y2="120" stroke="#f29900" stroke-width="1.5"/>
+  <line x1="660" y1="180" x2="880" y2="180" stroke="#fdd663" stroke-width="1"/>
+  <line x1="660" y1="240" x2="880" y2="240" stroke="#fdd663" stroke-width="1"/>
+
+  <!-- X row labels + data -->
+  <text x="91" y="157" text-anchor="middle" font-size="17" fill="#202124">第 1 筆</text>
+  <text x="233" y="157" text-anchor="middle" font-size="19" fill="#202124">175</text>
+  <text x="376" y="157" text-anchor="middle" font-size="19" fill="#202124">70</text>
+  <text x="518" y="157" text-anchor="middle" font-size="19" fill="#202124">25</text>
+
+  <text x="91" y="217" text-anchor="middle" font-size="17" fill="#202124">第 2 筆</text>
+  <text x="233" y="217" text-anchor="middle" font-size="19" fill="#202124">160</text>
+  <text x="376" y="217" text-anchor="middle" font-size="19" fill="#202124">50</text>
+  <text x="518" y="217" text-anchor="middle" font-size="19" fill="#202124">28</text>
+
+  <text x="91" y="277" text-anchor="middle" font-size="17" fill="#202124">第 3 筆</text>
+  <text x="233" y="277" text-anchor="middle" font-size="19" fill="#202124">180</text>
+  <text x="376" y="277" text-anchor="middle" font-size="19" fill="#202124">85</text>
+  <text x="518" y="277" text-anchor="middle" font-size="19" fill="#202124">35</text>
+
+  <!-- y data -->
+  <text x="770" y="157" text-anchor="middle" font-size="19" fill="#202124">0 (男)</text>
+  <text x="770" y="217" text-anchor="middle" font-size="19" fill="#202124">1 (女)</text>
+  <text x="770" y="277" text-anchor="middle" font-size="19" fill="#202124">0 (男)</text>
+
+  <!-- arrow X => y -->
+  <line x1="595" y1="185" x2="650" y2="185" stroke="#5f6368" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <line x1="595" y1="200" x2="650" y2="200" stroke="#5f6368" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <text x="622" y="172" text-anchor="middle" font-size="13" fill="#5f6368">對應</text>
+
+  <!-- shape labels -->
+  <text x="305" y="332" text-anchor="middle" font-size="17" fill="#202124">形狀 (Shape) = (3, 3)</text>
+  <text x="770" y="332" text-anchor="middle" font-size="17" fill="#202124">形狀 (Shape) = (3,)</text>
+</svg>
