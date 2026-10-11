@@ -2,6 +2,12 @@
 
 歡迎來到機器學習 **決策樹集成模型（Ensembles of Decision Trees）** 的教學目錄。本單元深入探討如何透過組合多棵決策樹來克服單一決策樹容易過擬合（Overfitting）的弱點，包含 **隨機森林（Random Forests）** 與 **梯度提升樹（Gradient Boosted Decision Trees / GBDT）** 的核心理論、邊界視覺化、特徵重要性分析與調參指南。
 
+> [!TIP]
+> 🎬 **想要更生動的隨機森林與 GBDT 動畫圖解？**  
+> 歡迎閱讀：👉 [**名詞解釋：08_集成學習 (觀念詳解與互動動畫)**](../名詞解釋/08_集成學習/README.md)  
+> * 深入剖析 Bagging（平行隨機採樣）、Boosting（循序聚焦殘差）與 Stacking（元模型融合）三大流派本質！  
+> * 線上互動網站體驗：[集成學習動態互動教材](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/)
+
 ---
 
 ## 📌 🎯 ⭐ 主教學筆記本（Master Notebook）

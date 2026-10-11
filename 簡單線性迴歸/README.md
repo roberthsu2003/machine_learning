@@ -5,8 +5,16 @@
 
 # 簡單線性迴歸 (Linear Regression)
 
-
 本教學旨在引導學習者從最基礎的幾何概念開始，逐步理解線性迴歸的數學原理與程式實作，並學會使用主流的機器學習套件 Scikit-Learn 進行實際的預測與評估。
+
+> [!TIP]
+> 🎬 **想要更直觀的損失函數碗狀曲面與梯度下降動畫？**  
+> 歡迎閱讀：  
+> * 👉 [**名詞解釋：06_優化算法 (梯度下降篇)**](../名詞解釋/06_優化算法/README.md)（內含學習率太小/太大動態演示）  
+> * 👉 [**名詞解釋：09_評估指標 (回歸指標篇)**](../名詞解釋/09_評估指標/README.md#2-回歸評估指標-regression-metrics)（MAE / MSE / RMSE / $R^2$ 深度比較）  
+> * 線上互動網站體驗：[梯度下降與學習率動畫](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#gradient-descent) · [回歸指標動畫](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors)
+
+---
 
 ## 🎯 學習重點
 - **基礎理論**：從幾何與公式出發，理解線性迴歸的數學表達式與其核心參數（斜率與截距）。

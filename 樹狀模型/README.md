@@ -2,6 +2,12 @@
 
 歡迎來到機器學習 **樹狀模型（Tree-based Models）** 的教學目錄。本單元包含從基礎概念比喻、漸進切割繪圖、過擬合與預剪枝實作、Graphviz 可視化、特徵重要性分析，到迴歸外推限制與實務專案演練的完整教學教材。
 
+> [!TIP]
+> 🎬 **想要更生動的二元分割幾何原理與互動動畫？**  
+> 歡迎閱讀：👉 [**名詞解釋：07_常見算法 (決策樹篇)**](../名詞解釋/07_常見算法/README.md#2-決策樹-decision-tree)  
+> * 深入解析資訊獲利 (Information Gain)、吉尼不純度 (Gini) 與樹深度剪枝對防範過擬合的關鍵作用！  
+> * 線上互動網站體驗：[決策樹動態分割動畫](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#tree)
+
 ---
 
 ## 📌 🎯 ⭐ 主教學筆記本（Master Notebook）

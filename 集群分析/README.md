@@ -1,4 +1,14 @@
-# 集群分析
+# 集群分析 (Clustering)
+
+集群分析（Clustering），又稱聚類分析，是一種經典的非監督式學習方法。在沒有預先標註標籤的情況下，透過演算法探索資料內在的幾何分佈與相似性結構。
+
+> [!TIP]
+> 🎬 **想要更生動的監督 vs 非監督學習動畫與分群解析？**  
+> 歡迎閱讀：👉 [**名詞解釋：01_機器學習的類型 (非監督學習篇)**](../名詞解釋/01_機器學習的類型/README.md#2-非監督式學習-unsupervised-learning)  
+> * 圖解 K-Means 群聚中心移動、距離聚類與市場客戶分群的真實場景！  
+> * 線上互動網站體驗：[學習範式與非監督分群動畫](https://roberthsu2003.github.io/machine_learning/glossary/01-learning-paradigms/#unsupervised)
+
+---
 
 **1. 集群分析的用途**
 

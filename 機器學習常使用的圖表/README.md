@@ -4,6 +4,13 @@
 
 本單元收集並實作了多種常見的機器學習圖表，幫助您在開發過程中快速查閱與使用。
 
+> [!TIP]
+> 🎬 **想要深入理解圖表背後的機器學習評估指標與學習曲線？**  
+> 歡迎閱讀：  
+> * 👉 [**名詞解釋：09_評估指標 (ROC-AUC 與混淆矩陣)**](../名詞解釋/09_評估指標/README.md)（含分類門檻動態拉動與四象限連動動畫）  
+> * 👉 [**名詞解釋：10_模型性能問題 (學習曲線診斷)**](../名詞解釋/10_模型性能問題/README.md#4-學習曲線-learning-curves)（判斷欠擬合與過擬合的高低偏差方差圖解）  
+> * 線上互動網站體驗：[評估指標互動教材](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/) · [模型性能與泛化教材](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/)
+
 ---
 
 ## 🔍 1. 探索性數據分析 (EDA) 常用圖表

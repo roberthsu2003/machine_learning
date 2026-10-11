@@ -2,6 +2,12 @@
 
 k 近鄰分類法 (KNN) 是一種簡單、直觀且效果卓越的**監督式學習演算法**。它是一種基於實例的學習 (Instance-based learning) 或懶惰學習 (Lazy learning)，在訓練階段只會儲存數據，直到有新樣本需要預測時，才計算其與周圍鄰居的距離，並透過多數決投票來決定新樣本的類別。
 
+> [!TIP]
+> 🎬 **想要更生動的幾何觀念圖解與動態決策邊界動畫？**  
+> 歡迎閱讀：👉 [**名詞解釋：07_常見算法 (KNN 篇)**](../名詞解釋/07_常見算法/README.md#1-k-最近鄰-k-nn)  
+> * 內含 K 值大小對欠擬合/過擬合的影響解析，以及距離權重計算圖解！  
+> * 線上互動網站體驗：[KNN 互動決策邊界動畫](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#knn)
+
 ---
 
 ## 🗺️ 學習地圖 (Learning Map)

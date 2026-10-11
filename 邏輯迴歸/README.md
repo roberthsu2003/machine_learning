@@ -1,6 +1,15 @@
-## 線性迴歸分類模型(Linear Regression Classification Model)
+# 邏輯迴歸分類模型 (Logistic Regression Classification)
 
 線性分類模型雖然簡單，但在許多實際應用中仍然非常有用，特別是在數據量較小或需要快速部署的場景中。理解線性分類模型也是學習更複雜模型的重要基礎。
+
+> [!TIP]
+> 🎬 **想要更生動的分類門檻動態拉動與 ROC-AUC 動畫？**  
+> 歡迎閱讀：  
+> * 👉 [**名詞解釋：07_常見算法 (線性分類篇)**](../名詞解釋/07_常見算法/README.md)（線性超平面決策邊界解析）  
+> * 👉 [**名詞解釋：09_評估指標 (分類指標篇)**](../名詞解釋/09_評估指標/README.md#1-分類評估指標-classification-metrics)（分類門檻、混淆矩陣、Precision/Recall 此消彼長與 ROC-AUC 互動動畫）  
+> * 線上互動網站體驗：[分類評估指標與門檻滑動動畫](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#classification-threshold)
+
+---
 
 ### 基本概念
 

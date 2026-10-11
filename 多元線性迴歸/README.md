@@ -15,6 +15,13 @@ $$\hat{y} = w_1 x_1 + w_2 x_2 + \dots + w_n x_n + b$$
 
 本章節將引導您學習從數據的前處理（編碼與縮放）、手動實作梯度下降優化，到使用 Scikit-Learn 自動建模的完整路徑，並附帶一個真實福利社營業額預測的專案實作。
 
+> [!TIP]
+> 🎬 **想要更生動的多元梯度下降與特徵縮放動畫？**  
+> 歡迎閱讀：  
+> * 👉 [**名詞解釋：06_優化算法 (梯度下降篇)**](../名詞解釋/06_優化算法/README.md)（矩陣梯度優化與 Batch Size 比較）  
+> * 👉 [**名詞解釋：04_特徵工程 (縮放與編碼篇)**](../名詞解釋/04_特徵工程/README.md)（多元特徵尺度拉平與等高線加速收斂）  
+> * 線上互動網站體驗：[梯度下降動畫](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#gradient-descent) · [特徵縮放動畫](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#scaling)
+
 ---
 
 ## 🗺️ 學習地圖 (Learning Map)
