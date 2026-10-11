@@ -137,8 +137,8 @@
         {
           "id": "selection",
           "title": "特徵選擇",
-          "geometry": "多欄方塊矩陣中，無關特徵淡出；過濾、包裝與嵌入方法用不同選取流程對照。",
-          "controls": "切換方法、保留／移除特徵",
+          "geometry": "過濾法依相關係數排序；包裝法逐組訓練並比較驗證誤差；嵌入法顯示 Lasso 係數隨 L1 強度縮到零。",
+          "controls": "切換方法、保留特徵數、L1 強度",
           "source_images": [
             "名詞解釋/04_特徵工程/images/01_feature_selection.svg"
           ]

@@ -22,6 +22,27 @@ for(const chapter of catalog.chapters){
   const cases=[defaults];
   for(const field of def.fields){const values=field.type==='select'?field.options.map(([value])=>value):field.type==='checkbox'?[false,true]:[field.min,field.max];for(const value of values)cases.push({...defaults,[field.key]:value});}
   for(const params of cases)for(const progress of [0,.25,.5,.75,1])render(def,params,progress);
+  if(def.id==='selection'){
+   // Balanced orthogonal demo: β=(3,.25,1.5,0); holdout reverses the spurious X2 effect.
+   const {fitSelection,selectionCandidates}=await import('./04-feature-engineering/scenes/selection.js');
+   for(const alpha of [0,.1,.25,.6,1.5,3,3.5]){
+    const model=fitSelection([0,1,2,3],alpha);
+    const expected=[3,.25,1.5,0].map(w=>Math.max(0,w-alpha));
+    model.weights.forEach((w,j)=>assert.ok(Math.abs(w-expected[j])<1e-9));
+    const m=render(def,{...defaults,method:'embedded',alpha},1);
+    assert.deepEqual(m.selected,expected.flatMap((w,j)=>w>1e-8?[j]:[]));
+    assert.equal(m.alpha,alpha);
+   }
+   for(const keep of [1,2,3,4]){
+    const list=selectionCandidates(keep),total=list.length*3+1;
+    assert.equal(list.length,[0,4,6,4,1][keep]);
+    for(let step=0;step<=total;step++)assert.equal(render(def,{...defaults,method:'wrapper',keep},step/total).evaluated,Math.min(list.length,Math.floor(step/3)));
+    const result=render(def,{...defaults,method:'wrapper',keep},1);
+    assert.equal(result.selected.length,keep);
+    assert.ok(Math.abs(result.best.validationMSE-Math.min(...list.map(m=>m.validationMSE)))<1e-9);
+    if(keep===2){assert.deepEqual(result.selected,[0,2]);assert.ok(Math.abs(result.best.validationMSE-.1025)<1e-9);}
+   }
+  }
   if(def.id==='split-strategies')for(const mode of ['random','stratified','time'])for(const ratio of [40,70,90]){
    const m=render(def,{...defaults,mode,ratio},1);
    assert.equal(m.train.length+m.test.length,40);assert.equal(new Set([...m.train,...m.test]).size,40);assert.equal(m.arrived.flat().length,40);
