@@ -18,7 +18,7 @@
 | 40～55 分 | B1／B2：做最小介面與驗收 |
 | 55～60 分 | 回答三個問題並展示結果 |
 
-第 01 例可把前 10 分鐘用於環境檢查，縮短比較實驗；課前由教師協助安裝 uv、VS Code 與 AI 助手。若生成／下載延遲，先確保 Notebook 主流程與單筆應用完成，比較圖或批次功能可課後延伸。
+環境建立由老師帶領，這份教材從模型與資料的操作開始。若生成／下載延遲，先確保 Notebook 主流程與單筆應用完成，比較圖或批次功能可課後延伸。
 
 ## 觀念連結
 
@@ -28,13 +28,13 @@
 - [常見算法](../../名詞解釋/07_常見算法/README.md)｜[線上原文](https://github.com/roberthsu2003/machine_learning/blob/main/名詞解釋/07_常見算法/README.md)
 - [評估指標](../../名詞解釋/09_評估指標/README.md)｜[線上原文](https://github.com/roberthsu2003/machine_learning/blob/main/名詞解釋/09_評估指標/README.md)
 
-本倉庫相對連結用於閱讀原教材；複製到獨立學生專案後改用「線上原文」。AI 的步驟 prompt 已附可直接讀取的線上網址。
+直接在 GitHub 開啟上述觀念連結閱讀，不必下載名詞解釋資料夾。AI 的步驟 prompt 已附可直接讀取的線上網址。
 
 ## 資料與問題設定
 
 [UCI Optical Recognition of Handwritten Digits](https://archive.ics.uci.edu/dataset/80/optical+recognition+of+handwritten+digits)，資料 CC BY 4.0；作者 E. Alpaydin、C. Kaynak。採 [sklearn load_digits](https://scikit-learn.org/stable/modules/generated/sklearn.datasets.load_digits.html) 的 1,797 筆 8×8 子集。
 
-此例使用開放資料。A1 由 AI 載入／快取；本教材尚未附上該來源 CSV。教師請於課前快取需下載的資料。
+本例使用 scikit-learn 內附的開放資料，無需另外下載範例檔。A1 由 AI 載入並儲存在本例 `data/`，不需要下載整個 repo。
 
 - **X（特徵）**：64 個像素強度，按照固定 row-major 順序從 8×8 展開；圖像顯示與模型輸入使用同一順序。
 - **y（標籤）**：數字 0～9 的類別；雖然標籤是數字，此處是分類，不是預測連續值。
@@ -42,21 +42,22 @@
 
 ## A｜一步一步請 AI 建立 ipynb
 
-先完成[課程首頁的環境 prompt](../README.md#學生專案與環境)，再依序貼 A0～A5。一次只貼一段；每段執行成功、回答 AI 的觀念問題後才貼下一段。另開 AI 對話時，重新貼 A0 並請它讀現有檔案接續。
+老師帶領完成環境後，直接從 GitHub 複製 A0～A5，依序貼給 AI。一次只貼一段；每段執行成功、回答 AI 的觀念問題後才貼下一段。另開 AI 對話時，重新貼 A0 並請它讀現有檔案接續。
 
 ### A0｜設定 AI 的工作方式
 
 ```text
 你是我的機器學習程式執行者與教學助教，我不熟悉 Python。
-我已在獨立學生專案 ml_ai_course 建立 uv 環境；不是在教師 machine_learning 倉庫根目錄執行。
-本例資料夾是 04_digits，請先讀 04_digits/README.md 和存在的 04_digits/data/DATA_CARD.md。
+老師已帶領我準備好學生專案與環境；請沿用目前開啟的學生專案，不重新建立環境。
+本例資料夾是 04_digits；不存在時請在學生專案內建立。教材不一定在本機，請讀以下 README 網址或我貼上的教材內容：
+https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/04_digits/README.md
 本例是「手寫數字：圖片也是特徵」，任務是多類別分類，之後介面使用 Gradio。
 你負責產生／修改真正可開啟的 04_digits/lesson.ipynb，不要只貼 Python 程式碼讓我自己建立檔案。
 每個步驟在同一 Notebook 追加 Markdown 解說與少量程式 cell，不覆寫我已完成的觀察。
 程式與圖用繁體中文說明；用語言比喻先解釋，再寫程式。繪圖中文若缺字型，選可用字型或英文圖例＋中文 Markdown，不讓缺字阻擋課程。
 只執行我目前貼出的步驟；不要一次完成 Notebook、app 和全部延伸。
 能存取檔案／終端時請直接做，否則提供完整檔案附件與一條可複製命令，說明我必須在哪個資料夾執行。
-所有套件用學生專案根目錄的 uv add 管理並保留 uv.lock；不在本例另外 init、建立 .venv 或用全域 pip 安裝。
+沿用老師準備的環境；缺少套件時列出名稱交由老師協助，不重建或更換環境。
 Notebook kernel 必須是根目錄 .venv；每個新函式讓初學者看懂用途，不要求我手寫程式。
 只在本例新增資料、Notebook、artifacts、app 檔案，不改其他例、不覆寫教材 README 或固定偽資料。
 先讀以下連結中最相關的 1～2 章段落，不必全章全讀，摘取本例的 2～3 個觀念；無法讀取時明講，讓我開連結提供段落，不捏造老師教材：
@@ -142,10 +143,10 @@ y：數字 0～9 的類別；雖然標籤是數字，此處是分類，不是預
 ### B1｜以已完成模型建立應用
 
 ```text
-延續 A0～A5；若是新對話，先讀 04_digits/README.md、04_digits/lesson.ipynb 與 04_digits/artifacts/metadata.json。
+延續 A0～A5；若是新對話，先讀 A0 提供的線上教材（或我貼上的內容），以及本機 04_digits/lesson.ipynb 與 04_digits/artifacts/metadata.json。
 用 Gradio 在 04_digits/app.py 建立繁體中文本機應用，必要的共同推論函式放在同例 inference.py。
 先確認 model.joblib 與 metadata 存在；若沒有或版本不相容，提示回到 A5，不在 app 啟動時自動重訓或下載資料。
-使用根目錄 uv add 安裝 gradio，保留 uv.lock；查已安裝版本的官方 API，不能照舊版記憶拼湊。
+使用老師準備好的 gradio；查已安裝版本的官方 API，缺少套件時列出需求交由老師協助。
 功能：Notebook 匯出 20 張 test 示例（64 特徵＋sample_id，真實標籤另存）；app 選 sample_id、顯示 8×8 圖與預測及前三名機率，按「揭曉」才顯示已存真實答案。核心不做自由畫板，避免不同解析度／反色造成輸入分布不一致。
 載入一次完整模型；輸入先驗證欄位、順序、型態與單位，保持 Notebook 的前處理，不另寫一套手動轉換。
 所有 artifacts 與資料檔都依 app.py 的檔案位置定位，不依賴目前終端工作目錄。

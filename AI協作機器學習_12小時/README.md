@@ -21,64 +21,38 @@
 | 11 | [客服工單](./11_support_text/README.md) | 偽資料：900 則、30 模板群 | TF-IDF、NB、模板洩漏 | Gradio 工單分流 |
 | 12 | [用電與漂移](./12_energy_drift/README.md) | 偽資料：600 天×3 棟 | 完整流程、未來泛化、誤差監測 | Streamlit 預測與批次監測 |
 
-一小時的節奏為：觀念 5 分、資料／切分 10 分、模型／評估 20 分、模型保存 5 分、最小應用 15 分、口頭驗收 5 分。第 01 小時先做環境確認，可縮短比較實驗；每例都可獨立重跑。教師於課前協助軟體安裝、AI 連線與資料快取，課中把時間用於理解與驗收。十二個完整 MVP 是教學目標；下載或 AI 生成延遲時，先完成主流程與單筆介面，延伸功能留作課後練習。
+一小時的節奏為：觀念 5 分、資料／切分 10 分、模型／評估 20 分、模型保存 5 分、最小應用 15 分、口頭驗收 5 分。環境建立由老師另外帶領；每例都可獨立重跑，課中把時間用於理解與驗收。十二個完整 MVP 是教學目標；下載或 AI 生成延遲時，先完成主流程與單筆介面，延伸功能留作課後練習。
 
-## 學生專案與環境
+## 在 GitHub 閱讀，只下載當次需要的檔案
 
-1. 在自己的電腦建立獨立的 `ml_ai_course` 資料夾，放在教師倉庫之外。
-2. 把本課程資料夾內的 README 與十二個範例資料夾複製到 `ml_ai_course`，保留後六例的 `data/`。不要只複製 prompt 而漏掉 CSV。
-3. 用 VS Code 開啟 `ml_ai_course`；啟用可讀寫專案檔案的 AI 助手，以及 Python／Jupyter 擴充功能。
-4. 貼下方環境 prompt。十二例共用根目錄的 `.venv`、`pyproject.toml`、`uv.lock`，不要每例建立不同環境。
-5. 日後執行命令都在 `ml_ai_course` 根目錄；Notebook 必須選這個專案的 `.venv` kernel。
+環境建立由老師課堂示範，本教材從已準備好的學生專案開始。
 
-完成後的預期配置（其中環境、Notebook、程式及 artifacts 由學生的 AI 建立）：
+1. 在 GitHub 開啟上方當次範例的 README，直接複製 prompt 給 AI，不必下載 README。
+2. 在老師帶領建立的學生專案中，讓 AI 建立該例資料夾，例如 `01_iris/`；Notebook、模型與應用都放在該例內。
+3. 本例有提供資料檔時，點該例「範例檔下載」連結，只儲存本次需要的檔案。不要下載整個 GitHub repo 或全部十二例資料。
+4. 依序貼 A0～A5，再貼 B1～B2。觀念解說直接開 GitHub 的「名詞解釋」連結閱讀。
 
-```text
-ml_ai_course/
-├── README.md                       # 本課程導航
-├── pyproject.toml                  # AI 建立
-├── uv.lock                         # uv 產生
-├── .venv/                          # uv 建立，十二例共用
-├── 01_iris/
-│   ├── README.md                   # 已提供的 prompt 教材，保留
-│   ├── lesson.ipynb                # A prompts 產生
-│   ├── data/                       # 開放資料由 AI 載入與快取
-│   ├── artifacts/                  # A5 保存的模型、指標、metadata
-│   ├── app.py                      # B prompts 產生
-│   └── RUN.md                      # AI 產生的操作說明
-├── 02_penguins/ ... 06_wholesale/
-├── 07_shop_sales/
-│   ├── README.md
-│   └── data/                       # CSV 與資料卡已提供
-└── 08_customer_churn/ ... 12_energy_drift/
-```
+CSV 連結開啟原始檔；若瀏覽器顯示文字，使用「另存新檔」，保留 `.csv` 副檔名，放到表格指定的位置。資料卡可線上閱讀，不必下載。AI 可讀取教材網址；如果工具無法讀取，貼上當次 README 的內容即可，不必把教材複製到本機。
 
-### 環境 prompt｜只要貼一次
+### 後六例的範例檔下載
 
-```text
-你是我的 Python 開發環境執行者。我不熟悉程式，現在 VS Code 開啟的是獨立學生專案 ml_ai_course，內含十二份 prompt README 與後六例資料。
-請先檢查目前路徑；如果開到教師 machine_learning 倉庫，先停下告訴我應該另開哪個學生資料夾，不修改教師的 pyproject.toml。
-確認作業系統、uv 是否可用及網路狀態。uv 未安裝時請依官方安裝頁提供我這個系統的操作，不讓我自己猜：
-https://docs.astral.sh/uv/getting-started/installation/
-僅在沒有 pyproject.toml 時，以 uv init --bare --python 3.12 初始化，保留現有 README 和資料；不要建立額外的巢狀專案。
-以 uv venv --python 3.12 建立根目錄 .venv；已有環境就檢查，不覆寫。
-用 uv add 安裝 numpy pandas scikit-learn matplotlib joblib；用 uv add --dev 安裝 ipykernel jupyterlab nbconvert。
-新增依賴與 uv.lock 由 uv 管理，不用全域 pip，也不直接安裝教師倉庫的全部 requirements。
-Gradio、Streamlit、ucimlrepo 在對應例子需要時再用 uv add 安裝。
-說明 VS Code 如何選 Python Environments 的根目錄 .venv kernel；確認 sys.executable 實際指向此環境，測試 pandas 與 sklearn 能匯入。
-若用瀏覽器 Notebook，從根目錄執行 uv run jupyter lab，並同樣檢查 kernel。命令在 Windows／macOS／Linux 都以本作業系統可用的方式給出，路徑含空白時正確加引號。
-如果 pyproject.toml 和 lock 已存在，先 uv sync，再確認缺的依賴；不重建別人的專案或全域環境。
-環境完成後列出實際 Python／套件版本、可用 kernel 與執行 Notebook 的方法，然後停下；不要開始寫十二個模型。
-```
+| 範例 | 只下載這個 CSV | 放在學生專案內 | 線上欄位說明 |
+| :--- | :--- | :--- | :--- |
+| 07 | [下載 shop_sales.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/07_shop_sales/data/shop_sales.csv) | `07_shop_sales/data/shop_sales.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/07_shop_sales/data/DATA_CARD.md) |
+| 08 | [下載 customer_churn.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/08_customer_churn/data/customer_churn.csv) | `08_customer_churn/data/customer_churn.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/08_customer_churn/data/DATA_CARD.md) |
+| 09 | [下載 machine_readings.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/09_machine_groups/data/machine_readings.csv) | `09_machine_groups/data/machine_readings.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/09_machine_groups/data/DATA_CARD.md) |
+| 10 | [下載 cafe_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/10_cafe_time/data/cafe_daily.csv) | `10_cafe_time/data/cafe_daily.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/10_cafe_time/data/DATA_CARD.md) |
+| 11 | [下載 support_tickets.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/11_support_text/data/support_tickets.csv) | `11_support_text/data/support_tickets.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/11_support_text/data/DATA_CARD.md) |
+| 12 | [下載 energy_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/data/energy_daily.csv) | `12_energy_drift/data/energy_daily.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/data/DATA_CARD.md) |
 
-環境安排依據 [uv 專案指南](https://docs.astral.sh/uv/guides/projects/) 與 [uv＋Jupyter 官方說明](https://docs.astral.sh/uv/guides/integration/jupyter/)。本課程不要求学生記憶命令，讓 AI 執行並解釋環境、套件與 kernel 各自做什麼。
+前六例使用開放資料：01、04、05 由 AI 載入 scikit-learn 內附資料；02 的 README 提供企鵝 CSV 下載連結；03、06 由 A1 從 UCI 載入並快取本例資料。每次只取得當前例子的資料。
 
 ## 每例的兩組 prompt 怎麼貼
 
 - **A0～A5：Notebook 路線。** 設定 AI 角色 → 看資料 → 切分與前處理 → 建模／比較 → 評估 → 重新執行與保存。每段停下問一個概念問題，學生確認成功後才貼下一段。
 - **B1～B2：專案路線。** 讀取同一已保存模型 → 建立介面 → 驗收重啟與預測一致性。UI 不重新訓練，避免介面與 Notebook 變成兩個不同模型。
 
-AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功能的 AI，請它交付完整檔案附件，再由學生存到指定路徑；沒有工具能力時不可宣稱已執行或測試。每次續接對話讓 AI 讀現有 README、Notebook 與 metadata，避免從頭亂改。
+AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功能的 AI，請它交付完整檔案附件，再由學生存到指定路徑；沒有工具能力時不可宣稱已執行或測試。每次續接對話讓 AI 讀線上教材，以及本機 Notebook 與 metadata，避免從頭亂改。
 
 ### AI 出錯時的除錯 prompt
 
@@ -97,8 +71,8 @@ AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功�
 
 ```text
 我已完成目前範例的 lesson.ipynb 與 artifacts。
-請先問我這次要轉換哪個範例資料夾，讀該例 README、metadata 與既有推論函式。
-保留同一 model.joblib 與預處理，以 uv add PyQt6 在共用學生環境加入桌面依賴。
+請先問我這次要轉換哪個範例資料夾，讀該例的 GitHub 教材或我貼上的內容，以及本機 metadata 與既有推論函式。
+保留同一 model.joblib 與預處理，使用老師準備好的環境；缺少 PyQt6 時列出需求交由老師協助。
 在該例另建 desktop_app.py，不覆寫已完成的 Gradio／Streamlit app。
 用 PyQt6 做與原 B1 相同的原始欄位、預測按鈕、結果與資料／模型限制；文字為繁體中文。
 檔案路徑依 desktop_app.py 所在位置定位。啟動只載入已保存模型，不訓練、不下載；較慢推論或 CSV 作業不要阻塞畫面。
@@ -110,7 +84,7 @@ AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功�
 
 ## 名詞解釋如何穿插教學
 
-每個範例 README 都連到本倉庫[名詞解釋](../名詞解釋/README.md)，並附線上原文供複製到學生專案後閱讀。不是每小時從頭念完整一章；先開與當前問題相關的動畫／段落，再讓 AI 以實際結果回扣觀念。
+每個範例 README 都連到本倉庫[名詞解釋](../名詞解釋/README.md)，並附線上原文，學生直接在 GitHub 閱讀。不是每小時從頭念完整一章；先開與當前問題相關的動畫／段落，再讓 AI 以實際結果回扣觀念。
 
 | 原教材章節 | 最適合回看的範例 |
 | :--- | :--- |

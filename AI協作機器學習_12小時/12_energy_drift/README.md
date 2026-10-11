@@ -18,7 +18,7 @@
 | 40～55 分 | B1／B2：做最小介面與驗收 |
 | 55～60 分 | 回答三個問題並展示結果 |
 
-第 01 例可把前 10 分鐘用於環境檢查，縮短比較實驗；課前由教師協助安裝 uv、VS Code 與 AI 助手。若生成／下載延遲，先確保 Notebook 主流程與單筆應用完成，比較圖或批次功能可課後延伸。
+環境建立由老師帶領，這份教材從模型與資料的操作開始。若生成／下載延遲，先確保 Notebook 主流程與單筆應用完成，比較圖或批次功能可課後延伸。
 
 ## 觀念連結
 
@@ -30,13 +30,18 @@
 - [模型泛化](../../名詞解釋/11_模型泛化/README.md)｜[線上原文](https://github.com/roberthsu2003/machine_learning/blob/main/名詞解釋/11_模型泛化/README.md)
 - [機器學習訓練過程](../../名詞解釋/12_機器學習訓練過程/README.md)｜[線上原文](https://github.com/roberthsu2003/machine_learning/blob/main/名詞解釋/12_機器學習訓練過程/README.md)
 
-本倉庫相對連結用於閱讀原教材；複製到獨立學生專案後改用「線上原文」。AI 的步驟 prompt 已附可直接讀取的線上網址。
+直接在 GitHub 開啟上述觀念連結閱讀，不必下載名詞解釋資料夾。AI 的步驟 prompt 已附可直接讀取的線上網址。
 
 ## 資料與問題設定
 
 本教材原創偽資料，data/energy_daily.csv，600 天×3 棟假想建物＝1,800 筆；seed=7012，最後 120 天刻意改變耗電規則。
 
-[偽資料卡與欄位字典](./data/DATA_CARD.md) 已隨教材提供；使用固定 CSV，不必請 AI 再抽一份。
+### 範例檔下載
+
+- [下載 energy_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/data/energy_daily.csv)：只下載本例 CSV，儲存到學生專案的 `12_energy_drift/data/energy_daily.csv`。
+- [線上閱讀偽資料卡與欄位字典](./data/DATA_CARD.md)：直接在 GitHub 閱讀，不必下載。
+
+若連結顯示文字，使用瀏覽器「另存新檔」，保留 `.csv` 副檔名。使用這份固定 CSV，不請 AI 重新生成；本例不需要其他範例的資料，也不必下載整個 repo。
 
 - **X（特徵）**：building_type、floor_area_m2、occupancy_rate、temperature_forecast_c、is_weekend；building_id、date、scenario_regime、is_synthetic 排除，date 僅用於切分；energy_kwh 為 target。
 - **y（標籤）**：energy_kwh；後期用電規則加乘 1.25，這是教學生成設定，不是模型事先知道的資訊。
@@ -44,21 +49,24 @@
 
 ## A｜一步一步請 AI 建立 ipynb
 
-先完成[課程首頁的環境 prompt](../README.md#學生專案與環境)，再依序貼 A0～A5。一次只貼一段；每段執行成功、回答 AI 的觀念問題後才貼下一段。另開 AI 對話時，重新貼 A0 並請它讀現有檔案接續。
+老師帶領完成環境後，直接從 GitHub 複製 A0～A5，依序貼給 AI。一次只貼一段；每段執行成功、回答 AI 的觀念問題後才貼下一段。另開 AI 對話時，重新貼 A0 並請它讀現有檔案接續。
 
 ### A0｜設定 AI 的工作方式
 
 ```text
 你是我的機器學習程式執行者與教學助教，我不熟悉 Python。
-我已在獨立學生專案 ml_ai_course 建立 uv 環境；不是在教師 machine_learning 倉庫根目錄執行。
-本例資料夾是 12_energy_drift，請先讀 12_energy_drift/README.md 和存在的 12_energy_drift/data/DATA_CARD.md。
+老師已帶領我準備好學生專案與環境；請沿用目前開啟的學生專案，不重新建立環境。
+本例資料夾是 12_energy_drift；不存在時請在學生專案內建立。教材不一定在本機，請讀以下 README 網址或我貼上的教材內容：
+https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/README.md
+欄位字典與生成規則請讀以下線上資料卡，不要求本機一定有 DATA_CARD.md：
+https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/data/DATA_CARD.md
 本例是「用電預測：完整專案與資料漂移」，任務是回歸、監測與成果整合，之後介面使用 Streamlit。
 你負責產生／修改真正可開啟的 12_energy_drift/lesson.ipynb，不要只貼 Python 程式碼讓我自己建立檔案。
 每個步驟在同一 Notebook 追加 Markdown 解說與少量程式 cell，不覆寫我已完成的觀察。
 程式與圖用繁體中文說明；用語言比喻先解釋，再寫程式。繪圖中文若缺字型，選可用字型或英文圖例＋中文 Markdown，不讓缺字阻擋課程。
 只執行我目前貼出的步驟；不要一次完成 Notebook、app 和全部延伸。
 能存取檔案／終端時請直接做，否則提供完整檔案附件與一條可複製命令，說明我必須在哪個資料夾執行。
-所有套件用學生專案根目錄的 uv add 管理並保留 uv.lock；不在本例另外 init、建立 .venv 或用全域 pip 安裝。
+沿用老師準備的環境；缺少套件時列出名稱交由老師協助，不重建或更換環境。
 Notebook kernel 必須是根目錄 .venv；每個新函式讓初學者看懂用途，不要求我手寫程式。
 只在本例新增資料、Notebook、artifacts、app 檔案，不改其他例、不覆寫教材 README 或固定偽資料。
 先讀以下連結中最相關的 1～2 章段落，不必全章全讀，摘取本例的 2～3 個觀念；無法讀取時明講，讓我開連結提供段落，不捏造老師教材：
@@ -77,7 +85,10 @@ https://github.com/roberthsu2003/machine_learning/blob/main/名詞解釋/12_機�
 ```text
 承接 A0，只做資料載入與觀察。
 建立／追加 12_energy_drift/lesson.ipynb 的「問題與資料」區塊。
-讀取附帶 CSV 與 DATA_CARD.md；日期、建物與 scenario_regime 只供資料稽核，scenario_regime 不能當答案提示特徵。
+讀取我下載到 12_energy_drift/data/energy_daily.csv 的固定 CSV；資料卡使用 A0 的線上網址，不要求下載 DATA_CARD.md。
+若 CSV 不存在，提供下列網址與儲存位置，等我下載完成再繼續，不重新生成或宣稱已載入：
+https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/data/energy_daily.csv
+依線上資料卡檢查 CSV；日期、建物與 scenario_regime 只供資料稽核，scenario_regime 不能當答案提示特徵。
 資料與 artifacts 路徑要在該例資料夾內。Notebook 可能由專案根目錄或本例資料夾啟動，先檢查工作目錄與存在檔案，正確定位，不寫死教師電腦路徑。
 請執行載入，顯示前 5 筆、列／欄數、欄名、型態、缺失與一張最有用的圖；有 target 才列類別／target 分布，分群則列六欄消費分布。
 這次不訓練模型。資料下載失敗不換資料、不編造讀取結果，先說明可重試或使用教師同來源快取的辦法。
@@ -146,10 +157,10 @@ y：energy_kwh；後期用電規則加乘 1.25，這是教學生成設定，不�
 ### B1｜以已完成模型建立應用
 
 ```text
-延續 A0～A5；若是新對話，先讀 12_energy_drift/README.md、12_energy_drift/lesson.ipynb 與 12_energy_drift/artifacts/metadata.json。
+延續 A0～A5；若是新對話，先讀 A0 提供的線上教材（或我貼上的內容），以及本機 12_energy_drift/lesson.ipynb 與 12_energy_drift/artifacts/metadata.json。
 用 Streamlit 在 12_energy_drift/app.py 建立繁體中文本機應用，必要的共同推論函式放在同例 inference.py。
 先確認 model.joblib 與 metadata 存在；若沒有或版本不相容，提示回到 A5，不在 app 啟動時自動重訓或下載資料。
-使用根目錄 uv add 安裝 streamlit，保留 uv.lock；查已安裝版本的官方 API，不能照舊版記憶拼湊。
+使用老師準備好的 streamlit；查已安裝版本的官方 API，缺少套件時列出需求交由老師協助。
 功能：單筆原始特徵預測＋上傳含五特徵與已觀測 energy_kwh 的監測 CSV，顯示輸出下載、批次 MAE、相對 val 基準與檢查提示。若無真值只能預測，不能算 MAE；頁面標示模型版本、訓練期間、偽資料與未知建物型態提示。
 載入一次完整模型；輸入先驗證欄位、順序、型態與單位，保持 Notebook 的前處理，不另寫一套手動轉換。
 所有 artifacts 與資料檔都依 app.py 的檔案位置定位，不依賴目前終端工作目錄。
