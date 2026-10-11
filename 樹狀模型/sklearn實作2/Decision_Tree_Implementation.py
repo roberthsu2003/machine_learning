@@ -6,6 +6,17 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
 from sklearn.preprocessing import LabelEncoder
 
+# --- 設定 Matplotlib 中文字型支援（Mac / Windows / Colab 通用）---
+import glob
+import os
+import mplfonts
+from matplotlib import font_manager
+from mplfonts import use_font
+
+for f in glob.glob(os.path.join(os.path.dirname(mplfonts.__file__), "fonts", "*.[ot]tf")):
+    font_manager.fontManager.addfont(f)   # 直接註冊 mplfonts 內附的字型，不改任何檔案
+use_font("Noto Sans CJK SC")              # 套用思源黑體，負號也會一起處理
+
 # 讀取資料集
 data = pd.read_csv('Bookstore_Stationery_Dataset.csv')
 

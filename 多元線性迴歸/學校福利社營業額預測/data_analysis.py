@@ -5,9 +5,16 @@ import seaborn as sns
 # 載入資料集
 df = pd.read_csv("福利社營業額資料集.csv")
 
-# 設置繁體中文顯示
-plt.rcParams["font.family"] = "Microsoft JhengHei"
-plt.rcParams["axes.unicode_minus"] = False
+# --- 設定 Matplotlib 中文字型支援（Mac / Windows / Colab 通用）---
+import glob
+import os
+import mplfonts
+from matplotlib import font_manager
+from mplfonts import use_font
+
+for f in glob.glob(os.path.join(os.path.dirname(mplfonts.__file__), "fonts", "*.[ot]tf")):
+    font_manager.fontManager.addfont(f)   # 直接註冊 mplfonts 內附的字型，不改任何檔案
+use_font("Noto Sans CJK SC")              # 套用思源黑體，負號也會一起處理
 
 # 1. 散點圖：氣溫 vs 營業額
 plt.figure(figsize=(8, 6))

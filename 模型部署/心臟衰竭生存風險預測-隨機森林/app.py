@@ -3,7 +3,6 @@ import joblib
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib.font_manager as fm
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 import gradio as gr
@@ -19,16 +18,19 @@ meta = joblib.load(MODEL_PATH)
 model = meta["model"]
 feature_importances = meta["feature_importances"]
 
-# 中文字型設定
-try:
-    from mplfonts import use_font
-    use_font('Noto Sans CJK TC')
-except Exception:
-    font_path = "ChineseFont.ttf" if os.path.exists("ChineseFont.ttf") else "../../source_data/ChineseFont.ttf"
-    if os.path.exists(font_path):
-        font_prop = fm.FontProperties(fname=font_path)
-        plt.rcParams["font.sans-serif"] = [font_prop.get_name()]
-        plt.rcParams["axes.unicode_minus"] = False
+# --- 設定 Matplotlib 中文字型支援（Mac / Windows / Colab 通用）---
+import glob
+import mplfonts
+from matplotlib import font_manager
+from mplfonts import use_font
+
+for f in glob.glob(os.path.join(os.path.dirname(mplfonts.__file__), "fonts", "*.[ot]tf")):
+    font_manager.fontManager.addfont(f)   # 直接註冊 mplfonts 內附的字型，不改任何檔案
+use_font("Noto Sans CJK SC")              # 套用思源黑體，負號也會一起處理
+# 取註冊好的思源黑體供圖表 fontproperties 使用
+from matplotlib.font_manager import FontProperties
+_sc_fonts = sorted(glob.glob(os.path.join(os.path.dirname(mplfonts.__file__), "fonts", "*CJKsc*")))
+font_prop = FontProperties(fname=_sc_fonts[0]) if _sc_fonts else None
 
 # 2. FastAPI
 app = FastAPI(
