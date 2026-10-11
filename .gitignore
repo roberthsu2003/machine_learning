@@ -1,5 +1,10 @@
 .env
-__pycache__
+__pycache__/
+*.py[cod]
 *.joblib
 *.pkl
 .venv/
+.DS_Store
+output/
+.playwright-cli/
+cache/
