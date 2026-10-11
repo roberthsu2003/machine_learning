@@ -15,6 +15,9 @@ export function mountScenes(definitions){
   definitions.forEach(def=>{
     const panel=document.querySelector(`[data-scene="${def.id}"]`);if(!panel)return;
     panel.classList.add('ready');if(def.guide){const guide=document.createElement('div');guide.className='scene-guide';const title=document.createElement('strong');title.textContent='怎麼操作與閱讀';guide.append(title);const list=document.createElement('ol');def.guide.forEach(instruction=>{const item=document.createElement('li');item.textContent=instruction;list.append(item);});guide.append(list);panel.querySelector('.scene-description').after(guide);}if(def.note)panel.querySelector('.scene-note').textContent=def.note+' '+panel.querySelector('.scene-note').textContent;const canvas=panel.querySelector('canvas'),ctx=canvas.getContext('2d');
+    const stage=document.createElement('div');stage.className='scene-stage';stage.tabIndex=0;stage.setAttribute('role','region');stage.setAttribute('aria-label',`${def.title}畫布，可左右捲動`);canvas.before(stage);stage.append(canvas);
+    if(def.viewSize)stage.classList.add('responsive-stage');
+    const hint=document.createElement('p');hint.className='canvas-scroll-hint';if(def.viewSize)hint.hidden=true;hint.textContent='畫布可左右滑動或用方向鍵捲動；按「放大動畫」可查看更多細節。';stage.before(hint);
     if(!ctx){panel.querySelector('.scene-description').textContent='此瀏覽器不支援 Canvas 2D，請參考本節文字與原圖。';return;}
     const state={def,panel,canvas,ctx,time:0,playing:false,visible:false,speed:1,params:Object.fromEntries((def.fields||[]).map(f=>[f.key,f.value])),lastResult:null};
     state.params.seed=42;
@@ -23,9 +26,11 @@ export function mountScenes(definitions){
     state.buttonState=()=>{play.textContent=state.playing?'Ⅱ 暫停':'▶ 播放動畫';play.setAttribute('aria-pressed',String(state.playing));};
     state.draw=()=>{
       const r=canvas.getBoundingClientRect();if(!r.width||!r.height)return;
+      const [viewWidth,viewHeight]=def.viewSize?.(r.width)??[760,450];
+      if(def.viewSize)canvas.style.aspectRatio=`${viewWidth}/${viewHeight}`;
       const dpr=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
-      ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,w,h);const scale=Math.min(w/760,h/450);ctx.setTransform(scale,0,0,scale,(w-760*scale)/2,(h-450*scale)/2);
-      state.progress=state.time/16;state.step=Math.min(def.steps??12,Math.floor(state.progress*(def.steps??12)));state.phase=state.progress*4;
+      ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,w,h);const scale=Math.min(w/viewWidth,h/viewHeight);ctx.setTransform(scale,0,0,scale,(w-viewWidth*scale)/2,(h-viewHeight*scale)/2);
+      state.progress=state.time/16;const steps=typeof def.steps==='function'?def.steps(state):def.steps??12;state.step=Math.min(steps,Math.floor(state.progress*steps+1e-6));state.phase=state.progress*4;
       const result=def.render(ctx,state)||{};
       if(result.message&&panel.querySelector('.scene-result').textContent!==result.message)panel.querySelector('.scene-result').textContent=result.message;
       state.lastResult=result;panel.dataset.result=JSON.stringify(result.metrics??{});panel.dataset.time=state.time.toFixed(3);
@@ -33,13 +38,13 @@ export function mountScenes(definitions){
     };
     play.addEventListener('click',()=>{if(state.time>=16)state.time=0;state.playing=!state.playing;state.buttonState();state.draw();});
     panel.querySelector('[data-action="reset"]').addEventListener('click',()=>{state.time=0;state.playing=false;state.buttonState();state.draw();});
-    panel.querySelector('[data-action="step"]').addEventListener('click',()=>{state.playing=false;const steps=def.steps??12;state.time=state.time>=16?0:Math.min(16,(Math.floor(state.time/16*steps+1e-6)+1)*16/steps);state.buttonState();state.draw();});
+    panel.querySelector('[data-action="step"]').addEventListener('click',()=>{state.playing=false;const steps=typeof def.steps==='function'?def.steps(state):def.steps??12;state.time=state.time>=16?0:Math.min(16,(Math.floor(state.time/16*steps+1e-6)+1)*16/steps);state.buttonState();state.draw();});
     panel.querySelector('[data-action="resample"]').addEventListener('click',()=>{state.params.seed++;state.time=0;state.playing=false;state.buttonState();state.draw();});
     panel.querySelector('[data-action="resample"]').hidden=!def.resample;
     panel.querySelector('[data-action="zoom"]').addEventListener('click',event=>{const zoom=panel.classList.toggle('zoomed');event.currentTarget.textContent=zoom?'收回動畫':'放大動畫';document.body.classList.toggle('scene-open',zoom);state.draw();});
     panel.querySelector('.speed').addEventListener('change',event=>state.speed=Number(event.target.value));
     timeline.addEventListener('input',event=>{state.time=Number(event.target.value);state.playing=false;state.buttonState();state.draw();});
-    if(def.pointer){let dragging=false;const move=event=>{if(!dragging)return;const r=canvas.getBoundingClientRect(),scale=Math.min(r.width/760,r.height/450),x=(event.clientX-r.left-(r.width-760*scale)/2)/scale,y=(event.clientY-r.top-(r.height-450*scale)/2)/scale;def.pointer(state,x,y);state.time=0;state.playing=false;state.buttonState();panel.querySelectorAll('.parameter input[type=range]').forEach(input=>{if(input.name in state.params){input.value=state.params[input.name];input.parentNode.querySelector('output').textContent=input.value;}});state.draw();};canvas.addEventListener('pointerdown',event=>{dragging=true;canvas.setPointerCapture(event.pointerId);move(event);});canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);canvas.classList.add('draggable');}
+    if(def.pointer){let dragging=false;const move=event=>{if(!dragging)return;const r=canvas.getBoundingClientRect(),scale=Math.min(r.width/760,r.height/450),x=(event.clientX-r.left-(r.width-760*scale)/2)/scale,y=(event.clientY-r.top-(r.height-450*scale)/2)/scale;def.pointer(state,x,y);state.time=0;state.playing=false;state.buttonState();panel.querySelectorAll('.parameter input[type=range]').forEach(input=>{if(input.name in state.params){input.value=state.params[input.name];input.parentNode.querySelector('output').textContent=input.value;}});state.draw();};canvas.addEventListener('pointerdown',event=>{if(event.pointerType==='touch'&&stage.scrollWidth>stage.clientWidth)return;dragging=true;canvas.setPointerCapture(event.pointerId);move(event);});canvas.addEventListener('pointermove',move);canvas.addEventListener('pointerup',()=>dragging=false);canvas.addEventListener('pointercancel',()=>dragging=false);canvas.classList.add('draggable');}
     new ResizeObserver(state.draw).observe(canvas);
     new IntersectionObserver(entries=>{state.visible=entries[0].isIntersecting;if(!state.visible){state.playing=false;state.buttonState();}else state.draw();},{threshold:.05}).observe(panel);
     scenes.push(state);state.draw();

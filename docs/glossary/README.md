@@ -121,3 +121,14 @@ python3 -m http.server 8765 --directory docs
 動畫修改於各章 `scenes/index.js`；共用播放器與計算工具在 `shared/`。動畫不需要重新產生 HTML，場景 ID 必須與 `chapters.json` 一致。數值檢查可執行 `node docs/glossary/check-math.mjs`。
 
 沿用目前 GitHub Pages 的 `/docs` 設定。完成檔案 commit 並推送至 Pages 使用的分支後，等待 GitHub 部署完成。不要將發布來源改成 `docx`。
+
+## 全面動畫檢查
+
+詳見 [42 個場景的檢查與修正紀錄](animation-review.md)。數值與教學步驟可用下列指令重新檢查：
+
+```sh
+node docs/glossary/check-math.mjs
+node docs/glossary/check-scenes.mjs
+```
+
+手機畫布保留可讀尺寸，提供場景內左右捲動；帶 ID 的切分策略有直向布局。全部互動場景使用 Canvas 2D，靜態 SVG 原圖保留作教材對照。

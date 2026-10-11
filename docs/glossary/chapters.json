@@ -61,8 +61,8 @@
         {
           "id": "labels",
           "title": "標籤與任務",
-          "geometry": "成交價或類別標籤從樣本卡片抽出，移到 y 欄；分類用離散色塊，回歸用數線。",
-          "controls": "切換分類／回歸、顯示答案",
+          "geometry": "房屋的四個輸入欄位保持完整，答案方塊移入 y 欄；切換分類類別與回歸成交價。",
+          "controls": "切換分類／回歸、顯示或遮住答案",
           "source_images": [
             "名詞解釋/02_數據結構/images/02_labels.png"
           ]
@@ -70,8 +70,8 @@
         {
           "id": "matrix",
           "title": "特徵矩陣 X 與標籤 y",
-          "geometry": "三筆原教材房屋資料重排為 3×4 矩陣與長度 3 的向量，樣本列與特徵欄逐一亮起。",
-          "controls": "選樣本、選欄位、重播資料重排",
+          "geometry": "五欄房屋資料分離為 X 與 y；欄名隨數字移動，選定格以深色外框標示。",
+          "controls": "選樣本列、選特徵欄、重播 X／y 分離",
           "source_images": [
             "名詞解釋/02_數據結構/images/03_data_structure_example.svg"
           ]
@@ -90,7 +90,7 @@
         {
           "id": "train-test",
           "title": "訓練／測試分割",
-          "geometry": "帶 ID 的樣本方塊打散，再移入互不重疊的訓練與測試容器。",
+          "geometry": "帶 ID 的樣本方塊移入 Train／Test；保留來源位置與類別圖例，可追蹤同一 ID。",
           "controls": "調整比例、固定種子重新分割",
           "source_images": [
             "名詞解釋/03_數據分割/images/01_train_test_split.svg"
@@ -99,7 +99,7 @@
         {
           "id": "train-validation-test",
           "title": "三份資料的角色",
-          "geometry": "資料移入 Train／Validation／Test；只有 Train 流入模型，Validation 流向調參旋鈕，Test 保持封存。",
+          "geometry": "帶 ID 的資料移入三個互斥容器；切換流程時亮起相應集合與用途箭頭。",
           "controls": "切換訓練／調參／最終評估、調整比例",
           "source_images": [
             "名詞解釋/03_數據分割/images/02_three_way_split_validation.svg"
@@ -108,7 +108,7 @@
         {
           "id": "split-strategies",
           "title": "隨機、分層與時間切分",
-          "geometry": "切換抽樣方式後，兩類樣本在各容器的比例改變；時間模式按先後排列方塊。",
+          "geometry": "保留帶 ID 的原始資料，逐步呈現抽樣順序與 Train／Test 分配；對照類別比例，時間模式標示過去與未來的分界。",
           "controls": "切換切分方式、顯示各類數量",
           "source_images": [
             "名詞解釋/03_數據分割/images/02_three_way_split_validation.svg"
@@ -258,8 +258,8 @@
         {
           "id": "knn",
           "title": "KNN",
-          "geometry": "拖曳待分類點，距離線依序連向最近 k 個點，鄰居投票後改變預測標記。",
-          "controls": "拖曳查詢點、調整 k、顯示距離",
+          "geometry": "用圓／方／三角形區分類別；距離線依次連接查詢點與最近鄰居，右側排名表避免距離文字重疊。",
+          "controls": "拖曳或滑桿定位查詢點、調整 k、顯示距離",
           "source_images": [
             "名詞解釋/07_常見算法/images/01_knn.png"
           ]
@@ -285,8 +285,8 @@
         {
           "id": "naive-bayes",
           "title": "樸素貝氏",
-          "geometry": "代表詞彙的方塊流入兩個類別容器，依條件機率更新相對分數。",
-          "controls": "選擇詞彙、顯示先驗與條件機率",
+          "geometry": "選定詞的條件機率同時流向垃圾與一般郵件分數，再正規化成比例。",
+          "controls": "逐詞納入機率、調整先驗與詞彙",
           "source_images": [
             "名詞解釋/07_常見算法/images/04_naive_bayes.svg"
           ]
@@ -305,8 +305,8 @@
         {
           "id": "bagging",
           "title": "Bagging",
-          "geometry": "樣本有放回抽取到不同模型；多個預測標記移向投票或平均結果。",
-          "controls": "重新抽樣、顯示重複樣本、逐模型投票",
+          "geometry": "逐模型預測流入投票／平均結果；下方展示 Bootstrap ID，讓有放回抽樣的重複可見。",
+          "controls": "重新抽樣、顯示重複樣本 ID、逐模型投票",
           "source_images": [
             "名詞解釋/08_集成學習/images/01_bagging.svg"
           ]
@@ -323,8 +323,8 @@
         {
           "id": "stacking",
           "title": "Stacking",
-          "geometry": "基礎模型的 OOF 預測方塊重排為新矩陣，再流入元模型。",
-          "controls": "逐折產生 OOF、組成新特徵、執行元模型",
+          "geometry": "每一步揭露一折 OOF 預測，全部完成後再開啟元模型；表格明示預覽筆數。",
+          "controls": "設定折數、逐折產生 OOF、完成後整合元模型",
           "source_images": [
             "名詞解釋/08_集成學習/images/03_stacking.svg"
           ]
@@ -343,7 +343,7 @@
         {
           "id": "confusion-matrix",
           "title": "混淆矩陣",
-          "geometry": "每個樣本按真實類別與預測類別移進 TP／FP／FN／TN 四格，數量同步增加。",
+          "geometry": "帶 ID 的樣本依真實類別與預測類別移入 TP／FP／FN／TN；保留來源位置並標示兩軸。",
           "controls": "逐樣本分類、調整分類門檻",
           "source_images": [
             "名詞解釋/09_評估指標/images/01_confusion_matrix.svg"
@@ -361,8 +361,8 @@
         {
           "id": "regression-errors",
           "title": "MAE、MSE、RMSE",
-          "geometry": "殘差線段展開為絕對長度與平方色塊，加入離群點後比較各種誤差變化。",
-          "controls": "移動預測線、加入／移除離群值",
+          "geometry": "殘差線段對應各筆平方色塊，標出 |e|、e² 與共用倍率，避免裁切、重疊或色塊太小。",
+          "controls": "移動預測線、加入／移除離群值、比較誤差數值",
           "source_images": [
             "名詞解釋/09_評估指標/images/03_regression_metrics_errors.png"
           ]
@@ -447,7 +447,7 @@
         {
           "id": "generalization-gap",
           "title": "泛化鴻溝",
-          "geometry": "訓練與驗證誤差長條同步變動，以連接線顯示兩者差距與絕對高度。",
+          "geometry": "訓練與驗證誤差使用同一個 0–1 尺度；長條數字與泛化鴻溝隨動畫同步變動。",
           "controls": "切換欠擬合／過擬合／良好泛化",
           "source_images": [
             "名詞解釋/11_模型泛化/images/02_generalization_gap.png"
@@ -456,8 +456,8 @@
         {
           "id": "cross-validation",
           "title": "資料分割與 K 折交叉驗證",
-          "geometry": "先封存測試方塊；剩餘資料分成 K 份，驗證份逐輪換位並累計分數。",
-          "controls": "設定 K、下一折、顯示平均與標準差",
+          "geometry": "先封存 Test；每按一次下一步完成一折驗證，逐折揭露 MSE、平均與標準差。",
+          "controls": "設定 K、逐折評估、比較平均與標準差",
           "source_images": [
             "名詞解釋/11_模型泛化/images/03_data_splitting.svg",
             "名詞解釋/11_模型泛化/images/04_cross_validation.svg"
@@ -486,8 +486,8 @@
         {
           "id": "lifecycle",
           "title": "端到端生命週期",
-          "geometry": "資料包沿六大階段前進，在部署監控處形成回饋閉環，必要時回到前面重訓。",
-          "controls": "逐階段播放、點選階段、查看產出",
+          "geometry": "六階段依蛇形箭頭前進，每格顯示產出；部署監控以橘色閉環回到問題與資料。",
+          "controls": "逐階段播放、滑桿選擇階段、查看產出與重訓回饋",
           "source_images": [
             "名詞解釋/12_機器學習訓練過程/images/01_ml_lifecycle_pipeline.svg"
           ]
@@ -495,8 +495,8 @@
         {
           "id": "inner-loop",
           "title": "訓練迭代與 Epoch／Batch／Iteration",
-          "geometry": "樣本隊列逐批進入模型，循環走過前向、損失、反傳與更新；計數器同步增加。",
-          "controls": "設定 N／Batch Size／Epoch、播放一批／一輪",
+          "geometry": "一批走完前向、損失、反傳與更新才完成一次 Iteration；單步、批次 ID 與 Epoch 計數一致。",
+          "controls": "設定 N／Batch Size／Epoch、單步完成一批、切換 drop_last",
           "source_images": [
             "名詞解釋/12_機器學習訓練過程/images/02_model_training_iteration_loop.svg"
           ]
@@ -504,8 +504,8 @@
         {
           "id": "training-health",
           "title": "健康度與檢查清單",
-          "geometry": "模型線與驗證曲線對照變動；在流程關卡檢查資料切分、洩漏與最終評估。",
-          "controls": "切換擬合狀態、開啟檢查點、回到對應前章",
+          "geometry": "誤差長條以共用 0–1 尺度對照；三個流程關卡各有文字標籤與通過狀態。",
+          "controls": "切換擬合狀態、檢查資料切分／fit Train／Test 不調參",
           "source_images": [
             "名詞解釋/12_機器學習訓練過程/images/03_underfitting_overfitting_spectrum.png"
           ]

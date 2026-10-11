@@ -204,7 +204,7 @@ class Renderer(mistune.HTMLRenderer):
             labels = re.findall(r'\["([^"\]]+)"\]', code)
             labels = list(dict.fromkeys(labels))
             if labels:
-                return '<div class="flow-summary"><strong>流程與概念摘要</strong><ul>' + ''.join('<li>' + escape(label).replace('&lt;br&gt;', ' ／ ') + '</li>' for label in labels) + '</ul></div>'
+                return '<div class="flow-summary"><strong>流程與概念摘要</strong><ul>' + ''.join('<li>' + escape(re.sub(r'<br\s*/?>', ' ／ ', label, flags=re.I)) + '</li>' for label in labels) + '</ul></div>'
         return super().block_code(code, info)
 
 

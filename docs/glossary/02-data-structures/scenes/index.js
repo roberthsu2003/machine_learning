@@ -72,6 +72,22 @@ demo('features','特徵與資料型態',[
  guide:['先選房屋特徵；左邊同時顯示對應的欄位與原始值。','按第一次「下一步」：把欄位的值抽到右側。','按第二次「下一步」：觀察數線、計數、等級、類別或文字編碼流程。','切換選項會回到起點，請再按兩次「下一步」。也可播放或拖動時間軸。']
 }),
 demo('labels','標籤與任務',[select('task','標籤型態',[['regression','回歸：成交價'],['classification','分類：價格區間']]),check('answer','顯示標籤答案',true)],(c,s)=>{
- G.heading(c,'X 是輸入，y 是要預測的答案');houses.forEach((h,i)=>{G.rect(c,55,95+i*88,410,62,C.white,C.line);G.text(c,`${h[0]} 坪 · ${h[1]} 房 · ${h[2]} 年 · ${h[3]} 公尺`,260,126+i*88,16);const value=s.params.answer?(s.params.task==='regression'?h[4]+' 萬元':h[4]>1500?'高價':'一般'):'?';G.cell(c,M.lerp(420,625,s.progress),126+i*88,value,i%2?'#f1e0ca':C.mint,140,50);});G.text(c,'特徵 X',260,390,20,C.green);G.text(c,'標籤 y',625,390,20,C.purple);return {message:s.params.task==='regression'?'成交價是連續數值標籤，單位為萬元。':'為演示分類，把成交價 > 1500 萬元定義為高價類，其餘為一般類。',metrics:{task:s.params.task,labels:houses.map(h=>s.params.task==='regression'?h[4]:h[4]>1500?1:0)}}},undefined,{guide:['左邊三張是房屋卡，右邊是抽出的標籤 y。','按「下一步」或拖時間軸：看標籤從卡片移到 y 欄。','切換分類／回歸：比較色塊標籤與萬元數線標籤的差異。','取消「顯示標籤答案」可先遮住答案，自己先猜再對照。']}),
+ G.heading(c,'X 是輸入，y 是要預測的答案');
+ G.text(c,'特徵 X：四個輸入欄位',235,77,17,C.green);G.text(c,'標籤 y：目標答案',625,77,17,C.purple);
+ houses.forEach((h,i)=>{
+  const y=134+i*87;
+  G.rect(c,35,y-30,420,65,C.white,C.line);
+  G.text(c,`${h[0]} 坪 · ${h[1]} 房 · ${h[2]} 年 · ${h[3]} 公尺`,245,y-8,16);
+  G.text(c,`房屋 ${i+1} 的輸入保持不變`,245,y+17,12,C.muted);
+  const value=s.params.answer?(s.params.task==='regression'?h[4]+' 萬元':h[4]>1500?'高價':'一般'):'?';
+  G.rect(c,545,y-25,160,50,C.white,C.line);G.text(c,'?',625,y,18,C.muted);
+  const t=M.clamp(s.progress*1.5-i*.15),x=M.lerp(490,625,t);
+  G.arrow(c,461,y,535,y,C.line);
+  G.cell(c,x,y,value,s.params.task==='regression'?'#eadff3':h[4]>1500?'#f1e0ca':C.mint,100,44);
+ });
+ G.text(c,s.params.task==='regression'?'回歸：成交價是連續數值，單位為萬元':'分類：> 1500 萬元為「高價」，其餘為「一般」',380,410,17,C.green);
+ return {message:s.params.task==='regression'?'輸入特徵與答案分開呈現：三筆成交價是 1850、920、2680 萬元，可用於回歸。':'為演示分類，把成交價 > 1500 萬元定義為高價類，其餘為一般類。',metrics:{task:s.params.task,labels:houses.map(h=>s.params.task==='regression'?h[4]:h[4]>1500?1:0)}};
+},undefined,{guide:['左邊保留三筆房屋的四個特徵，右邊是目標標籤 y。','按「下一步」或拖時間軸：答案方塊移入 y 欄，輸入欄位保持完整。','切換分類／回歸：比較類別答案與連續數值答案。','取消「顯示標籤答案」可先遮住答案，自己先猜再對照。']}),
 demo('matrix','特徵矩陣 X 與標籤 y',[range('row','選取樣本列',1,3,1),range('col','選取特徵欄',1,4,1)],(c,s)=>{
- G.heading(c,'3 筆樣本 × 4 個特徵 → X 的形狀 (3, 4)');houses.forEach((h,i)=>h.forEach((v,j)=>{const sx=90+j*115,sy=125+i*85,tx=j===4?655:125+j*105,ty=130+i*85;G.cell(c,M.lerp(sx,tx,s.progress),M.lerp(sy,ty,s.progress),v,j===4?'#eadff3':(i===s.params.row-1||j===s.params.col-1)?C.mint:C.white,88,52);}));names.forEach((name,i)=>G.text(c,name,i===4?655:125+i*105,83,13,i===4?C.purple:C.green));G.text(c,'X：每列是一個樣本，每欄是一個特徵',330,384,17,C.green);G.text(c,'y：(3,)',655,384,17,C.purple);return {message:`X[${s.params.row-1}, ${s.params.col-1}] = ${houses[s.params.row-1][s.params.col-1]}；同一列的 y = ${houses[s.params.row-1][4]}。`,metrics:{shape:[3,4],selected:houses[s.params.row-1][s.params.col-1],label:houses[s.params.row-1][4]}}},undefined,{guide:['左邊是三筆原始房屋資料，右邊是排好的 X 矩陣與 y 向量。','按「下一步」或拖時間軸：看每個數字移入矩陣中的位置。','用「選取樣本列／特徵欄」：綠框標出 X[i,j] 與同列的 y。','下方訊息直接顯示選中格的取值，可逐格對照。']})];
+ G.heading(c,'3 筆樣本 × 4 個特徵 → X 的形狀 (3, 4)');houses.forEach((h,i)=>h.forEach((v,j)=>{const sx=90+j*115,sy=125+i*85,tx=j===4?655:125+j*105,ty=130+i*85;G.cell(c,M.lerp(sx,tx,s.progress),M.lerp(sy,ty,s.progress),v,j===4?'#eadff3':(i===s.params.row-1&&j===s.params.col-1)?'#c6e2d3':(i===s.params.row-1||j===s.params.col-1)?C.mint:C.white,88,52);}));names.forEach((name,i)=>G.text(c,name,M.lerp(90+i*115,i===4?655:125+i*105,s.progress),83,13,i===4?C.purple:C.green));
+ const j=s.params.col-1,i=s.params.row-1,x=M.lerp(90+j*115,125+j*105,s.progress),y=M.lerp(125+i*85,130+i*85,s.progress);G.rect(c,x-44,y-26,88,52,'#c6e2d3',C.green);G.text(c,houses[i][j],x,y,16,C.green);G.text(c,'X：每列是一個樣本，每欄是一個特徵',330,384,17,C.green);G.text(c,'y：(3,)',655,384,17,C.purple);return {message:`X[${s.params.row-1}, ${s.params.col-1}] = ${houses[s.params.row-1][s.params.col-1]}；同一列的 y = ${houses[s.params.row-1][4]}。`,metrics:{shape:[3,4],selected:houses[s.params.row-1][s.params.col-1],label:houses[s.params.row-1][4]}}},undefined,{guide:['起點是三筆房屋的五欄資料；播放後，四個特徵組成 X，成交價移入 y。','按「下一步」或拖時間軸：看每個數字移入矩陣中的位置。','用「選取樣本列／特徵欄」：綠框標出 X[i,j] 與同列的 y。','下方訊息直接顯示選中格的取值，可逐格對照。']})];

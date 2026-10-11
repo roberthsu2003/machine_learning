@@ -12,3 +12,5 @@
 每章 `lesson.js` 載入自己的 `scenes/index.js`；上一章／目錄／下一章由 `build.py` 根據 `chapters.json` 產生。所有程式與圖片使用相對路徑，可直接在 GitHub Pages 發布。
 
 時間軸只控制過程顯示；倍速不改變計算規則。預設數據或概念動畫在場景說明中標明「示意」，數值場景使用實際計算結果。原教材圖片在對應小節可展開查看。
+
+場景可設定 `steps: state => count`，讓單步數依批次、模型數或交叉驗證折數變動。`viewSize: width => [logicalWidth, logicalHeight]` 可指定響應式畫布；未設定時沿用 760×450。一般場景在手機上使用可左右捲動的舞台，拖曳型場景仍可用滑桿定位。

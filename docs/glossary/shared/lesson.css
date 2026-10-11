@@ -5,3 +5,13 @@
 @media print{body{background:white}.site-header,.lesson-toc,.hero-actions,.scene-controls,.scene-parameters,.original,.chapter-nav,footer{display:none!important}.page-wrap{max-width:none;padding:0}.lesson-layout{display:block}.chapter-hero{padding:0}.scene{break-inside:avoid;box-shadow:none}.scene-head{padding-bottom:0}.table-scroll{overflow:visible}table{font-size:10px}th,td{padding:5px}.zoomed{position:static}.scene canvas{height:auto;aspect-ratio:760/450}}
 
 .scene-guide{margin:0 20px 20px;padding:16px 20px;background:#edf5ed;border-left:3px solid #246d58;border-radius:6px}.scene-guide ol{margin:8px 0 0;padding-left:22px}.scene-guide li{margin:6px 0;line-height:1.65}
+
+/* Numbered split tiles use a portrait layout on phones, including the enlarged view. */
+@media(max-width:550px){.scene.zoomed[data-scene="split-strategies"] canvas{height:auto}}
+
+.scene-stage{overflow-x:auto;overscroll-behavior-x:contain;background:var(--paper)}
+.canvas-scroll-hint{display:none;color:var(--muted);font-size:12px;padding:0 12px;margin:8px 0}
+@media(max-width:550px){.scene-stage:not(.responsive-stage) canvas{min-width:640px}.scene-stage:not(.responsive-stage)+*{min-width:0}.canvas-scroll-hint{display:block}.scene-tag{display:none}.scene-stage:not(.responsive-stage) canvas.draggable{touch-action:pan-x}.scene-stage{scrollbar-width:thin}}
+@media print{.canvas-scroll-hint{display:none}.scene-stage{overflow:visible}.scene-stage canvas{min-width:0!important}}
+
+@media(max-width:550px){.zoomed .scene-stage:not(.responsive-stage) canvas{height:auto;aspect-ratio:760/450}}
