@@ -52,6 +52,26 @@ CSV 連結開啟原始檔；若瀏覽器顯示文字，使用「另存新檔」�
 
 AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功能的 AI，請它交付完整檔案附件，再由學生存到指定路徑；沒有工具能力時不可宣稱已執行或測試。每次續接對話讓 AI 讀線上教材，以及本機 Notebook 與 metadata，避免從頭亂改。
 
+### 共用 prompt｜Matplotlib 與 Seaborn 繁體中文繪圖
+
+第一次繪圖前貼給 AI；每個新 Notebook 都要套用，應用程式也沿用同一設定。
+
+[下載 ChineseFont.ttf](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/ChineseFont.ttf)，放在學生專案的 `fonts/ChineseFont.ttf`，十二例共用，不必下載整個 repo。若瀏覽器開啟檔案，請另存並保留 `.ttf` 副檔名。
+
+參考你的[邏輯迴歸範例](../邏輯迴歸/03_diabetes_logistic_regression.ipynb)的字型註冊方式，以及[混淆矩陣範例](../機器學習常使用的圖表/混淆矩陣confusion_maxtrix.ipynb)的中文標題與標籤。資料欄位保留原名，圖表顯示名稱改成繁體中文。
+
+```text
+請在 Notebook 第一張圖之前建立共用字型設定。
+定位 fonts/ChineseFont.ttf，用 fontManager.addfont 註冊。
+用 FontProperties(fname=字型路徑).get_name() 取得字型名稱。
+Matplotlib 與 sns.set_theme(font=字型名稱) 使用相同字型。
+設定 axes.unicode_minus=False；重啟或應用啟動時重新註冊。
+圖表標題、座標軸、圖例、類別與註解全部使用繁體中文。
+用含負數的中文圖測試顯示及存檔；缺字時修正，不改成英文。
+```
+
+缺少字型檔時，請 AI 提供上方下載連結；不要寫死老師電腦的路徑。切換 Seaborn 主題時仍保留中文字型。設定依據：[Matplotlib 字型管理](https://matplotlib.org/stable/api/font_manager_api.html)、[Seaborn 主題設定](https://seaborn.pydata.org/generated/seaborn.set_theme.html)。
+
 ### AI 出錯時的除錯 prompt
 
 ```text
@@ -69,6 +89,7 @@ AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功�
 請將我指定範例的已保存模型，做成 PyQt6 本機桌面應用。
 沿用原始輸入、前處理與模型，不重新訓練。
 建立 desktop_app.py，提供輸入、預測按鈕與結果。
+Matplotlib／Seaborn 圖表沿用共用字型，全部顯示繁體中文。
 保留原本的網頁應用，提供啟動命令並依 B2 驗收。
 不能操作視窗時，列出需要我確認的項目。
 ```
@@ -77,7 +98,7 @@ AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功�
 
 ## 名詞解釋如何穿插教學
 
-每個範例 README 都連到本倉庫[名詞解釋](../名詞解釋/README.md)，並附線上原文，學生直接在 GitHub 閱讀。先開與當前問題相關的動畫／段落，再讓 AI 以實際結果回扣觀念。
+各段 prompt 的標題下方，依需要連到本倉庫[名詞解釋](../名詞解釋/README.md)，學生直接在 GitHub 閱讀。先開與當前問題相關的動畫／段落，再讓 AI 以實際結果回扣觀念。
 
 | 原教材章節 | 最適合回看的範例 |
 | :--- | :--- |
