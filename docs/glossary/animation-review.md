@@ -36,7 +36,7 @@
 | 03 數據分割 | [隨機、分層與時間切分](./03-data-splitting/index.html#split-strategies) | 保留完整原始資料；抽樣與分配分階段、逐筆移動，標示比例與時間分界；手機採直向版。 檢查通過。 |
 | 03 數據分割 | [資料洩漏與診斷](./03-data-splitting/index.html#leakage) | 把所選診斷情境顯示於畫布，與計算統計量分開。 檢查通過。 |
 | 04 特徵工程 | [特徵選擇](./04-feature-engineering/index.html#selection) | 包裝法改為逐組線性模型訓練與驗證 MSE；嵌入法實算 Lasso 正則化路徑、係數長條與非零保留欄位。檢查全部保留數、L1 強度端點、單步計數、播放／重設／放大及手機捲動。 檢查通過。 |
-| 04 特徵工程 | [特徵縮放](./04-feature-engineering/index.html#scaling) | 檢查三種轉換與離群值；共用手機畫布改善。 檢查通過。 |
+| 04 特徵工程 | [特徵縮放](./04-feature-engineering/index.html#scaling) | Canvas 改為面積與房間數的兩候選近鄰比較，分色呈現平方距離貢獻，四步展示縮放與排名；檢查三種縮放、單位換算不變性、離群值及手機操作。 檢查通過。 |
 | 04 特徵工程 | [類別編碼](./04-feature-engineering/index.html#encoding) | One-Hot 起點方塊分開，補上對應類別欄名。 檢查通過。 |
 | 05 模型參數 | [模型參數](./05-model-parameters/index.html#parameters) | 檢查 w、b 極值與梯度更新；共用手機畫布改善。 檢查通過。 |
 | 05 模型參數 | [超參數](./05-model-parameters/index.html#hyperparameters) | 縮小樹的分支間距，避免最大深度 4 越界或覆蓋損失圖。 檢查通過。 |

@@ -43,6 +43,27 @@ for(const chapter of catalog.chapters){
     if(keep===2){assert.deepEqual(result.selected,[0,2]);assert.ok(Math.abs(result.best.validationMSE-.1025)<1e-9);}
    }
   }
+  if(def.id==='scaling'){
+   const {scalingExample}=await import('./04-feature-engineering/scenes/scaling.js');
+   for(const outlier of [false,true])for(const method of ['raw','z','minmax']){
+    const original=scalingExample({method,unit:'m2',outlier});
+    const converted=scalingExample({method,unit:'kilo',outlier});
+    assert.equal(original.trainingCount,outlier?7:6);
+    assert.ok(Math.abs(original.stats[0].mean-(outlier?9010/7:4010/6))<1e-9);
+    assert.equal(original.beforeNearest,'A');assert.equal(converted.beforeNearest,'B');
+    if(method!=='raw'){
+     assert.equal(original.afterNearest,'B');assert.equal(converted.afterNearest,'B');
+     original.scaled.forEach((row,i)=>row.forEach((v,j)=>assert.ok(Math.abs(v-converted.scaled[i][j])<1e-9)));
+     original.after.forEach((p,i)=>assert.ok(Math.abs(p.distance-converted.after[i].distance)<1e-9));
+    }else assert.deepEqual(original.after,original.before);
+    for(const unit of ['m2','kilo'])for(let step=0;step<=4;step++){
+     const m=render(def,{...defaults,method,unit,outlier},step/4);assert.equal(m.step,step);
+     for(const p of [...m.before,...m.after])assert.ok(Math.abs(p.distance**2-p.parts.reduce((a,b)=>a+b,0))<1e-8);
+    }
+   }
+   assert.equal(scalingExample({method:'raw'}).before[0].squared,109);
+   assert.equal(scalingExample({method:'raw'}).before[1].squared,40000);
+  }
   if(def.id==='split-strategies')for(const mode of ['random','stratified','time'])for(const ratio of [40,70,90]){
    const m=render(def,{...defaults,mode,ratio},1);
    assert.equal(m.train.length+m.test.length,40);assert.equal(new Set([...m.train,...m.test]).size,40);assert.equal(m.arrived.flat().length,40);

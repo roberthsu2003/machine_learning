@@ -146,8 +146,8 @@
         {
           "id": "scaling",
           "title": "特徵縮放",
-          "geometry": "散點與座標軸從尺度懸殊變成縮放後的空間；距離線與數值同步更新。",
-          "controls": "原始／Z-score／Min-Max、加入離群值",
+          "geometry": "以面積與房間數比較兩個候選近鄰；平方距離長條揭露尺度主導，對照縮放前後排名與單位變換。",
+          "controls": "Z-score／Min-Max／不縮放、面積單位、加入離群值",
           "source_images": [
             "名詞解釋/04_特徵工程/images/02_feature_scaling.png"
           ]
