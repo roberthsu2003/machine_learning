@@ -148,3 +148,18 @@ graph TD
 2. **[data_analysis.ipynb](./學校福利社營業額預測/data_analysis.ipynb)**：進行探索性數據分析（EDA），繪製散佈圖、箱形圖與相關性熱圖。
 3. **[multiple_linear_regression.ipynb](./學校福利社營業額預測/multiple_linear_regression.ipynb)**：進行多元線性迴歸建模，並比較「標準化前後」的預測性能（MSE、RMSE、R² Score）。
 4. **[predict_new_data.ipynb](./學校福利社營業額預測/predict_new_data.ipynb)**：載入訓練好的模型，預測未來的新數據。
+
+---
+
+## 💼 模型部署實務專案：薪資預測服務 (FastAPI + Gradio)
+
+如果您想將訓練好的多元線性迴歸模型封裝為可對外提供服務的雲端應用，請參考此實務部署專案：
+
+🔗 **[專案目錄：薪資預測-多元線性迴歸 (FastAPI + Gradio)](../模型部署/薪資預測-多元線性迴歸/README.md)**
+
+本部署專案延伸自本章節的薪資數據集實作：
+* **[multiple_linear_regression2.ipynb](./multiple_linear_regression2.ipynb)**：多元線性迴歸建模核心實作。
+* **[practice_train_api_answer.ipynb](../模型部署/薪資預測-多元線性迴歸/practice_train_api_answer.ipynb)**：模型訓練與 `/train` API 端點。
+* **[practice_predict_api_answer.ipynb](../模型部署/薪資預測-多元線性迴歸/practice_predict_api_answer.ipynb)**：特徵預處理與 `/predict` API 端點。
+* **[practice_gradio_ui_answer.ipynb](../模型部署/薪資預測-多元線性迴歸/practice_gradio_ui_answer.ipynb)**：Gradio 互動式網頁介面。
+

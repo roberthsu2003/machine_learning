@@ -1,6 +1,6 @@
 # 💼 機器學習模型部署：薪資預測-多元線性迴歸 (FastAPI + Gradio)
 
-本專案是一個特別為機器學習教學設計的**實務部署範例**。它展示了如何將**多元線性迴歸模型**從訓練、預處理、序列化儲存、建立 RESTful API，到設計網頁互動 UI，最後一鍵部署至雲端平台（如 Render）的完整生命週期。
+本專案延伸自核心教學章節 [multiple_linear_regression2.ipynb](../../多元線性迴歸/multiple_linear_regression2.ipynb)（薪資多元線性迴歸建模實作），展示如何將**多元線性迴歸模型**從訓練、預處理、序列化儲存、建立 RESTful API，到設計網頁互動 UI，最後一鍵部署至雲端平台（如 Render）的完整生命週期。
 
 ---
 
@@ -39,9 +39,9 @@
 > 主程式 `app.py` 整合了模型訓練、FastAPI RESTful 端點以及 Gradio Web 介面，程式碼架構完整且檔案較大，初學者可能較難一口氣理解全貌。
 > 
 > 為降低學習門檻，本專案特別提供了 **3 個步驟式拆解範例 (`.ipynb`)**，建議學生可先開啟並依序學習：
-> 1. **`practice_train_api_answer.ipynb`**：拆解學習如何訓練多元線性迴歸模型、序列化保存預處理器與實作 `/train` API。
-> 2. **`practice_predict_api_answer.ipynb`**：拆解學習特徵編碼（`OrdinalEncoder` / `OneHotEncoder`）、標準化轉換與實作 `/predict` API。
-> 3. **`practice_gradio_ui_answer.ipynb`**：拆解學習如何單獨建構 Gradio 互動式 UI 介面並與後端 API 串接。
+> 1. **[practice_train_api_answer.ipynb](./practice_train_api_answer.ipynb)**：拆解學習如何訓練多元線性迴歸模型、序列化保存預處理器與實作 `/train` API。
+> 2. **[practice_predict_api_answer.ipynb](./practice_predict_api_answer.ipynb)**：拆解學習特徵編碼（`OrdinalEncoder` / `OneHotEncoder`）、標準化轉換與實作 `/predict` API。
+> 3. **[practice_gradio_ui_answer.ipynb](./practice_gradio_ui_answer.ipynb)**：拆解學習如何單獨建構 Gradio 互動式 UI 介面並與後端 API 串接。
 > 
 > 先透過 Notebook 掌握各模組細節後，再閱讀完整融合的主程式 `app.py`，會更容易融會貫通！
 
