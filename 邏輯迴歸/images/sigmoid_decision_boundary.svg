@@ -1,0 +1,148 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="520" viewBox="0 0 960 520" role="img" aria-labelledby="svg-title svg-desc">
+  <title id="svg-title">Sigmoid 函數與分類決策邊界 (Decision Boundary)</title>
+  <desc id="svg-desc">展示邏輯迴歸中 Sigmoid 激活函數將連續線性輸出 z 擠壓至 0 到 1 機率區間，並以 z=0 和 P=0.5 作為正負類分類決策邊界的視覺圖解。</desc>
+
+  <defs>
+    <!-- 箭頭標記 -->
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+      <path d="M 0 0 L 8 4 L 0 8 Z" fill="#475569"/>
+    </marker>
+    <!-- 曲線陰影濾鏡 -->
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#2563eb" flood-opacity="0.25"/>
+    </filter>
+  </defs>
+
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans CJK TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    }
+    .title { font-size: 20px; font-weight: 700; fill: #0f172a; }
+    .subtitle { font-size: 13px; fill: #64748b; }
+    .axis-label { font-size: 13px; font-weight: 600; fill: #334155; }
+    .tick-label { font-size: 12px; fill: #64748b; }
+    .badge-title { font-size: 14px; font-weight: 700; }
+    .card-text { font-size: 12px; fill: #475569; line-height: 1.5; }
+  </style>
+
+  <!-- 外層卡片背景 -->
+  <rect width="960" height="520" rx="16" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- 頂部標題區 -->
+  <g transform="translate(40, 36)">
+    <rect x="0" y="0" width="4" height="24" rx="2" fill="#2563eb"/>
+    <text x="14" y="18" class="title">Sigmoid 函數與分類決策邊界 (Decision Boundary)</text>
+    <text x="14" y="38" class="subtitle">將線性組合 z = w·x + b 壓縮至 (0, 1) 機率區間，以 z = 0 (P = 0.5) 作為二元分類的分水嶺</text>
+  </g>
+
+  <!-- 左側：座標圖表區域 -->
+  <g transform="translate(0, 20)">
+    <!-- 區域著色：正類預測區 (P ≥ 0.5) -->
+    <rect x="130" y="110" width="490" height="140" fill="#f0fdf4" opacity="0.8"/>
+    <text x="145" y="132" font-size="12" font-weight="600" fill="#16a34a">正類判定區域 (P ≥ 0.5，預測 ŷ = 1)</text>
+
+    <!-- 區域著色：負類預測區 (P < 0.5) -->
+    <rect x="130" y="250" width="490" height="140" fill="#f8fafc" opacity="0.8"/>
+    <text x="145" y="375" font-size="12" font-weight="600" fill="#64748b">負類判定區域 (P &lt; 0.5，預測 ŷ = 0)</text>
+
+    <!-- 水平參考線：P = 1.0 (漸近線) -->
+    <line x1="130" y1="110" x2="620" y2="110" stroke="#cbd5e1" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="100" y="114" class="tick-label" text-anchor="end" font-weight="600">1.0</text>
+
+    <!-- 水平參考線：P = 0.5 (決策門檻) -->
+    <line x1="130" y1="250" x2="620" y2="250" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="6 4"/>
+    <text x="100" y="254" class="tick-label" text-anchor="end" font-weight="700" fill="#d97706">0.5</text>
+
+    <!-- 垂直參考線：z = 0 (決策邊界) -->
+    <line x1="375" y1="95" x2="375" y2="390" stroke="#f59e0b" stroke-width="1.8" stroke-dasharray="6 4"/>
+
+    <!-- X 軸與 Y 軸 -->
+    <!-- X 軸 (z 輸入) -->
+    <line x1="120" y1="390" x2="635" y2="390" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <text x="645" y="394" class="axis-label">輸入 z (w·x + b)</text>
+
+    <!-- Y 軸 (機率 P) -->
+    <line x1="130" y1="400" x2="130" y2="90" stroke="#475569" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <text x="130" y="78" class="axis-label" text-anchor="middle">預測機率 P(y=1|x)</text>
+
+    <!-- Y 軸刻度 0.0 -->
+    <text x="100" y="394" class="tick-label" text-anchor="end" font-weight="600">0.0</text>
+
+    <!-- X 軸刻度標記 -->
+    <!-- -4 -->
+    <line x1="215" y1="390" x2="215" y2="396" stroke="#64748b" stroke-width="1"/>
+    <text x="215" y="412" class="tick-label" text-anchor="middle">-4</text>
+    <!-- -2 -->
+    <line x1="295" y1="390" x2="295" y2="396" stroke="#64748b" stroke-width="1"/>
+    <text x="295" y="412" class="tick-label" text-anchor="middle">-2</text>
+    <!-- 0 -->
+    <line x1="375" y1="390" x2="375" y2="396" stroke="#d97706" stroke-width="2"/>
+    <text x="375" y="414" class="tick-label" text-anchor="middle" font-weight="700" fill="#d97706">z = 0</text>
+    <!-- +2 -->
+    <line x1="455" y1="390" x2="455" y2="396" stroke="#64748b" stroke-width="1"/>
+    <text x="455" y="412" class="tick-label" text-anchor="middle">+2</text>
+    <!-- +4 -->
+    <line x1="535" y1="390" x2="535" y2="396" stroke="#64748b" stroke-width="1"/>
+    <text x="535" y="412" class="tick-label" text-anchor="middle">+4</text>
+
+    <!-- Sigmoid S 型平滑曲線 (精準數學採樣點) -->
+    <path d="M 135 389.3 L 155 388.9 L 175 388.5 L 195 387.6 L 215 385.0 L 235 383.6 L 255 379.5 L 275 373.2 L 295 363.3 L 315 348.9 L 335 328.7 L 355 304.3 L 375 250.0 L 395 195.7 L 415 171.3 L 435 151.1 L 455 136.7 L 475 126.8 L 495 120.5 L 515 116.4 L 535 115.0 L 555 112.4 L 575 111.5 L 595 111.1 L 615 110.7" 
+          fill="none" stroke="#2563eb" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" filter="url(#shadow)"/>
+
+    <!-- 函數公式標籤 -->
+    <g transform="translate(460, 160)">
+      <rect x="0" y="0" width="145" height="30" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1"/>
+      <text x="72" y="19" font-size="12" font-weight="700" fill="#1d4ed8" text-anchor="middle">σ(z) = 1 / (1 + e⁻ᶻ)</text>
+    </g>
+
+    <!-- 決策邊界中心點 (z=0, P=0.5) -->
+    <circle cx="375" cy="250" r="7" fill="#f59e0b" stroke="#ffffff" stroke-width="2.5"/>
+    <circle cx="375" cy="250" r="11" fill="none" stroke="#f59e0b" stroke-width="1.5" stroke-dasharray="2 2"/>
+
+    <!-- 中心點浮動說明標籤 -->
+    <g transform="translate(385, 222)">
+      <rect x="0" y="0" width="140" height="26" rx="5" fill="#fef3c7" stroke="#fcd34d" stroke-width="1"/>
+      <text x="70" y="17" font-size="11" font-weight="700" fill="#b45309" text-anchor="middle">決策邊界點 (0, 0.5)</text>
+    </g>
+  </g>
+
+  <!-- 右側：觀念解析卡片群 -->
+  <g transform="translate(655, 95)">
+    <!-- 卡片 1: 正類區域 -->
+    <g transform="translate(0, 0)">
+      <rect width="265" height="100" rx="10" fill="#f0fdf4" stroke="#86efac" stroke-width="1.2"/>
+      <circle cx="20" cy="22" r="6" fill="#16a34a"/>
+      <text x="34" y="26" class="badge-title" fill="#15803d">正類區域 (P ≥ 0.5)</text>
+      <text x="16" y="50" class="card-text">• 線性輸入條件：z = w·x + b ≥ 0</text>
+      <text x="16" y="70" class="card-text">• 決策判定：預測類別 ŷ = 1</text>
+      <text x="16" y="90" class="card-text">• 實例：患病、詐欺交易、點擊廣告</text>
+    </g>
+
+    <!-- 卡片 2: 決策邊界 -->
+    <g transform="translate(0, 115)">
+      <rect width="265" height="100" rx="10" fill="#fffbeb" stroke="#fde68a" stroke-width="1.2"/>
+      <circle cx="20" cy="22" r="6" fill="#d97706"/>
+      <text x="34" y="26" class="badge-title" fill="#b45309">決策邊界 (z = 0)</text>
+      <text x="16" y="50" class="card-text">• 臨界切分點：w·x + b = 0</text>
+      <text x="16" y="70" class="card-text">• 輸出機率恰為 50% (P = 0.5)</text>
+      <text x="16" y="90" class="card-text">• 幾何意義：二維直線 / 高維超平面</text>
+    </g>
+
+    <!-- 卡片 3: 負類區域 -->
+    <g transform="translate(0, 230)">
+      <rect width="265" height="100" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+      <circle cx="20" cy="22" r="6" fill="#64748b"/>
+      <text x="34" y="26" class="badge-title" fill="#334155">負類區域 (P &lt; 0.5)</text>
+      <text x="16" y="50" class="card-text">• 線性輸入條件：z = w·x + b &lt; 0</text>
+      <text x="16" y="70" class="card-text">• 決策判定：預測類別 ŷ = 0</text>
+      <text x="16" y="90" class="card-text">• 實例：健康、正常交易、未點擊</text>
+    </g>
+
+    <!-- 底部提點 -->
+    <g transform="translate(0, 345)">
+      <rect width="265" height="42" rx="8" fill="#f1f5f9"/>
+      <text x="12" y="19" font-size="11" fill="#475569">💡 門檻值可依任務調整：如防範癌症</text>
+      <text x="12" y="34" font-size="11" fill="#475569">可調降門檻（如 0.3）以大幅降低漏報</text>
+    </g>
+  </g>
+</svg>
