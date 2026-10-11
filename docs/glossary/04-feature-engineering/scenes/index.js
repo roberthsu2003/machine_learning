@@ -1,7 +1,4 @@
-import {scaling} from './scaling.js';
 import {selection} from './selection.js';
-import {demo,range,select} from '../../shared/scene.js';import * as M from '../../shared/math.js';import * as G from '../../shared/geometry.js';const C=G.colors;
-export const definitions=[
-selection,
-scaling,
-demo('encoding','類別編碼',[select('mode','編碼方式',[['onehot','無序顏色 → One-Hot'],['ordinal','有序學歷 → 順序整數'],['bad','無序顏色 → 整數（對照陷阱）']]),range('category','類別索引',0,2,0)],(c,s)=>{const k=s.params.category,names=s.params.mode==='ordinal'?['高中','大學','碩士']:['紅','綠','藍'];G.heading(c,'選一個類別，觀察它如何變成數字');names.forEach((name,i)=>{G.rect(c,65,110+i*90,140,60,i===k?'#f1e0ca':C.white,i===k?C.orange:C.line);G.text(c,name,135,140+i*90,22);});const y=140+k*90;G.arrow(c,210,y,425,230,C.line);if(s.params.mode==='onehot'){for(let j=0;j<3;j++){G.cell(c,M.lerp(265+j*76,465+j*85,s.progress),M.lerp(y,230,s.progress),j===k?1:0,j===k?C.mint:C.white,68,62);G.text(c,names[j],465+j*85,185,15,C.muted);}G.text(c,'各欄分別表示一種類別',555,330,18,C.green);}else{G.cell(c,M.lerp(245,545,s.progress),M.lerp(y,230,s.progress),k,C.mint,105,85);G.text(c,s.params.mode==='ordinal'?'有自然順序':'整數可能引入假的大小關係',555,330,17,s.params.mode==='bad'?C.orange:C.green);}return {message:`${names[k]} → ${s.params.mode==='onehot'?`[${[0,1,2].map(i=>i===k?1:0).join(', ')}]`:k}。${s.params.mode==='bad'?'無序顏色本身沒有 0 < 1 < 2 的意義。':'依模型與資料語義選擇合適編碼。'}`,metrics:{mode:s.params.mode,encoding:s.params.mode==='onehot'?[0,1,2].map(i=>i===k?1:0):k}};},undefined,{guide:['左邊三個方塊是原始類別，用「類別索引」切換橘框。','按「下一步」或拖時間軸：看類別移入右邊的數字表示。','切換三種編碼：比較 One-Hot 向量、有序整數與陷阱整數。','陷阱模式下注意：顏色本無大小順序，整數會引入假關係。']})];
+import {scaling} from './scaling.js';
+import {encoding} from './encoding.js';
+export const definitions=[selection,scaling,encoding];

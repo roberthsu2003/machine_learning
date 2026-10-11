@@ -155,8 +155,8 @@
         {
           "id": "encoding",
           "title": "類別編碼",
-          "geometry": "顏色方塊分別變成整數標籤或 One-Hot 向量；對照有序與無序資料。",
-          "controls": "切換編碼、選類別、展開向量",
+          "geometry": "有序學歷以階梯展示語義順序與 0／1／2 的對應，游標沿階梯移動；對照 One-Hot 與無序整數距離陷阱。",
+          "controls": "切換編碼、選取等級、四步階梯動畫",
           "source_images": [
             "名詞解釋/04_特徵工程/images/03_categorical_encoding.svg"
           ]

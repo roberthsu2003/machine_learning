@@ -64,6 +64,23 @@ for(const chapter of catalog.chapters){
    assert.equal(scalingExample({method:'raw'}).before[0].squared,109);
    assert.equal(scalingExample({method:'raw'}).before[1].squared,40000);
   }
+  if(def.id==='encoding'){
+   const {ordinalCursor}=await import('./04-feature-engineering/scenes/encoding.js');
+   for(const category of [0,1,2]){
+    assert.deepEqual(ordinalCursor(category,0),[155,288]);
+    assert.deepEqual(ordinalCursor(category,1),[155+category*220,288-category*60]);
+    let previous=[155,288];
+    for(let i=0;i<=30;i++){
+     const point=ordinalCursor(category,i/30);
+     assert.ok(point[0]>=previous[0]&&point[1]<=previous[1]);previous=point;
+    }
+    for(const mode of ['ordinal','onehot','bad'])for(let step=0;step<=4;step++){
+     const m=render(def,{...defaults,mode,category},step/4);assert.equal(m.step,step);
+     assert.deepEqual(m.encoding,mode==='onehot'?[0,1,2].map(i=>i===category?1:0):category);
+     if(mode==='ordinal'&&step===4)assert.deepEqual(m.cursor,ordinalCursor(category,1));
+    }
+   }
+  }
   if(def.id==='split-strategies')for(const mode of ['random','stratified','time'])for(const ratio of [40,70,90]){
    const m=render(def,{...defaults,mode,ratio},1);
    assert.equal(m.train.length+m.test.length,40);assert.equal(new Set([...m.train,...m.test]).size,40);assert.equal(m.arrived.flat().length,40);
