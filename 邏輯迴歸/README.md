@@ -121,9 +121,23 @@ $$P(y=1|x) = \sigma(z) = \frac{1}{1 + e^{-z}}$$
 | **Step 1**<br>基礎觀念 | 📖 [**說明1.ipynb**](./說明1.ipynb) | 什麼是邏輯分類？Sigmoid 曲線原理 | 模擬 2D 數據 | • Sigmoid 函數數值推導<br>• LogisticRegression 與 LinearSVC 幾何邊界比較 |
 | **Step 2**<br>參數調校 | 🎯 [**forge說明2.ipynb**](./forge說明2.ipynb) | 正則化參數 $C$ 與決策邊界調校 | Forge 二元分類數據集 | • 視覺化 $C=0.01, 1, 100$ 的直線邊界變化<br>• 體驗權重收縮抗過擬合的效果 |
 | **Step 3**<br>高維實戰 | 🔬 [**cancer說明3.ipynb**](./cancer說明3.ipynb) | 高維真實數據與 L1/L2 正則化比較 | 威斯康辛州乳癌數據 (30特徵) | • L2 懲罰 vs L1 稀疏特徵選擇<br>• 繪製各特徵係數條形圖，找出關鍵致癌指標 |
-| **Step 4**<br>臨床專案 | 🩺 [**03_diabetes_logistic_regression.ipynb**](./03_diabetes_logistic_regression.ipynb) | 糖尿病風險預測與勝算比臨床分析 | 真實糖尿病數據 (`Diabetes_Data.csv`) | • 探索性數據分析 (EDA)<br>• 混淆矩陣、ROC 曲線與 AUC 評估<br>• 臨床勝算比 (Odds Ratio) 深度解讀 |
+| **Step 4**<br>臨床專案 | 🩺 [**03_diabetes_logistic_regression.ipynb**](./03_diabetes_logistic_regression.ipynb)<br>*(延伸部署：[FastAPI+Gradio](../模型部署/糖尿病風險評估-邏輯迴歸/README.md))* | 糖尿病風險預測與勝算比臨床分析 | 真實糖尿病數據 (`Diabetes_Data.csv`) | • 探索性數據分析 (EDA)<br>• 混淆矩陣、ROC 曲線與 AUC 評估<br>• 臨床勝算比 (Odds Ratio) 深度解讀<br>• 模型序列化 (`joblib`) 銜接雲端部署 |
 | **Step 5**<br>多元理論 | 📐 [**multiclass_classification說明.ipynb**](./multiclass_classification說明.ipynb) | 多元分類原理 (One-vs-Rest, OvR) | 3 類別模擬資料集 | • 3 條二元直線如何切割二維平面<br>• 三角重疊區域與未知空間的歸屬判定 |
 | **Step 6**<br>多元實作 | 🌸 [**multiclass_classification實作.ipynb**](./multiclass_classification實作.ipynb) | Scikit-learn 多元分類快速實作 | 經典 Iris 鳶尾花數據集 | • 使用 `LogisticRegression` 輕鬆搞定 3 分類任務<br>• 混淆矩陣多類別評估 |
+
+---
+
+## 💼 模型部署實務專案：糖尿病罹病風險即時評估服務 (FastAPI + Gradio)
+
+如果您想將本單元訓練好的邏輯迴歸模型封裝為可對外提供服務的雲端微服務，請參考此實務部署專案：
+
+🔗 **[專案目錄：糖尿病風險評估-邏輯迴歸 (FastAPI + Gradio)](../模型部署/糖尿病風險評估-邏輯迴歸/README.md)**
+
+本部署專案完整延伸自本章節的糖尿病臨床案例：
+* **[03_diabetes_logistic_regression.ipynb](./03_diabetes_logistic_regression.ipynb)**：糖尿病邏輯迴歸建模、評估與序列化儲存核心筆記本。
+* **[practice_train_api_answer.ipynb](../模型部署/糖尿病風險評估-邏輯迴歸/practice_train_api_answer.ipynb)**：模型訓練、標準化與 `/train` API 端點。
+* **[practice_predict_api_answer.ipynb](../模型部署/糖尿病風險評估-邏輯迴歸/practice_predict_api_answer.ipynb)**：病患生理指標驗證與 `/predict` API 端點。
+* **[practice_gradio_ui_answer.ipynb](../模型部署/糖尿病風險評估-邏輯迴歸/practice_gradio_ui_answer.ipynb)**：Gradio 醫療儀表板與勝算比圖表整合。
 
 ---
 

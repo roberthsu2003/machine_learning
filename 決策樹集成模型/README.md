@@ -30,7 +30,7 @@
 | 📄 **[02_random_forest_cancer.ipynb](./02_random_forest_cancer.ipynb)** *(原 100棵樹組成的隨機森林.ipynb)* | 乳癌資料集 - 100 棵樹隨機森林與特徵重要性直方圖 | 🌲 隨機森林抗過擬合實作 |
 | 🚀 **[03_gradient_boosting_cancer.ipynb](./03_gradient_boosting_cancer.ipynb)** *(全新補充)* | 乳癌資料集 - 梯度提升樹 (GBDT) 實作、`max_depth` 與 `learning_rate` 調參 | ⚡ GBDT 循序學習與優化 |
 | 📄 **[04_synthetic_rf_demo.ipynb](./04_synthetic_rf_demo.ipynb)** *(原 random_forests1.ipynb)* | 合成資料集二元分類實作與單一樹結構繪製 | 🧪 基礎實作練習 |
-| 🏥 **[05_random_forest_heart_failure.ipynb](./05_random_forest_heart_failure.ipynb)** *(真實醫療案例)* | 心臟衰竭臨床記錄 - 隨機森林生存風險預測、預剪枝與特徵重要性權重 | 🩺 智慧醫療與重症風險預測實戰 |
+| 🏥 **[05_random_forest_heart_failure.ipynb](./05_random_forest_heart_failure.ipynb)** *(真實醫療案例)*<br>*(延伸部署：[FastAPI+Gradio](../模型部署/心臟衰竭生存風險預測-隨機森林/README.md))* | 心臟衰竭臨床記錄 - 隨機森林生存風險預測、預剪枝與特徵重要性權重、模型序列化 (`joblib`) 儲存 | 🩺 智慧醫療與重症風險預測實戰 |
 
 ---
 
@@ -57,6 +57,20 @@
 * **概念**：使用深度較淺的樹（`max_depth=1`）與低學習率（`learning_rate=0.01`）避免過擬合，獲得高度精準的預測力。
 * **對應圖表**：📌 **圖 2-35**（GBDT 特徵重要性分佈圖）
 * **對應單元**：[03_gradient_boosting_cancer.ipynb](./03_gradient_boosting_cancer.ipynb)
+
+---
+
+## 💼 模型部署實務專案：心臟衰竭生存風險預測服務 (FastAPI + Gradio)
+
+如果您想將本單元訓練好的隨機森林模型封裝為可對外提供服務的雲端微服務，請參考此實務部署專案：
+
+🔗 **[專案目錄：心臟衰竭生存風險預測-隨機森林 (FastAPI + Gradio)](../模型部署/心臟衰竭生存風險預測-隨機森林/README.md)**
+
+本部署專案完整延伸自本章節的心臟衰竭臨床案例：
+* **[05_random_forest_heart_failure.ipynb](./05_random_forest_heart_failure.ipynb)**：隨機森林建模、預剪枝、評估與序列化儲存核心筆記本。
+* **[practice_train_api_answer.ipynb](../模型部署/心臟衰竭生存風險預測-隨機森林/practice_train_api_answer.ipynb)**：隨機森林訓練、超參數調校與 `/train` API 端點。
+* **[practice_predict_api_answer.ipynb](../模型部署/心臟衰竭生存風險預測-隨機森林/practice_predict_api_answer.ipynb)**：臨床指標防呆驗證與 `/predict` API 端點。
+* **[practice_gradio_ui_answer.ipynb](../模型部署/心臟衰竭生存風險預測-隨機森林/practice_gradio_ui_answer.ipynb)**：Gradio 急診監控儀表板與特徵重要性圖表整合。
 
 ---
 
