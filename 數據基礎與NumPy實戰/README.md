@@ -145,17 +145,16 @@ print("重塑後的形狀:", y_2d.shape)  # (3, 1)
 
 <br>
 
-本專案全數範例已採用現代跨平台字型套件 **`mplfonts`**，只需兩行代碼即可自動載入開源思源黑體並修正負號顯示問題：
-
-```python
-# 1. 一鍵安裝 mplfonts 套件
-!pip install -q mplfonts
-
-# 2. 自動套用思源黑體（繁體中文）
+# 設定中文字型支援
+# --- 設定 Matplotlib 中文字型支援（Mac / Windows / Colab 通用）---
+import glob
+import os
+import mplfonts
+from matplotlib import font_manager
 from mplfonts import use_font
-use_font('Noto Sans CJK TC')
-```
 
-*(註：本專案各範例 Notebook 均已在開頭內建此設定，直接依序執行 Cell 即可正常繪製中文圖表。)*
+for f in glob.glob(os.path.join(os.path.dirname(mplfonts.__file__), "fonts", "*.[ot]tf")):
+    font_manager.fontManager.addfont(f)   # 直接註冊 mplfonts 內附的字型，不改任何檔案
+use_font("Noto Sans CJK SC")              # 套用思源黑體，負號也會一起處理
 </details>
 
