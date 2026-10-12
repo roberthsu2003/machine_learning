@@ -1,141 +1,142 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="680" viewBox="0 0 1000 680" role="img" aria-labelledby="title desc">
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="760" viewBox="0 0 1100 760" role="img" aria-labelledby="title desc">
   <title id="title">K-近鄰 (K-NN) 算法原理：少數服從多數的鄰居表決</title>
   <desc id="desc">展示 K-NN 算法在不同 k 值下的鄰域搜索與多數投票分類機制</desc>
   <defs>
     <style>
       text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans CJK TC", "Microsoft JhengHei", Roboto, sans-serif; }
-      .title { font-size: 23px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
-      .subtitle { font-size: 13.5px; fill: #64748b; text-anchor: middle; }
-      .axis-title { font-size: 13.5px; font-weight: 600; fill: #334155; }
-      .axis-tick { font-size: 12px; fill: #64748b; }
-      .grid-line { stroke: #f1f5f9; stroke-width: 1; }
-      .axis-line { stroke: #94a3b8; stroke-width: 1.5; }
-      .k3-circle { fill: rgba(37, 99, 235, 0.07); stroke: #2563eb; stroke-width: 2.2; stroke-dasharray: 6,4; }
-      .k5-circle { fill: rgba(147, 51, 234, 0.05); stroke: #9333ea; stroke-width: 2.2; stroke-dasharray: 6,4; }
-      .badge-title { font-size: 13px; font-weight: 700; }
-      .badge-text { font-size: 12px; fill: #334155; }
-      .badge-result { font-size: 13px; font-weight: 700; }
-      .card-title { font-size: 14px; font-weight: 700; fill: #1e293b; }
-      .card-item { font-size: 13px; fill: #334155; }
-      .legend-text { font-size: 12px; fill: #1e293b; font-weight: 500; }
+      .main-title { font-size: 28px; font-weight: 700; fill: #0f172a; text-anchor: middle; }
+      .sub-title { font-size: 17px; fill: #475569; text-anchor: middle; font-weight: 500; }
+      .axis-title { font-size: 18px; font-weight: 700; fill: #1e293b; }
+      .axis-tick { font-size: 16px; font-weight: 600; fill: #475569; }
+      .grid-line { stroke: #e2e8f0; stroke-width: 1.2; }
+      .axis-line { stroke: #64748b; stroke-width: 2; }
+      .k3-circle { fill: rgba(37, 99, 235, 0.08); stroke: #2563eb; stroke-width: 3; stroke-dasharray: 8,5; }
+      .k5-circle { fill: rgba(147, 51, 234, 0.06); stroke: #9333ea; stroke-width: 3; stroke-dasharray: 8,5; }
+      .badge-title { font-size: 17px; font-weight: 700; }
+      .badge-text { font-size: 16px; fill: #1e293b; font-weight: 500; }
+      .badge-result { font-size: 17px; font-weight: 800; }
+      .card-title { font-size: 19px; font-weight: 700; fill: #0f172a; }
+      .card-item { font-size: 16px; fill: #1e293b; font-weight: 500; }
+      .legend-title { font-size: 17px; font-weight: 700; fill: #0f172a; }
+      .legend-text { font-size: 16px; fill: #1e293b; font-weight: 600; }
     </style>
-    <marker id="arrow-k3" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M1 1 L7 4 L1 7 Z" fill="#2563eb" />
+    <marker id="arrow-k3" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1 1 L8 4.5 L1 8 Z" fill="#2563eb" />
     </marker>
-    <marker id="arrow-k5" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-      <path d="M1 1 L7 4 L1 7 Z" fill="#9333ea" />
+    <marker id="arrow-k5" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1 1 L8 4.5 L1 8 Z" fill="#9333ea" />
     </marker>
     <filter id="shadow" x="-8%" y="-8%" width="116%" height="120%" filterUnits="userSpaceOnUse">
-      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.08"/>
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.10"/>
     </filter>
   </defs>
-  <rect width="1000" height="680" fill="#ffffff" rx="12" />
-  <text x="500" y="38" class="title">K-近鄰 (K-NN) 算法原理：少數服從多數的鄰居表決</text>
-  <text x="500" y="62" class="subtitle">【幾何決策直覺】未知樣本的分類結果，直接取決於 k 值的選擇與鄰域搜索範圍</text>
-  <rect x="125.0" y="67.0" width="582.0" height="398.0" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1.5" rx="8" />
-  <line x1="140.0" y1="67.0" x2="140.0" y2="465.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="232.0" y1="67.0" x2="232.0" y2="465.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="324.0" y1="67.0" x2="324.0" y2="465.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="416.0" y1="67.0" x2="416.0" y2="465.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="508.0" y1="67.0" x2="508.0" y2="465.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="600.0" y1="67.0" x2="600.0" y2="465.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="692.0" y1="67.0" x2="692.0" y2="465.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="125.0" y1="450.0" x2="707.0" y2="450.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="125.0" y1="358.0" x2="707.0" y2="358.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="125.0" y1="266.0" x2="707.0" y2="266.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="125.0" y1="174.0" x2="707.0" y2="174.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="125.0" y1="82.0" x2="707.0" y2="82.0" class="grid-line" stroke-dasharray="3,3" />
-  <line x1="125.0" y1="450.0" x2="707.0" y2="450.0" class="axis-line" />
-  <line x1="140.0" y1="67.0" x2="140.0" y2="465.0" class="axis-line" />
-  <line x1="140.0" y1="450.0" x2="140.0" y2="455.0" class="axis-line" />
-  <text x="140.0" y="470.0" class="axis-tick" text-anchor="middle">1</text>
-  <line x1="232.0" y1="450.0" x2="232.0" y2="455.0" class="axis-line" />
-  <text x="232.0" y="470.0" class="axis-tick" text-anchor="middle">2</text>
-  <line x1="324.0" y1="450.0" x2="324.0" y2="455.0" class="axis-line" />
-  <text x="324.0" y="470.0" class="axis-tick" text-anchor="middle">3</text>
-  <line x1="416.0" y1="450.0" x2="416.0" y2="455.0" class="axis-line" />
-  <text x="416.0" y="470.0" class="axis-tick" text-anchor="middle">4</text>
-  <line x1="508.0" y1="450.0" x2="508.0" y2="455.0" class="axis-line" />
-  <text x="508.0" y="470.0" class="axis-tick" text-anchor="middle">5</text>
-  <line x1="600.0" y1="450.0" x2="600.0" y2="455.0" class="axis-line" />
-  <text x="600.0" y="470.0" class="axis-tick" text-anchor="middle">6</text>
-  <line x1="692.0" y1="450.0" x2="692.0" y2="455.0" class="axis-line" />
-  <text x="692.0" y="470.0" class="axis-tick" text-anchor="middle">7</text>
-  <line x1="135.0" y1="450.0" x2="140.0" y2="450.0" class="axis-line" />
-  <text x="130.0" y="454.0" class="axis-tick" text-anchor="end">1</text>
-  <line x1="135.0" y1="358.0" x2="140.0" y2="358.0" class="axis-line" />
-  <text x="130.0" y="362.0" class="axis-tick" text-anchor="end">2</text>
-  <line x1="135.0" y1="266.0" x2="140.0" y2="266.0" class="axis-line" />
-  <text x="130.0" y="270.0" class="axis-tick" text-anchor="end">3</text>
-  <line x1="135.0" y1="174.0" x2="140.0" y2="174.0" class="axis-line" />
-  <text x="130.0" y="178.0" class="axis-tick" text-anchor="end">4</text>
-  <line x1="135.0" y1="82.0" x2="140.0" y2="82.0" class="axis-line" />
-  <text x="130.0" y="86.0" class="axis-tick" text-anchor="end">5</text>
-  <text x="416.0" y="490.0" class="axis-title" text-anchor="middle">特徵 1 (Feature 1)</text>
-  <text x="102.0" y="266.0" class="axis-title" text-anchor="middle" transform="rotate(-90, 102.0, 266.0)">特徵 2 (Feature 2)</text>
+  <rect width="1100" height="760" fill="#ffffff" rx="14" />
+  <text x="550" y="44" class="main-title">K-近鄰 (K-NN) 算法原理：少數服從多數的鄰居表決</text>
+  <text x="550" y="74" class="sub-title">【幾何決策直覺】未知樣本的分類結果，直接取決於 k 值的選擇與鄰域搜索範圍</text>
+  <rect x="135.0" y="85.0" width="630.0" height="430.0" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8" rx="8" />
+  <line x1="150.0" y1="85.0" x2="150.0" y2="515.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="250.0" y1="85.0" x2="250.0" y2="515.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="350.0" y1="85.0" x2="350.0" y2="515.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="450.0" y1="85.0" x2="450.0" y2="515.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="550.0" y1="85.0" x2="550.0" y2="515.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="650.0" y1="85.0" x2="650.0" y2="515.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="750.0" y1="85.0" x2="750.0" y2="515.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="135.0" y1="500.0" x2="765.0" y2="500.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="135.0" y1="400.0" x2="765.0" y2="400.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="135.0" y1="300.0" x2="765.0" y2="300.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="135.0" y1="200.0" x2="765.0" y2="200.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="135.0" y1="100.0" x2="765.0" y2="100.0" class="grid-line" stroke-dasharray="4,4" />
+  <line x1="135.0" y1="500.0" x2="765.0" y2="500.0" class="axis-line" />
+  <line x1="150.0" y1="85.0" x2="150.0" y2="515.0" class="axis-line" />
+  <line x1="150.0" y1="500.0" x2="150.0" y2="506.0" class="axis-line" />
+  <text x="150.0" y="526.0" class="axis-tick" text-anchor="middle">1</text>
+  <line x1="250.0" y1="500.0" x2="250.0" y2="506.0" class="axis-line" />
+  <text x="250.0" y="526.0" class="axis-tick" text-anchor="middle">2</text>
+  <line x1="350.0" y1="500.0" x2="350.0" y2="506.0" class="axis-line" />
+  <text x="350.0" y="526.0" class="axis-tick" text-anchor="middle">3</text>
+  <line x1="450.0" y1="500.0" x2="450.0" y2="506.0" class="axis-line" />
+  <text x="450.0" y="526.0" class="axis-tick" text-anchor="middle">4</text>
+  <line x1="550.0" y1="500.0" x2="550.0" y2="506.0" class="axis-line" />
+  <text x="550.0" y="526.0" class="axis-tick" text-anchor="middle">5</text>
+  <line x1="650.0" y1="500.0" x2="650.0" y2="506.0" class="axis-line" />
+  <text x="650.0" y="526.0" class="axis-tick" text-anchor="middle">6</text>
+  <line x1="750.0" y1="500.0" x2="750.0" y2="506.0" class="axis-line" />
+  <text x="750.0" y="526.0" class="axis-tick" text-anchor="middle">7</text>
+  <line x1="144.0" y1="500.0" x2="150.0" y2="500.0" class="axis-line" />
+  <text x="138.0" y="506.0" class="axis-tick" text-anchor="end">1</text>
+  <line x1="144.0" y1="400.0" x2="150.0" y2="400.0" class="axis-line" />
+  <text x="138.0" y="406.0" class="axis-tick" text-anchor="end">2</text>
+  <line x1="144.0" y1="300.0" x2="150.0" y2="300.0" class="axis-line" />
+  <text x="138.0" y="306.0" class="axis-tick" text-anchor="end">3</text>
+  <line x1="144.0" y1="200.0" x2="150.0" y2="200.0" class="axis-line" />
+  <text x="138.0" y="206.0" class="axis-tick" text-anchor="end">4</text>
+  <line x1="144.0" y1="100.0" x2="150.0" y2="100.0" class="axis-line" />
+  <text x="138.0" y="106.0" class="axis-tick" text-anchor="end">5</text>
+  <text x="450.0" y="550.0" class="axis-title" text-anchor="middle">特徵 1 (Feature 1)</text>
+  <text x="105.0" y="300.0" class="axis-title" text-anchor="middle" transform="rotate(-90, 105.0, 300.0)">特徵 2 (Feature 2)</text>
   <!-- k=5 Neighborhood Circle -->
-  <circle cx="416.0" cy="266.0" r="126.96" class="k5-circle" />
+  <circle cx="450.0" cy="300.0" r="138.0" class="k5-circle" />
   <!-- k=3 Neighborhood Circle -->
-  <circle cx="416.0" cy="266.0" r="92.0" class="k3-circle" />
+  <circle cx="450.0" cy="300.0" r="100.0" class="k3-circle" />
   <!-- Data Points -->
-  <circle cx="351.6" cy="229.20000000000002" r="8.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
-  <rect x="463.7" y="203.29999999999998" width="15" height="15" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="2" />
-  <circle cx="360.79999999999995" cy="330.40000000000003" r="8.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
-  <rect x="482.09999999999997" y="322.90000000000003" width="15" height="15" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="2" />
-  <rect x="509.70000000000005" y="230.9" width="15" height="15" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="2" />
-  <circle cx="305.6" cy="376.4" r="8.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
-  <rect x="436.09999999999997" y="424.1" width="15" height="15" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="2" />
-  <circle cx="250.40000000000003" cy="192.40000000000003" r="8.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
-  <circle cx="296.4" cy="128.0" r="8.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
-  <circle cx="232.0" cy="302.79999999999995" r="8.5" fill="#2563eb" stroke="#ffffff" stroke-width="2" />
-  <rect x="546.5" y="129.7" width="15" height="15" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="2" />
-  <rect x="574.0999999999999" y="350.5" width="15" height="15" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="2" />
-  <rect x="610.9000000000001" y="212.5" width="15" height="15" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="2" />
-  <circle cx="416.0" cy="266.0" r="16" fill="rgba(16, 185, 129, 0.2)" />
+  <circle cx="380.0" cy="260.0" r="11" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+  <rect x="499.99999999999994" y="230.0" width="20" height="20" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="2.5" />
+  <circle cx="390.0" cy="370.0" r="11" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+  <rect x="520.0" y="360.0" width="20" height="20" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="2.5" />
+  <rect x="550.0" y="260.0" width="20" height="20" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="2.5" />
+  <circle cx="330.0" cy="420.0" r="11" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+  <rect x="470.0" y="470.0" width="20" height="20" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="2.5" />
+  <circle cx="270.0" cy="220.0" r="11" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+  <circle cx="320.0" cy="150.0" r="11" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+  <circle cx="250.0" cy="340.0" r="11" fill="#2563eb" stroke="#ffffff" stroke-width="2.5" />
+  <rect x="590.0" y="149.99999999999994" width="20" height="20" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="2.5" />
+  <rect x="620.0" y="390.0" width="20" height="20" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="2.5" />
+  <rect x="660.0" y="240.0" width="20" height="20" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="2.5" />
+  <circle cx="450.0" cy="300.0" r="22" fill="rgba(16, 185, 129, 0.25)" />
   <!-- Query Sample (Unknown) -->
-  <path d="M416.0,252.0 L420.1,260.3 L429.3,261.7 L422.7,268.2 L424.2,277.3 L416.0,273.0 L407.8,277.3 L409.3,268.2 L402.7,261.7 L411.9,260.3 Z" fill="#10b981" stroke="#047857" stroke-width="2" />
+  <path d="M450.0,282.0 L455.3,292.7 L467.1,294.4 L458.6,302.8 L460.6,314.6 L450.0,309.0 L439.4,314.6 L441.4,302.8 L432.9,294.4 L444.7,292.7 Z" fill="#10b981" stroke="#047857" stroke-width="2.5" />
   <!-- k=3 Info Badge -->
   <g filter="url(#shadow)">
-    <rect x="155" y="95" width="190" height="80" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="1.8" />
-    <rect x="155" y="95" width="190" height="25" rx="8" fill="#eff6ff" />
-    <rect x="155" y="113" width="190" height="7" fill="#eff6ff" />
-    <text x="165" y="112" class="badge-title" fill="#1d4ed8">⚡ k = 3 鄰域範圍</text>
-    <text x="165" y="138" class="badge-text">2 個類別 A，1 個類別 B</text>
-    <text x="165" y="160" class="badge-result" fill="#2563eb">→ 判定：類別 A (2 vs 1)</text>
+    <rect x="160" y="110" width="220" height="95" rx="8" fill="#ffffff" stroke="#2563eb" stroke-width="2" />
+    <rect x="160" y="110" width="220" height="28" rx="8" fill="#eff6ff" />
+    <rect x="160" y="130" width="220" height="8" fill="#eff6ff" />
+    <text x="172" y="130" class="badge-title" fill="#1d4ed8">⚡ k = 3 鄰域範圍</text>
+    <text x="172" y="160" class="badge-text">2 個類別 A，1 個類別 B</text>
+    <text x="172" y="186" class="badge-result" fill="#2563eb">→ 表決判定：類別 A</text>
   </g>
-  <path d="M 345 140.0 Q 370 150.0 350.956 200.95600000000002" fill="none" stroke="#2563eb" stroke-width="1.8" marker-end="url(#arrow-k3)" />
+  <path d="M 380 167.5 Q 405 177.5 379.3 229.3" fill="none" stroke="#2563eb" stroke-width="2.2" marker-end="url(#arrow-k3)" />
   <!-- k=5 Info Badge -->
   <g filter="url(#shadow)">
-    <rect x="505" y="90" width="190" height="80" rx="8" fill="#ffffff" stroke="#9333ea" stroke-width="1.8" />
-    <rect x="505" y="90" width="190" height="25" rx="8" fill="#faf5ff" />
-    <rect x="505" y="108" width="190" height="7" fill="#faf5ff" />
-    <text x="515" y="107" class="badge-title" fill="#7e22ce">🔮 k = 5 鄰域範圍</text>
-    <text x="515" y="133" class="badge-text">2 個類別 A，3 個類別 B</text>
-    <text x="515" y="155" class="badge-result" fill="#9333ea">→ 判定：類別 B (2 vs 3)</text>
+    <rect x="530" y="105" width="220" height="95" rx="8" fill="#ffffff" stroke="#9333ea" stroke-width="2" />
+    <rect x="530" y="105" width="220" height="28" rx="8" fill="#faf5ff" />
+    <rect x="530" y="125" width="220" height="8" fill="#faf5ff" />
+    <text x="542" y="125" class="badge-title" fill="#7e22ce">🔮 k = 5 鄰域範圍</text>
+    <text x="542" y="155" class="badge-text">2 個類別 A，3 個類別 B</text>
+    <text x="542" y="181" class="badge-result" fill="#9333ea">→ 表決判定：類別 B</text>
   </g>
-  <path d="M 505 140.0 Q 485 150.0 488.8212643591288 162.00045645706962" fill="none" stroke="#9333ea" stroke-width="1.8" marker-end="url(#arrow-k5)" />
+  <path d="M 530 162.5 Q 510 172.5 529.1535482164444 186.95701788811914" fill="none" stroke="#9333ea" stroke-width="2.2" marker-end="url(#arrow-k5)" />
   <!-- Legend Box -->
   <g filter="url(#shadow)">
-    <rect x="740" y="200" width="225" height="115" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.2" />
-    <rect x="740" y="200" width="225" height="24" rx="8" fill="#f8fafc" />
-    <rect x="740" y="216" width="225" height="8" fill="#f8fafc" />
-    <text x="752" y="217" class="badge-title" fill="#475569">圖例說明 (Legend)</text>
-    <circle cx="762" cy="240" r="7" fill="#2563eb" stroke="#ffffff" stroke-width="1.5" />
-    <text x="778" y="244" class="legend-text">類別 A（圓形，標籤 0）</text>
-    <rect x="755" y="258" width="14" height="14" rx="2" fill="#ea580c" stroke="#ffffff" stroke-width="1.5" />
-    <text x="778" y="269" class="legend-text">類別 B（方形，標籤 1）</text>
-    <circle cx="762" cy="294" r="10" fill="rgba(16, 185, 129, 0.2)" />
-    <path d="M762.0,285.5 L764.6,290.4 L770.1,291.4 L766.3,295.4 L767.0,300.9 L762.0,298.5 L757.0,300.9 L757.7,295.4 L753.9,291.4 L759.4,290.4 Z" fill="#10b981" stroke="#047857" stroke-width="1" />
-    <text x="778" y="298" class="legend-text">待預測樣本（查詢點 ?）</text>
+    <rect x="790" y="210" width="280" height="140" rx="10" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" />
+    <rect x="790" y="210" width="280" height="32" rx="10" fill="#f1f5f9" />
+    <rect x="790" y="232" width="280" height="10" fill="#f1f5f9" />
+    <text x="806" y="233" class="legend-title">圖例說明 (Legend)</text>
+    <circle cx="815" cy="262" r="9" fill="#2563eb" stroke="#ffffff" stroke-width="1.8" />
+    <text x="835" y="268" class="legend-text">類別 A（圓形，標籤 0）</text>
+    <rect x="806" cy="286" y="284" width="18" height="18" rx="3" fill="#ea580c" stroke="#ffffff" stroke-width="1.8" />
+    <text x="835" y="298" class="legend-text">類別 B（方形，標籤 1）</text>
+    <circle cx="815" cy="328" r="13" fill="rgba(16, 185, 129, 0.25)" />
+    <path d="M815.0,317.0 L818.2,323.6 L825.5,324.6 L820.2,329.7 L821.5,336.9 L815.0,333.5 L808.5,336.9 L809.8,329.7 L804.5,324.6 L811.8,323.6 Z" fill="#10b981" stroke="#047857" stroke-width="1.5" />
+    <text x="835" y="334" class="legend-text">待預測樣本（查詢點 ?）</text>
   </g>
   <!-- Bottom Decision Mechanism Card -->
   <g filter="url(#shadow)">
-    <rect x="60" y="520" width="880" height="125" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5" />
-    <rect x="60" y="520" width="880" height="30" rx="10" fill="#e2e8f0" />
-    <rect x="60" y="540" width="880" height="10" fill="#e2e8f0" />
-    <text x="500.0" y="541" class="card-title" text-anchor="middle">【 K-NN 核心決策機制：少數服從多數 】</text>
-    <text x="85" y="572" class="card-item">1. 計算幾何距離：依特徵向量計算未知樣本與所有已知訓練點的歐氏距離  d = √((x₁ - x₂)² + (y₁ - y₂)²)</text>
-    <text x="85" y="597" class="card-item">2. 挑選最近鄰居：將所有距離由近到遠排序，圈出最靠近的前 K 個鄰居樣本（如 k=3 或 k=5）</text>
-    <text x="85" y="622" class="card-item">3. 多數投票決定：以鄰居類別的得票數高低決定預測標籤；若 k 太小易受雜訊誤導，k 太大則邊界過度平滑</text>
+    <rect x="60" y="580" width="980" height="150" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.8" />
+    <rect x="60" y="580" width="980" height="36" rx="10" fill="#e2e8f0" />
+    <rect x="60" y="606" width="980" height="10" fill="#e2e8f0" />
+    <text x="550.0" y="606" class="card-title" text-anchor="middle">【 K-NN 核心決策機制：少數服從多數 】</text>
+    <text x="85" y="642" class="card-item">1. 計算幾何距離：計算未知樣本與所有已知樣本的歐氏直線距離  d = √((x₁ - x₂)² + (y₁ - y₂)²)</text>
+    <text x="85" y="672" class="card-item">2. 圈選最近鄰居：依距離排序，挑選最靠近的前 K 個樣本納入決策圈（例如 k=3 或 k=5）</text>
+    <text x="85" y="702" class="card-item">3. 多數投票判定：統計鄰居標籤票數；k 值的選取對結果有決定性影響（k 太小易受雜訊誤導，k 太大過度平滑）</text>
   </g>
 </svg>

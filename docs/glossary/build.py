@@ -164,7 +164,8 @@ class Renderer(mistune.HTMLRenderer):
         self.headings = []
 
     def image(self, text, url, title=None):
-        path = (self.source.parent / url).resolve()
+        clean_url = url.split('?')[0]
+        path = (self.source.parent / clean_url).resolve()
         relative = str(path.relative_to(ROOT))
         target = BASE / self.chapter['slug'] / 'assets/images' / path.name
         target.parent.mkdir(parents=True, exist_ok=True)
@@ -209,7 +210,7 @@ class Renderer(mistune.HTMLRenderer):
 
 
 def normalize(source):
-    source = re.sub(r'\[!\[([^\]]*)\]\(([^)]+)\)\]\(\2\)', r'![\1](\2)', source)
+    source = re.sub(r'\[!\[([^\]]*)\]\(([^)]+)\)\]\([^)]+\)', r'![\1](\2)', source)
     source = re.sub(r'\n\[⏮️ 上一章[^\n]*', '', source)
     source = re.sub(r'> \[!(?:TIP|CAUTION|WARNING|NOTE)\]\s*\n', '> ', source)
     source = re.sub(r'\$\$([\s\S]*?)\$\$', lambda m: '\n$$\n' + m.group(1).strip() + '\n$$\n' if '\n' in m.group(1) else m.group(), source)
