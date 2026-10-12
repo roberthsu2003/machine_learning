@@ -5,9 +5,25 @@
 <div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#knn">KNN</a><a href="#decision-tree">決策樹</a><a href="#svm">SVM</a><a href="#naive-bayes">樸素貝氏</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. K-近鄰 (K-NN, K-Nearest Neighbors)</a><a href="#section-3">2. 決策樹 (Decision Tree)</a><a href="#section-4">3. 支援向量機 (SVM, Support Vector Machine)</a><a href="#section-5">4. 樸素貝氏 (Naive Bayes)</a><a href="#section-6">5. 四大演算法特性速查矩陣</a><a href="#section-7">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在經典機器學習領域中，有四種極具代表性、哲學思想各異且歷久彌新的核心演算法：<strong>K-近鄰 (K-NN)</strong>、<strong>決策樹 (Decision Tree)</strong>、<strong>支援向量機 (SVM)</strong> 與 <strong>樸素貝氏 (Naive Bayes)</strong>。</p>
 <p>理解它們各自背後的數學哲學、空間劃分幾何直覺以及適用邊界，是構建演算法直覺與面試選型的必修課。</p>
 <hr />
+<blockquote>
+<h3>💡 核心導讀：為什麼本章重點是「非線性數據」？（為什麼沒有線性回歸？）</h3>
+<p>在現實世界中，多數業務問題的特徵與目標並非單純的直線或平面關係，而是充滿了彎曲、環狀、群聚或互斥（XOR）等<strong>非線性分佈 (Non-linear Data)</strong>。</p>
+<ul>
+<li><strong>傳統線性模型（如線性回歸、邏輯回歸）的局限</strong>：<br />
+線性模型本質上是一把「筆直的長尺」，只能劃出平直的超平面（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y = w^T x + b"><mrow><mi>y</mi><mo>=</mo><msup><mi>w</mi><mi>T</mi></msup><mi>x</mi><mo>+</mo><mi>b</mi></mrow></math>）。如果資料分佈是彎曲或環狀的，線性模型在未經手動特徵工程（如加入多項式項 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="x^2"><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></math>）的情況下將嚴重<strong>欠擬合</strong>。<br />
+<em>(註：線性回歸與邏輯回歸已作為核心基石，分別於 01 章、05 章、06 章及專案專題目錄中詳細介紹)</em>。</li>
+<li><strong>本章四大演算法的突破：天生自帶應對「非線性」的解法</strong>：<ol>
+<li><strong>K-NN</strong>：透過<strong>局部距離度量</strong>，拼湊出自然貼合數據的多邊形非線性邊界（無須預設立體形狀）。</li>
+<li><strong>決策樹</strong>：透過<strong>階層式軸向正交切割</strong>，像拼圖或積木般用階梯狀逼近任意複雜的非線性曲面。</li>
+<li><strong>SVM</strong>：透過<strong>核技巧 (Kernel Trick)</strong>，將低維線性不可分的數據投影至高維特徵空間，再輕鬆一刀切開。</li>
+<li><strong>樸素貝氏</strong>：透過<strong>條件機率密度推斷</strong>，各類別方差不同時能自然形成二次曲線（拋物線/雙曲線）等非線性決策邊界。</li>
+</ol></li>
+</ul>
+</blockquote>
+<hr />
 <h2 id="section-1">🎯 本章學習目標</h2>
 <ol>
-<li>掌握四大經典演算法（KNN、決策樹、SVM、樸素貝氏）的底層核心直覺。</li>
+<li>掌握四大經典演算法（KNN、決策樹、SVM、樸素貝氏）的底層核心直覺，以及它們如何突破傳統線性模型的限制來處理<strong>非線性數據</strong>。</li>
 <li>搞懂各演算法的關鍵超參數與防範過擬合策略。</li>
 <li>具備演算法選型直覺，能透過特性速查表針對特定任務挑選最適模型。</li>
 </ol>
@@ -139,12 +155,13 @@
 <li><strong>伯努利樸素貝氏 (BernoulliNB)</strong>：特徵為二元布林值（0 或 1，僅關心單詞「有出現」或「沒出現」）。</li>
 </ol>
 <hr />
-<h2 id="section-6">5. 四大演算法特性速查矩陣</h2>
+<h2 id="section-6">5. 演算法特性與非線性能力速查矩陣</h2>
 <div class="table-scroll"><table>
 <thead>
 <tr>
   <th style="text-align:left">演算法</th>
   <th style="text-align:center">模型類型</th>
+  <th style="text-align:left">決策邊界形狀 / 非線性處理機制</th>
   <th style="text-align:center">可解釋性</th>
   <th style="text-align:center">訓練速度</th>
   <th style="text-align:center">推論速度</th>
@@ -155,8 +172,20 @@
 </thead>
 <tbody>
 <tr>
+  <td style="text-align:left"><em>(基準對照)</em><br /><strong>線性回歸 / 邏輯回歸</strong></td>
+  <td style="text-align:center">全域線性參數模型</td>
+  <td style="text-align:left"><strong>純平直超平面</strong> ❌<br />（無法自主擬合非線性，需手動特徵工程）</td>
+  <td style="text-align:center">極高</td>
+  <td style="text-align:center">快</td>
+  <td style="text-align:center">極快</td>
+  <td style="text-align:center">是 ⚠️</td>
+  <td style="text-align:center">強（結構簡單不易過擬合）</td>
+  <td style="text-align:left">線性關係明確、特徵權重可解釋性、快速基準線</td>
+</tr>
+<tr>
   <td style="text-align:left"><strong>K-NN</strong></td>
   <td style="text-align:center">距離幾何 / 懶惰學習</td>
+  <td style="text-align:left"><strong>不規則多邊形曲面</strong> 🟢<br />（局部鄰域投票，天然適應非線性）</td>
   <td style="text-align:center">中</td>
   <td style="text-align:center"><strong>極快</strong>（無訓練）</td>
   <td style="text-align:center"><strong>極慢</strong>（逐筆算距離）</td>
@@ -167,6 +196,7 @@
 <tr>
   <td style="text-align:left"><strong>決策樹</strong></td>
   <td style="text-align:center">規則樹狀 / 白盒模型</td>
+  <td style="text-align:left"><strong>階梯狀軸向多面體</strong> 🟢<br />（正交超平面多層切割逼近非線性）</td>
   <td style="text-align:center"><strong>極高</strong></td>
   <td style="text-align:center">快</td>
   <td style="text-align:center">極快</td>
@@ -176,7 +206,8 @@
 </tr>
 <tr>
   <td style="text-align:left"><strong>SVM</strong></td>
-  <td style="text-align:center">最大間隔 / 黑盒模型</td>
+  <td style="text-align:center">最大間隔 / 幾何邊界</td>
+  <td style="text-align:left"><strong>高維超平面 / 任意彎曲邊界</strong> 🟢<br />（核技巧將非線性數據投射至高維）</td>
   <td style="text-align:center">低</td>
   <td style="text-align:center">慢（高維大樣本耗時）</td>
   <td style="text-align:center">快</td>
@@ -187,6 +218,7 @@
 <tr>
   <td style="text-align:left"><strong>樸素貝氏</strong></td>
   <td style="text-align:center">機率生成 / 統計模型</td>
+  <td style="text-align:left"><strong>二次曲線 / 超平面</strong> 🟡<br />（依特徵機率分佈密度函數動態形成）</td>
   <td style="text-align:center">高</td>
   <td style="text-align:center"><strong>極快</strong></td>
   <td style="text-align:center"><strong>極快</strong></td>
@@ -199,9 +231,10 @@
 <hr />
 <h2 id="section-7">📌 本章精華速記</h2>
 <ol>
-<li><strong>K-NN</strong>：物以類聚少數服從多數，推論慢、依賴距離縮放。</li>
-<li><strong>決策樹</strong>：階層規則軸向切割，可解釋性滿分，無需縮放但須限制樹深防過擬合。</li>
-<li><strong>SVM</strong>：追求最大幾何安全隔離帶，核技巧解決非線性，對高維數據極度強悍。</li>
+<li><strong>非線性威力</strong>：相較於線性模型只能劃出筆直超平面，本章四大演算法均擁有捕捉<strong>非線性分佈</strong>的核心武器（局部距離、階梯正交、高維投影、機率密度）。</li>
+<li><strong>K-NN</strong>：物以類聚少數服從多數，推論慢、依賴距離縮放，天然形成曲折的非線性決策邊界。</li>
+<li><strong>決策樹</strong>：階層規則軸向切割，階梯狀逼近非線性曲面，可解釋性滿分，無需縮放但須限制樹深防過擬合。</li>
+<li><strong>SVM</strong>：追求最大幾何安全隔離帶，核技巧輕鬆切開非線性分佈，對高維數據極度強悍。</li>
 <li><strong>樸素貝氏</strong>：條件獨立性假設簡化聯合機率，計算飛快，文字分類的性價比之王。</li>
 </ol>
 <hr />
