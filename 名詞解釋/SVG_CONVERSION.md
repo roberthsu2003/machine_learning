@@ -39,7 +39,7 @@ SVG 使用本機中文字型，不內嵌字型或點陣圖片，也沒有 JavaSc
 | 06_優化算法 | [01_gradient_descent.png](06_優化算法/images/01_gradient_descent.png) | 保留 PNG | 包含散點、曲線、等高線或複雜座標；缺少原繪圖資料，描邊易使刻度與文字失真。 |
 | 06_優化算法 | [02_learning_rate.png](06_優化算法/images/02_learning_rate.png) | 保留 PNG | 包含散點、曲線、等高線或複雜座標；缺少原繪圖資料，描邊易使刻度與文字失真。 |
 | 06_優化算法 | [03_batch_size_comparison.png](06_優化算法/images/03_batch_size_comparison.png) | 重製 SVG | 流程、表格或資訊卡適合以原生向量文字和線條重製。 |
-| 07_常見算法 | [01_knn.png](07_常見算法/images/01_knn.png) | 保留 PNG | 包含散點、曲線、等高線或複雜座標；缺少原繪圖資料，描邊易使刻度與文字失真。 |
+| 07_常見算法 | [01_knn.svg](07_常見算法/images/01_knn.svg) | 重製 SVG | 修正原圖鄰域點數與類別不符之幾何錯誤，重製為精確歐氏距離的 SVG 向量圖。 |
 | 07_常見算法 | [02_decision_tree.png](07_常見算法/images/02_decision_tree.png) | 保留 PNG | 包含散點、曲線、等高線或複雜座標；缺少原繪圖資料，描邊易使刻度與文字失真。 |
 | 07_常見算法 | [03_svm.png](07_常見算法/images/03_svm.png) | 保留 PNG | 包含散點、曲線、等高線或複雜座標；缺少原繪圖資料，描邊易使刻度與文字失真。 |
 | 07_常見算法 | [04_naive_bayes.png](07_常見算法/images/04_naive_bayes.png) | 重製 SVG | 流程、表格或資訊卡適合以原生向量文字和線條重製。 |

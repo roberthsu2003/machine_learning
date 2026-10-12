@@ -18,7 +18,7 @@
 ## 原圖對應
 
 動畫依原教材順序呈現；保留原圖對照，並在旁邊提供動畫的文字說明。
-- `knn`：`01_knn.png`。
+- `knn`：`01_knn.svg`。
 - `decision-tree`：`02_decision_tree.png`。
 - `svm`：`03_svm.png`。
 - `naive-bayes`：`04_naive_bayes.png`。

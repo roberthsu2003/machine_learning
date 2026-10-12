@@ -2,24 +2,25 @@
 <header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/07_%E5%B8%B8%E8%A6%8B%E7%AE%97%E6%B3%95/README.md">GitHub 原文 ↗</a></nav></header>
 <main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 07 / 12 · INTERACTIVE LESSON</div><h1>常見算法</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#knn">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
 <noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
-<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#knn">KNN</a><a href="#decision-tree">決策樹</a><a href="#svm">SVM</a><a href="#naive-bayes">樸素貝氏</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. K-近鄰 (K-NN, K-Nearest Neighbors)</a><a href="#section-3">2. 決策樹 (Decision Tree)</a><a href="#section-4">3. 支援向量機 (SVM, Support Vector Machine)</a><a href="#section-5">4. 樸素貝氏 (Naive Bayes)</a><a href="#section-6">5. 四大演算法特性速查矩陣</a><a href="#section-7">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在經典機器學習領域中，有四種極具代表性、哲學思想各異且歷久彌新的核心演算法：<strong>K-近鄰 (K-NN)</strong>、<strong>決策樹 (Decision Tree)</strong>、<strong>支援向量機 (SVM)</strong> 與 <strong>樸素貝氏 (Naive Bayes)</strong>。</p>
+<div class="lesson-layout"><aside class="lesson-toc" aria-label="本章目錄"><h2>動畫與教材</h2><nav class="toc-links"><a href="#knn">KNN</a><a href="#decision-tree">決策樹</a><a href="#svm">SVM</a><a href="#naive-bayes">樸素貝氏</a><hr><a href="#section-1">🎯 本章學習目標</a><a href="#section-2">1. K-近鄰 (K-NN, K-Nearest Neighbors)</a><a href="#section-3">2. 決策樹 (Decision Tree)</a><a href="#section-4">3. 支援向量機 (SVM, Support Vector Machine)</a><a href="#section-5">4. 樸素貝氏 (Naive Bayes)</a><a href="#section-6">5. 演算法特性與非線性能力速查矩陣</a><a href="#section-7">📌 本章精華速記</a></nav></aside><article class="lesson-content"><p>在經典機器學習領域中，有四種極具代表性、哲學思想各異且歷久彌新的核心演算法：<strong>K-近鄰 (K-NN)</strong>、<strong>決策樹 (Decision Tree)</strong>、<strong>支援向量機 (SVM)</strong> 與 <strong>樸素貝氏 (Naive Bayes)</strong>。</p>
 <p>理解它們各自背後的數學哲學、空間劃分幾何直覺以及適用邊界，是構建演算法直覺與面試選型的必修課。</p>
 <hr />
-<blockquote>
 <h3>💡 核心導讀：為什麼本章重點是「非線性數據」？（為什麼沒有線性回歸？）</h3>
 <p>在現實世界中，多數業務問題的特徵與目標並非單純的直線或平面關係，而是充滿了彎曲、環狀、群聚或互斥（XOR）等<strong>非線性分佈 (Non-linear Data)</strong>。</p>
 <ul>
-<li><strong>傳統線性模型（如線性回歸、邏輯回歸）的局限</strong>：<br />
-線性模型本質上是一把「筆直的長尺」，只能劃出平直的超平面（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y = w^T x + b"><mrow><mi>y</mi><mo>=</mo><msup><mi>w</mi><mi>T</mi></msup><mi>x</mi><mo>+</mo><mi>b</mi></mrow></math>）。如果資料分佈是彎曲或環狀的，線性模型在未經手動特徵工程（如加入多項式項 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="x^2"><mrow><msup><mi>x</mi><mn>2</mn></msup></mrow></math>）的情況下將嚴重<strong>欠擬合</strong>。<br />
-<em>(註：線性回歸與邏輯回歸已作為核心基石，分別於 01 章、05 章、06 章及專案專題目錄中詳細介紹)</em>。</li>
-<li><strong>本章四大演算法的突破：天生自帶應對「非線性」的解法</strong>：<ol>
+<li><p><strong>傳統線性模型（如線性回歸、邏輯回歸）的局限</strong>：<br />
+線性模型本質上是一把「筆直的長尺」，只能劃出平直的超平面（<code>y = w^T x + b</code>）。如果資料分佈是彎曲或環狀的，線性模型在未經手動特徵工程（如加入多項式項 <code>x^2</code>）的情況下將嚴重<strong>欠擬合</strong>。<br />
+<em>(註：線性回歸與邏輯回歸已作為核心基石，分別於 <a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/01_%25E6%25A9%259F%25E5%2599%25A8%25E5%25AD%25B8%25E7%25BF%2592%25E7%259A%2584%25E9%25A1%259E%25E5%259E%258B/README.md">01 章</a>、<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/05_%25E6%25A8%25A1%25E5%259E%258B%25E5%258F%2583%25E6%2595%25B8/README.md">05 章</a>、<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/06_%25E5%2584%25AA%25E5%258C%2596%25E7%25AE%2597%25E6%25B3%2595/README.md">06 章</a> 及專案專題目錄中詳細介紹)</em>。</p>
+</li>
+<li><p><strong>本章四大演算法的突破：天生自帶應對「非線性」的解法</strong>：</p>
+<ol>
 <li><strong>K-NN</strong>：透過<strong>局部距離度量</strong>，拼湊出自然貼合數據的多邊形非線性邊界（無須預設立體形狀）。</li>
 <li><strong>決策樹</strong>：透過<strong>階層式軸向正交切割</strong>，像拼圖或積木般用階梯狀逼近任意複雜的非線性曲面。</li>
 <li><strong>SVM</strong>：透過<strong>核技巧 (Kernel Trick)</strong>，將低維線性不可分的數據投影至高維特徵空間，再輕鬆一刀切開。</li>
 <li><strong>樸素貝氏</strong>：透過<strong>條件機率密度推斷</strong>，各類別方差不同時能自然形成二次曲線（拋物線/雙曲線）等非線性決策邊界。</li>
-</ol></li>
+</ol>
+</li>
 </ul>
-</blockquote>
 <hr />
 <h2 id="section-1">🎯 本章學習目標</h2>
 <ol>
@@ -30,15 +31,16 @@
 <hr />
 <h2 id="section-2">1. K-近鄰 (K-NN, K-Nearest Neighbors)</h2>
 <h3>核心定義</h3>
-<p>K-NN 是一種基於「幾何距離度量」的非參數化算法。其核心哲學是**「物以類聚，人以群分」**——當需要預測一個未知新樣本的類別時，找出特徵空間中離它最近的 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="K"><mrow><mi>K</mi></mrow></math> 個鄰居，並以「少數服從多數」的投票表決（分類）或鄰居平均值（回歸）作為預測輸出。</p>
+<p>K-NN 是一種基於「幾何距離度量」的非參數化算法。其核心哲學是**「物以類聚，人以群分」**——當需要預測一個未知新樣本的類別時，找出特徵空間中離它最近的 <code>K</code> 個鄰居，並以「少數服從多數」的投票表決（分類）或鄰居平均值（回歸）作為預測輸出。</p>
 <h3>💡 生活直觀比喻：問路過的街坊鄰居</h3>
 <blockquote>
 <p>你剛搬進一個新社區，想知道這棟房子的租金行情。<br />
-你不需要研究房地產大盤趨勢，只要<strong>敲開左鄰右舍最近的 5 戶人家大門（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k=5"><mrow><mi>k</mi><mo>=</mo><mn>5</mn></mrow></math>），問問他們每個月付多少租金，然後取個平均數</strong>即可！</p>
+你不需要研究房地產大盤趨勢，只要<strong>敲開左鄰右舍最近的 5 戶人家大門（k=5），問問他們每個月付多少租金，然後取個平均數</strong>即可！</p>
 </blockquote>
 <h4>📊 觀念圖解</h4>
 <blockquote>
-<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#knn">KNN</a>
+<p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#knn">KNN</a></p>
+</blockquote>
 <section class="scene" id="knn" data-scene="knn" aria-labelledby="title-knn">
 <div class="scene-head"><h3 id="title-knn">KNN</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">用圓／方／三角形區分類別；距離線依次連接查詢點與最近鄰居，右側排名表避免距離文字重疊。</p>
@@ -47,17 +49,20 @@
 <p class="scene-result" id="result-knn" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
 <div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="KNN播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="KNN動畫時間軸"><span class="time-label">0%</span></div>
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
-</section><details class="original"><summary>對照原教材圖解：K-近鄰算法原理：少數服從多數的鄰居表決</summary><p class="scene-jump"><a href="#knn">↑ 回到互動動畫：KNN</a></p><img src="./assets/images/01_knn.png" alt="K-近鄰算法原理：少數服從多數的鄰居表決" loading="lazy"><a href="./assets/images/01_knn.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
+</section><details class="original"><summary>對照原教材圖解：K-近鄰算法原理：少數服從多數的鄰居表決</summary><p class="scene-jump"><a href="#knn">↑ 回到互動動畫：KNN</a></p><img src="./assets/images/01_knn.svg" alt="K-近鄰算法原理：少數服從多數的鄰居表決" loading="lazy"><a href="./assets/images/01_knn.svg" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<blockquote>
+<p>💡 <strong>提示</strong>：點擊上方圖片可在 GitHub 中開啟全尺寸高解析度 SVG 向量圖放大檢視。<br />
+<em>(如需對照歷史版本，可<a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/07_%E5%B8%B8%E8%A6%8B%E7%AE%97%E6%B3%95/images/01_knn.png">查看原始 PNG 圖片</a>)</em></p>
 </blockquote>
 <h3>關鍵超參數與幾何特點</h3>
 <ul>
 <li><strong>懶惰學習 (Lazy Learning)</strong>：模型在訓練階段完全不做任何計算（只把數據存入記憶體），所有計算全推遲到「預測推論時」才計算距離。</li>
-<li><strong>超參數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 值的權衡</strong>：<ul>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 太小（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k=1"><mrow><mi>k</mi><mo>=</mo><mn>1</mn></mrow></math>）：只要最近的鄰居剛好是異常雜訊點，預測立刻出錯，<strong>極易過擬合 (Overfitting)</strong>，決策邊界破碎支離。</li>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 太大（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k=100"><mrow><mi>k</mi><mo>=</mo><mn>100</mn></mrow></math>）：納入了太多遠處無關的鄰居，決策邊界過於平滑，<strong>極易欠擬合 (Underfitting)</strong>，且受樣本類別不平衡嚴重干擾。</li>
+<li><strong>超參數 <code>k</code> 值的權衡</strong>：<ul>
+<li><code>k</code> 太小（如 <code>k=1</code>）：只要最近的鄰居剛好是異常雜訊點，預測立刻出錯，<strong>極易過擬合 (Overfitting)</strong>，決策邊界破碎支離。</li>
+<li><code>k</code> 太大（如 <code>k=100</code>）：納入了太多遠處無關的鄰居，決策邊界過於平滑，<strong>極易欠擬合 (Underfitting)</strong>，且受樣本類別不平衡嚴重干擾。</li>
 </ul>
 </li>
-<li><strong>🚨 關鍵預處理</strong>：<strong>必須做特徵縮放</strong>！否則尺度大的特徵將完全主宰幾何距離。</li>
+<li><strong>關鍵預處理</strong>：<strong>必須做特徵縮放</strong>！否則尺度大的特徵將完全主宰幾何距離。</li>
 </ul>
 <hr />
 <h2 id="section-3">2. 決策樹 (Decision Tree)</h2>
@@ -66,7 +71,7 @@
 <h3>💡 生活直觀比喻：二十個問題 (20 Questions) 與流程圖</h3>
 <blockquote>
 <p>就像玩「二十個問題」猜謎遊戲：<br />
-「它是活的嗎？➔ 是」➔「它是哺乳動物嗎？➔ 是」➔「它會汪汪叫嗎？➔ 是」➔ 結論：「它是狗！」<br />
+「它是活的嗎？→ 是」→「它是哺乳動物嗎？→ 是」→「它會汪汪叫嗎？→ 是」→ 結論：「它是狗！」<br />
 這種層層遞進的 if-else 邏輯樹，就是決策樹的本質。</p>
 </blockquote>
 <h4>📊 觀念圖解</h4>
@@ -119,12 +124,12 @@
 <ul>
 <li><strong>支援向量 (Support Vectors)</strong>：只有緊貼安全間隔邊緣的少數幾個關鍵樣本點決定了超平面的位置，這賦予了 SVM 極高的數學穩定性（Robust）。</li>
 <li><strong>核技巧 (Kernel Trick)</strong>：當低維數據線性不可分（如環狀分佈）時，透過核函數（如高斯核 RBF、多項式核 Poly）<strong>隱式將數據投影至高維特徵空間</strong>，在高維空間中輕鬆一刀切開！</li>
-<li><strong>超參數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> (容錯懲罰項)</strong>：<ul>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> 很大：嚴格容錯（Hard Margin），不准任何樣本越界，邊界極窄，易過擬合。</li>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> 很小：寬鬆容錯（Soft Margin），允許部分樣本稍微越過間隔，邊界較寬，泛化能力較強。</li>
+<li><strong>超參數 <code>C</code> (容錯懲罰項)</strong>：<ul>
+<li><code>C</code> 很大：嚴格容錯（Hard Margin），不准任何樣本越界，邊界極窄，易過擬合。</li>
+<li><code>C</code> 很小：寬鬆容錯（Soft Margin），允許部分樣本稍微越過間隔，邊界較寬，泛化能力較強。</li>
 </ul>
 </li>
-<li><strong>🚨 關鍵預處理</strong>：<strong>必須做特徵縮放</strong>！</li>
+<li><strong>關鍵預處理</strong>：<strong>必須做特徵縮放</strong>！</li>
 </ul>
 <hr />
 <h2 id="section-5">4. 樸素貝氏 (Naive Bayes)</h2>
@@ -172,57 +177,57 @@
 </thead>
 <tbody>
 <tr>
-  <td style="text-align:left"><em>(基準對照)</em><br /><strong>線性回歸 / 邏輯回歸</strong></td>
+  <td style="text-align:left"><em>(基準對照)</em><br><strong>線性回歸 / 邏輯回歸</strong></td>
   <td style="text-align:center">全域線性參數模型</td>
-  <td style="text-align:left"><strong>純平直超平面</strong> ❌<br />（無法自主擬合非線性，需手動特徵工程）</td>
+  <td style="text-align:left"><strong>純平直超平面</strong><br>（無法自主擬合非線性，需手動特徵工程）</td>
   <td style="text-align:center">極高</td>
   <td style="text-align:center">快</td>
   <td style="text-align:center">極快</td>
-  <td style="text-align:center">是 ⚠️</td>
+  <td style="text-align:center">是（強烈建議）</td>
   <td style="text-align:center">強（結構簡單不易過擬合）</td>
   <td style="text-align:left">線性關係明確、特徵權重可解釋性、快速基準線</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>K-NN</strong></td>
   <td style="text-align:center">距離幾何 / 懶惰學習</td>
-  <td style="text-align:left"><strong>不規則多邊形曲面</strong> 🟢<br />（局部鄰域投票，天然適應非線性）</td>
+  <td style="text-align:left"><strong>不規則多邊形曲面</strong><br>（局部鄰域投票，天然適應非線性）</td>
   <td style="text-align:center">中</td>
   <td style="text-align:center"><strong>極快</strong>（無訓練）</td>
   <td style="text-align:center"><strong>極慢</strong>（逐筆算距離）</td>
-  <td style="text-align:center"><strong>是 ⚠️</strong></td>
-  <td style="text-align:center">差（依賴 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="k"><mrow><mi>k</mi></mrow></math> 調優）</td>
+  <td style="text-align:center">是（必須）</td>
+  <td style="text-align:center">差（依賴 <code>k</code> 調優）</td>
   <td style="text-align:left">小樣本、多分類、推薦系統</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>決策樹</strong></td>
   <td style="text-align:center">規則樹狀 / 白盒模型</td>
-  <td style="text-align:left"><strong>階梯狀軸向多面體</strong> 🟢<br />（正交超平面多層切割逼近非線性）</td>
+  <td style="text-align:left"><strong>階梯狀軸向多面體</strong><br>（正交超平面多層切割逼近非線性）</td>
   <td style="text-align:center"><strong>極高</strong></td>
   <td style="text-align:center">快</td>
   <td style="text-align:center">極快</td>
-  <td style="text-align:center"><strong>否 🛡️</strong></td>
+  <td style="text-align:center">否（不需要）</td>
   <td style="text-align:center">差（極易無節制生長）</td>
   <td style="text-align:left">業務決策、風控審核、特徵探索</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>SVM</strong></td>
   <td style="text-align:center">最大間隔 / 幾何邊界</td>
-  <td style="text-align:left"><strong>高維超平面 / 任意彎曲邊界</strong> 🟢<br />（核技巧將非線性數據投射至高維）</td>
+  <td style="text-align:left"><strong>高維超平面 / 任意彎曲邊界</strong><br>（核技巧將非線性數據投射至高維）</td>
   <td style="text-align:center">低</td>
   <td style="text-align:center">慢（高維大樣本耗時）</td>
   <td style="text-align:center">快</td>
-  <td style="text-align:center"><strong>是 ⚠️</strong></td>
-  <td style="text-align:center"><strong>強</strong>（依賴核函數與 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math>）</td>
+  <td style="text-align:center">是（必須）</td>
+  <td style="text-align:center">強（依賴核函數與 <code>C</code>）</td>
   <td style="text-align:left">高維數據、文本分類、小樣本精準預測</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>樸素貝氏</strong></td>
   <td style="text-align:center">機率生成 / 統計模型</td>
-  <td style="text-align:left"><strong>二次曲線 / 超平面</strong> 🟡<br />（依特徵機率分佈密度函數動態形成）</td>
+  <td style="text-align:left"><strong>二次曲線 / 超平面</strong><br>（依特徵機率分佈密度函數動態形成）</td>
   <td style="text-align:center">高</td>
   <td style="text-align:center"><strong>極快</strong></td>
   <td style="text-align:center"><strong>極快</strong></td>
-  <td style="text-align:center"><strong>否 🛡️</strong></td>
+  <td style="text-align:center">否（不需要）</td>
   <td style="text-align:center">良好</td>
   <td style="text-align:left">垃圾郵件過濾、情感分析、新聞分類</td>
 </tr>

@@ -48,7 +48,11 @@ K-NN 是一種基於「幾何距離度量」的非參數化算法。其核心哲
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[KNN](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#knn)
-![K-近鄰算法原理：少數服從多數的鄰居表決](images/01_knn.png)
+
+[![K-近鄰算法原理：少數服從多數的鄰居表決](images/01_knn.svg)](images/01_knn.svg)
+
+> 💡 **提示**：點擊上方圖片可在 GitHub 中開啟全尺寸高解析度 SVG 向量圖放大檢視。  
+> *(如需對照歷史版本，可[查看原始 PNG 圖片](images/01_knn.png))*
 
 ### 關鍵超參數與幾何特點
 - **懶惰學習 (Lazy Learning)**：模型在訓練階段完全不做任何計算（只把數據存入記憶體），所有計算全推遲到「預測推論時」才計算距離。

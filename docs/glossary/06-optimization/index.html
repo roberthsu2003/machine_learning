@@ -94,7 +94,7 @@
 </section><details class="original"><summary>對照原教材圖解：學習率大小對訓練收斂的影響</summary><p class="scene-jump"><a href="#learning-rate">↑ 回到互動動畫：學習率</a></p><img src="./assets/images/02_learning_rate.png" alt="學習率大小對訓練收斂的影響" loading="lazy"><a href="./assets/images/02_learning_rate.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
 <h3>步長大小引發的性能光譜</h3>
-<p><img src="./assets/images/02_learning_rate_spectrum.svg" alt="學習率大小引發的性能光譜" loading="lazy" style="max-width:100%;height:auto;"></p>
+<details class="original"><summary>對照原教材圖解：學習率大小引發的性能光譜</summary><img src="./assets/images/02_learning_rate_spectrum.svg" alt="學習率大小引發的性能光譜" loading="lazy"><a href="./assets/images/02_learning_rate_spectrum.svg" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
 <h3>實務調優策略</h3>
 <ol>
 <li><strong>典型初始值</strong>：常見的嘗試起點為 <code>0.001</code>、<code>0.01</code>。</li>
@@ -126,12 +126,11 @@
 <li><strong>小批次（如 16, 32 / 街頭隨機抽問幾人）</strong>：問話速度極快，記憶體佔用極低。雖然每次更新的方向有些搖晃震盪，但<strong>適度的噪聲反而能將模型震出平庸的淺坑（鞍點），尋找到更寬廣、泛化更好的全局平坦最優谷底</strong>！</li>
 </ul>
 <h3>🔄 訓練計量三劍客：Batch Size、Step (Iteration) 與 Epoch</h3>
-<p>在觀察模型訓練或動畫演示時，很多人常有疑問：<br>
+<p>在觀察模型訓練或動畫演示時，很多人常有疑問：<br />
 <strong>「如果資料集只有 32 筆，我設批次為 8，為什麼更新次數會走 20 次？資料不是讀完 32 筆就結束了嗎？」</strong></p>
-<p>答案是：<strong>資料不是只讀一次，而是會被重新洗牌（Shuffle）、反覆研讀許多輪！</strong><br>
+<p>答案是：<strong>資料不是只讀一次，而是會被重新洗牌（Shuffle）、反覆研讀許多輪！</strong><br />
 為了精確描述訓練進度，我們必須釐清以下三個核心概念：</p>
-<div class="table-wrap">
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
   <th style="text-align:left">術語</th>
@@ -153,11 +152,10 @@
 <tr>
   <td style="text-align:left"><strong>Epoch (訓練輪次)</strong></td>
   <td style="text-align:left"><strong>全部訓練資料被模型完整看過一遍</strong>的週期。</td>
-  <td style="text-align:left">32 ÷ 8 = <strong>每 4 步算 1 個 Epoch</strong></td>
+  <td style="text-align:left"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="32 \div 8 ="><mrow><mn>32</mn><mo>div</mo><mn>8</mn><mo>=</mo></mrow></math> <strong>每 4 步算 1 個 Epoch</strong></td>
 </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 <h4>💡 生活比喻：考前刷題庫</h4>
 <ul>
 <li><strong>總題庫有 32 題</strong>。你每次從中抽出 <strong>8 題</strong> 一起寫（Batch Size = 8）。</li>
@@ -166,10 +164,7 @@
 <li><strong>但只做一遍就能考滿分嗎？通常不能！</strong> 模型只看一遍資料根本記不住規律，因此必須把題目<strong>重新打散順序（Shuffle）</strong>，繼續刷第 2 輪、第 3 輪……當完成 20 次更新時，相當於把這份題庫<strong>反覆精讀了整整 5 輪（5 個 Epochs）</strong>！</li>
 </ul>
 <h4>📐 三者的數學連動關係</h4>
-<p style="text-align:center;font-weight:600;font-size:1.05em;background:#f8faf6;padding:12px;border-radius:8px;border:1px solid #cbded0;margin:16px 0;">
-總更新步數 (Steps) = 總輪數 (Epochs) × ( 資料集總樣本數 ÷ 批次大小 (Batch Size) )
-</p>
-<blockquote>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\text{總更新步數 (Steps)} = \text{總輪數 (Epochs)} \times \left( \frac{\text{資料集總樣本數}}{\text{批次大小 (Batch Size)}} \right)"><mrow><mtext>總更新步數 (Steps)</mtext><mo>=</mo><mtext>總輪數 (Epochs)</mtext><mo>×</mo><mo>(</mo><mfrac><mrow><mtext>資料集總樣本數</mtext></mrow><mrow><mtext>批次大小 (Batch Size)</mtext></mrow></mfrac><mo>)</mo></mrow></math></div><blockquote>
 <blockquote>
 <p><strong>GPU 硬體加速法則</strong>：<br />
 在配置 Batch Size 時，幾乎總是設定為 <strong>2 的次方數</strong>（如 16, 32, 64, 128, 256, 512）。這是因為 GPU 的硬體計算單元（CUDA Cores / Tensor Cores）在 2 的次方記憶體對齊下吞吐效率最高！</p>
@@ -179,13 +174,17 @@
 <p>很多初學者會疑惑：<strong>「訓練模型時，只要調學習率就好，還是連 Batch Size 也要一起調？不同的演算法調整方式一樣嗎？」</strong></p>
 <p>答案是：<strong>它們通常需要成對調整，而且不同演算法能調整的超參數也不一樣！</strong></p>
 <ol>
-<li><strong>學習率與 Batch Size 是「搭檔關係」</strong>：<br>
-實務上調整模型時，這兩者往往牽一髮而動全身。一般來說，若把 <strong>Batch Size 調大</strong>，每次計算的方向更穩、但整個 Epoch 裡的更新次數變少了，通常會把<strong>學習率也相應調大</strong>以維持訓練效率；反之，若 <strong>Batch Size 調小</strong>，更新震盪較大，學習率就必須設定得相對保守。</li>
-<li><strong>演算法不同，需要調的超參數也完全不同</strong>：<br>
-每種優化算法提供的「控制旋鈕」各不相同：</li>
+<li><p><strong>學習率與 Batch Size 是「搭檔關係」</strong>：</p>
+<ul>
+<li>實務上調整模型時，這兩者往往牽一髮而動全身。</li>
+<li>一般來說，若把 <strong>Batch Size 調大</strong>，每次計算的方向更穩、但整個 Epoch 裡的更新次數變少了，通常會把<strong>學習率也相應調大</strong>以維持訓練效率；反之，若 <strong>Batch Size 調小</strong>，更新震盪較大，學習率就必須設定得相對保守。</li>
+</ul>
+</li>
+<li><p><strong>演算法不同，需要調的超參數也完全不同</strong>：
+每種優化算法提供的「控制旋鈕」各不相同：</p>
+</li>
 </ol>
-<div class="table-wrap">
-<table>
+<div class="table-scroll"><table>
 <thead>
 <tr>
   <th style="text-align:left">優化演算法</th>
@@ -196,22 +195,22 @@
 <tbody>
 <tr>
   <td style="text-align:left"><strong>BGD (全部數據)</strong></td>
-  <td style="text-align:left">學習率 (α)</td>
+  <td style="text-align:left">學習率 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\alpha"><mrow><mi>α</mi></mrow></math>)</td>
   <td style="text-align:left"><strong>不用調 Batch Size</strong>（因為永遠是 100% 數據），只需專注調學習率。</td>
 </tr>
 <tr>
-  <td style="text-align:left"><strong>SGD (N=1)</strong></td>
-  <td style="text-align:left">學習率 (α)</td>
+  <td style="text-align:left"><strong>SGD (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="N=1"><mrow><mi>N</mi><mo>=</mo><mn>1</mn></mrow></math>)</strong></td>
+  <td style="text-align:left">學習率 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\alpha"><mrow><mi>α</mi></mrow></math>)</td>
   <td style="text-align:left">Batch Size 固定為 1，噪聲大，需特別注意學習率不能太大。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Mini-Batch GD</strong></td>
-  <td style="text-align:left"><strong>學習率 (α) + 批次大小 (Batch Size)</strong></td>
+  <td style="text-align:left"><strong>學習率 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\alpha"><mrow><mi>α</mi></mrow></math>) + 批次大小 (Batch Size)</strong></td>
   <td style="text-align:left">現代深度學習標準搭配，通常需要<strong>同時搜尋這兩者的最佳組合</strong>。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>Momentum (動量法)</strong></td>
-  <td style="text-align:left">學習率 + Batch Size + <strong>動量係數 (β)</strong></td>
+  <td style="text-align:left">學習率 + Batch Size + <strong>動量係數 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\beta"><mrow><mo>beta</mo></mrow></math>)</strong></td>
   <td style="text-align:left">多了一個「慣性」超參數（通常預設為 0.9）。</td>
 </tr>
 <tr>
@@ -220,13 +219,13 @@
   <td style="text-align:left">演算法會自己動態微調各參數步長，但<strong>起始學習率與批次大小</strong>依然是關鍵。</td>
 </tr>
 </tbody>
-</table>
-</div>
+</table></div>
 <hr />
 <h2 id="section-5">4. 拓展視野：現代優化器家族演進</h2>
 <p>簡單來說，<strong>優化器（Optimizer）就是訓練時「自動幫你調整模型參數」的核心引擎</strong>！模型算出預測誤差後，工程師不需要手動修改權重數值，全靠優化器自動計算方向並把參數更新到位。</p>
 <p>不過，不同的優化器在「自動調整」時的聰明程度大不相同——傳統方法（如 SGD）調整時步伐死板固執，而現代優化器則學會了自帶慣性與自適應調速：</p>
-<p><img src="./assets/images/04_optimizers_evolution.svg" alt="現代優化器家族演進脈絡" loading="lazy" style="max-width:100%;height:auto;"></p><ul>
+<details class="original"><summary>對照原教材圖解：現代優化器家族演進脈絡</summary><img src="./assets/images/04_optimizers_evolution.svg" alt="現代優化器家族演進脈絡" loading="lazy"><a href="./assets/images/04_optimizers_evolution.svg" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details>
+<ul>
 <li><strong>為什麼大家愛用 Adam？</strong>：<br />
 Adam (Adaptive Moment Estimation) 就是最受歡迎的「全自動自適應優化器」！它同時具備「慣性衝力（避免卡在鞍點）」與「自動調整步長（劇烈變動的特徵自動小步走、罕見變動的特徵自動大步走）」，是目前大多數機器學習與深度學習任務中表現最魯棒、最省心的默認選擇！</li>
 </ul>

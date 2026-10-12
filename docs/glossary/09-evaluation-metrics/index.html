@@ -142,21 +142,121 @@
 </ul>
 <hr />
 <h3>5. ROC-AUC (受試者工作特徵曲線與曲線下面積)</h3>
-<p>在實務中，分類模型輸出的往往是「屬於正類的機率值」（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.78"><mrow><mn>0.78</mn></mrow></math>）。我們通常以 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.5"><mrow><mn>0.5</mn></mrow></math> 作為門檻（Threshold），大於 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.5"><mrow><mn>0.5</mn></mrow></math> 判為正類。但如果把門檻調低（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.2"><mrow><mn>0.2</mn></mrow></math>）或調高（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.8"><mrow><mn>0.8</mn></mrow></math>），Precision 與 Recall 就會此消彼長。</p>
+<p>在實務中，分類模型輸出的往往不是直接的「是/否」，而是「屬於正類的機率分數」（例如：預測這封信是垃圾信的機率為 0.78）。我們通常預設以 0.5 作為<strong>分類門檻 (Threshold)</strong>：大於等於 0.5 就判為正類。</p>
+<p>但門檻不一定要設在 0.5。如果調整門檻，<strong>精確率 (Precision)</strong> 與 <strong>召回率 (Recall)</strong> 就會出現<strong>此消彼長 (Trade-off)</strong> 的關係：</p>
+<blockquote>
+<p>💡 <strong>生活小範例：醫院的「癌症早期篩檢」</strong></p>
 <ul>
-<li><strong>ROC 曲線</strong>：以假正例率 (FPR) 為橫軸、真正例率 (TPR / Recall) 為縱軸，描繪門檻從 1 變動到 0 時模型的表現軌跡。</li>
-<li><strong>AUC (Area Under Curve)</strong>：ROC 曲線下方的面積（介於 0 到 1 之間；低於 0.5 可能表示排序方向反轉）。<ul>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{AUC} = 1.0"><mrow><mtext>AUC</mtext><mo>=</mo><mn>1.0</mn></mrow></math>：完美無瑕的頂級模型。</li>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{AUC} = 0.5"><mrow><mtext>AUC</mtext><mo>=</mo><mn>0.5</mn></mrow></math>：等同於盲猜拋硬幣。</li>
-<li><strong>最大優點</strong>：<strong>衡量跨門檻的排序能力，但類別不平衡時仍應搭配 PR 指標與情境分析</strong>，且能客觀評價模型跨越所有可能門檻的綜合排序能力！</li>
+<li><strong>假設把門檻調低（例如降到 0.2）——「寧可錯抓，不能放過」</strong>：<ul>
+<li>只要有 20% 的罹癌嫌疑，就全部叫來做進一步檢查。</li>
+<li><strong>結果</strong>：幾乎所有真正的病患都被找了出來，漏診極少 ➔ <strong>Recall（召回率 / 抓全率）大幅提高</strong>！</li>
+<li><strong>代價</strong>：許多健康的人也被誤抓去複檢（冤枉好人增加），在所有被抓出來的人中真正罹癌的比例降低 ➔ <strong>Precision（精確率 / 抓準率）下降</strong>。</li>
+</ul>
+</li>
+<li><strong>假設把門檻調高（例如升到 0.8）——「證據確鑿，才敢斷定」</strong>：<ul>
+<li>模型必須有高達 80% 的把握，才判定有病。</li>
+<li><strong>結果</strong>：只要被判定有病的人，幾乎百分之百真的是病患，很少冤枉好人 ➔ <strong>Precision（精確率 / 抓準率）大幅提高</strong>！</li>
+<li><strong>代價</strong>：那些病況不明顯（機率只有 30% ~ 70%）的潛在病患全部漏掉了 ➔ <strong>Recall（召回率 / 抓全率）大幅下降</strong>。</li>
 </ul>
 </li>
 </ul>
-<h4>🎬 動畫裡的兩個滑桿是什麼？</h4>
+<p>📌 <strong>核心總結</strong>：門檻就像一個「嚴格度調節旋鈕」——<strong>門檻越低抓越全但越不準；門檻越高抓越準但越不全</strong>。</p>
+</blockquote>
 <ul>
-<li><strong>分類門檻（分數 ≥ 門檻判正類）</strong>：模型輸出的是「像正類的分數」（0～1），≥ 門檻才判正類——它是「判多嚴」的開關。門檻調低→抓到更多正類（Recall 升）但也冤枉更多好人（Precision 降）。拖動它時橘菱形沿 ROC 曲線走、四張指標卡此消彼長，但 <strong>AUC 不動（門檻無關）</strong>。</li>
-<li><strong>正類比例（%）：重抽 40 筆樣本</strong>：40 筆樣本中真實正類的占比，模擬「換一批數據」。改變它會重抽整批數據，ROC 形狀與 AUC 跟著變——這也是唯一會讓 AUC 變動的滑桿。</li>
+<li><strong>兩個軸代表什麼意思？（代價 vs 收益）</strong>：<ul>
+<li><strong>縱軸（Y 軸）TPR (真正例率 / Recall)</strong>：<strong>「抓對壞人的能力」</strong>（抓到的病患 / 全部病患）。越高越好，上限是 1.0（100% 壞人都抓出）。</li>
+<li><strong>橫軸（X 軸）FPR (假正例率)</strong>：<strong>「冤枉好人的代價」</strong>（被冤枉的好人 / 全部好人）。越低越好，下限是 0（完全沒冤枉人）。</li>
+<li>🎯 <strong>最理想的頂級目標</strong>：落在座標圖的<strong>左上角 (0, 1)</strong> ➔ 抓到 100% 的壞人，而且 0% 冤枉好人！</li>
 </ul>
+</li>
+</ul>
+<blockquote>
+<p>💡 <strong>小範例：ROC 曲線是怎麼畫出來的？</strong>
+想像我們把分類門檻從最高（1.0）一路往下調到最低（0.0），看看模型沿途的表現：</p>
+<ol>
+<li><strong>門檻設在 1.0（最嚴格）</strong>：誰都不抓 ➔ 抓到壞人 0% (TPR=0)，冤枉好人 0% (FPR=0)。點落在左下角 <strong>(0, 0)</strong>。</li>
+<li><strong>門檻逐漸調低（0.9 ➔ 0.7 ➔ 0.5...）</strong>：模型開始指認嫌疑犯。<ul>
+<li><strong>優秀的模型</strong>：會「先抓到真正的壞人，而且幾乎不冤枉好人」。這時縱軸 TPR 迅速往上衝，橫軸 FPR 還保持很小，所以<strong>軌跡會大幅往「左上角」凸起前進</strong>！</li>
+<li><strong>隨便瞎猜的模型</strong>：每抓到一個壞人，就會以相同的機率冤枉一個好人，軌跡只能沿著 <strong>45 度對角線</strong> 緩步前進。</li>
+</ul>
+</li>
+<li><strong>門檻降到 0.0（最寬鬆）</strong>：所有人全抓 ➔ 抓到壞人 100% (TPR=1.0)，但也把所有好人全當壞人 (FPR=1.0)。點落在右上角 <strong>(1, 1)</strong>。</li>
+</ol>
+<p>📌 <strong>把門檻從 1.0 變到 0.0 所經過的所有點連成一條線，這條線就叫「ROC 曲線」</strong>。</p>
+</blockquote>
+<ul>
+<li><strong>AUC (Area Under Curve，曲線下面積)</strong>：
+ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表示排序方向反轉），用來客觀總評模型「分辨好人與壞人的排序實力」：<ul>
+<li><strong>AUC = 1.0（完美無瑕）</strong>：曲線直接直角衝上左上角，面積鋪滿整張圖（等於 1）。代表隨機抽一個壞人和一個好人，模型給壞人的分數<strong>永遠高於</strong>好人！</li>
+<li><strong>AUC = 0.5（毫無鑑別力）</strong>：曲線就是 (0,0) 到 (1,1) 的對角斜線，面積剛好是一半。代表模型的預測效果跟「閉著眼睛丟銅板盲猜」完全一樣。</li>
+<li><strong>實務表現</strong>：一般來說，AUC 在 0.8 以上算良好，0.9 以上算是極為優異的模型。</li>
+<li><strong>最大優點</strong>：<strong>衡量跨門檻的排序能力，但類別不平衡時仍應搭配 PR 指標與情境分析</strong>。因為 TPR 只計算病患內的比例、FPR 只計算好人內的比例，即便好人有 100 萬人、病患只有 10 人，面積數值也不會被稀釋或失真！</li>
+</ul>
+</li>
+</ul>
+<h4>🎬 互動動畫導覽與操作指引（如何解讀與介紹？）</h4>
+<p>本動畫將門檻調控對各項評估指標的連動影響完全視覺化，可以用以下三個層次來理解與介紹：</p>
+<ol>
+<li><p><strong>版面配置與核心元素</strong>：</p>
+<ul>
+<li><strong>左圖（ROC 曲線）</strong>：以 FPR（冤枉好人率）為橫軸、TPR（抓對壞人率）為縱軸；<strong>橘色菱形點</strong>即為「目前門檻」在曲線上的即時落點。</li>
+<li><strong>右側指標卡</strong>：即時顯示目前門檻下的 Accuracy、Precision、Recall 與 F1 四大指標。</li>
+<li><strong>底部狀態列</strong>：即時統計混淆矩陣的四象限計數（TP / FP / FN / TN）與當前整體的 AUC 面積。</li>
+</ul>
+</li>
+<li><p><strong>滑桿一：分類門檻（判多嚴的業務旋鈕）</strong>：</p>
+<ul>
+<li><strong>向右調高（如 0.9，從嚴審查）</strong>：模型要有 90% 以上把握才判正類 ➔ <strong>Precision 高達 1.000</strong>（抓出來的絕對是真病患/真詐欺），但 <strong>Recall 慘跌至 0.100</strong>（大部分真正病患都被漏掉了），橘菱形點縮在左下角。</li>
+<li><strong>向左調低（如 0.2，從寬篩檢）</strong>：只要有 20% 嫌疑就判正類 ➔ 橘點沿著綠線一路衝向右上角，<strong>Recall 暴增到接近 1.0</strong>（病患全抓到），但 <strong>Precision 瞬間下跌</strong>（冤枉一堆健康好人）。</li>
+<li>📌 <strong>核心洞察</strong>：無論門檻如何拖動、右邊指標卡如何上下跳動，<strong>綠色的整條 ROC 曲線與 AUC (如 0.935) 紋風不動</strong>！因為 AUC 是看模型的「排序內功」，與外部決策門檻設在多少完全無關。</li>
+</ul>
+</li>
+<li><p><strong>滑桿二：正類比例（現實環境的分佈挑戰）</strong>：</p>
+<ul>
+<li>❓ <strong>什麼是「正類比例」？</strong><br />
+在分類問題中，我們特別關注、想揪出來的目標事件稱為<strong>正類 (Positive)</strong>（如：罹癌、信用卡盜刷、違約）。<strong>正類比例</strong>就是指測試樣本中，<strong>「真正是正類（目標群體）的樣本佔了百分之幾」</strong>。</li>
+<li>🔍 <strong>實務上我們如何知道正類佔了百分之幾？</strong><ul>
+<li><strong>在動畫中看</strong>：真實正類總數就是混淆矩陣中的 <strong>TP + FN</strong>（抓對的真病患 TP + 漏抓的真病患 FN）。例如畫面底部的 <code>TP 2 / FP 0 / FN 18 / TN 20</code>，真實正類總數就是 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="2 + 18 = 20"><mrow><mn>2</mn><mo>+</mo><mn>18</mn><mo>=</mo><mn>20</mn></mrow></math> 人，佔總樣本 40 人的 20 / 40 = 50%。</li>
+<li><strong>在 Python 程式碼中查</strong>：資料集通常已有標記好的真實答案欄位（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y=1"><mrow><mi>y</mi><mo>=</mo><mn>1</mn></mrow></math> 為正類、<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y=0"><mrow><mi>y</mi><mo>=</mo><mn>0</mn></mrow></math> 為負類），只需執行 <code>df['label'].value_counts(normalize=True)</code> 或 <code>y_true.mean()</code> 即可得知各類別佔比。</li>
+<li><strong>在商業與現實環境中</strong>：通常來自歷史統計或領域先驗知識（Domain Knowledge），稱為**「基礎率 (Base Rate)」<strong>或醫學上的</strong>「盛行率 (Prevalence)」**。例如：銀行過去百萬筆交易中盜刷約佔 0.05%、健檢統計某罕見疾病盛行率約 1%、工廠產線不良品瑕疵率約 2%。</li>
+</ul>
+</li>
+<li>🎲 <strong>為什麼寫「重抽 40 筆樣本」？</strong><br />
+動畫每次固定抽樣 40 筆數據來即時模擬計算：<ul>
+<li><strong>設為 50%（平衡數據）</strong>：40 筆樣本中包含 20 筆真病患（正類）與 20 筆健康人（負類），此時為標準對等分佈。</li>
+<li><strong>設為 5%（極端不平衡數據，模擬罕見疾病）</strong>：40 筆樣本中只有 2 筆真病患，高達 38 筆是健康人。這時你會發現就算模型盲猜「全體健康」，Accuracy 也能隨便達到 95%，但 Precision 與 F1 會變得極度敏感脆弱。</li>
+</ul>
+</li>
+<li>📌 <strong>核心洞察</strong>：調整正類比例是在模擬「把模型丟到不同疾病盛行率的真實世界」。整批數據重新抽樣，因此 <strong>ROC 曲線的形狀與 AUC 才會跟著重新計算改變</strong>。</li>
+</ul>
+</li>
+</ol>
+<hr />
+<h4>💡 兩個滑桿的核心本質差別對照表</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">滑桿名稱</th>
+  <th style="text-align:left">它在模擬什麼？</th>
+  <th style="text-align:left">會改變的項目</th>
+  <th style="text-align:left">不會改變的項目</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>分類門檻</strong></td>
+  <td style="text-align:left"><strong>決策者判斷多嚴格</strong>（業務規則調節）</td>
+  <td style="text-align:left">橘菱形點位置、Accuracy、Precision、Recall、F1</td>
+  <td style="text-align:left"><strong>ROC 曲線軌跡、AUC 面積</strong>（完全不變）</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>正類比例</strong></td>
+  <td style="text-align:left"><strong>現實世界的母體分佈</strong>（疾病發生率/詐欺率）</td>
+  <td style="text-align:left">40 筆樣本真實標籤分佈、ROC 曲線形狀、AUC</td>
+  <td style="text-align:left">—</td>
+</tr>
+</tbody>
+</table></div>
 <hr />
 <h2 id="section-3">2. 回歸評估指標 (Regression Metrics)</h2>
 <p>回歸任務的輸出為連續數值（如房價、氣溫、營收）。我們透過評估真實值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 與預測值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\hat{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math> 之間的殘差來衡量擬合品質。</p>
