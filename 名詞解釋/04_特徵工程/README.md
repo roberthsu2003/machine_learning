@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/04_%E7%89%B9%E5%BE%B5%E5%B7%A5%E7%A8%8B/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[特徵選擇](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#selection) · [特徵縮放](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#scaling) · [類別編碼](https://roberthsu2003.github.io/machine_learning/glossary/04-feature-engineering/#encoding)
 

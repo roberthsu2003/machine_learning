@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/12_%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E8%A8%93%E7%B7%B4%E9%81%8E%E7%A8%8B/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[端到端生命週期](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#lifecycle) · [訓練迭代與 Epoch／Batch／Iteration](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#inner-loop) · [健康度與檢查清單](https://roberthsu2003.github.io/machine_learning/glossary/12-training-process/#training-health)
 

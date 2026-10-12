@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/06_%E5%84%AA%E5%8C%96%E7%AE%97%E6%B3%95/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[梯度下降](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#gradient-descent) · [學習率](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#learning-rate) · [Batch／SGD／Mini-batch](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#batch-size) · [優化器補充](https://roberthsu2003.github.io/machine_learning/glossary/06-optimization/#optimizers)
 

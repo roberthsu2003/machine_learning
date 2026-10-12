@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/08_%E9%9B%86%E6%88%90%E5%AD%B8%E7%BF%92/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[Bagging](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#bagging) · [Boosting](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#boosting) · [Stacking](https://roberthsu2003.github.io/machine_learning/glossary/08-ensemble-learning/#stacking)
 

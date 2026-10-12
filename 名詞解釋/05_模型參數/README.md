@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/05_%E6%A8%A1%E5%9E%8B%E5%8F%83%E6%95%B8/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[模型參數](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#parameters) · [超參數](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#hyperparameters) · [比較與搜尋](https://roberthsu2003.github.io/machine_learning/glossary/05-model-parameters/#parameter-search)
 

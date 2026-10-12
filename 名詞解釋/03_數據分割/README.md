@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/03_%E6%95%B8%E6%93%9A%E5%88%86%E5%89%B2/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[訓練／測試分割](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#train-test) · [三份資料的角色](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#train-validation-test) · [隨機、分層與時間切分](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#split-strategies) · [資料洩漏與診斷](https://roberthsu2003.github.io/machine_learning/glossary/03-data-splitting/#leakage)
 

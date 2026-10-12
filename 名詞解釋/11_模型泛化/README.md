@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/11_%E6%A8%A1%E5%9E%8B%E6%B3%9B%E5%8C%96/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[未見資料與泛化](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#unseen-data) · [泛化鴻溝](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#generalization-gap) · [資料分割與 K 折交叉驗證](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#cross-validation) · [提升泛化](https://roberthsu2003.github.io/machine_learning/glossary/11-generalization/#improve-generalization)
 

@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[混淆矩陣](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix) · [分類指標與 ROC](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#classification-metrics) · [MAE、MSE、RMSE](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors) · [R²](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#r-squared)
 

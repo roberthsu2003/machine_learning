@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/02_%E6%95%B8%E6%93%9A%E7%B5%90%E6%A7%8B/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[特徵與資料型態](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#features) · [標籤與任務](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#labels) · [特徵矩陣 X 與標籤 y](https://roberthsu2003.github.io/machine_learning/glossary/02-data-structures/#matrix)
 

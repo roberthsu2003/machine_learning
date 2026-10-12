@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/10_%E6%A8%A1%E5%9E%8B%E6%80%A7%E8%83%BD%E5%95%8F%E9%A1%8C/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[欠擬合、良好擬合與過度擬合](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#fit-spectrum) · [偏差與變異數](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#bias-variance) · [學習曲線與早停](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#learning-curves) · [改善方式](https://roberthsu2003.github.io/machine_learning/glossary/10-model-performance/#solutions)
 

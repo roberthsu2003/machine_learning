@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/07_%E5%B8%B8%E8%A6%8B%E7%AE%97%E6%B3%95/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
 
 動畫場景：[KNN](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#knn) · [決策樹](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#decision-tree) · [SVM](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#svm) · [樸素貝氏](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#naive-bayes)
 
