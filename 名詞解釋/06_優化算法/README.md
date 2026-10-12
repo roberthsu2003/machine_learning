@@ -69,7 +69,7 @@ $$\theta_{\text{new}} = \theta_{\text{old}} - \alpha \cdot \nabla J(\theta)$$
 ![學習率大小引發的性能光譜](images/02_learning_rate_spectrum.svg)
 
 ### 實務調優策略
-1. **典型初始值**：常見的嘗試起點為 $0.001$、$0.01$。
+1. **典型初始值**：常見的嘗試起點為 `0.001`、`0.01`。
 2. **學習率衰減 (Learning Rate Decay / Scheduling)**：
    - 訓練初期（離谷底尚遠）：使用較大學習率大步快跑。
    - 訓練後期（接近最優點）：動態調小學習率（如 Cosine Annealing），細緻落入谷底最深處。
