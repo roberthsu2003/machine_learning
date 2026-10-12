@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="680" viewBox="0 0 1200 680" role="img" aria-labelledby="title desc">
+  <title id="title">現代優化器家族演進脈絡</title>
+  <desc id="desc">從標準 SGD 分支為動量法與自適應步長，最終匯流至 Adam 優化器的架構演進圖</desc>
+  <style>
+    text {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Noto Sans CJK TC", "Microsoft JhengHei", "PingFang TC", sans-serif;
+      fill: #1e293b;
+    }
+    .heading { font-weight: 700; }
+    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
+  </style>
+  <defs>
+    <marker id="arrow-purple" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1 1L7 4.5L1 8" fill="none" stroke="#8b5cf6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-amber" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1 1L7 4.5L1 8" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+    <marker id="arrow-emerald" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto">
+      <path d="M1 1L7 4.5L1 8" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </marker>
+  </defs>
+
+  <!-- 背景 -->
+  <rect width="1200" height="680" fill="#ffffff"/>
+
+  <!-- 頂部標題區 -->
+  <text x="600" y="42" font-size="28" text-anchor="middle" class="heading" fill="#0f172a">現代優化器家族演進脈絡</text>
+  <text x="600" y="72" font-size="15" text-anchor="middle" fill="#64748b">從單純負梯度邁步，到融合「物理慣性」與「自適應步長」的雙劍合璧</text>
+
+  <!-- ==================== 頂層：標準 SGD ==================== -->
+  <rect x="420" y="98" width="360" height="106" rx="12" fill="#f8fafc" stroke="#64748b" stroke-width="2"/>
+  <rect x="435" y="110" width="80" height="22" rx="4" fill="#e2e8f0"/>
+  <text x="475" y="125" font-size="12" font-weight="600" text-anchor="middle" fill="#475569">起點基石</text>
+  <text x="525" y="127" font-size="18" class="heading" fill="#1e293b">標準 SGD (隨機梯度下降)</text>
+  <text x="435" y="156" font-size="14" class="mono" fill="#475569">更新方式：θ ← θ − α · ∇J(θ)</text>
+  <text x="435" y="182" font-size="13" fill="#64748b">⚠️ 缺點：步長死板固定，易在鞍點平緩區卡死或狹谷劇烈震盪</text>
+
+  <!-- ==================== 分流連線與標籤 ==================== -->
+  <!-- 左路分流曲線 (SGD -> Momentum) -->
+  <path d="M 510 204 C 510 242, 325 242, 325 280" fill="none" stroke="#8b5cf6" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+  <rect x="290" y="231" width="150" height="26" rx="13" fill="#faf5ff" stroke="#c4b5fd" stroke-width="1.5"/>
+  <text x="365" y="248" font-size="12" font-weight="600" text-anchor="middle" fill="#7c3aed">💡 分支 A：加入物理慣性</text>
+
+  <!-- 右路分流曲線 (SGD -> AdaGrad/RMSprop) -->
+  <path d="M 690 204 C 690 242, 875 242, 875 280" fill="none" stroke="#f59e0b" stroke-width="2.5" marker-end="url(#arrow-amber)"/>
+  <rect x="760" y="231" width="150" height="26" rx="13" fill="#fffbeb" stroke="#fcd34d" stroke-width="1.5"/>
+  <text x="835" y="248" font-size="12" font-weight="600" text-anchor="middle" fill="#d97706">💡 分支 B：動態調節步長</text>
+
+  <!-- ==================== 中間層左側：Momentum ==================== -->
+  <rect x="80" y="282" width="480" height="142" rx="12" fill="#faf5ff" stroke="#8b5cf6" stroke-width="2"/>
+  <rect x="100" y="296" width="90" height="22" rx="4" fill="#ede9fe"/>
+  <text x="145" y="311" font-size="12" font-weight="600" text-anchor="middle" fill="#6d28d9">慣性視角</text>
+  <text x="200" y="313" font-size="18" class="heading" fill="#6d28d9">Momentum 動量法</text>
+  <text x="100" y="344" font-size="14" fill="#334155">✦ 核心機制：累積歷史梯度向量（指數加權移動平均，模擬物理速度）</text>
+  <text x="100" y="371" font-size="14" fill="#334155">✦ 優勢效果：遇到高原平地借力滑行、衝過鞍點淺坑，大幅抑制橫向晃動</text>
+  <text x="100" y="398" font-size="13" font-weight="600" fill="#7c3aed">🎯 經典超參數：動量係數 β（通常預設為 0.9）</text>
+
+  <!-- ==================== 中間層右側：AdaGrad / RMSprop ==================== -->
+  <rect x="640" y="282" width="480" height="142" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="2"/>
+  <rect x="660" y="296" width="105" height="22" rx="4" fill="#fef3c7"/>
+  <text x="712" y="311" font-size="12" font-weight="600" text-anchor="middle" fill="#b45309">自適應視角</text>
+  <text x="775" y="313" font-size="18" class="heading" fill="#b45309">AdaGrad → RMSprop</text>
+  <text x="660" y="344" font-size="14" fill="#334155">✦ 核心機制：根據各維度參數歷史梯度大小，動態調整各自獨立的步伐</text>
+  <text x="660" y="371" font-size="14" fill="#334155">✦ 優勢效果：頻繁變化的特徵自動踩煞車（縮小步長）；罕見特徵加大步幅</text>
+  <text x="660" y="398" font-size="13" font-weight="600" fill="#d97706">🎯 演進突破：RMSprop 加入衰減因子，解決 AdaGrad 步長過早歸零卡死問題</text>
+
+  <!-- ==================== 匯聚連線至 Adam ==================== -->
+  <!-- 左路匯流 (Momentum -> Adam) -->
+  <path d="M 320 424 C 320 464, 490 464, 490 500" fill="none" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrow-emerald)"/>
+  
+  <!-- 右路匯流 (RMSprop -> Adam) -->
+  <path d="M 880 424 C 880 464, 710 464, 710 500" fill="none" stroke="#10b981" stroke-width="2.5" marker-end="url(#arrow-emerald)"/>
+
+  <!-- 匯聚徽章 -->
+  <rect x="520" y="448" width="160" height="28" rx="14" fill="#ecfdf5" stroke="#6ee7b7" stroke-width="1.5"/>
+  <text x="600" y="466" font-size="12" font-weight="700" text-anchor="middle" fill="#047857">✨ 雙劍合璧 · 融合集大成</text>
+
+  <!-- ==================== 底層：Adam 優化器 ==================== -->
+  <rect x="300" y="502" width="600" height="126" rx="14" fill="#ecfdf5" stroke="#10b981" stroke-width="2.5"/>
+  <rect x="325" y="516" width="130" height="22" rx="4" fill="#d1fae5"/>
+  <text x="390" y="531" font-size="12" font-weight="700" text-anchor="middle" fill="#047857">現代工業標準首選</text>
+  <text x="465" y="533" font-size="20" class="heading" fill="#047857">Adam (Adaptive Moment Estimation)</text>
+  <text x="325" y="563" font-size="14" fill="#1e293b">✦ 一階動量 (Momentum 慣性衝力) ＋ 二階自適應 (RMSprop 智慧變速箱)</text>
+  <text x="325" y="588" font-size="14" fill="#1e293b">✦ 兼具抗噪聲、快速收斂、超參數魯棒性；面對複雜損失曲面依然穩定下坡</text>
+  <text x="325" y="612" font-size="13" font-weight="600" fill="#059669">🏆 實務黃金原則：新專案若不知選誰，Adam 永遠是第一首選基準！</text>
+
+  <!-- 底部說明文字 -->
+  <text x="600" y="658" font-size="13" text-anchor="middle" fill="#64748b">註：現代衍生變體（如 AdamW）進一步改善了權重衰減（L2 正則化）的解耦，已廣泛應用於大型語言模型與視覺 Transformer。</text>
+</svg>
