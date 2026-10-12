@@ -130,11 +130,32 @@
 <hr />
 <h2 id="section-5">4. 樸素貝氏 (Naive Bayes)</h2>
 <h3>核心定義</h3>
-<p>樸素貝氏是一種基於貝氏定理（Bayes' Theorem）與**「特徵條件獨立性大膽假設」**的機率生成分類演算法。它計算未知樣本屬於各類別的後驗機率 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="P(C \mid X)"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>X</mi><mo>)</mo></mrow></math>，並推選機率最高者作為最終預測。</p>
-<h3>核心公式</h3>
-<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="P(C \mid X) = \frac{P(C) \cdot P(X \mid C)}{P(X)}"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>X</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>)</mo><mo>·</mo><mi>P</mi><mo>(</mo><mi>X</mi><mo>|</mo><mi>C</mi><mo>)</mo></mrow><mrow><mi>P</mi><mo>(</mo><mi>X</mi><mo>)</mo></mrow></mfrac></mrow></math></div><h3>為什麼叫做「樸素 (Naive)」？</h3>
-<p>它大膽做了一個在現實中幾乎不成立的假設：<strong>在給定類別的條件下，所有特徵之間彼此互相獨立、互不影響</strong>。<br />
-（例如：預測一封信是否為垃圾郵件時，假設「免費」和「中獎」這兩個單詞出現的機率完全無關）。雖然這個假設看似天真幼稚，但在實務上（特別是文本與高維特徵）運算極度簡化，且分類效果出奇優異！</p>
+<p>樸素貝氏就像一個**「算機率的偵探」<strong>：它根據我們看到的線索（特徵 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math>），反推未知樣本屬於各個可能類別 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> 的</strong>後驗機率 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="P(C \mid X)"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>X</mi><mo>)</mo></mrow></math>**，並挑選機率最高者作為最終預測結果。</p>
+<h3>💡 生活直觀比喻：垃圾郵件過濾與「算機率的偵探」</h3>
+<blockquote>
+<p>想像你的電子信箱收到一封新郵件，信裡出現了**「免費」<strong>與</strong>「中獎」**兩個可疑詞彙。<br />
+樸素貝氏是如何判定這封信該不該丟進垃圾桶的？</p>
+<ol>
+<li><strong>起跑底色（先驗機率）</strong>：根據歷史經驗，收件匣平常有 <strong>40% 是垃圾郵件</strong>、<strong>60% 是一般郵件</strong>。</li>
+<li><strong>線索倍率（條件機率）</strong>：統計發現，垃圾信出現「免費」的機率高達 70%（一般信僅 10%）；出現「中獎」高達 60%（一般信僅 5%）。</li>
+<li><strong>連乘比大小</strong>：<ul>
+<li>垃圾信得分：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.40 \times 0.7 \times 0.6 = 0.168"><mrow><mn>0.40</mn><mo>×</mo><mn>0.7</mn><mo>×</mo><mn>0.6</mn><mo>=</mo><mn>0.168</mn></mrow></math></li>
+<li>一般信得分：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.60 \times 0.1 \times 0.05 = 0.003"><mrow><mn>0.60</mn><mo>×</mo><mn>0.1</mn><mo>×</mo><mn>0.05</mn><mo>=</mo><mn>0.003</mn></mrow></math></li>
+</ul>
+</li>
+<li><strong>換算百分比</strong>：垃圾信機率高達 <strong>98.2%</strong>，一般信只有 <strong>1.8%</strong> <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\rightarrow"><mrow><mo>→</mo></mrow></math> <strong>大膽判定：直接扔進垃圾桶！</strong></li>
+</ol>
+</blockquote>
+<h3>核心公式與白話拆解</h3>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="P(C \mid X) = \frac{P(C) \cdot P(X \mid C)}{P(X)}"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>X</mi><mo>)</mo><mo>=</mo><mfrac><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>)</mo><mo>·</mo><mi>P</mi><mo>(</mo><mi>X</mi><mo>|</mo><mi>C</mi><mo>)</mo></mrow><mrow><mi>P</mi><mo>(</mo><mi>X</mi><mo>)</mo></mrow></mfrac></mrow></math></div><ul>
+<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="P(C)"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>)</mo></mrow></math> 先驗機率（起跑點）</strong>：還沒看信件內容前，日常經驗中這類事件發生的基本機率。</li>
+<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="P(X \mid C)"><mrow><mi>P</mi><mo>(</mo><mi>X</mi><mo>|</mo><mi>C</mi><mo>)</mo></mrow></math> 條件機率（線索強度）</strong>：如果確定是某個類別，出現這些特定線索的機率有多高。</li>
+<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="P(C \mid X)"><mrow><mi>P</mi><mo>(</mo><mi>C</mi><mo>|</mo><mi>X</mi><mo>)</mo></mrow></math> 後驗機率（最終結論）</strong>：<strong>「看完線索 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 之後，它是類別 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="C"><mrow><mi>C</mi></mrow></math> 的真實機率」</strong>。</li>
+</ul>
+<h3>為什麼叫做「樸素 (Naive，天真傻白甜)」？</h3>
+<p>在現實中，許多詞彙通常是成對出現的（例如出現「恭喜」往往伴隨「中獎」）。<br />
+但樸素貝氏做了一個<strong>極為天真大膽的假設</strong>：<strong>假設所有特徵彼此完全獨立、互不相干！</strong><br />
+它把每個詞當作完全無關的獨立事件，計算時直接<strong>把各個詞的機率簡單粗暴地一路乘下去</strong>。雖然這個假設在現實世界很傻很天真，但這讓電腦計算飛快（只需連乘），且在文本分類、垃圾郵件過濾與情感分析中<strong>效果好得驚人</strong>！</p>
 <h4>📊 觀念圖解</h4>
 <blockquote>
 <p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#naive-bayes">樸素貝氏</a></p>

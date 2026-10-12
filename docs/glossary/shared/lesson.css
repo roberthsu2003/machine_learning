@@ -15,3 +15,27 @@
 @media print{.canvas-scroll-hint{display:none}.scene-stage{overflow:visible}.scene-stage canvas{min-width:0!important}}
 
 @media(max-width:550px){.zoomed .scene-stage:not(.responsive-stage) canvas{height:auto;aspect-ratio:760/450}}
+
+/* Guide Modal Dialog */
+.guide-chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:600;color:var(--green);background:#eef5ed;border:1px solid #b7d6be;border-radius:20px;padding:4px 12px;cursor:pointer;transition:all .15s}
+.guide-chip:hover{background:#dbeede;border-color:var(--green)}
+.scene-controls button[data-action="guide"]{background:#eef5ed;color:var(--green);border-color:#b7d6be;font-weight:600}
+.scene-controls button[data-action="guide"]:hover{background:#dbeede;border-color:var(--green)}
+
+dialog.scene-guide-dialog{border:0;border-radius:14px;padding:0;max-width:620px;width:calc(100% - 32px);box-shadow:0 16px 48px #18332f30;color:var(--ink);background:white;position:fixed;inset:0;margin:auto;max-height:85vh;overflow:hidden;display:flex;flex-direction:column}
+dialog.scene-guide-dialog:not([open]){display:none}
+dialog.scene-guide-dialog::backdrop{background:#18332f50;backdrop-filter:blur(3px)}
+.guide-dialog-header{display:flex;align-items:center;justify-content:space-between;padding:16px 22px;border-bottom:1px solid var(--line);background:#f6faf5}
+.guide-dialog-header h3{margin:0;font-size:17px;color:var(--green);display:flex;align-items:center;gap:6px}
+.guide-close-btn{background:none;border:0;font-size:18px;color:var(--muted);cursor:pointer;padding:4px 8px;border-radius:6px;line-height:1}
+.guide-close-btn:hover{background:#e2ece0;color:var(--ink)}
+.guide-dialog-body{padding:18px 22px;overflow-y:auto;font-size:14px;line-height:1.7;flex:1}
+.guide-dialog-section{margin-bottom:18px}
+.guide-dialog-section:last-child{margin-bottom:0}
+.guide-dialog-section h4{margin:0 0 8px;font-size:14.5px;color:var(--ink);border-left:3px solid var(--green);padding-left:8px}
+.guide-dialog-section ol,.guide-dialog-section ul{margin:6px 0;padding-left:22px}
+.guide-dialog-section li{margin:6px 0}
+.guide-action-badge{display:inline-block;background:#eef5ed;color:var(--green);font-size:12px;font-weight:650;padding:1px 7px;border-radius:4px;border:1px solid #c9decb;margin-right:4px}
+.guide-dialog-footer{padding:12px 22px;border-top:1px solid var(--line);background:#fbfdfa;display:flex;justify-content:flex-end}
+.guide-dialog-footer button{padding:8px 20px;font-size:14px}
+@media print{dialog.scene-guide-dialog,.guide-chip,.scene-controls button[data-action="guide"]{display:none!important}}
