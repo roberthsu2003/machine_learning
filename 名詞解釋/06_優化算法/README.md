@@ -66,12 +66,7 @@ $$\theta_{\text{new}} = \theta_{\text{old}} - \alpha \cdot \nabla J(\theta)$$
 
 ### 步長大小引發的性能光譜
 
-```mermaid
-flowchart LR
-    Small["學習率過小 (α = 0.00001)"] -->|"步履蹣跚 耗費算力"| Slow["訓練極慢 卡在局部極值"]
-    Moderate["學習率適中 (α = 0.001)"] -->|"穩健下坡 步步為營"| Optimal["快速平穩收斂至最優解"]
-    Large["學習率過大 (α = 10.0)"] -->|"用力過猛 跨過山谷"| Diverge["兩壁劇烈震盪甚至數值發散 NaN"]
-```
+![學習率大小引發的性能光譜](images/02_learning_rate_spectrum.svg)
 
 ### 實務調優策略
 1. **典型初始值**：常見的嘗試起點為 $0.001$、$0.01$。
