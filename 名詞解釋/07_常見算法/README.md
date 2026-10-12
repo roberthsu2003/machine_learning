@@ -75,7 +75,11 @@ K-NN 是一種基於「幾何距離度量」的非參數化算法。其核心哲
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[決策樹](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#decision-tree)
-![決策樹原理：階層式條件規則與空間軸向劃分](images/02_decision_tree.png)
+
+[![決策樹原理：階層式條件規則與空間軸向劃分](images/02_decision_tree.svg)](images/02_decision_tree.svg)
+
+> 💡 **提示**：點擊上方圖片可在 GitHub 中開啟全尺寸高解析度 SVG 向量圖放大檢視。  
+> *(如需對照歷史版本，可[查看原始 PNG 圖片](images/02_decision_tree.png))*
 
 ### 幾何視角與核心特點
 - **正交超平面切割**：在幾何特徵空間中，決策樹的每一次條件分支，都相當於**畫出一條平行於座標軸的正交切線**，將空間切割為許多長方形區塊。
@@ -98,7 +102,11 @@ SVM 是一種追求**「最大化間隔（Maximum Margin）」**的經典演算�
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[SVM](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#svm)
-![支援向量機原理：最大間隔超平面與核技巧](images/03_svm.png)
+
+[![支援向量機原理：最大間隔超平面與核技巧](images/03_svm.svg)](images/03_svm.svg)
+
+> 💡 **提示**：點擊上方圖片可在 GitHub 中開啟全尺寸高解析度 SVG 向量圖放大檢視。  
+> *(如需對照歷史版本，可[查看原始 PNG 圖片](images/03_svm.png))*
 
 ### 核心法寶與關鍵超參數
 - **支援向量 (Support Vectors)**：只有緊貼安全間隔邊緣的少數幾個關鍵樣本點決定了超平面的位置，這賦予了 SVM 極高的數學穩定性（Robust）。
@@ -125,9 +133,11 @@ $$P(C \mid X) = \frac{P(C) \cdot P(X \mid C)}{P(X)}$$
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[樸素貝氏](https://roberthsu2003.github.io/machine_learning/glossary/07-common-algorithms/#naive-bayes)
-![樸素貝氏分類原理：機率推斷與三大常見模型](images/04_naive_bayes.svg)
 
-[查看原始 PNG 圖片](images/04_naive_bayes.png)
+[![樸素貝氏分類原理：機率推斷與三大常見模型](images/04_naive_bayes.svg)](images/04_naive_bayes.svg)
+
+> 💡 **提示**：點擊上方圖片可在 GitHub 中開啟全尺寸高解析度 SVG 向量圖放大檢視。  
+> *(如需對照歷史版本，可[查看原始 PNG 圖片](images/04_naive_bayes.png))*
 
 ### 三大常見模型類型
 1. **高斯樸素貝氏 (GaussianNB)**：特徵為連續數值（如身高、血壓、體溫），假設服從常態高斯分佈。

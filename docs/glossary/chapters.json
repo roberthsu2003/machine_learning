@@ -270,7 +270,7 @@
           "geometry": "座標平面逐次出現水平／垂直切割線，同步亮起樹狀圖的判斷路徑。",
           "controls": "下一次分割、調整深度、放入查詢點",
           "source_images": [
-            "名詞解釋/07_常見算法/images/02_decision_tree.png"
+            "名詞解釋/07_常見算法/images/02_decision_tree.svg"
           ]
         },
         {
@@ -279,7 +279,7 @@
           "geometry": "分界線與兩側間隔帶移動，支援向量以外框圈起；非線性資料切換核方法示意。",
           "controls": "拖曳分界線、比較間隔、線性／核示意",
           "source_images": [
-            "名詞解釋/07_常見算法/images/03_svm.png"
+            "名詞解釋/07_常見算法/images/03_svm.svg"
           ]
         },
         {
