@@ -117,7 +117,7 @@
         {
           "id": "leakage",
           "title": "資料洩漏與診斷",
-          "geometry": "對照「全資料 fit」與「只用 Train fit」；測試資訊以橘色路徑表示是否流入預處理。",
+          "geometry": "分步對照「只用 Train fit」與「全資料洩漏」的統計量與數值轉換，下方聯動模型表現診斷與誤差矩陣。",
           "controls": "正確／錯誤流程對照、顯示訓練與驗證誤差",
           "source_images": [
             "名詞解釋/03_數據分割/images/03_split_workflow_and_overfitting.svg"
