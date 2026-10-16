@@ -9,7 +9,7 @@
 <ol>
 <li>深刻理解<strong>模型參數 (Parameters)</strong> 的內在特性與自主學習本質。</li>
 <li>掌握<strong>超參數 (Hyperparameters)</strong> 作為外部控制旋鈕的功能與常見種類。</li>
-<li>熟悉實務上調校超參數的經典搜尋策略（網格搜尋、隨機搜尋等）。</li>
+<li>熟悉實務上調校超參數的 3 大經典搜尋策略與實作工具（網格搜尋、隨機搜尋、貝氏優化）。</li>
 </ol>
 <hr />
 <h2 id="section-2">1. 模型參數 (Model Parameters)</h2>
@@ -146,11 +146,12 @@
 </table></div>
 <hr />
 <h2 id="section-5">4. 如何尋找最佳超參數？(Hyperparameter Tuning)</h2>
-<p>由於超參數無法靠梯度下降自動求出，實務上我們依賴<strong>驗證集 (Validation Set)</strong> 評估不同超參數組合的效果：</p>
+<p>實務上，由於超參數無法靠梯度下降自動求出，我們依賴<strong>驗證集 (Validation Set)</strong> 評估不同超參數組合的效果。常見實作超參數調整（Hyperparameter Tuning）的 <strong>3 大主流方法與工具</strong> 如下：</p>
 <div class="table-scroll"><table>
 <thead>
 <tr>
   <th style="text-align:left">調優策略</th>
+  <th style="text-align:left">常見實作工具</th>
   <th style="text-align:left">運作機制</th>
   <th style="text-align:left">💡 直觀比喻</th>
   <th style="text-align:left">優缺點評價</th>
@@ -159,19 +160,22 @@
 <tbody>
 <tr>
   <td style="text-align:left"><strong>網格搜尋 (Grid Search)</strong></td>
+  <td style="text-align:left"><code>GridSearchCV</code><br>(scikit-learn)</td>
   <td style="text-align:left">窮舉排列組合。例如學習率試 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="[0.1, 0.01]"><mrow><mo>[</mo><mn>0.1</mn><mo>,</mo><mn>0.01</mn><mo>]</mo></mrow></math>、樹深度試 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="[3, 5, 7]"><mrow><mo>[</mo><mn>3</mn><mo>,</mo><mn>5</mn><mo>,</mo><mn>7</mn><mo>]</mo></mrow></math>，逐一暴力嘗試全部 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="2 \times 3 = 6"><mrow><mn>2</mn><mo>×</mo><mn>3</mn><mo>=</mo><mn>6</mn></mrow></math> 種組合。</td>
   <td style="text-align:left">網格地毯式地表搜索</td>
   <td style="text-align:left"><strong>優點</strong>：不遺漏設定範圍內的任何點。<br><strong>缺點</strong>：維度稍多時計算量指數級爆炸。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>隨機搜尋 (Random Search)</strong></td>
+  <td style="text-align:left"><code>RandomizedSearchCV</code><br>(scikit-learn)</td>
   <td style="text-align:left">在指定的超參數分佈區間內隨機抽樣 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="N"><mrow><mi>N</mi></mrow></math> 組進行評估。</td>
   <td style="text-align:left">隨機投擲飛鏢抽查</td>
   <td style="text-align:left"><strong>優點</strong>：通常比網格搜尋更有效率，能在有限運算預算內探索更廣的連續空間。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>貝氏優化 (Bayesian Optimization)</strong></td>
-  <td style="text-align:left">根據前幾次嘗試的成敗結果，建立代理機率模型（如 Optuna），智慧推測下一個最可能帶來突破的參數點。</td>
+  <td style="text-align:left"><code>Optuna</code><br><code>Hyperopt</code><br><code>BayesSearchCV</code></td>
+  <td style="text-align:left">根據前幾次嘗試的成敗結果，建立代理機率模型，智慧推測下一個最可能帶來突破的參數點。</td>
   <td style="text-align:left">經驗豐富的老獵人循跡追蹤</td>
   <td style="text-align:left"><strong>優點</strong>：當前工業界最推崇的高效調參方案，極大節省運算成本。</td>
 </tr>
