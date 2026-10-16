@@ -99,9 +99,9 @@ AI 繪圖時最常遇到中文變方塊亂碼（Tofu）、負號顯示成亂碼�
 | 10 | [咖啡店每日銷量](./10_cafe_time/README.md) | [AGENT.md](./10_cafe_time/AGENT.md) | 偽資料：730 天 | 時間切分、lag、只能用過去 | Streamlit 次日銷量預估 |
 | 11 | [客服工單](./11_support_text/README.md) | [AGENT.md](./11_support_text/AGENT.md) | 偽資料：900 則、30 模板群 | TF-IDF、NB、模板洩漏 | Gradio 工單分流 |
 | 12 | [用電與漂移](./12_energy_drift/README.md) | [AGENT.md](./12_energy_drift/AGENT.md) | 偽資料：600 天×3 棟 | 完整流程、未來泛化、誤差監測 | Streamlit 預測與批次監測 |
-| 13 | [合約法律風險預警](./13_legal_contract_risk/README.md) | [AGENT.md](./13_legal_contract_risk/AGENT.md) | 偽資料：1,000 份審約紀錄 | 多分類、條款特徵工程、隨機森林、混淆矩陣 | Tkinter 桌面合約審查視窗 |
-| 14 | [訴訟勝率與判賠試算](./14_lawsuit_outcome/README.md) | 規劃中 | 偽資料：800 件判決紀錄 | 訴訟爭點、勝訴機率分類、判賠金額回歸 | Tkinter 訴訟與和解決策視窗 |
-| 15 | [法遵舞弊與洗錢預警](./15_compliance_aml_fraud/README.md) | 規劃中 | 偽資料：2,000 筆交易查核 | 不平衡分類、異常偵測、偽冒特徵 | Tkinter 異常交易稽核視窗 |
+| 13 | [法務部矯正署—受刑人假釋再犯風險評估](./13_parole_recidivism/README.md) | 包含雙軌互動筆記本 | 偽資料：2,000 筆假釋個案 | 二元分類、累犯特徵、隨機森林、混淆矩陣 | Tkinter 假審會桌面評估視窗 |
+| 14 | [法務部行政執行署—公法欠費徵起機率預測](./14_administrative_execution/README.md) | 規劃中 | 偽資料：1,500 件移送執行案件 | 案件分流、徵起機率分類、可徵起金額回歸 | Tkinter 執行分流決策視窗 |
+| 15 | [法務部打詐專案—涉詐人頭帳戶高風險預警](./15_fraud_account_risk/README.md) | 規劃中 | 偽資料：3,000 筆帳戶交易紀錄 | 不平衡分類、金融異常偵測、人頭帳戶預警 | Tkinter 涉詐帳戶聯防視窗 |
 
 ---
 
