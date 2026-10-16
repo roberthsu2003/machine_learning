@@ -30,7 +30,7 @@ def get_data_path():
     candidates = [
         os.path.join(os.path.dirname(__file__), "fraud_accounts.csv"),
         os.path.join(os.getcwd(), "fraud_accounts.csv"),
-        os.path.join(os.getcwd(), "AI協作機器學習_12範例", "15_法務部_涉詐人頭帳戶預警", "fraud_accounts.csv"),
+        os.path.join(os.getcwd(), "AI協作機器學習_職場實戰篇", "15_法務部_涉詐人頭帳戶預警", "fraud_accounts.csv"),
     ]
     for p in candidates:
         if os.path.exists(p):
