@@ -147,16 +147,22 @@
 <blockquote>
 <p>💡 <strong>生活小範例：醫院的「癌症早期篩檢」</strong></p>
 <ul>
+<li><strong>先釐清正例與負例定義</strong>：<ul>
+<li><strong>正例 (Positive)</strong>：<strong>「罹癌／病例」</strong>（我們關注重點、想主動找出的目標）。</li>
+<li><strong>負例 (Negative)</strong>：<strong>「健康／無病」</strong>（一般正常狀態）。</li>
+<li>模型輸出的是<strong>「罹患癌症（正例）的機率分數」</strong>。</li>
+</ul>
+</li>
 <li><strong>假設把門檻調低（例如降到 0.2）——「寧可錯抓，不能放過」</strong>：<ul>
-<li>只要有 20% 的罹癌嫌疑，就全部叫來做進一步檢查。</li>
-<li><strong>結果</strong>：幾乎所有真正的病患都被找了出來，漏診極少 ➔ <strong>Recall（召回率 / 抓全率）大幅提高</strong>！</li>
-<li><strong>代價</strong>：許多健康的人也被誤抓去複檢（冤枉好人增加），在所有被抓出來的人中真正罹癌的比例降低 ➔ <strong>Precision（精確率 / 抓準率）下降</strong>。</li>
+<li>只要模型判定有 20% 的罹癌嫌疑，就全部判為正例（診斷為有病），叫來做進一步精密檢查。</li>
+<li><strong>結果</strong>：幾乎所有真正的病患（真實正例）都被找了出來，漏診極少 ➔ <strong>Recall（召回率 / 抓全率）大幅提高</strong>！</li>
+<li><strong>代價</strong>：許多健康的人（真實負例）也被誤判為有病（假正例 FP 增加，冤枉健康人），在所有被判定有病的人中真正罹癌的比例降低 ➔ <strong>Precision（精確率 / 抓準率）下降</strong>。</li>
 </ul>
 </li>
 <li><strong>假設把門檻調高（例如升到 0.8）——「證據確鑿，才敢斷定」</strong>：<ul>
-<li>模型必須有高達 80% 的把握，才判定有病。</li>
-<li><strong>結果</strong>：只要被判定有病的人，幾乎百分之百真的是病患，很少冤枉好人 ➔ <strong>Precision（精確率 / 抓準率）大幅提高</strong>！</li>
-<li><strong>代價</strong>：那些病況不明顯（機率只有 30% ~ 70%）的潛在病患全部漏掉了 ➔ <strong>Recall（召回率 / 抓全率）大幅下降</strong>。</li>
+<li>模型必須有高達 80% 的把握，才敢判定為正例（診斷為有病）。</li>
+<li><strong>結果</strong>：只要被判定有病的人，幾乎百分之百真的是病患，很少冤枉健康人（假正例 FP 極少） ➔ <strong>Precision（精確率 / 抓準率）大幅提高</strong>！</li>
+<li><strong>代價</strong>：那些病況不明顯（機率只有 30% ~ 70%）的真正病患全被判定為健康而漏掉了（假負例 FN 暴增） ➔ <strong>Recall（召回率 / 抓全率）大幅下降</strong>。</li>
 </ul>
 </li>
 </ul>
@@ -164,9 +170,9 @@
 </blockquote>
 <ul>
 <li><strong>兩個軸代表什麼意思？（代價 vs 收益）</strong>：<ul>
-<li><strong>縱軸（Y 軸）TPR (真正例率 / Recall)</strong>：<strong>「抓對壞人的能力」</strong>（抓到的病患 / 全部病患）。越高越好，上限是 1.0（100% 壞人都抓出）。</li>
-<li><strong>橫軸（X 軸）FPR (假正例率)</strong>：<strong>「冤枉好人的代價」</strong>（被冤枉的好人 / 全部好人）。越低越好，下限是 0（完全沒冤枉人）。</li>
-<li>🎯 <strong>最理想的頂級目標</strong>：落在座標圖的<strong>左上角 (0, 1)</strong> ➔ 抓到 100% 的壞人，而且 0% 冤枉好人！</li>
+<li><strong>縱軸（Y 軸）TPR (真正例率 / Recall)</strong>：<strong>「抓對正例（病例）的能力」</strong>（成功抓出的病患 / 全部真實病患）。越高越好，上限是 1.0（100% 病患都抓出）。</li>
+<li><strong>橫軸（X 軸）FPR (假正例率)</strong>：<strong>「誤判負例（健康人）的代價」</strong>（被冤枉誤診的健康人 / 全部健康人）。越低越好，下限是 0（完全沒冤枉健康人）。</li>
+<li>🎯 <strong>最理想的頂級目標</strong>：落在座標圖的<strong>左上角 (0, 1)</strong> ➔ 抓到 100% 的病患（正例），而且 0% 冤枉健康人（負例）！</li>
 </ul>
 </li>
 </ul>
