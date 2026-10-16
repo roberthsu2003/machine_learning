@@ -152,6 +152,34 @@
 <li><strong>變異數 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{Variance}"><mrow><mtext>Variance</mtext></mrow></math>)</strong>：源自模型對特定訓練集隨機波動的敏感性。模型越複雜，變異數越大。</li>
 <li><strong>不可約減誤差 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sigma^2"><mrow><msup><mi>σ</mi><mn>2</mn></msup></mrow></math>, Irreducible Error)</strong>：數據採集過程本身無法消除的本底噪聲與客觀隨機性，這是任何算法都不可能跨越的誤差底限。</li>
 </ul>
+<blockquote>
+<p>💡 <strong>白話解惑：為什麼叫「權衡 (Tradeoff)」？什麼是「平衡藝術」？</strong></p>
+<ol>
+<li><strong>「權衡」就是「魚與熊掌不可兼得的翹翹板效應」</strong>：
+<ul>
+<li><strong>模型做得太簡單（如直線）</strong>：換什麼數據來訓練它都長得差不多（低變異數），但太笨學不會複雜規律 ➔ <strong>偏差飆高（欠擬合）</strong>。</li>
+<li><strong>模型做得太複雜（如深層神經網路、高階曲線）</strong>：訓練集考 100 分（低偏差），但極度神經質，換個數據就暴走變形 ➔ <strong>變異數飆高（過度擬合）</strong>。</li>
+</ul>
+👉 我們<strong>不可能同時把兩者都壓到零</strong>，壓下一頭，另一頭就會翹起來！
+</li>
+<li><strong>為什麼終極目標是「平衡」？（數學本質）</strong>：<br />
+從上方公式可知，現實世界預測的「總誤差」是兩者相加的：
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\mathbf{總預測誤差} = \mathbf{偏差}^2 + \mathbf{變異數} + \sigma^2"><mrow><mtext>總預測誤差</mtext><mo>=</mo><msup><mtext>偏差</mtext><mn>2</mn></msup><mo>+</mo><mtext>變異數</mtext><mo>+</mo><msup><mi>σ</mi><mn>2</mn></msup></mrow></math></div>
+<ul>
+<li>若只顧著消滅偏差（做超複雜），變異數爆炸，總誤差反而變大！</li>
+<li>若只顧著消滅變異（做超簡單），偏差爆炸，總誤差依然很大！</li>
+<li><strong>最佳解法只有「各退一步」</strong>：容許一點點可接受的小偏差，換取模型的穩定性，讓相加後的「總泛化誤差」降到最低！</li>
+</ul>
+</li>
+<li><strong>生活比喻：買衣服的哲學</strong>：
+<ul>
+<li><strong>均碼休閒服 (Free Size / 簡單模型)</strong>：每個人都能穿不會破（低變異），但誰穿都不合身（高偏差）。</li>
+<li><strong>極致量身訂做緊身衣 (超複雜模型)</strong>：今天早上每寸身材完美貼合（超低偏差），但中午多喝一杯珍奶肚子微凸，衣服瞬間爆開穿不下（超高變異）。</li>
+<li><strong>微彈性修身剪裁 (平衡藝術)</strong>：既顯身材線條（偏差小），又容許體重有一兩公斤正常浮動（變異小、容錯率高）！</li>
+</ul>
+</li>
+</ol>
+</blockquote>
 <h3>擬合光譜三態對比</h3>
 <div class="table-scroll"><table>
 <thead>
