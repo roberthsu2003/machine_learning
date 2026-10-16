@@ -9,7 +9,6 @@
 ```text
 01_廣告效益預測_迴歸篇/
 ├── README.md               # 本範例簡介、學習目標與五階段 AI 提問指南（本檔）
-├── PROMPT_GUIDE.md         # 🎯 學生對話指南獨立備用檔
 ├── lesson.ipynb            # 完整實作驗證 Notebook（對照 AI 回覆）
 └── data/
     └── advSale.csv         # 4,500 筆廣告投入與銷售額數據集

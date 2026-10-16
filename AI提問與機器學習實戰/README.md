@@ -92,7 +92,7 @@ flowchart TD
 
 ## 🚀 學習路徑建議
 
-1. 先閱讀本章節各子資料夾中的 `PROMPT_GUIDE.md`，了解提問的設計邏輯與範本。
+1. 先閱讀各範例資料夾中的 `README.md`，了解五階段提問手冊的設計邏輯與提示詞範本。
 2. 開啟你的 AI 工具（例如 ChatGPT, Claude 或 IDE 內的 AI 助手），將範例資料夾 `data/` 中的資料摘要貼入。
 3. 按照各篇提供的 Prompt 逐步發問，並將 AI 生成的程式碼貼入 Jupyter Notebook 執行驗證。
 4. 比對各範例提供的 `lesson.ipynb`，檢視自己的實驗結果與標準示範的異同。
