@@ -329,6 +329,14 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <h3>決定係數 (<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 分數 / R-Squared)</h3>
 <h4>核心定義</h4>
 <p><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 衡量回歸模型**「能夠解釋數據中總變異性 (Variance) 的百分比」**。它是無量綱（無單位）的標準化指標，以「直接猜母體平均數 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math> 的基準笨模型」為對照組。</p>
+<blockquote>
+<p>💡 <strong>白話三步驟拆解（為什麼要用 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math>？）</strong>：</p>
+<ol>
+<li><strong>什麼是「無量綱（無單位）」？</strong><br>預測房價時 MAE 是「差 50 萬元」，預測體重時是「差 2 公斤」，兩者單位尺度不同無法橫向比較。<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 將表現轉化為類似「0%～100%」的標準化分數，跨領域、跨任務皆能一眼評斷模型優劣。</li>
+<li><strong>什麼是「基準笨模型（猜平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><>¯</mo></mover></mrow></math>）」？</strong><br>假設要猜全班 40 位同學的考試成績，但完全不給任何線索，最保險的做法就是「所有人都猜全班平均 60 分」。這個不看任何特徵的無腦基準策略，累積的總犯錯量在數學上稱為 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和／數據原始總波動）</strong>。</li>
+<li><strong>什麼叫「解釋了數據的變異性（波動）」？</strong><br>學生成績之所以有高有低（波動起伏），背後有其原因（如讀書時間、出席率）。若模型加入這些特徵後，把原本笨模型犯下的失誤<strong>消滅掉了 85%</strong>，只剩 15% 小誤差，代表「數據高低起伏中，有 85% 的原因被你的模型抓到了、看懂了」，這時 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.85</mn></mrow></math> (85%)</strong>！</li>
+</ol>
+</blockquote>
 <h4>📊 觀念圖解</h4>
 <blockquote>
 <p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#r-squared">R²</a>
@@ -347,13 +355,48 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）：模型沒能解釋的預測殘差平方和。</li>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和）：數據本身的原始總波動平方和。</li>
 </ul>
-<h4><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 數值解讀光譜</h4>
-<ul>
-<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 1.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1.0</mn></mrow></math> (100%)</strong>：完美預測！所有樣本點分毫不差落在回歸線上。</li>
-<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0 &lt; R^2 &lt; 1.0"><mrow><mn>0</mn><mo>&lt;</mo><msup><mi>R</mi><mn>2</mn></msup><mo>&lt;</mo><mn>1.0</mn></mrow></math></strong>：一般正常模型（如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.85</mn></mrow></math> 表示模型解釋了數據中 85% 的波動）。</li>
-<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.0</mn></mrow></math></strong>：等同瞎猜。模型水平跟直接猜平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math> 完全一樣。</li>
-<li><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 &lt; 0.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>&lt;</mo><mn>0.0</mn></mrow></math> (負數！)</strong>：模型預測誤差比直接猜均值還要離譜，可能與模型、資料品質或分布改變有關，需進一步診斷。</li>
-</ul>
+<h4><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 數值解讀光譜與白話對照</h4>
+<div class="table-scroll"><table>
+<thead>
+<tr>
+  <th style="text-align:left">情況</th>
+  <th style="text-align:left">你的模型表現</th>
+  <th style="text-align:center">公式計算</th>
+  <th style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 結果</th>
+  <th style="text-align:left">白話解讀</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td style="text-align:left"><strong>完美神預測</strong></td>
+  <td style="text-align:left">模型完全沒猜錯（誤差 = 0）</td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{0}{SS_{\text{tot}}}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>0</mn></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac></mrow></math></td>
+  <td style="text-align:center"><strong>1.0 (100%)</strong></td>
+  <td style="text-align:left">數據的所有起伏波動被模型 100% 完整捕捉！</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>正常好模型</strong></td>
+  <td style="text-align:left">誤差只有猜平均笨模型的 15%</td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{15}{100}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>15</mn></mrow><mrow><mn>100</mn></mrow></mfrac></mrow></math></td>
+  <td style="text-align:center"><strong>0.85 (85%)</strong></td>
+  <td style="text-align:left">模型成功解釋了數據中 85% 的波動規律。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>瞎猜笨模型</strong></td>
+  <td style="text-align:left">表現跟直接猜平均值一模一樣</td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{SS_{\text{tot}}}{SS_{\text{tot}}}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac></mrow></math></td>
+  <td style="text-align:center"><strong>0.0 (0%)</strong></td>
+  <td style="text-align:left">模型完全沒學到任何有用特徵，等同瞎猜。</td>
+</tr>
+<tr>
+  <td style="text-align:left"><strong>幫倒忙模型</strong></td>
+  <td style="text-align:left">預測離譜到比直接猜平均還差</td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{150}{100}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>150</mn></mrow><mrow><mn>100</mn></mrow></mfrac></mrow></math></td>
+  <td style="text-align:center"><strong>&lt; 0 (負數！)</strong></td>
+  <td style="text-align:left">模型預測邏輯搞反或嚴重過擬合，比瞎猜平均還糟糕。</td>
+</tr>
+</tbody>
+</table></div>
 <hr />
 <h2 id="section-4">📌 本章精華速記</h2>
 <ol>
