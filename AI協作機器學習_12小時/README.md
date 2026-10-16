@@ -58,21 +58,45 @@ AI 要能直接建立真正的 `.ipynb` 與程式檔。若使用只有聊天功�
 
 第一次繪圖前貼給 AI；每個新 Notebook 都要套用，應用程式也沿用同一設定。
 
-[下載 ChineseFont.ttf](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/ChineseFont.ttf)，放在學生專案的 `fonts/ChineseFont.ttf`，十二例共用，不必下載整個 repo。若瀏覽器開啟檔案，請另存並保留 `.ttf` 副檔名。
+環境使用 `mplfonts` 套件提供中文字型支援（若環境尚未安裝，請先執行 `pip install mplfonts`），十二例共用，不必手動下載字型檔。
 
 參考你的[邏輯迴歸範例](../邏輯迴歸/03_diabetes_logistic_regression.ipynb)的字型註冊方式，以及[混淆矩陣範例](../機器學習常使用的圖表/混淆矩陣confusion_maxtrix.ipynb)的中文標題與標籤。資料欄位保留原名，圖表顯示名稱改成繁體中文。
 
+```python
+# 設定中文字型支援
+# --- 設定 Matplotlib 中文字型支援（Mac / Windows / Colab 通用）---
+import glob
+import os
+import mplfonts
+from matplotlib import font_manager
+from mplfonts import use_font
+
+for f in glob.glob(os.path.join(os.path.dirname(mplfonts.__file__), "fonts", "*.[ot]tf")):
+    font_manager.fontManager.addfont(f)   # 直接註冊 mplfonts 內附的字型，不改任何檔案
+use_font("Noto Sans CJK SC")              # 套用思源黑體，負號也會一起處理
+```
+
+貼給 AI 的 prompt：
+
 ```text
-請在 Notebook 第一張圖之前建立共用字型設定。
-定位 fonts/ChineseFont.ttf，用 fontManager.addfont 註冊。
-用 FontProperties(fname=字型路徑).get_name() 取得字型名稱。
-Matplotlib 與 sns.set_theme(font=字型名稱) 使用相同字型。
-設定 axes.unicode_minus=False；重啟或應用啟動時重新註冊。
+請在 Notebook 第一張圖之前建立共用字型設定（使用 mplfonts 套件，若未安裝請先 pip install mplfonts）：
+# 設定中文字型支援
+# --- 設定 Matplotlib 中文字型支援（Mac / Windows / Colab 通用）---
+import glob
+import os
+import mplfonts
+from matplotlib import font_manager
+from mplfonts import use_font
+
+for f in glob.glob(os.path.join(os.path.dirname(mplfonts.__file__), "fonts", "*.[ot]tf")):
+    font_manager.fontManager.addfont(f)   # 直接註冊 mplfonts 內附的字型，不改任何檔案
+use_font("Noto Sans CJK SC")              # 套用思源黑體，負號也會一起處理
+
 圖表標題、座標軸、圖例、類別與註解全部使用繁體中文。
 用含負數的中文圖測試顯示及存檔；缺字時修正，不改成英文。
 ```
 
-缺少字型檔時，請 AI 提供上方下載連結；不要寫死老師電腦的路徑。切換 Seaborn 主題時仍保留中文字型。設定依據：[Matplotlib 字型管理](https://matplotlib.org/stable/api/font_manager_api.html)、[Seaborn 主題設定](https://seaborn.pydata.org/generated/seaborn.set_theme.html)。
+切換 Seaborn 主題時仍保留中文字型。設定依據：[Matplotlib 字型管理](https://matplotlib.org/stable/api/font_manager_api.html)、[Seaborn 主題設定](https://seaborn.pydata.org/generated/seaborn.set_theme.html)。
 
 ### AI 出錯時的除錯 prompt
 

@@ -39,7 +39,7 @@ Matplotlib／Seaborn 圖表的顯示文字全部使用繁體中文。
 ```
 
 繪圖前，先貼[共用繁體中文繪圖 prompt](../README.md#共用-promptmatplotlib-與-seaborn-繁體中文繪圖)。
-字型檔只需[下載一次](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/ChineseFont.ttf)，放在學生專案的 `fonts/ChineseFont.ttf`。
+中文字型使用 `mplfonts` 套件支援，免手動下載字型檔（若尚未安裝請執行 `pip install mplfonts`）。
 
 ### A1｜讀取與觀察資料
 
