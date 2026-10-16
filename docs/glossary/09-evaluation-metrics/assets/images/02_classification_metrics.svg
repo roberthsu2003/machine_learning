@@ -10,16 +10,16 @@
 <text x="60.0" y="162" font-size="22">(TP + TN) / (TP + TN + FP + FN)</text>
 <text x="60.0" y="207" font-size="22">全部樣本中，有多少比例猜對？</text>
 <text x="60.0" y="252" font-size="22">類別不平衡時，需搭配其他指標。</text>
-<rect x="612.0" y="85" width="548.0" height="245" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
-<text x="632.0" y="120" font-size="24" class="heading" style="fill:#16834a">Precision：精確率</text>
-<text x="632.0" y="162" font-size="22">TP / (TP + FP)</text>
-<text x="632.0" y="207" font-size="22">預測為正類的樣本中，有多少是真的？</text>
-<text x="632.0" y="252" font-size="22">關注誤報 FP。</text>
-<rect x="40.0" y="354" width="548.0" height="245" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
-<text x="60.0" y="389" font-size="24" class="heading" style="fill:#b86a10">Recall：召回率</text>
-<text x="60.0" y="431" font-size="22">TP / (TP + FN)</text>
-<text x="60.0" y="476" font-size="22">真正的正類中，有多少被找出？</text>
-<text x="60.0" y="521" font-size="22">關注漏報 FN。</text>
+<rect x="612.0" y="85" width="548.0" height="245" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
+<text x="632.0" y="120" font-size="24" class="heading" style="fill:#b86a10">Recall：召回率</text>
+<text x="632.0" y="162" font-size="22">TP / (TP + FN)</text>
+<text x="632.0" y="207" font-size="22">真正的正類中，有多少被找出？</text>
+<text x="632.0" y="252" font-size="22">關注漏報 FN。</text>
+<rect x="40.0" y="354" width="548.0" height="245" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
+<text x="60.0" y="389" font-size="24" class="heading" style="fill:#16834a">Precision：精確率</text>
+<text x="60.0" y="431" font-size="22">TP / (TP + FP)</text>
+<text x="60.0" y="476" font-size="22">預測為正類的樣本中，有多少是真的？</text>
+<text x="60.0" y="521" font-size="22">關注誤報 FP。</text>
 <rect x="612.0" y="354" width="548.0" height="245" rx="12" fill="#faf5ff" stroke="#8053bc" stroke-width="2"/>
 <text x="632.0" y="389" font-size="24" class="heading" style="fill:#8053bc">F1：精確率與召回率的調和平均</text>
 <text x="632.0" y="431" font-size="22">2 × Precision × Recall / (Precision + Recall)</text>
