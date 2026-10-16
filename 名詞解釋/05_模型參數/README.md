@@ -116,6 +116,34 @@ flowchart TD
 | **隨機搜尋 (Random Search)** | 在指定的超參數分佈區間內隨機抽樣 $N$ 組進行評估。 | 隨機投擲飛鏢抽查 | **優點**：通常比網格搜尋更有效率，能在有限運算預算內探索更廣的連續空間。 |
 | **貝氏優化 (Bayesian Optimization)** | 根據前幾次嘗試的成敗結果，建立代理機率模型（如 Optuna），智慧推測下一個最可能帶來突破的參數點。 | 經驗豐富的老獵人循跡追蹤 | **優點**：當前工業界最推崇的高效調參方案，極大節省運算成本。 |
 
+### 💻 簡單實作：用網格搜尋找出最佳 `alpha`
+
+前一個範例是由人手動指定 `alpha=0.1` 與 `alpha=500` 後比較結果；下面改由 `GridSearchCV` 幫我們測試多個候選值。它會把資料分成 5 份，輪流以其中 1 份驗證、其餘資料訓練，最後選出平均均方誤差（MSE）最低的 `alpha`。
+
+```python
+from sklearn.linear_model import Ridge
+from sklearn.model_selection import GridSearchCV
+
+# X、y 沿用前一個「廣告與銷售資料集」範例的資料
+候選超參數 = {"alpha": [0.01, 0.1, 1, 10, 100, 500]}
+
+搜尋器 = GridSearchCV(
+    estimator=Ridge(),
+    param_grid=候選超參數,
+    scoring="neg_mean_squared_error",  # 分數越高代表 MSE 越低
+    cv=5
+)
+搜尋器.fit(X, y)
+
+print("最佳超參數：", 搜尋器.best_params_)
+print(f"最佳交叉驗證 MSE：{-搜尋器.best_score_:.2f}")
+
+# 搜尋完成後，best_estimator_ 已用最佳 alpha 在全部訓練資料上重新訓練
+最佳模型 = 搜尋器.best_estimator_
+```
+
+這個範例共嘗試 6 個 `alpha` 值，每個值進行 5 次交叉驗證，合計訓練 $6 \times 5 = 30$ 次。實際專案中，仍應保留**測試集**到最後才使用，不能用它來挑選超參數。
+
 ---
 
 ## 📌 本章精華速記
