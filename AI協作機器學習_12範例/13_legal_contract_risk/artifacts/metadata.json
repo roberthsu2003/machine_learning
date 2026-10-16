@@ -1,0 +1,34 @@
+{
+  "task": "multiclass_classification",
+  "target": "risk_level",
+  "classes": [
+    "中風險",
+    "低風險",
+    "高風險"
+  ],
+  "features": {
+    "categorical": [
+      "contract_type"
+    ],
+    "numeric": [
+      "contract_amount_twd",
+      "payment_term_days",
+      "has_liability_cap",
+      "governing_law_local",
+      "has_auto_renewal",
+      "has_ip_assignment",
+      "counterparty_tenure_years",
+      "historical_dispute_count",
+      "contract_pages"
+    ]
+  },
+  "contract_types": [
+    "保密協議NDA",
+    "勞務承攬",
+    "採購合約",
+    "經銷代理",
+    "軟體委外授權"
+  ],
+  "test_accuracy": 0.795,
+  "samples_count": 1000
+}
