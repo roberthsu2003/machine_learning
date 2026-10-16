@@ -103,25 +103,17 @@ AI 繪圖時最常遇到中文變方塊亂碼（Tofu）、負號顯示成亂碼�
 
 ---
 
-## 範例資料下載指南
+## 範例資料集與架構設計
 
-環境建立由老師課堂示範，本教材從已準備好的學生專案開始。
+本系列教材所有範例皆為**完全自給自足（Self-contained）之獨立專案**，每個資料夾內均直接內建五大標準元件：
+1. **擬真業務數據集（`.csv`）**：全繁體中文情境欄位，模擬真實職場營運、行銷、選品、人資、零售、物流與司法情境。
+2. **引導式學習筆記本（`.ipynb`）**：步驟 0 至步驟 6 全流程，每一代碼格下方均附有 AI 協作提問 Prompt。
+3. **專案規格與伴學手冊（`README.md`）**：包含名詞解釋對照、業務指引、與專屬新手伴學 AI 諮詢提示詞。
+4. **即時推論模型檔（`model.joblib`）**：預先完成 Scikit-Learn Pipeline 訓練與序列化封裝。
+5. **獨立桌面預測軟體（`app.py`）**：單擊即開的 Tkinter GUI 桌面工具，自帶資料重訓機制與情境快選按鈕。
 
-1. **建立專案環境**：建立該範例資料夾（例如 `01_iris/`），確保資料夾內有專屬的 `AGENT.md` 與 `README.md`。
-2. **下載資料（後六例及企鵝例）**：若本例有提供專用資料檔，依下方連結僅下載該例 CSV 至 `data/` 目錄，**不要下載整個 GitHub repo**。
-3. **前六例開放資料**：01、04、05 由 AI 透過 scikit-learn 直接載入；02 提供下載連結；03、06 由 AI 協助載入。
+學生無需四處下載外部 CSV，直接在 VS Code 開啟對應資料夾即可開始互動！
 
-### 需下載 CSV 之範例清單
-
-| 範例 | 資料檔下載 | 存放於學生專案內位置 | 線上欄位說明 |
-| :--- | :--- | :--- | :--- |
-| 02 | [下載 penguins.csv](https://raw.githubusercontent.com/allisonhorst/palmerpenguins/main/inst/extdata/penguins.csv) | `02_penguins/data/penguins.csv` | [線上說明](https://allisonhorst.github.io/palmerpenguins/) |
-| 07 | [下載 shop_sales.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/07_shop_sales/data/shop_sales.csv) | `07_shop_sales/data/shop_sales.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/07_shop_sales/data/DATA_CARD.md) |
-| 08 | [下載 customer_churn.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/08_customer_churn/data/customer_churn.csv) | `08_customer_churn/data/customer_churn.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/08_customer_churn/data/DATA_CARD.md) |
-| 09 | [下載 machine_readings.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/09_machine_groups/data/machine_readings.csv) | `09_machine_groups/data/machine_readings.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/09_machine_groups/data/DATA_CARD.md) |
-| 10 | [下載 cafe_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/10_cafe_time/data/cafe_daily.csv) | `10_cafe_time/data/cafe_daily.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/10_cafe_time/data/DATA_CARD.md) |
-| 11 | [下載 support_tickets.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/11_support_text/data/support_tickets.csv) | `11_support_text/data/support_tickets.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/11_support_text/data/DATA_CARD.md) |
-| 12 | [下載 energy_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/12_energy_drift/data/energy_daily.csv) | `12_energy_drift/data/energy_daily.csv` | [資料卡](https://github.com/roberthsu2003/machine_learning/blob/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/12_energy_drift/data/DATA_CARD.md) |
 
 ---
 
