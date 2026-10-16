@@ -1,137 +1,117 @@
 # 03｜汽車油耗：預測數字與誤差
 
-你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。此資料夾目前是提示詞教材，尚未有模型程式或 Notebook。
+你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。
 
-- 任務：回歸。
-- 最小應用：Streamlit。
-- 學生專案內位置：`03_auto_mpg/`；共用專案根目錄的 `.venv`。
-- 本例完成後：可用原始輸入執行預測，並說出一個模型限制。
+- **任務**：連續數值回歸（預測油耗效率 mpg）。
+- **最小應用**：Streamlit 網頁應用。
+- **專案 Prompt**：本資料夾內已備妥 [AGENT.md](./AGENT.md)，規範 AI 助教角色、繁體中文字型、回歸評估指標與防洩漏規則。
+- **學生專案位置**：`03_auto_mpg/`（共用專案根目錄的 `.venv`）。
+- **本例完成後**：可用車輛規格預測油耗數字，並說出一個模型限制。
+
+---
 
 ## 資料與問題設定
 
-[UCI Auto MPG](https://archive.ics.uci.edu/dataset/9/auto+mpg)，398 筆；CC BY 4.0。來源登錄者 R. Quinlan，DOI：10.24432/C5859H。
+[UCI Auto MPG](https://archive.ics.uci.edu/dataset/9/auto+mpg)，398 筆；CC BY 4.0。A1 由 AI 從 UCI 來源快取至 `03_auto_mpg/data/`。
 
-本例不另附資料檔。A1 由 AI 從上述 UCI 來源載入，只快取本例需要的資料到 `data/`；不需要下載整個 repo 或其他範例資料。
+- **X（特徵）**：
+  - 數值：`cylinders`、`displacement`、`horsepower`、`weight`、`acceleration`、`model_year`。
+  - 類別：`origin`（產地代碼 1: 美國, 2: 歐洲, 3: 日本）。
+  - 排除：`car_name`、車輛 ID 與預測目標 `mpg`。
+  - 缺失：`horsepower` 欄位存在缺失值，由 Pipeline 中位數補值處理。
+- **y（標籤）**：`mpg`（每美制加侖英里數，數值越大越省油；不可稱為分類準確率）。
+- **切分規則**：固定 `random_state=42` 隨機 80/20 切分；測試集嚴格封存至 A4 步驟。
 
-- **X（特徵）**：cylinders、displacement、horsepower、weight、acceleration、model_year；origin 作無序類別。依來源確認 horsepower 缺值；car_name 與 ID 排除。
-- **y（標籤）**：mpg（每美制加侖英里數），值越高代表該單位下較省油；不可叫做分類準確率。
-- **切分規則**：固定 random_state=42 隨機 80/20；80% 內 3 折 KFold(shuffle=True, random_state=42)，固定 test。此範例是歷史資料的 IID 教學，不能宣稱預測現代新車。
+---
 
-## A｜一步一步建立 Notebook
+## 上課流程：AI 專案 Prompt 協作
 
-先把本頁網址貼給 AI，再依序貼以下 prompt。
-一次只貼一段，確認結果後再繼續；無法讀取網址時，貼上本頁內容。
+在開始前，請確認 AI 已讀取當前資料夾的 [AGENT.md](./AGENT.md)。
 
-### A0｜讓 AI 認識任務
+> **啟動指令（貼給 AI 的第一句話）**：
+> ```text
+> 請詳細閱讀本資料夾的 AGENT.md，擔任我的機器學習助教，嚴格遵守繁體中文、字型設定、單步執行與防洩漏規則。
+> 現在請簡要向我說明本專案的回歸任務目標、特徵欄位與評估指標（MAE / RMSE / R²），等待我給予下一步指令。
+> ```
 
-觀念連結：[機器學習的類型](../../名詞解釋/01_機器學習的類型/README.md)
+---
 
-```text
-請閱讀我提供的教材與觀念連結，擔任我的機器學習助教。
-沿用老師準備的環境，在 03_auto_mpg/ 工作。
-依本例設定逐步建立 lesson.ipynb，保留已完成內容。
-用繁體中文說明，只做目前步驟；每步問我一個觀念問題。
-能執行就直接執行；不能執行時明說，不編造成績。
-Matplotlib／Seaborn 圖表的顯示文字全部使用繁體中文。
-現在先解釋問題、特徵與預期結果，不開始訓練。
-```
+## A｜一步一步建立 Notebook（lesson.ipynb）
 
-繪圖前，先貼[共用繁體中文繪圖 prompt](../README.md#共用-promptmatplotlib-與-seaborn-繁體中文繪圖)。
-中文字型使用 `mplfonts` 套件支援，免手動下載字型檔（若尚未安裝請執行 `pip install mplfonts`）。
+每次只貼一段 prompt，AI 執行後會提出一個觀念問題，確認理解後再貼下一段。
 
 ### A1｜讀取與觀察資料
-
-觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
+> 觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
 
 ```text
-在同一份 Notebook 載入本例資料。
-用 ucimlrepo 的 fetch_ucirepo(id=9) 載入資料。
-依上方設定確認 X／y，顯示前五筆、欄位與缺值。
-套用共用字型，畫繁體中文圖，說明一列資料代表什麼。
-缺檔時依上方下載連結取得，不換資料或重新生成。
+請在 03_auto_mpg/ 建立 lesson.ipynb，載入 Auto MPG 資料集。
+依 AGENT.md 確認 X／y，檢視資料形狀、前五筆，並找出缺失值（如 horsepower）。
+套用 AGENT.md 繁體中文字型設定，繪製特徵（如馬力、車重）與油耗 mpg 的散佈圖（全繁體中文標籤）。
+說明一列資料代表什麼，完成後請向我提出一個觀念思考題。
 ```
 
-### A2｜切分與前處理
-
-觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞解釋/04_特徵工程/README.md)
+### A2｜切分與前處理 Pipeline
+> 觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞解釋/04_特徵工程/README.md)
 
 ```text
-依上方「切分規則」分資料，不自行改成其他方式。
-只用指定特徵，排除答案、ID 與生成提示欄位。
-前處理只 fit train；交叉驗證時放在每折 Pipeline。
-列出各份筆數，檢查重疊與洩漏，說明各自用途。
+依 AGENT.md 切分規則切分資料：
+80/20 隨機切分（random_state=42），封存 test 集。
+建立 ColumnTransformer：
+- 數值欄位：SimpleImputer(strategy='median') ＋ StandardScaler
+- 類別欄位（origin）：OneHotEncoder(handle_unknown='ignore')
+列出 train 與 test 的筆數，確認無資料洩漏。
+完成後請向我提出一個觀念思考題。
 ```
 
 ### A3｜訓練與比較模型
-
-觀念連結：[模型參數](../../名詞解釋/05_模型參數/README.md)
+> 觀念連結：[常見算法](../../名詞解釋/07_常見算法/README.md)、[模型參數](../../名詞解釋/05_模型參數/README.md)
 
 ```text
-以平均值預測為基準，建立補值、編碼及 Ridge Pipeline。
-origin 做 One-Hot；數值補值並縮放。
-以開發集三折 CV MAE 比較 alpha＝0.1、1、10。
-比較只用 train／val 或開發集 CV，不用 test 挑設定。
-執行後解釋比較結果；不要為了高分改資料。
+以 DummyRegressor（平均值預測）作為基準線。
+建立 Ridge 回歸與 RandomForestRegressor 的 Pipeline。
+在開發集進行 3 折交叉驗證，比較負均方誤差（neg_mean_squared_error）與 R²。
+嚴格遵守：所有前處理都在 CV 折內由 Pipeline 完成，不碰測試集。
+解釋比較結果並選出最佳設定，完成後請向我提出一個觀念思考題。
 ```
 
 ### A4｜評估與解讀
-
-觀念連結：[評估指標](../../名詞解釋/09_評估指標/README.md)、[模型泛化](../../名詞解釋/11_模型泛化/README.md)
+> 觀念連結：[評估指標](../../名詞解釋/09_評估指標/README.md)
 
 ```text
-固定選好的模型與設定，再評估一次 test。
-顯示 test MAE、RMSE、R²，與基準比較。
-畫實際／預測及殘差圖，用 mpg 解釋誤差。
-不要依 test 成績回頭調參；用生活語言說明結果。
+以最佳 Pipeline 對封存的 test 集進行一次性最終評估。
+計算並顯示 test MAE、RMSE 與 R²。
+與基準線比較，並繪製「真實油耗 vs 預測油耗」的散佈圖與殘差圖（全繁體中文）。
+挑出一個預測誤差較大的案例進行原因分析。
+完成後請向我提出一個觀念思考題。
 ```
 
 ### A5｜保存與確認結果
-
 ```text
-重啟 kernel，從頭執行 lesson.ipynb，確認中文字型與圖表。
-將完整前處理與模型保存到 artifacts/model.joblib。
-另存 metadata.json：欄位、來源、切分、設定、指標與版本。
-本例需要的門檻、scaler、圖表與範例也一起保存。
-用新程序載入，比對同一輸入的預測，回報實際結果。
+重啟 kernel 從頭重新執行 lesson.ipynb，確保圖表繁中與結果可復現。
+將完整前處理與模型 Pipeline 保存至 artifacts/model.joblib。
+另存 artifacts/metadata.json：記錄特徵欄位、產地對應、最佳模型參數與測試集評估指標（MAE, RMSE, R²）。
+以新 Python 程序載入保存的模型，驗證一輛假想車的油耗預測，確認與 Notebook 一致。
+完成後回報成果。
 ```
 
-## B｜把模型做成應用
+---
 
-完成 A5 後再貼 B1、B2。桌面版可使用[PyQt6 延伸 prompt](../README.md#想改成-pyqt6-桌面程式時)。
+## B｜把模型做成應用（app.py）
 
-### B1｜建立介面
+完成 A5 後再進行 B1、B2。
 
+### B1｜建立 Streamlit 介面
 ```text
-讀取本例 Notebook 與 artifacts，用 Streamlit 建立 app.py。
-輸入七個原始特徵，顯示預測 mpg 與保存的 MAE。
-標示單位；MAE 不當作單筆預測的信賴區間。
-載入已保存的完整模型，不在介面重新訓練。
-以 app.py 的位置定位檔案，檢查輸入並標示來源與限制。
-介面與圖表用繁體中文，圖表沿用共用字型設定。
-僅供本機操作，提供啟動命令。
+讀取本例 Notebook 與 artifacts，使用 Streamlit 建立 app.py。
+提供氣缸數、排氣量、馬力、車重、加速度、年份與產地的輸入元件。
+點擊按鈕後顯示預測的油耗 MPG，並換算為生活熟悉的公制單位（公里/公升）。
+嚴格守則：直接 joblib.load 載入 artifacts/model.joblib，絕對不在 app.py 內重新訓練！
+介面文字全繁體中文，標示輸入限制。提供本機啟動命令（streamlit run app.py）。
 ```
 
 ### B2｜驗收應用
-
 ```text
-測試三組有效輸入，確認介面與 Notebook 預測一致。
-檢查空白、非法輸入及缺少模型時的提示。
-確認畫面與存檔圖表的繁體中文、負號均正常。
-停止後重新啟動，確認仍能預測，修正實際發現的問題。
-寫一份簡短 RUN.md，說明啟動、操作與模型限制。
-回報已測試與待確認項目，再問我下方觀念問題。
+測試 3 組有效輸入（如美系大馬力車 vs 日系輕量車），確認 app.py 與 Notebook 預測結果一致。
+檢查輸入邊界與異常值提示。
+產出 RUN.md，說明：如何啟動應用、如何操作、以及本模型的一項已知局限性（例如該模型基於 1970～1980 年代老車資料，無法直接套用於現代油電車或電動車）。
 ```
-
-## 觀念確認
-
-1. 預測 28 mpg、真實 25 mpg，誤差是什麼？
-2. R² 很高就能保證新車預測正確嗎？
-3. 為什麼不能把 mpg 留在特徵裡？
-
-## 完成檢查
-
-mpg 未進入 X；缺失 horsepower 不導致程式中斷；圖與評估數值來自真實執行，app 回傳數字與單位。
-
-至少展示：一個真實執行的模型結果、一個介面輸入／輸出、一個限制；說明一項由你下命令、AI 幫你完成並經你檢查的工作。
-
-[回到課程首頁](../README.md)

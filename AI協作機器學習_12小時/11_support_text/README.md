@@ -1,140 +1,115 @@
 # 11｜客服工單：文字也能建立模型
 
-你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。此資料夾目前是提示詞教材，尚未有模型程式或 Notebook。
+你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。
 
-- 任務：文字多類別分類。
-- 最小應用：Gradio。
-- 學生專案內位置：`11_support_text/`；共用專案根目錄的 `.venv`。
-- 本例完成後：可用原始輸入執行預測，並說出一個模型限制。
+- **任務**：繁體中文文字分類（客服工單意圖分流）。
+- **最小應用**：Gradio 網頁應用。
+- **專案 Prompt**：本資料夾內已備妥 [AGENT.md](./AGENT.md)，規範 AI 助教角色、繁體中文字型、模板群切分（GroupShuffleSplit）與防文字洩漏規則。
+- **學生專案位置**：`11_support_text/`（共用專案根目錄的 `.venv`）。
+- **本例完成後**：可輸入任意顧客諮詢文字自動分流，並說出一個模型限制。
+
+---
 
 ## 資料與問題設定
 
-本教材原創偽資料，data/support_tickets.csv，900 則繁體中文模板訊息、30 個模板群；seed=7011。
+本教材原創偽資料，`data/support_tickets.csv`，900 則繁體中文客服工單、30 個模板群；固定 seed=7011。
 
 ### 範例檔下載
+- [下載 support_tickets.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/11_support_text/data/support_tickets.csv)：儲存至 `11_support_text/data/support_tickets.csv`。
+- [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
-- [下載 support_tickets.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/11_support_text/data/support_tickets.csv)：只下載本例 CSV，儲存到學生專案的 `11_support_text/data/support_tickets.csv`。
-- [線上閱讀偽資料卡與欄位字典](./data/DATA_CARD.md)：直接在 GitHub 閱讀，不必下載。
+- **X（特徵）**：只用 `text` 欄位（繁體中文文字）；排除 `ticket_id`、`template_group`、`is_synthetic`。
+- **y（標籤）**：`intent`（三類：配送查詢／退換貨／付款問題）。
+- **切分規則**：使用 `GroupShuffleSplit` 依據 `template_group` 切分 60/20/20 train/val/test；相同模板文字絕對不跨組！
 
-若連結顯示文字，使用瀏覽器「另存新檔」，保留 `.csv` 副檔名。使用這份固定 CSV，不請 AI 重新生成；本例不需要其他範例的資料，也不必下載整個 repo。
+---
 
-- **X（特徵）**：只用 text；ticket_id、template_group、is_synthetic 不可進文字特徵。
-- **y（標籤）**：intent：配送查詢／退換貨／付款問題；有少量刻意標籤雜訊，並非完美關鍵字答案。
-- **切分規則**：GroupShuffleSplit 依 template_group 先留 20% test（random_state=42），剩餘 80% 再留 25% val（random_state=43），形成 60/20/20 train/val/test；相同模板不跨組。檢查各組有三類，不能把複製模板拆開湊高分。
+## 上課流程：AI 專案 Prompt 協作
 
-## A｜一步一步建立 Notebook
+在開始前，請確認 AI 已讀取當前資料夾的 [AGENT.md](./AGENT.md)。
 
-先把本頁網址貼給 AI，再依序貼以下 prompt。
-一次只貼一段，確認結果後再繼續；無法讀取網址時，貼上本頁內容。
+> **啟動指令（貼給 AI 的第一句話）**：
+> ```text
+> 請詳細閱讀本資料夾的 AGENT.md，擔任我的機器學習助教，嚴格遵守繁體中文、字型設定、單步執行與防洩漏規則。
+> 現在請簡要向我說明本專案的文字特徵（TF-IDF）提取方式，以及為什麼客服模板若跨組會造成虛假高分，等待我給予下一步指令。
+> ```
 
-### A0｜讓 AI 認識任務
+---
 
-```text
-請閱讀我提供的教材與觀念連結，擔任我的機器學習助教。
-沿用老師準備的環境，在 11_support_text/ 工作。
-依本例設定逐步建立 lesson.ipynb，保留已完成內容。
-用繁體中文說明，只做目前步驟；每步問我一個觀念問題。
-能執行就直接執行；不能執行時明說，不編造成績。
-Matplotlib／Seaborn 圖表的顯示文字全部使用繁體中文。
-現在先解釋問題、特徵與預期結果，不開始訓練。
-```
+## A｜一步一步建立 Notebook（lesson.ipynb）
 
-繪圖前，先貼[共用繁體中文繪圖 prompt](../README.md#共用-promptmatplotlib-與-seaborn-繁體中文繪圖)。
-中文字型使用 `mplfonts` 套件支援，免手動下載字型檔（若尚未安裝請執行 `pip install mplfonts`）。
+每次只貼一段 prompt，AI 執行後會提出一個觀念問題，確認理解後再貼下一段。
 
 ### A1｜讀取與觀察資料
-
-觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
+> 觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
 
 ```text
-在同一份 Notebook 載入本例資料。
-讀取已下載的 data/support_tickets.csv，查看類別與模板群。
-依上方設定確認 X／y，顯示前五筆、欄位與缺值。
-套用共用字型，畫繁體中文圖，說明一列資料代表什麼。
-缺檔時依上方下載連結取得，不換資料或重新生成。
+請在 11_support_text/ 建立 lesson.ipynb，讀取 data/support_tickets.csv。
+依 AGENT.md 確認 X（text）與 y（intent），顯示前 5 筆訊息與三個意圖類別的分佈比例。
+套用 AGENT.md 繁體中文字型設定，繪製各意圖的字數長度分佈直方圖（全繁體中文標籤）。
+說明真實客服訊息中常見的贅字、同義詞與語氣變化。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A2｜切分與前處理
-
-觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞解釋/04_特徵工程/README.md)
+### A2｜模板群切分（GroupShuffleSplit）與 TF-IDF Pipeline
+> 觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞工程/04_特徵工程/README.md)
 
 ```text
-依上方「切分規則」分資料，不自行改成其他方式。
-只用指定特徵，排除答案、ID 與生成提示欄位。
-前處理只 fit train；交叉驗證時放在每折 Pipeline。
-列出各份筆數，檢查重疊與洩漏，說明各自用途。
+依 AGENT.md 切分規則切分資料：
+1. 使用 GroupShuffleSplit 依 template_group 切分出 60% train、20% val、20% test（封存至 A4 步驟）。
+2. 驗證 train/val/test 的模板群集合完全互斥、交集為空。
+3. 建立包含 TfidfVectorizer(max_features=1000) 的 Pipeline，說明為什麼 fit 只能在 train 上進行。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A3｜訓練與比較模型
-
-觀念連結：[常見算法](../../名詞解釋/07_常見算法/README.md)
+### A3｜模型訓練與比較
+> 觀念連結：[常見算法](../../名詞解釋/07_常見算法/README.md)
 
 ```text
-以 DummyClassifier 為基準，建立 TF-IDF＋MultinomialNB。
-TF-IDF 用字元 2～4 gram、min_df＝2，只 fit train。
-用 val macro-F1 比較 alpha＝0.5、1，固定模板群組切分。
-比較只用 train／val 或開發集 CV，不用 test 挑設定。
-執行後解釋比較結果；不要為了高分改資料。
+以 DummyClassifier（多數決）為基準線。
+在開發集上比較 MultinomialNB（單純貝氏）與 LinearSVC（線性支援向量機）的 macro-F1。
+在驗證集上評估，選出表現最佳的模型 Pipeline。
+列出各意圖類別中 TF-IDF 權重最高的前 5 個代表性關鍵詞（全繁體中文）。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A4｜評估與解讀
-
-觀念連結：[評估指標](../../名詞解釋/09_評估指標/README.md)、[模型泛化](../../名詞解釋/11_模型泛化/README.md)
+### A4｜測試集最終評估
+> 觀念連結：[評估指標](../../名詞解釋/09_評估指標/README.md)
 
 ```text
-固定選好的模型與設定，再評估一次 test。
-顯示 test macro-F1、各類 precision／recall 與混淆矩陣。
-展示錯誤案例，另試三個新句子，不算入 test 分數。
-不要依 test 成績回頭調參；用生活語言說明結果。
+以最佳 Pipeline 對封存的全新模板 test 集進行一次性最終評估。
+顯示 test accuracy、macro-F1 與繁體中文混淆矩陣。
+挑出一則被模型分類錯誤的工單文本，分析其是否包含多種意圖的重疊語句。
+完成後請向我提出一個觀念思考題。
 ```
 
 ### A5｜保存與確認結果
-
 ```text
-重啟 kernel，從頭執行 lesson.ipynb，確認中文字型與圖表。
-將完整前處理與模型保存到 artifacts/model.joblib。
-另存 metadata.json：欄位、來源、切分、設定、指標與版本。
-本例需要的門檻、scaler、圖表與範例也一起保存。
-用新程序載入，比對同一輸入的預測，回報實際結果。
+重啟 kernel 從頭重新執行 lesson.ipynb，確保圖表繁中與結果可復現。
+將完整包含 TfidfVectorizer 與分類器的 Pipeline 保存至 artifacts/model.joblib。
+另存 artifacts/metadata.json：記錄字彙量上限、意圖標籤對應與測試集評估指標。
+以新 Python 程序載入模型驗證一句全新手打工單句子（例如：「我上週刷卡付費成功，但訂單狀態怎麼還是顯示待付款？」）。
+完成後回報成果。
 ```
 
-## B｜把模型做成應用
+---
 
-完成 A5 後再貼 B1、B2。桌面版可使用[PyQt6 延伸 prompt](../README.md#想改成-pyqt6-桌面程式時)。
+## B｜把模型做成應用（app.py）
 
-### B1｜建立介面
+完成 A5 後再進行 B1、B2。
 
+### B1｜建立 Gradio 介面
 ```text
-讀取本例 Notebook 與 artifacts，用 Gradio 建立 app.py。
-輸入工單文字，顯示建議類別與估計分數。
-空白輸入要提示；未知情境提醒人工確認。
-載入已保存的完整模型，不在介面重新訓練。
-以 app.py 的位置定位檔案，檢查輸入並標示來源與限制。
-介面與圖表用繁體中文，圖表沿用共用字型設定。
-僅供本機操作，提供啟動命令。
+讀取本例 Notebook 與 artifacts，使用 Gradio 建立 app.py。
+提供文字輸入大文字框（預先提供「包裹卡在海關」、「想退換貨尺寸不合」、「重複扣款問題」等範例按鈕）。
+點擊「工單意圖分流」後輸出預測的類別與三大意圖的信心度長條圖。
+嚴格守則：直接 joblib.load 載入 artifacts/model.joblib，絕對不在 app.py 內重新訓練！
+介面文字全繁體中文，標示輸入限制。提供本機啟動命令。
 ```
 
 ### B2｜驗收應用
-
 ```text
-測試三組有效輸入，確認介面與 Notebook 預測一致。
-檢查空白、非法輸入及缺少模型時的提示。
-確認畫面與存檔圖表的繁體中文、負號均正常。
-停止後重新啟動，確認仍能預測，修正實際發現的問題。
-寫一份簡短 RUN.md，說明啟動、操作與模型限制。
-回報已測試與待確認項目，再問我下方觀念問題。
+輸入 3 句不同長度的自然語言測試句，確認分流預測與 Notebook 一致。
+輸入一句完全無關的問候語（例如：「今天天氣真好」），觀察模型反應並記錄其限制。
+產出 RUN.md，說明：如何啟動應用、如何操作、以及本模型的一項已知局限性（例如基於詞袋與統計模型，對語意反諷或未見詞彙較無深層理解能力）。
 ```
-
-## 觀念確認
-
-1. TF-IDF 是文字答案，還是特徵？
-2. 同模板的改寫分到 test，能測到多少新情境？
-3. 這個模型可以直接當成聊天機器人嗎？
-
-## 完成檢查
-
-模板群組交集為空；完整 TF-IDF＋NB Pipeline 可重載；繁體中文與空白輸入可處理，頁面清楚標示模板偽資料。
-
-至少展示：一個真實執行的模型結果、一個介面輸入／輸出、一個限制；說明一項由你下命令、AI 幫你完成並經你檢查的工作。
-
-[回到課程首頁](../README.md)

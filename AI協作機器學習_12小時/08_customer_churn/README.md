@@ -1,142 +1,114 @@
-# 08｜訂閱服務：高準確率也可能漏掉重點
+# 08｜訂閱服務流失：不平衡與預警門檻
 
-你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。此資料夾目前是提示詞教材，尚未有模型程式或 Notebook。
+你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。
 
-- 任務：不平衡二元分類。
-- 最小應用：Streamlit。
-- 學生專案內位置：`08_customer_churn/`；共用專案根目錄的 `.venv`。
-- 本例完成後：可用原始輸入執行預測，並說出一個模型限制。
+- **任務**：不平衡二元分類（預測訂閱用戶流失）。
+- **最小應用**：Streamlit 網頁應用。
+- **專案 Prompt**：本資料夾內已備妥 [AGENT.md](./AGENT.md)，規範 AI 助教角色、繁體中文字型、不平衡評估指標與防洩漏規則。
+- **學生專案位置**：`08_customer_churn/`（共用專案根目錄的 `.venv`）。
+- **本例完成後**：可動態調節預警門檻篩選關懷名單，並說出一個模型限制。
+
+---
 
 ## 資料與問題設定
 
-本教材原創偽資料，data/customer_churn.csv，1,000 位假想客戶；seed=7008。
+本教材原創偽資料，`data/customer_churn.csv`，1,000 筆；固定 seed=7008。
 
 ### 範例檔下載
+- [下載 customer_churn.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/08_customer_churn/data/customer_churn.csv)：儲存至 `08_customer_churn/data/customer_churn.csv`。
+- [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
-- [下載 customer_churn.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/08_customer_churn/data/customer_churn.csv)：只下載本例 CSV，儲存到學生專案的 `08_customer_churn/data/customer_churn.csv`。
-- [線上閱讀偽資料卡與欄位字典](./data/DATA_CARD.md)：直接在 GitHub 閱讀，不必下載。
+- **X（特徵）**：用戶使用天數、月費、客服進線次數等；排除 `customer_id`、`is_synthetic`。
+- **y（標籤）**：`churn`（0: 續約, 1: 流失；正例約 15%～20% 不平衡）。
+- **切分規則**：使用 `stratify=y`、`random_state=42` 切分 60/20/20 train/val/test；測試集封存至 A4 步驟。
 
-若連結顯示文字，使用瀏覽器「另存新檔」，保留 `.csv` 副檔名。使用這份固定 CSV，不請 AI 重新生成；本例不需要其他範例的資料，也不必下載整個 repo。
+---
 
-- **X（特徵）**：tenure_months、inactive_days、uses_30d、support_tickets、monthly_fee、plan；數值有少量缺失，plan 為無序類別；customer_id、is_synthetic 排除。
-- **y（標籤）**：churn（未來 30 天是否流失，0／1）；特徵假定取自預測當下，不含事後停訂原因。
-- **切分規則**：stratify=y、random_state=42 的 60/20/20 train/val/test；補值、標準化、One-Hot 都只 fit train。
+## 上課流程：AI 專案 Prompt 協作
 
-## A｜一步一步建立 Notebook
+在開始前，請確認 AI 已讀取當前資料夾的 [AGENT.md](./AGENT.md)。
 
-先把本頁網址貼給 AI，再依序貼以下 prompt。
-一次只貼一段，確認結果後再繼續；無法讀取網址時，貼上本頁內容。
+> **啟動指令（貼給 AI 的第一句話）**：
+> ```text
+> 請詳細閱讀本資料夾的 AGENT.md，擔任我的機器學習助教，嚴格遵守繁體中文、字型設定、單步執行與防洩漏規則。
+> 現在請簡要向我說明本專案的不平衡二元分類特質、為什麼不能只看準確率（Accuracy），等待我給予下一步指令。
+> ```
 
-### A0｜讓 AI 認識任務
+---
 
-觀念連結：[機器學習的類型](../../名詞解釋/01_機器學習的類型/README.md)
+## A｜一步一步建立 Notebook（lesson.ipynb）
 
-```text
-請閱讀我提供的教材與觀念連結，擔任我的機器學習助教。
-沿用老師準備的環境，在 08_customer_churn/ 工作。
-依本例設定逐步建立 lesson.ipynb，保留已完成內容。
-用繁體中文說明，只做目前步驟；每步問我一個觀念問題。
-能執行就直接執行；不能執行時明說，不編造成績。
-Matplotlib／Seaborn 圖表的顯示文字全部使用繁體中文。
-現在先解釋問題、特徵與預期結果，不開始訓練。
-```
-
-繪圖前，先貼[共用繁體中文繪圖 prompt](../README.md#共用-promptmatplotlib-與-seaborn-繁體中文繪圖)。
-中文字型使用 `mplfonts` 套件支援，免手動下載字型檔（若尚未安裝請執行 `pip install mplfonts`）。
+每次只貼一段 prompt，AI 執行後會提出一個觀念問題，確認理解後再貼下一段。
 
 ### A1｜讀取與觀察資料
-
-觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
+> 觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
 
 ```text
-在同一份 Notebook 載入本例資料。
-讀取已下載的 data/customer_churn.csv，查看流失比例。
-依上方設定確認 X／y，顯示前五筆、欄位與缺值。
-套用共用字型，畫繁體中文圖，說明一列資料代表什麼。
-缺檔時依上方下載連結取得，不換資料或重新生成。
+請在 08_customer_churn/ 建立 lesson.ipynb，讀取 data/customer_churn.csv。
+依 AGENT.md 確認 X／y，計算正負樣本比例（流失 vs 續約）。
+套用 AGENT.md 繁體中文字型設定，繪製流失比例長條圖與關鍵特徵盒鬚圖（全繁體中文標籤）。
+說明如果模型全部猜「不流失」，準確率看似很高但有什麼致命問題（準確率陷阱）。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A2｜切分與前處理
-
-觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞解釋/04_特徵工程/README.md)
+### A2｜切分與前處理 Pipeline
+> 觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞工程/04_特徵工程/README.md)
 
 ```text
-依上方「切分規則」分資料，不自行改成其他方式。
-只用指定特徵，排除答案、ID 與生成提示欄位。
-前處理只 fit train；交叉驗證時放在每折 Pipeline。
-列出各份筆數，檢查重疊與洩漏，說明各自用途。
+依 AGENT.md 切分規則切分資料：
+使用分層切分（stratify=y, random_state=42）將資料切分為 60% train、20% val 與 20% test。
+建立包含補值與特徵縮放的 ColumnTransformer。
+說明在不平衡資料下，為什麼切分時「stratify」格外不可或缺。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A3｜訓練與比較模型
-
-觀念連結：[常見算法](../../名詞解釋/07_常見算法/README.md)、[評估指標](../../名詞解釋/09_評估指標/README.md)
+### A3｜模型訓練與分類門檻（Threshold）調校
+> 觀念連結：[評估指標](../../名詞解釋/09_評估指標/README.md)
 
 ```text
-以 DummyClassifier 為基準，建立補值、編碼及邏輯迴歸。
-數值縮放；plan 做 One-Hot，全部放入 Pipeline。
-用 val 比較門檻 0.3、0.5、0.7，以 F1 選定並保存。
-比較只用 train／val 或開發集 CV，不用 test 挑設定。
-執行後解釋比較結果；不要為了高分改資料。
+以 LogisticRegression(class_weight='balanced') 與 RandomForestClassifier 訓練模型。
+在驗證集（val）上計算各門檻（0.1 到 0.9）下的 Precision、Recall 與 F1-score。
+繪製 Precision-Recall 曲線圖與不同門檻下的混淆矩陣變化（全繁體中文）。
+根據商業情境（挽留每位客戶的成本 vs 漏報流失客戶的損失）選擇最佳門檻（如 0.35）。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A4｜評估與解讀
-
-觀念連結：[評估指標](../../名詞解釋/09_評估指標/README.md)
+### A4｜測試集最終評估
+> 觀念連結：[模型性能問題](../../名詞解釋/10_模型性能問題/README.md)
 
 ```text
-固定選好的模型與設定，再評估一次 test。
-顯示基準 accuracy／recall，以及 test precision、recall、F1。
-加上 PR-AUC 與混淆矩陣，解釋漏報與誤報的代價。
-不要依 test 成績回頭調參；用生活語言說明結果。
+以選好的最佳模型與門檻，對封存的 test 集進行一次性最終評估。
+顯示 test Precision、Recall、F1-score 與繁體中文混淆矩陣。
+與全部猜 0 的基準線比較，計算模型成功多抓出多少潛在流失客戶。
+完成後請向我提出一個觀念思考題。
 ```
 
 ### A5｜保存與確認結果
-
 ```text
-重啟 kernel，從頭執行 lesson.ipynb，確認中文字型與圖表。
-將完整前處理與模型保存到 artifacts/model.joblib。
-另存 metadata.json：欄位、來源、切分、設定、指標與版本。
-本例需要的門檻、scaler、圖表與範例也一起保存。
-用新程序載入，比對同一輸入的預測，回報實際結果。
+重啟 kernel 從頭重新執行 lesson.ipynb，確保圖表繁中與結果可復現。
+將完整前處理與模型 Pipeline 保存至 artifacts/model.joblib。
+另存 artifacts/metadata.json：記錄特徵清單、正例比例、推薦預警門檻（threshold）與測試集各指標。
+以新 Python 程序載入模型驗證一名高風險客戶的機率預測。
+完成後回報成果。
 ```
 
-## B｜把模型做成應用
+---
 
-完成 A5 後再貼 B1、B2。桌面版可使用[PyQt6 延伸 prompt](../README.md#想改成-pyqt6-桌面程式時)。
+## B｜把模型做成應用（app.py）
 
-### B1｜建立介面
+完成 A5 後再進行 B1、B2。
 
+### B1｜建立 Streamlit 介面
 ```text
-讀取本例 Notebook 與 artifacts，用 Streamlit 建立 app.py。
-輸入六個客戶欄位，顯示模型分數與關懷候選結果。
-使用保存的門檻，展示 val 比較表。
-載入已保存的完整模型，不在介面重新訓練。
-以 app.py 的位置定位檔案，檢查輸入並標示來源與限制。
-介面與圖表用繁體中文，圖表沿用共用字型設定。
-僅供本機操作，提供啟動命令。
+讀取本例 Notebook 與 artifacts，使用 Streamlit 建立 app.py。
+提供用戶基本屬性與行為數據的輸入面板，並在側邊欄提供「流失預警敏感度門檻（0.1～0.9）」的互動滑桿。
+動態輸出流失機率、風險等級（低/中/高）與是否需要立即發送關懷優惠券的建議。
+嚴格守則：直接 joblib.load 載入 artifacts/model.joblib，絕對不在 app.py 內重新訓練！
+介面文字全繁體中文，標示輸入限制。提供本機啟動命令（streamlit run app.py）。
 ```
 
 ### B2｜驗收應用
-
 ```text
-測試三組有效輸入，確認介面與 Notebook 預測一致。
-檢查空白、非法輸入及缺少模型時的提示。
-確認畫面與存檔圖表的繁體中文、負號均正常。
-停止後重新啟動，確認仍能預測，修正實際發現的問題。
-寫一份簡短 RUN.md，說明啟動、操作與模型限制。
-回報已測試與待確認項目，再問我下方觀念問題。
+調整滑桿門檻，確認風險標籤與關懷建議隨門檻動態變化，並與 Notebook 一致。
+產出 RUN.md，說明：如何啟動應用、如何操作、以及本模型的一項已知局限性（例如該模型基於假想固定資費用戶行為，若公司推出全新產品方案可能發生行為改變）。
 ```
-
-## 觀念確認
-
-1. 全部猜不流失，為什麼也可能 accuracy 高？
-2. 降低門檻，誰會變多：誤報還是漏報？
-3. test 的角色為什麼不是替我們找門檻？
-
-## 完成檢查
-
-實際正類比例與基準 recall 已顯示；門檻來自 val 並保存；app 使用固定門檻，漏報與誤報能用自然語言說明。
-
-至少展示：一個真實執行的模型結果、一個介面輸入／輸出、一個限制；說明一項由你下命令、AI 幫你完成並經你檢查的工作。
-
-[回到課程首頁](../README.md)

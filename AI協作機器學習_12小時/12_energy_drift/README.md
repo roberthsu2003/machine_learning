@@ -1,142 +1,119 @@
 # 12｜用電預測：完整專案與資料漂移
 
-你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。此資料夾目前是提示詞教材，尚未有模型程式或 Notebook。
+你提出需求、看懂結果並驗收；AI 負責寫程式、執行和除錯。
 
-- 任務：回歸、監測與成果整合。
-- 最小應用：Streamlit。
-- 學生專案內位置：`12_energy_drift/`；共用專案根目錄的 `.venv`。
-- 本例完成後：可用原始輸入執行預測，並說出一個模型限制。
+- **任務**：數值回歸與時間概念漂移（Concept Drift）監測。
+- **最小應用**：Streamlit 網頁應用。
+- **專案 Prompt**：本資料夾內已備妥 [AGENT.md](./AGENT.md)，規範 AI 助教角色、繁體中文字型、時序切分與資料漂移監測規則。
+- **學生專案位置**：`12_energy_drift/`（共用專案根目錄的 `.venv`）。
+- **本例完成後**：可預估建物耗電並即時監測模型漂移，說出一個模型限制。
+
+---
 
 ## 資料與問題設定
 
-本教材原創偽資料，data/energy_daily.csv，600 天×3 棟假想建物＝1,800 筆；seed=7012，最後 120 天刻意改變耗電規則。
+本教材原創偽資料，`data/energy_daily.csv`，600 天 × 3 棟假想建物 = 1,800 筆；固定 seed=7012（最後 120 天刻意改變耗電規則加乘 1.25）。
 
 ### 範例檔下載
+- [下載 energy_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/data/energy_daily.csv)：儲存至 `12_energy_drift/data/energy_daily.csv`。
+- [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
-- [下載 energy_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/12_energy_drift/data/energy_daily.csv)：只下載本例 CSV，儲存到學生專案的 `12_energy_drift/data/energy_daily.csv`。
-- [線上閱讀偽資料卡與欄位字典](./data/DATA_CARD.md)：直接在 GitHub 閱讀，不必下載。
+- **X（特徵）**：`building_type`、`floor_area_m2`、`occupancy_rate`、`temperature_forecast_c`、`is_weekend`；排除 `building_id`、`date`、`scenario_regime`、`is_synthetic`。
+- **y（標籤）**：`energy_kwh`（當日用電量 kWh）。
+- **切分規則**：按日期嚴格時間切分，前 360 天 train、接續 120 天 val、最後 120 天 test（漂移期封存至 A4 步驟）。絕對不可 shuffle！
 
-若連結顯示文字，使用瀏覽器「另存新檔」，保留 `.csv` 副檔名。使用這份固定 CSV，不請 AI 重新生成；本例不需要其他範例的資料，也不必下載整個 repo。
+---
 
-- **X（特徵）**：building_type、floor_area_m2、occupancy_rate、temperature_forecast_c、is_weekend；building_id、date、scenario_regime、is_synthetic 排除，date 僅用於切分；energy_kwh 為 target。
-- **y（標籤）**：energy_kwh；後期用電規則加乘 1.25，這是教學生成設定，不是模型事先知道的資訊。
-- **切分規則**：按日期唯一日序：前 360 天 train、接續 120 天 val、最後 120 天 test，同一日期三棟必須在同組。目標是既有三棟在未來的表現，不宣稱測試新建物泛化。
+## 上課流程：AI 專案 Prompt 協作
 
-## A｜一步一步建立 Notebook
+在開始前，請確認 AI 已讀取當前資料夾的 [AGENT.md](./AGENT.md)。
 
-先把本頁網址貼給 AI，再依序貼以下 prompt。
-一次只貼一段，確認結果後再繼續；無法讀取網址時，貼上本頁內容。
+> **啟動指令（貼給 AI 的第一句話）**：
+> ```text
+> 請詳細閱讀本資料夾的 AGENT.md，擔任我的機器學習助教，嚴格遵守繁體中文、字型設定、單步執行與防洩漏規則。
+> 現在請簡要向我說明本專案的建物耗電回歸任務，以及最後 120 天概念漂移（Concept Drift）的意義，等待我給予下一步指令。
+> ```
 
-### A0｜讓 AI 認識任務
+---
 
-```text
-請閱讀我提供的教材與觀念連結，擔任我的機器學習助教。
-沿用老師準備的環境，在 12_energy_drift/ 工作。
-依本例設定逐步建立 lesson.ipynb，保留已完成內容。
-用繁體中文說明，只做目前步驟；每步問我一個觀念問題。
-能執行就直接執行；不能執行時明說，不編造成績。
-Matplotlib／Seaborn 圖表的顯示文字全部使用繁體中文。
-現在先解釋問題、特徵與預期結果，不開始訓練。
-```
+## A｜一步一步建立 Notebook（lesson.ipynb）
 
-繪圖前，先貼[共用繁體中文繪圖 prompt](../README.md#共用-promptmatplotlib-與-seaborn-繁體中文繪圖)。
-中文字型使用 `mplfonts` 套件支援，免手動下載字型檔（若尚未安裝請執行 `pip install mplfonts`）。
+每次只貼一段 prompt，AI 執行後會提出一個觀念問題，確認理解後再貼下一段。
 
 ### A1｜讀取與觀察資料
-
-觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
+> 觀念連結：[數據結構](../../名詞解釋/02_數據結構/README.md)
 
 ```text
-在同一份 Notebook 載入本例資料。
-讀取已下載的 data/energy_daily.csv，檢查日期與建物。
-依上方設定確認 X／y，顯示前五筆、欄位與缺值。
-套用共用字型，畫繁體中文圖，說明一列資料代表什麼。
-缺檔時依上方下載連結取得，不換資料或重新生成。
+請在 12_energy_drift/ 建立 lesson.ipynb，讀取 data/energy_daily.csv。
+依 AGENT.md 確認 X 與 y，檢視 3 棟建物的用電量走勢。
+套用 AGENT.md 繁體中文字型設定，繪製 600 天三棟建物的總耗電時間序列圖（全繁體中文標籤）。
+說明環境背景條件變化對耗電規律的潛在影響。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A2｜切分與前處理
-
-觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞解釋/04_特徵工程/README.md)
+### A2｜按日序時間切分與特徵 Pipeline
+> 觀念連結：[數據分割](../../名詞解釋/03_數據分割/README.md)、[特徵工程](../../名詞工程/04_特徵工程/README.md)
 
 ```text
-依上方「切分規則」分資料，不自行改成其他方式。
-只用指定特徵，排除答案、ID 與生成提示欄位。
-前處理只 fit train；交叉驗證時放在每折 Pipeline。
-列出各份筆數，檢查重疊與洩漏，說明各自用途。
+依 AGENT.md 切分規則切分資料：
+按日期順序切分：前 360 天 train、接續 120 天 val、最後 120 天 test（封存至 A4 步驟）。
+建立 ColumnTransformer：
+- 類別欄位（building_type）：OneHotEncoder
+- 數值欄位：StandardScaler
+確認同一日期的 3 棟建築嚴格位於相同分割中，不可被拆散。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A3｜訓練與比較模型
-
-觀念連結：[集成學習](../../名詞解釋/08_集成學習/README.md)
+### A3｜模型訓練與驗證期評估
+> 觀念連結：[集成學習](../../名詞解釋/08_集成學習/README.md)、[模型參數](../../名詞解釋/05_模型參數/README.md)
 
 ```text
-以平均值預測為基準，建立補值、One-Hot 及隨機森林。
-森林用 100 棵樹，僅用 val MAE 比較深度 4、8。
-排除 scenario_regime，不因 test 表現下降重新調參。
-比較只用 train／val 或開發集 CV，不用 test 挑設定。
-執行後解釋比較結果；不要為了高分改資料。
+建立包含 ColumnTransformer 與 HistGradientBoostingRegressor / RandomForest 的 Pipeline。
+在訓練集（前 360 天）上訓練模型，並在驗證集（第 361～480 天）評估 MAE 與 RMSE。
+繪製驗證期「真實用電 vs 模型預測」的時間序列對照圖（全繁體中文）。
+確認在規則尚未改變前，模型能良好捕捉溫度與假日的耗電規律。
+完成後請向我提出一個觀念思考題。
 ```
 
-### A4｜評估與解讀
-
-觀念連結：[評估指標](../../名詞解釋/09_評估指標/README.md)、[模型泛化](../../名詞解釋/11_模型泛化/README.md)
+### A4｜最後 120 天漂移期評估與誤差監測
+> 觀念連結：[模型性能問題](../../名詞解釋/10_模型性能問題/README.md)、[機器學習訓練過程](../../名詞解釋/12_機器學習訓練過程/README.md)
 
 ```text
-固定選好的模型與設定，再評估一次 test。
-顯示 val／test MAE、RMSE 與每週誤差時間線。
-對照資料卡的規則改變，解釋漂移與未來泛化。
-不要依 test 成績回頭調參；用生活語言說明結果。
+以在歷史正常期訓練好的模型，對最後 120 天（第 481～600 天，發生概念漂移期）test 集進行推論：
+1. 計算漂移期的 MAE 與 RMSE，比較其與驗證期誤差的倍數增長（例如誤差增加 30% 以上）。
+2. 計算每日預測殘差（真實值 - 預測值），並繪製 14 天滾動平均殘差趨勢圖（全繁體中文）。
+3. 說明如何設定維運監測閾值（Alarm Threshold），及時發現模型失效並觸發重新訓練。
+完成後請向我提出一個觀念思考題。
 ```
 
 ### A5｜保存與確認結果
-
-觀念連結：[機器學習訓練過程](../../名詞解釋/12_機器學習訓練過程/README.md)
-
 ```text
-重啟 kernel，從頭執行 lesson.ipynb，確認中文字型與圖表。
-將完整前處理與模型保存到 artifacts/model.joblib。
-另存 metadata.json：欄位、來源、切分、設定、指標與版本。
-本例需要的門檻、scaler、圖表與範例也一起保存。
-用新程序載入，比對同一輸入的預測，回報實際結果。
+重啟 kernel 從頭重新執行 lesson.ipynb，確保圖表繁中與結果可復現。
+將完整模型 Pipeline 保存至 artifacts/model.joblib。
+另存 artifacts/metadata.json：記錄特徵清單、正常期 MAE、漂移期 MAE、殘差漂移警報門檻與版本。
+以新 Python 程序載入模型驗證一筆建物預測。
+完成後回報成果。
 ```
 
-## B｜把模型做成應用
+---
 
-完成 A5 後再貼 B1、B2。桌面版可使用[PyQt6 延伸 prompt](../README.md#想改成-pyqt6-桌面程式時)。
+## B｜把模型做成應用（app.py）
 
-### B1｜建立介面
+完成 A5 後再進行 B1、B2。
 
+### B1｜建立 Streamlit 介面
 ```text
-讀取本例 Notebook 與 artifacts，用 Streamlit 建立 app.py。
-提供單筆預測與批次 CSV 監測，顯示模型版本與訓練期間。
-有真實 energy_kwh 才計算 MAE；無真值只提供預測。
-載入已保存的完整模型，不在介面重新訓練。
-以 app.py 的位置定位檔案，檢查輸入並標示來源與限制。
-介面與圖表用繁體中文，圖表沿用共用字型設定。
-僅供本機操作，提供啟動命令。
+讀取本例 Notebook 與 artifacts，使用 Streamlit 建立 app.py。
+提供兩大功能分頁：
+1. 「單日耗電試算」：選擇建物類型、樓地板面積、預估進駐率、氣溫預報與是否週末，預估耗電度數。
+2. 「模型健康監測儀表板」：載入近期監測批次數據，視覺化呈現滾動殘差折線圖，並以紅綠燈警示目前模型是否發生概念漂移需要重新訓練。
+嚴格守則：直接 joblib.load 載入 artifacts/model.joblib，絕對不在 app.py 內重新訓練！
+介面文字全繁體中文，標示輸入限制。提供本機啟動命令（streamlit run app.py）。
 ```
 
 ### B2｜驗收應用
-
 ```text
-測試三組有效輸入，確認介面與 Notebook 預測一致。
-檢查空白、非法輸入及缺少模型時的提示。
-確認畫面與存檔圖表的繁體中文、負號均正常。
-停止後重新啟動，確認仍能預測，修正實際發現的問題。
-寫一份簡短 RUN.md，說明啟動、操作與模型限制。
-回報已測試與待確認項目，再問我下方觀念問題。
+在介面中輸入正常日數值與極端高溫日數值，確認預測合乎邏輯。
+切換至監測分頁，確認警報燈號與殘差數值與 Notebook 分析一致。
+產出 RUN.md，說明：如何啟動應用、如何操作、以及本模型的一項已知局限性（例如模型只根據歷史用電規律訓練，當遭遇能源政策改變或極端氣候突變時，必須依靠監測機制觸發再訓練）。
 ```
-
-## 觀念確認
-
-1. 昨日好模型為何可能在未來變差？
-2. 沒有實際用電量可以算 MAE 嗎？
-3. AI 能執行哪些工作，哪些驗收責任仍由你決定？
-
-## 完成檢查
-
-未知 future target 或 regime 不進 X；日期三棟不跨組；新程序載入 model 與 metadata，單筆預測與監測 CSV 可用；最後說明需求、資料、模型、評估和限制。
-
-至少展示：一個真實執行的模型結果、一個介面輸入／輸出、一個限制；說明一項由你下命令、AI 幫你完成並經你檢查的工作。
-
-[回到課程首頁](../README.md)
