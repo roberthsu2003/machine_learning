@@ -1,5 +1,7 @@
 # 範例 01：廣告效益預測 (迴歸篇)
 
+[廣告效益預測_迴歸篇.ipynb](./廣告效益預測_迴歸篇.ipynb)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/01_%E5%BB%A3%E5%91%8A%E6%95%88%E7%9B%8A%E9%A0%90%E6%B8%AC_%E8%BF%B4%E6%AD%B8%E7%AF%87/%E5%BB%A3%E5%91%8A%E6%95%88%E7%9B%8A%E9%A0%90%E6%B8%AC_%E8%BF%B4%E6%AD%B8%E7%AF%87.ipynb)
 
 本範例以企業最常見的 **「行銷廣告預算配置與銷售額預測」** 為核心，帶領學生體驗現代化的 **「AI 伴學模式」**。

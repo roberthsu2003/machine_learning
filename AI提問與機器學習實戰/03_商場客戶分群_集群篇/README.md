@@ -1,5 +1,7 @@
 # 範例 03：商場客戶價值分群 (集群篇)
 
+[商場客戶分群_集群篇.ipynb](./商場客戶分群_集群篇.ipynb)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/03_%E5%95%86%E5%A0%B4%E5%AE%A2%E6%88%B6%E5%88%86%E7%BE%A4_%E9%9B%86%E7%BE%A4%E7%AF%87/%E5%95%86%E5%A0%B4%E5%AE%A2%E6%88%B6%E5%88%86%E7%BE%A4_%E9%9B%86%E7%BE%A4%E7%AF%87.ipynb)
 
 本範例以零售商業中最經典的 **「客戶價值畫像與市場區隔 (Customer Segmentation)」** 為核心，帶領學生體驗現代化的 **「AI 伴學模式」**。

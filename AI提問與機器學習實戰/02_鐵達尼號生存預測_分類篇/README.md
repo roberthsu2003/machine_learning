@@ -1,5 +1,7 @@
 # 範例 02：鐵達尼號生存預測 (分類篇)
 
+[鐵達尼號生存預測_分類篇.ipynb](./鐵達尼號生存預測_分類篇.ipynb)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/02_%E9%90%B5%E9%81%94%E5%B0%BC%E8%99%9F%E7%94%9F%E5%AD%98%E9%A0%90%E6%B8%AC_%E5%88%86%E9%A1%9E%E7%AF%87/%E9%90%B5%E9%81%94%E5%B0%BC%E8%99%9F%E7%94%9F%E5%AD%98%E9%A0%90%E6%B8%AC_%E5%88%86%E9%A1%9E%E7%AF%87.ipynb)
 
 本範例以機器學習歷史上最著名、也是最考驗特徵工程觀念的 **「鐵達尼號乘客生還預測」** 為核心，帶領學生體驗現代化的 **「AI 伴學模式」**。

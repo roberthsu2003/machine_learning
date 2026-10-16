@@ -1,5 +1,7 @@
 # 🧠 範例 07：葡萄酒品種辨識（神經網路篇）
 
+[葡萄酒品種辨識_神經網路篇.ipynb](./葡萄酒品種辨識_神經網路篇.ipynb)
+
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/07_葡萄酒品種辨識_神經網路篇/葡萄酒品種辨識_神經網路篇.ipynb)
 
 本範例以《資料科學自學聖經》的 **wine.csv** 為資料來源，沿用範例 01 的完整 AI 伴學教學架構：穩定程式碼、逐段白話解說、可複製的 Prompt、交叉驗證與獨立桌面 GUI。
