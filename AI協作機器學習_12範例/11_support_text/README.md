@@ -15,7 +15,7 @@
 本教材原創偽資料，`data/support_tickets.csv`，900 則繁體中文客服工單、30 個模板群；固定 seed=7011。
 
 ### 範例檔下載
-- [下載 support_tickets.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/11_support_text/data/support_tickets.csv)：儲存至 `11_support_text/data/support_tickets.csv`。
+- [下載 support_tickets.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/11_support_text/data/support_tickets.csv)：儲存至 `11_support_text/data/support_tickets.csv`。
 - [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
 - **X（特徵）**：只用 `text` 欄位（繁體中文文字）；排除 `ticket_id`、`template_group`、`is_synthetic`。

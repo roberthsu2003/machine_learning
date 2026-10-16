@@ -15,7 +15,7 @@
 本教材原創偽資料，`data/cafe_daily.csv`，2024-01-01 起連續 730 天；固定 seed=7010。
 
 ### 範例檔下載
-- [下載 cafe_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/10_cafe_time/data/cafe_daily.csv)：儲存至 `10_cafe_time/data/cafe_daily.csv`。
+- [下載 cafe_daily.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/10_cafe_time/data/cafe_daily.csv)：儲存至 `10_cafe_time/data/cafe_daily.csv`。
 - [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
 - **X（特徵）**：`day_of_week`、`promo_planned`、`temperature_forecast_c`、`rain_forecast`，以及由歷史銷量衍生出的 `sales_lag_1` 與 `sales_rolling_7`（rolling 必須先 shift(1)）。

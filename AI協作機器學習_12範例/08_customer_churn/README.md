@@ -15,7 +15,7 @@
 本教材原創偽資料，`data/customer_churn.csv`，1,000 筆；固定 seed=7008。
 
 ### 範例檔下載
-- [下載 customer_churn.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/08_customer_churn/data/customer_churn.csv)：儲存至 `08_customer_churn/data/customer_churn.csv`。
+- [下載 customer_churn.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/08_customer_churn/data/customer_churn.csv)：儲存至 `08_customer_churn/data/customer_churn.csv`。
 - [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
 - **X（特徵）**：用戶使用天數、月費、客服進線次數等；排除 `customer_id`、`is_synthetic`。

@@ -15,7 +15,7 @@
 本教材原創偽資料，`data/machine_readings.csv`，50 台設備各 20 筆觀測，共 1,000 筆；固定 seed=7009。
 
 ### 範例檔下載
-- [下載 machine_readings.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/09_machine_groups/data/machine_readings.csv)：儲存至 `09_machine_groups/data/machine_readings.csv`。
+- [下載 machine_readings.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/09_machine_groups/data/machine_readings.csv)：儲存至 `09_machine_groups/data/machine_readings.csv`。
 - [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
 - **X（特徵）**：`temperature_c`、`vibration_mm_s`、`operating_hours`、`machine_age_years`；排除 `machine_id`、`reading_id`、`is_synthetic`。

@@ -1,4 +1,4 @@
-![AI Python 機器學習實作入門](./AI協作機器學習_12小時/course-cover.png)
+![AI Python 機器學習實作入門](./AI協作機器學習_12範例/course-cover.png)
 
 # 🎓 實戰機器學習：從基礎理論到雲端部署
 
@@ -160,4 +160,4 @@ cd machine_learning
 
 ---
 
-[12 小時 AI 協作機器學習課程](./AI協作機器學習_12小時/README.md)
+[AI 協作機器學習｜十二個範例](./AI協作機器學習_12範例/README.md)

@@ -15,7 +15,7 @@
 本教材原創偽資料，`data/shop_sales.csv`，600 筆；固定 seed=7007。
 
 ### 範例檔下載
-- [下載 shop_sales.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E5%B0%8F%E6%99%82/07_shop_sales/data/shop_sales.csv)：儲存至 `07_shop_sales/data/shop_sales.csv`。
+- [下載 shop_sales.csv](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E5%8D%94%E4%BD%9C%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92_12%E7%AF%84%E4%BE%8B/07_shop_sales/data/shop_sales.csv)：儲存至 `07_shop_sales/data/shop_sales.csv`。
 - [線上資料卡](./data/DATA_CARD.md)：欄位定義與生成規則。
 
 - **X（特徵）**：`visitors`（當日預估來客數，0～200）；排除 `day_id`、`is_synthetic`。
