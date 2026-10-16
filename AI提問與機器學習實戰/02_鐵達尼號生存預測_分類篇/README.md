@@ -25,7 +25,7 @@
 | :--- | :--- | :--- | :--- |
 | `row.names` | int64 | 無 | 乘客序號（無預測價值，應剔除） |
 | `pclass` | object | 無 | 艙等（`1st`, `2nd`, `3rd`，關鍵社經地位特徵） |
-| `survived` | int64 | 無 | **預測目標 ($y$)**：`1` 代表生還、`0` 代表遇難（生還率約 34%） |
+| `survived` | int64 | 無 | **預測目標 (y)**：`1` 代表生還、`0` 代表遇難（生還率約 34%） |
 | `name` | object | 無 | 乘客姓名（高基數文字） |
 | `age` | float64 | 680 筆缺失 | 乘客年齡（數值型，需中位數補值） |
 | `embarked` | object | 492 筆缺失 | 登船港口（`Southampton`, `Cherbourg`, `Queenstown`） |
