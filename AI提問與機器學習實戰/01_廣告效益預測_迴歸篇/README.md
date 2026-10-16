@@ -6,6 +6,32 @@
 
 ---
 
+## 🎯 你將學會的核心觀念 (學習目標)
+
+完成本範例後，你將完整掌握現代機器學習工程與商業分析的 7 大核心能力：
+
+1. 📊 **連續數值迴歸分析本質 (Regression Fundamentals)**
+   - 清楚區分「特徵變數 ($X$)」與「目標變數 ($y$)」，理解迴歸（預測連續金額）與分類（預測類別標籤）的本質差異。
+2. 🔍 **探索性資料分析與相關性解讀 (EDA & Correlation)**
+   - 學會計算並繪製皮爾森相關係數 (Pearson Correlation) 熱力圖。
+   - 建立「相關性不等於因果性 (Correlation vs. Causation)」的數據批判思考，避免武斷將相關當作因果。
+3. ⚙️ **專業特徵工程與管線封裝 (Feature Engineering & Pipeline)**
+   - 數值特徵標準化 (`StandardScaler`) 與類別特徵獨熱編碼 (`OneHotEncoder`) 的轉換邏輯。
+   - 深刻理解並避開機器學習兩大致命陷阱：「資料洩漏 (Data Leakage)」與「虛擬變數陷阱 (Dummy Variable Trap)」。
+   - 學會使用 Scikit-Learn 的 `ColumnTransformer` 與 `Pipeline` 將預處理與模型無縫焊接。
+4. ⚖️ **穩健的模型評估與交叉驗證 (Cross-Validation)**
+   - 掌握「5 折交叉驗證 (5-Fold Cross-Validation)」的運作機制，擺脫單一切分測試集的隨機誤差。
+   - 探討「簡單線性模型」與「複雜黑盒子隨機森林」在商業可解釋性 (Interpretability) 上的取捨權衡。
+5. 📈 **迴歸評估指標深度解讀與殘差診斷 (Metrics & Residual Analysis)**
+   - 能用生活化白話向主管解讀 MAE（平均誤差）、RMSE（大誤差懲罰）與 R²（判定係數，模型解釋力）。
+   - 透過「真實值 vs 預測值對角線散佈圖」與殘差分佈檢查模型是否存在過度擬合 (Overfitting)。
+6. 💼 **行銷商業決策推論與邊際效益分析 (Inference & ROI)**
+   - 封裝推論函式，模擬不同廣告預算配置下的預估銷售總額，計算行銷邊際貢獻與投資回報率 (ROI)。
+7. 🖥️ **專案落地：從 Notebook 走向獨立視窗軟體 (GUI Application)**
+   - 學會向 AI 提出結構化提示詞 (Prompt)，將訓練好的 Pipeline 落地成包含預測範例、滑桿調參與即時效益回饋的桌面視窗應用程式 (`app.py`)。
+
+---
+
 ## 💡 為什麼採用「程式儲存格 ＋ AI 互動儲存格」的設計？
 
 過去如果完全讓外部 AI 從無到有自由生成程式碼，常因各家 AI 表現不一（有些模型一次全寫完、有些遺漏資料切分、有些套件版本不合）而導致學習體驗非常不穩定。
