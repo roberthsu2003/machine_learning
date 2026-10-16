@@ -1,24 +1,17 @@
 # 範例 02：鐵達尼號生存預測 (分類篇)
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/02_%E9%90%B5%E9%81%94%E5%B0%BC%E8%99%9F%E7%94%9F%E5%AD%98%E9%A0%90%E6%B8%AC_%E5%88%86%E9%A1%9E%E7%AF%87/%E9%90%B5%E9%81%94%E5%B0%BC%E8%99%9F%E7%94%9F%E5%AD%98%E9%A0%90%E6%B8%AC_%E5%88%86%E9%A1%9E%E7%AF%87.ipynb)
+
 本範例以機器學習歷史上最著名、也是最考驗特徵工程觀念的 **「鐵達尼號乘客生還預測」** 為核心，引導初學者透過精準的提示詞，向 AI 請益如何辨識「資料洩漏特徵」、填補缺失值、處理類別不平衡，並解讀二元分類的關鍵指標。
 
 ---
 
-## 📁 檔案結構說明
+## 📊 資料集介紹 (`titanic.csv`)
 
-```text
-02_鐵達尼號生存預測_分類篇/
-├── README.md               # 本範例簡介、學習目標與五階段 AI 提問指南（本檔）
-├── lesson.ipynb            # 完整實作驗證 Notebook（對照 AI 回覆）
-└── data/
-    └── titanic.csv         # 1,313 筆鐵達尼號乘客名單與生存狀態數據集
-```
-
----
-
-## 📊 資料集概要 (`titanic.csv`)
+📥 **資料集直接下載**：[titanic.csv (點此下載或於瀏覽器直接開啟)](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/02_%E9%90%B5%E9%81%94%E5%B0%BC%E8%99%9F%E7%94%9F%E5%AD%98%E9%A0%90%E6%B8%AC_%E5%88%86%E9%A1%9E%E7%AF%87/titanic.csv) ｜ 本機相對路徑：[`titanic.csv`](./titanic.csv)
 
 資料集包含 1,313 位乘客的人口統計特徵、艙等票價資訊與生還狀態：
+
 
 | 欄位名稱 | 數據型態 | 缺失值狀況 | 欄位含義與特徵價值評估 |
 | :--- | :--- | :--- | :--- |
@@ -68,7 +61,7 @@
 在 Jupyter Notebook 中執行：
 ```python
 import pandas as pd
-df = pd.read_csv("data/titanic.csv")
+df = pd.read_csv("titanic.csv")
 print("=== 資料筆數與缺失值統計 ===")
 print(df.isnull().sum())
 print("\n=== 前 3 筆樣本 ===")
@@ -80,7 +73,7 @@ print(df.head(3))
 > **📋 複製這段提示詞給 AI：**
 > 
 > ```markdown
-> 你現在是一位專業的「資料科學導師」。我是一位機器學習初學者，手邊有一份經典的鐵達尼號乘客數據集 `data/titanic.csv`。
+> 你現在是一位專業的「資料科學導師」。我是一位機器學習初學者，手邊有一份經典的鐵達尼號乘客數據集 `titanic.csv`。
 > 
 > 以下是資料集摘要：
 > 1. 總筆數：1,313 筆，目標變數是 `survived`（1=生存，0=遇難，生存者約佔 34%）。

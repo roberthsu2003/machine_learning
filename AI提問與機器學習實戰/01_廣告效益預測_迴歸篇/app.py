@@ -29,14 +29,16 @@ from sklearn.metrics import mean_squared_error, mean_absolute_error, r2_score
 def get_data_path():
     """自動尋找 advSale.csv 檔案路徑"""
     candidates = [
+        os.path.join(os.path.dirname(__file__), "advSale.csv"),
+        os.path.join(os.getcwd(), "advSale.csv"),
+        os.path.join(os.getcwd(), "AI提問與機器學習實戰", "01_廣告效益預測_迴歸篇", "advSale.csv"),
         os.path.join(os.path.dirname(__file__), "data", "advSale.csv"),
-        os.path.join(os.getcwd(), "data", "advSale.csv"),
-        os.path.join(os.getcwd(), "AI提問與機器學習實戰", "01_廣告效益預測_迴歸篇", "data", "advSale.csv"),
     ]
     for p in candidates:
         if os.path.exists(p):
             return p
     return None
+
 
 
 class AdPredictionApp:

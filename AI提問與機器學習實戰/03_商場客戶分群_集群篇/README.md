@@ -1,24 +1,17 @@
 # 範例 03：商場客戶價值分群 (集群篇)
 
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/03_%E5%95%86%E5%A0%B4%E5%AE%A2%E6%88%B6%E5%88%86%E7%BE%A4_%E9%9B%86%E7%BE%A4%E7%AF%87/%E5%95%86%E5%A0%B4%E5%AE%A2%E6%88%B6%E5%88%86%E7%BE%A4_%E9%9B%86%E7%BE%A4%E7%AF%87.ipynb)
+
 本範例以零售商業中最經典的 **「客戶價值畫像與市場區隔 (Customer Segmentation)」** 為核心，引導初學者透過與 AI 的結構化對話，理解**「非監督式學習 (Unsupervised Learning)」** 的概念、如何決定最佳分群數量 K、並為每一群客戶量身打造商業行銷策略。
 
 ---
 
-## 📁 檔案結構說明
+## 📊 資料集介紹 (`customer.csv`)
 
-```text
-03_商場客戶分群_集群篇/
-├── README.md               # 本範例簡介、學習目標與五階段 AI 提問指南（本檔）
-├── lesson.ipynb            # 完整實作驗證 Notebook（對照 AI 回覆）
-└── data/
-    └── customer.csv        # 200 筆商場會員年齡、收入與消費分數數據集
-```
-
----
-
-## 📊 資料集概要 (`customer.csv`)
+📥 **資料集直接下載**：[customer.csv (點此下載或於瀏覽器直接開啟)](https://raw.githubusercontent.com/roberthsu2003/machine_learning/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/03_%E5%95%86%E5%A0%B4%E5%AE%A2%E6%88%B6%E5%88%86%E7%BE%A4_%E9%9B%86%E7%BE%A4%E7%AF%87/customer.csv) ｜ 本機相對路徑：[`customer.csv`](./customer.csv)
 
 資料集包含 200 位商場 VIP 會員的人口統計與消費行為指標：
+
 
 | 欄位名稱 | 數據型態 | 數值範圍 | 商業意義 |
 | :--- | :--- | :--- | :--- |
@@ -65,7 +58,7 @@
 在 Jupyter Notebook 中執行：
 ```python
 import pandas as pd
-df = pd.read_csv("data/customer.csv")
+df = pd.read_csv("customer.csv")
 print("=== 資料筆數與統計量 ===")
 print(df.info())
 print("\n=== 前 3 筆樣本 ===")
@@ -77,7 +70,7 @@ print(df.head(3))
 > **📋 複製這段提示詞給 AI：**
 > 
 > ```markdown
-> 你現在是一位專業的「商務數據分析與機器學習導師」。我是一位初學者，手上有一份百貨商場的顧客消費數據 `data/customer.csv`。
+> 你現在是一位專業的「商務數據分析與機器學習導師」。我是一位初學者，手上有一份百貨商場的顧客消費數據 `customer.csv`。
 > 
 > 以下是資料集摘要：
 > 1. 總筆數：200 筆，沒有缺失值。
