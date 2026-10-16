@@ -14,13 +14,13 @@
 <hr />
 <h2 id="section-2">1. 分類評估指標 (Classification Metrics)</h2>
 <h3>混淆矩陣 (Confusion Matrix)</h3>
-<p>混淆矩陣是一個二維交叉統計表，精確總結了分類模型的預測結果與真實情況，是所有分類衍生指標的基石。</p>
+<p>混淆矩陣是一個二維交叉統計表，精確總結了分類模型的預測結果與真實情況，是所有分類衍生指標的基石。<strong>在醫療檢測等實例中，通常將關注重點設定為「正例（病例／患病）」，無病者為「負例（健康）」。</strong></p>
 <h4>📊 觀念圖解</h4>
 <blockquote>
 <p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix">混淆矩陣</a>
 <section class="scene" id="confusion-matrix" data-scene="confusion-matrix" aria-labelledby="title-confusion-matrix">
 <div class="scene-head"><h3 id="title-confusion-matrix">混淆矩陣</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
-<p class="scene-description">帶 ID 的樣本依真實類別與預測類別移入 TP／FP／FN／TN；保留來源位置並標示兩軸。</p>
+<p class="scene-description">以醫療檢測為例：正例（Positive）＝病例、負例（Negative）＝健康。帶 ID 的樣本依真實類別與預測類別移入 TP／FP／FN／TN；保留來源位置並標示兩軸。</p>
 <canvas width="760" height="450" role="img" aria-label="混淆矩陣幾何動畫" aria-describedby="result-confusion-matrix">請閱讀下方的動畫說明與本節教材。</canvas>
 <div class="scene-parameters"></div>
 <p class="scene-result" id="result-confusion-matrix" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
@@ -35,8 +35,8 @@
 <tr>
   <th style="text-align:left">象限名詞</th>
   <th style="text-align:left">英文全稱</th>
-  <th style="text-align:center">真實情況</th>
-  <th style="text-align:center">模型預測</th>
+  <th style="text-align:center">真實情況<br><small style="font-weight:normal">(+病例 / −健康)</small></th>
+  <th style="text-align:center">模型預測<br><small style="font-weight:normal">(+病例 / −健康)</small></th>
   <th style="text-align:left">💡 生活實例（醫療檢測）</th>
 </tr>
 </thead>
@@ -44,29 +44,29 @@
 <tr>
   <td style="text-align:left"><strong>真正例 (TP)</strong></td>
   <td style="text-align:left">True Positive</td>
-  <td style="text-align:center"><strong>陽性 (+)</strong></td>
-  <td style="text-align:center"><strong>陽性 (+)</strong></td>
+  <td style="text-align:center"><strong>陽性 (+)【病例】</strong></td>
+  <td style="text-align:center"><strong>陽性 (+)【病例】</strong></td>
   <td style="text-align:left">病患確實染病，檢測結果精確抓出為陽性（成功確診）。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>真負例 (TN)</strong></td>
   <td style="text-align:left">True Negative</td>
-  <td style="text-align:center"><strong>陰性 (-)</strong></td>
-  <td style="text-align:center"><strong>陰性 (-)</strong></td>
+  <td style="text-align:center"><strong>陰性 (−)【健康】</strong></td>
+  <td style="text-align:center"><strong>陰性 (−)【健康】</strong></td>
   <td style="text-align:left">受檢者完全健康，檢測結果回報為陰性（平安無事）。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>假正例 (FP)</strong></td>
   <td style="text-align:left">False Positive<br><em>(Type I Error 第一型錯誤 / 誤報)</em></td>
-  <td style="text-align:center"><strong>陰性 (-)</strong></td>
-  <td style="text-align:center"><strong>陽性 (+)</strong></td>
+  <td style="text-align:center"><strong>陰性 (−)【健康】</strong></td>
+  <td style="text-align:center"><strong>陽性 (+)【病例】</strong></td>
   <td style="text-align:left">受檢者明明健康，檢測卻誤判為陽性（虛驚一場、冤枉好人）。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>假負例 (FN)</strong></td>
   <td style="text-align:left">False Negative<br><em>(Type II Error 第二型錯誤 / 漏報)</em></td>
-  <td style="text-align:center"><strong>陽性 (+)</strong></td>
-  <td style="text-align:center"><strong>陰性 (-)</strong></td>
+  <td style="text-align:center"><strong>陽性 (+)【病例】</strong></td>
+  <td style="text-align:center"><strong>陰性 (−)【健康】</strong></td>
   <td style="text-align:left">病患確實染病，檢測卻漏判為陰性（<strong>致命漏網之魚！</strong>）。</td>
 </tr>
 </tbody>
@@ -75,7 +75,7 @@
 <p>💡 <strong>雙字母記憶口訣</strong>：</p>
 <ul>
 <li><strong>第一個字母 (True / False)</strong>：代表模型「<strong>猜得對不對</strong>」（T = 猜對，F = 猜錯）。</li>
-<li><strong>第二個字母 (Positive / Negative)</strong>：代表模型「<strong>預測它是哪一類</strong>」（P = 猜正類，N = 猜負類）。</li>
+<li><strong>第二個字母 (Positive / Negative)</strong>：代表模型「<strong>預測它是哪一類</strong>」（P = 猜正類【病例】，N = 猜負類【健康】）。</li>
 </ul>
 </blockquote>
 <hr />

@@ -2,8 +2,8 @@ import {demo,range,select,check} from '../../shared/scene.js';import * as M from
 function confusion(c,s,data){
  const counts=M.metrics(data,s.params.threshold),names=['TP','FP','FN','TN'],groups=[data.filter(p=>p.y&&p.score>=s.params.threshold),data.filter(p=>!p.y&&p.score>=s.params.threshold),data.filter(p=>p.y&&p.score<s.params.threshold),data.filter(p=>!p.y&&p.score<s.params.threshold)],positions=new Map();
  G.text(c,'原始樣本 · 30 筆',103,88,15,C.green);
- G.text(c,'真實正類',385,82,15,C.orange);G.text(c,'真實負類',575,82,15,C.green);
- G.text(c,'預測正類',259,160,14,C.ink);G.text(c,'預測負類',259,310,14,C.ink);
+ G.text(c,'真實正類（病例）',385,82,14,C.orange);G.text(c,'真實負類（健康）',575,82,14,C.green);
+ G.text(c,'預測正類（病例）',235,160,13,C.ink);G.text(c,'預測負類（健康）',235,310,13,C.ink);
  groups.forEach((group,i)=>{
   const x=385+(i%2)*190,y=145+Math.floor(i/2)*150;
   G.rect(c,x-75,y-35,150,120,i===0||i===3?C.mint:'#f6e6d3',C.line);
@@ -16,13 +16,13 @@ function confusion(c,s,data){
   const x=M.lerp(from[0],to[0],t),y=M.lerp(from[1],to[1],t);
   G.rect(c,x-7,y-7,14,14,p.y?C.orange:C.green,null,2);G.text(c,p.id+1,x,y,9,C.white);
  });
- G.legend(c,[['真實負類',C.green],['真實正類',C.orange]],35,327,115);
+ G.legend(c,[['真實負類（健康）',C.green],['真實正類（病例）',C.orange]],10,327,135);
  G.text(c,'格內數字：已移入／總筆數；方塊數字：樣本 ID',380,420,15,C.green);
  return counts;
 }
 const errorData=[{x:0,y:1},{x:1,y:2},{x:2,y:2.5},{x:3,y:4},{x:4,y:4.2}];
 export const definitions=[
-demo('confusion-matrix','混淆矩陣',[range('threshold','判為正類的門檻',0,1,.5,.05)],(c,s)=>{const data=M.scored(30,.3),out=confusion(c,s,data);G.heading(c,'P/N 是預測類別，T/F 是猜對與否');return {message:`最終分格：TP=${out.tp}, FP=${out.fp}, FN=${out.fn}, TN=${out.tn}，總數 30。預測 score ≥ ${s.params.threshold} 為正類；每個方塊保留原本的真實標籤。`,metrics:out};},undefined,{guide:['左邊 30 格是樣本（顏色代表真實類別），右邊是 TP／FP／FN／TN 四格。','拖動門檻滑桿：看方塊重新落格，數量同步更新。','按「下一步」或拖時間軸：看方塊從左邊移入四格。','下方訊息顯示四格數量，總數恆為 30。']}),
+demo('confusion-matrix','混淆矩陣',[range('threshold','判為正類的門檻',0,1,.5,.05)],(c,s)=>{const data=M.scored(30,.3),out=confusion(c,s,data);G.heading(c,'正例＝病例，負例＝健康 ｜ P/N 為預測、T/F 為對錯');return {message:`最終分格：TP=${out.tp}, FP=${out.fp}, FN=${out.fn}, TN=${out.tn}，總數 30。設定「正例=病例、負例=健康」；預測 score ≥ ${s.params.threshold} 判為正類。每個方塊保留原本真實標籤。`,metrics:out};},undefined,{guide:['左邊 30 格是樣本（橘色=真實病例，綠色=真實健康），右邊是混淆矩陣四象限。','情境設定：正例 (Positive) = 病例、負例 (Negative) = 健康。','拖動門檻滑桿：看方塊重新落格，數量同步更新。','按「下一步」或拖時間軸：看方塊從左邊移入四格。','下方訊息顯示四格數量，總數恆為 30。']}),
 demo('classification-metrics','分類指標與 ROC',[range('threshold','分類門檻（分數 ≥ 門檻判正類）',0,1,.5,.05),range('positive','正類比例（%）：重抽 40 筆樣本',10,90,30,10)],(c,s)=>{const data=M.scored(40,s.params.positive/100),out=M.metrics(data,s.params.threshold),roc=M.roc(data),a=G.axes(c,{xmin:0,xmax:1,ymin:0,ymax:1,x:65,y:90,w:325,h:280,xlabel:'FPR',ylabel:'TPR / Recall'});G.line(c,a.X(0),a.Y(0),a.X(1),a.Y(1),C.line,1,[5,4]);const n=Math.max(1,Math.floor(s.progress*roc.curve.length));roc.curve.slice(0,n).forEach((p,i,arr)=>{if(i)G.line(c,a.X(arr[i-1].fpr),a.Y(arr[i-1].recall),a.X(p.fpr),a.Y(p.recall),C.green,3);});G.diamond(c,a.X(out.fpr),a.Y(out.recall),8,C.orange);[['Accuracy',out.accuracy],['Precision',out.precision],['Recall',out.recall],['F1',out.f1]].forEach(([label,value],i)=>{G.rect(c,455,100+i*68,250,54,C.white,C.line);G.text(c,label,475,127+i*68,16,C.muted,'left');G.text(c,M.fmt(value),675,127+i*68,21,C.green,'right');});G.heading(c,'門檻改變，四象限與指標一起變');return {message:`TP ${out.tp} / FP ${out.fp} / FN ${out.fn} / TN ${out.tn}；AUC=${M.fmt(roc.auc)}。AUC 描述此分數的排序能力；它可小於 0.5，且類別不平衡時仍需看 PR 指標與情境。分母為零顯示未定義。`,metrics:{...out,auc:roc.auc}};},undefined,{guide:['分類門檻：模型輸出「像正類的分數」，≥ 門檻才判正類；是「判多嚴」的開關。','正類比例：40 筆樣本中真實正類的占比；改變會重抽整批數據，ROC 形狀與 AUC 跟著變。','左圖是 ROC 曲線（綠）與目前門檻點（橘菱形），右邊是指標卡。','拖動門檻：橘點沿曲線走，指標此消彼長，但 AUC 不動（門檻無關）。','分母為零時顯示「未定義」；AUC 可小於 0.5。']}),
 demo('regression-errors','MAE、MSE、RMSE',[range('slope','預測斜率',0,2,.8,.1),check('outlier','加入離群值',false)],(c,s)=>{
  const data=s.params.outlier?[...errorData,{x:4.5,y:8}]:errorData,a=G.axes(c,{xmin:0,xmax:5,ymin:0,ymax:9,x:55,w:390,h:280,xlabel:'特徵 X₁',ylabel:'標籤 y'}),fn=x=>s.params.slope*x+.8,out=M.regressionMetrics(data,fn);

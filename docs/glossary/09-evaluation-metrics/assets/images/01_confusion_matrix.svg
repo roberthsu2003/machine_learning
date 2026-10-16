@@ -1,30 +1,108 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620" role="img" aria-labelledby="title desc">
-<title id="title">混淆矩陣：真實標籤 y 與預測類別 ŷ</title>
-<desc id="desc">以向量圖形和文字重製的教學圖解。原始 PNG 保留於同一資料夾。</desc>
-<style>text{font-family:"Noto Sans CJK TC","Microsoft JhengHei","PingFang TC",sans-serif;fill:#1e293b} .heading{font-weight:700}</style>
-<defs><marker id="arrow" markerWidth="9" markerHeight="9" refX="8" refY="4" orient="auto"><path d="M0 0L8 4L0 8" fill="none" stroke="#64748b" stroke-width="1.5"/></marker></defs>
-<rect width="1200" height="620" fill="#fff"/>
-<text x="600" y="43" font-size="29" text-anchor="middle" class="heading">混淆矩陣：真實標籤 y 與預測類別 ŷ</text>
-<text x="730" y="100" font-size="25" text-anchor="middle" class="heading">預測類別 ŷ</text>
-<text x="515" y="145" font-size="22" text-anchor="middle">預測正類（+）</text>
-<text x="925" y="145" font-size="22" text-anchor="middle">預測負類（−）</text>
-<text x="125" y="280" font-size="22" text-anchor="middle">真實正類（+）</text>
-<text x="125" y="460" font-size="22" text-anchor="middle">真實負類（−）</text>
-<rect x="300" y="170" width="390" height="160" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
-<text x="320" y="205" font-size="24" class="heading" style="fill:#16834a">TP：真正例</text>
-<text x="320" y="247" font-size="22">猜正類，實際也是正類。</text>
-<text x="320" y="292" font-size="22">例如：患病者被判定患病。</text>
-<rect x="710" y="170" width="390" height="160" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
-<text x="730" y="205" font-size="24" class="heading" style="fill:#b86a10">FN：偽負例／漏報</text>
-<text x="730" y="247" font-size="22">猜負類，實際是正類。</text>
-<text x="730" y="292" font-size="22">例如：患病者被判定健康。</text>
-<rect x="300" y="350" width="390" height="160" rx="12" fill="#fffbeb" stroke="#b86a10" stroke-width="2"/>
-<text x="320" y="385" font-size="24" class="heading" style="fill:#b86a10">FP：偽正例／誤報</text>
-<text x="320" y="427" font-size="22">猜正類，實際是負類。</text>
-<text x="320" y="472" font-size="22">例如：健康者被判定患病。</text>
-<rect x="710" y="350" width="390" height="160" rx="12" fill="#f0fdf4" stroke="#16834a" stroke-width="2"/>
-<text x="730" y="385" font-size="24" class="heading" style="fill:#16834a">TN：真負例</text>
-<text x="730" y="427" font-size="22">猜負類，實際也是負類。</text>
-<text x="730" y="472" font-size="22">例如：健康者被判定健康。</text>
-<text x="600" y="570" font-size="21" text-anchor="middle">本圖以列表示真實類別、欄表示預測類別；正類的定義由任務決定。</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="740" viewBox="0 0 1200 740" role="img" aria-labelledby="title desc">
+<title id="title">二元混淆矩陣 (Confusion Matrix) 結構與四象限詳解</title>
+<desc id="desc">詳細標示正例（病例）與負例（健康）在混淆矩陣四象限中的預測與真實對應關係</desc>
+<style>
+  text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; }
+  .heading { font-weight: 700; }
+  .badge-text { font-weight: 600; font-size: 15px; }
+  .card-title { font-size: 21px; font-weight: 700; }
+  .card-sub { font-size: 14px; font-weight: 500; }
+  .card-status { font-size: 15px; font-weight: 700; }
+  .card-desc { font-size: 15px; font-weight: 500; }
+  .card-note { font-size: 13.5px; font-weight: 500; }
+</style>
+
+<!-- 背景 -->
+<rect width="1200" height="740" fill="#ffffff"/>
+
+<!-- 主標題 -->
+<text x="600" y="44" font-size="26" text-anchor="middle" class="heading" fill="#0f172a">二元混淆矩陣 (Confusion Matrix) 結構與四象限詳解</text>
+
+<!-- 核心情境範例提示列 -->
+<rect x="230" y="66" width="740" height="36" rx="18" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.5"/>
+<text x="600" y="90" class="badge-text" text-anchor="middle" fill="#1e40af">
+  💡 醫療檢測情境對照：正例 (Positive) = <tspan fill="#b91c1c" font-weight="700">病例（患病）</tspan> ｜ 負例 (Negative) = <tspan fill="#15803d" font-weight="700">健康（無病）</tspan>
+</text>
+
+<!-- 上方：模型預測結果 (Predicted) -->
+<text x="700" y="138" font-size="22" text-anchor="middle" class="heading" fill="#2563eb">模型預測結果 (Predicted)</text>
+
+<!-- 預測欄標頭 1：預測為正例（病例） -->
+<rect x="300" y="152" width="390" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<text x="495" y="174" font-size="17" text-anchor="middle" class="heading" fill="#1d4ed8">預測為 正例 (+)</text>
+<text x="495" y="191" font-size="14" text-anchor="middle" font-weight="600" fill="#b91c1c">【判定為：病例】</text>
+
+<!-- 預測欄標頭 2：預測為負例（健康） -->
+<rect x="710" y="152" width="390" height="46" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<text x="905" y="174" font-size="17" text-anchor="middle" class="heading" fill="#334155">預測為 負例 (−)</text>
+<text x="905" y="191" font-size="14" text-anchor="middle" font-weight="600" fill="#15803d">【判定為：健康】</text>
+
+<!-- 左側：真實情況 (Actual) 大標籤 -->
+<rect x="25" y="278" width="70" height="200" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1"/>
+<text x="60" y="318" font-size="18" text-anchor="middle" class="heading" fill="#991b1b">真</text>
+<text x="60" y="342" font-size="18" text-anchor="middle" class="heading" fill="#991b1b">實</text>
+<text x="60" y="366" font-size="18" text-anchor="middle" class="heading" fill="#991b1b">情</text>
+<text x="60" y="390" font-size="18" text-anchor="middle" class="heading" fill="#991b1b">況</text>
+<text x="60" y="420" font-size="13" text-anchor="middle" font-weight="600" fill="#b91c1c">Actual</text>
+
+<!-- 真實列標頭 1：真實為正例（病例） -->
+<rect x="105" y="210" width="180" height="160" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<text x="195" y="275" font-size="17" text-anchor="middle" class="heading" fill="#991b1b">真實為 正例 (+)</text>
+<text x="195" y="302" font-size="15" text-anchor="middle" font-weight="700" fill="#b91c1c">【實際是：病例】</text>
+
+<!-- 真實列標頭 2：真實為負例（健康） -->
+<rect x="105" y="385" width="180" height="160" rx="10" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1"/>
+<text x="195" y="450" font-size="17" text-anchor="middle" class="heading" fill="#334155">真實為 負例 (−)</text>
+<text x="195" y="477" font-size="15" text-anchor="middle" font-weight="700" fill="#15803d">【實際是：健康】</text>
+
+<!-- ================= 四個象限卡片 ================= -->
+
+<!-- 1. TP: 真正例 (True Positive) -->
+<rect x="300" y="210" width="390" height="160" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+<text x="325" y="242" class="card-title" fill="#15803d">真正例 (TP)</text>
+<text x="500" y="242" class="card-sub" fill="#166534">True Positive</text>
+<text x="325" y="274" class="card-status" fill="#15803d">✅【答對了！診斷正確】</text>
+<text x="325" y="305" class="card-desc" fill="#1e293b">真實是<tspan font-weight="700" fill="#b91c1c">病例</tspan>，模型正確診斷為<tspan font-weight="700" fill="#b91c1c">病例</tspan></text>
+<text x="325" y="333" class="card-note" fill="#15803d">🎯 實例：成功揪出確診病患，及時給予妥善治療。</text>
+
+<!-- 2. FN: 假負例 (False Negative) / 漏報 -->
+<rect x="710" y="210" width="390" height="160" rx="12" fill="#fef2f2" stroke="#dc2626" stroke-width="2.5"/>
+<text x="735" y="242" class="card-title" fill="#b91c1c">假負例 (FN) ／ 漏報</text>
+<text x="965" y="242" class="card-sub" fill="#991b1b">False Negative</text>
+<text x="735" y="274" class="card-status" fill="#dc2626">🚨【嚴重致命漏抓！】(Type II Error)</text>
+<text x="735" y="305" class="card-desc" fill="#1e293b">真實是<tspan font-weight="700" fill="#b91c1c">病例</tspan>，模型誤判判定為<tspan font-weight="700" fill="#15803d">健康</tspan></text>
+<text x="735" y="333" class="card-note" fill="#b91c1c">⚠️ 實例：病患染病卻被放回家，延誤治療最危險！</text>
+
+<!-- 3. FP: 假正例 (False Positive) / 誤報 -->
+<rect x="300" y="385" width="390" height="160" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="2.5"/>
+<text x="325" y="417" class="card-title" fill="#b45309">假正例 (FP) ／ 誤報</text>
+<text x="555" y="417" class="card-sub" fill="#92400e">False Positive</text>
+<text x="325" y="449" class="card-status" fill="#d97706">⚠️【虛驚一場！】(Type I Error)</text>
+<text x="325" y="480" class="card-desc" fill="#1e293b">真實是<tspan font-weight="700" fill="#15803d">健康</tspan>，模型誤判判定為<tspan font-weight="700" fill="#b91c1c">病例</tspan></text>
+<text x="325" y="508" class="card-note" fill="#92400e">🔔 實例：健康者被誤診為陽性，徒增恐慌與複檢成本。</text>
+
+<!-- 4. TN: 真負例 (True Negative) -->
+<rect x="710" y="385" width="390" height="160" rx="12" fill="#f0fdf4" stroke="#16a34a" stroke-width="2.5"/>
+<text x="735" y="417" class="card-title" fill="#15803d">真負例 (TN)</text>
+<text x="910" y="417" class="card-sub" fill="#166534">True Negative</text>
+<text x="735" y="449" class="card-status" fill="#15803d">✅【答對了！排除無病】</text>
+<text x="735" y="480" class="card-desc" fill="#1e293b">真實是<tspan font-weight="700" fill="#15803d">健康</tspan>，模型正確診斷為<tspan font-weight="700" fill="#15803d">健康</tspan></text>
+<text x="735" y="508" class="card-note" fill="#15803d">🎯 實例：受檢者身體健康，回報陰性平安無事。</text>
+
+<!-- ================= 雙字母記憶口訣與提示區塊 ================= -->
+<rect x="105" y="565" width="995" height="145" rx="14" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+<text x="600" y="598" font-size="18" text-anchor="middle" class="heading" fill="#0f172a">💡【雙字母記憶口訣與判讀要訣】</text>
+
+<text x="600" y="630" font-size="15" text-anchor="middle" fill="#334155">
+  <tspan font-weight="700" fill="#0f172a">第一個字母 (True / False)：</tspan>代表模型「<tspan font-weight="700" fill="#2563eb">猜得對不對</tspan>」（T = 判斷正確，F = 判斷錯誤）
+</text>
+
+<text x="600" y="658" font-size="15" text-anchor="middle" fill="#334155">
+  <tspan font-weight="700" fill="#0f172a">第二個字母 (Positive / Negative)：</tspan>代表模型「<tspan font-weight="700" fill="#2563eb">猜的是什麼</tspan>」（P = 預測為<tspan fill="#b91c1c" font-weight="700">正例/病例</tspan>，N = 預測為<tspan fill="#15803d" font-weight="700">負例/健康</tspan>）
+</text>
+
+<text x="600" y="686" font-size="14.5" text-anchor="middle" font-weight="600" fill="#64748b">
+  🟢 綠色卡片 (TP、TN) 代表預測成功 ｜ 🔴 紅色卡片 (FN) 代表致命漏報 ｜ 🟡 橘黃卡片 (FP) 代表誤報虛驚
+</text>
+
 </svg>
