@@ -2,7 +2,7 @@
 
 <!-- interactive-glossary:start -->
 
-🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99/README.ipynb) · 📓 **[實作筆記本](./README.ipynb)**
+🌐 **[開啟本章互動動畫教學](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/)** · 📓 **[分類評估實作筆記本 (README.ipynb)](./README.ipynb)** · 📈 **[回歸評估實作筆記本 (regression_metrics.ipynb)](./regression_metrics.ipynb)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99/regression_metrics.ipynb)
 
 動畫場景：[混淆矩陣](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix) · [分類指標與 ROC](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#classification-metrics) · [MAE、MSE、RMSE](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors) · [R²](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#r-squared)
 
@@ -193,6 +193,9 @@
 ## 2. 回歸評估指標 (Regression Metrics)
 
 回歸任務的輸出為連續數值（如房價、氣溫、營收）。我們透過評估真實值 $y$ 與預測值 $\hat{y}$ 之間的殘差來衡量擬合品質。
+
+> 📓 **本節專屬實戰：[台北市房價預測與回歸指標深度實戰 (regression_metrics.ipynb)](./regression_metrics.ipynb)** · [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99/regression_metrics.ipynb)  
+> 包含真實數據模擬、MAE/MSE/RMSE 人話翻譯、極端豪宅離群值衝擊實驗與 $R^2$ 三線對照尺！
 
 #### 📊 觀念圖解
 > 🎬 互動動畫：[MAE、MSE、RMSE](https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors)

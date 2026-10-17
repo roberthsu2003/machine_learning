@@ -174,6 +174,8 @@ class Renderer(mistune.HTMLRenderer):
         self.headings = []
 
     def image(self, text, url, title=None):
+        if url.startswith(('https:', 'http:')):
+            return f'<img src="{escape(url)}" alt="{escape(text, quote=True)}" loading="lazy">'
         clean_url = url.split('?')[0]
         path = (self.source.parent / clean_url).resolve()
         relative = str(path.relative_to(ROOT))
