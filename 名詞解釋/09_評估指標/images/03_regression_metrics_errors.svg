@@ -1,0 +1,248 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="740" viewBox="0 0 1200 740" role="img" aria-labelledby="title desc">
+  <title id="title">回歸評估指標判讀指南：MAE、MSE 與 RMSE 如何看？如何判斷好壞？</title>
+  <desc id="desc">深入解析 MAE、MSE、RMSE 的物理意義、單位陷阱，以及如何透過 RMSE 與 MAE 的差距快速診斷模型離群值與穩定度。</desc>
+  <defs>
+    <!-- 陰影 -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="3" stdDeviation="4" flood-color="#0f172a" flood-opacity="0.06"/>
+    </filter>
+    <!-- 箭頭 -->
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7 Z" fill="#16a34a" />
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7 Z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; }
+    .title { font-weight: 800; font-size: 25px; fill: #0f172a; }
+    .badge-bar { font-size: 14.5px; font-weight: 600; }
+    .card-title { font-size: 16.5px; font-weight: 800; }
+    .card-formula { font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 13.5px; font-weight: 700; }
+    .card-text { font-size: 13px; font-weight: 500; line-height: 1.4; fill: #334155; }
+    .tag { font-size: 11.5px; font-weight: 700; }
+  </style>
+
+  <!-- 背景底色 -->
+  <rect width="1200" height="740" fill="#f8fafc"/>
+
+  <!-- 頂部主標題 -->
+  <text x="600" y="38" text-anchor="middle" class="title">回歸誤差判讀指南：MAE、MSE 與 RMSE 如何看？如何判斷好壞？</text>
+
+  <!-- 頂部防踩坑醒目標題列 -->
+  <rect x="120" y="54" width="960" height="34" rx="17" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="600" y="76" text-anchor="middle" class="badge-bar">
+    <tspan fill="#dc2626" font-weight="700">🚨 必避盲點：</tspan>
+    MSE 單位是<tspan font-weight="700" fill="#7c3aed">「平方」</tspan>，不可直接跟 MAE 比大小！真正對決是比
+    <tspan fill="#b45309" font-weight="700">【RMSE vs MAE】</tspan> ── 兩者差距越大，代表離群大失誤越嚴重！
+  </text>
+
+  <!-- ========================================== -->
+  <!-- 左半部：幾何殘差與數值震撼對比區 (x: 40 ~ 550) -->
+  <!-- ========================================== -->
+  <g id="left-column" transform="translate(45, 105)">
+    <!-- 容器背景外框 -->
+    <rect x="0" y="0" width="505" height="580" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#shadow)"/>
+    
+    <!-- 區域標題 -->
+    <text x="25" y="32" font-size="16px" font-weight="800" fill="#0f172a">殘差幾何直觀：線段長度與極端離群值</text>
+    <text x="25" y="52" font-size="12px" fill="#64748b">垂直距離就是殘差 e = y - ŷ ｜ 猜對的點緊貼直線，離群值垂直甩開</text>
+
+    <!-- 迷你散佈圖座標系 (x: 25 ~ 480, y: 65 ~ 265) -->
+    <rect x="25" y="65" width="455" height="195" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+    
+    <!-- 格線 -->
+    <line x1="55" y1="230" x2="455" y2="230" stroke="#cbd5e1" stroke-width="1.2"/>
+    <line x1="55" y1="85" x2="55" y2="230" stroke="#cbd5e1" stroke-width="1.2"/>
+    
+    <!-- 橘色回歸預測線 -->
+    <line x1="65" y1="210" x2="445" y2="120" stroke="#d97706" stroke-width="3"/>
+    <text x="395" y="112" font-size="11.5px" font-weight="700" fill="#d97706">預測線 ŷ</text>
+
+    <!-- 正常樣本點 1~5 -->
+    <!-- 點 1 (x: 100, y: 195, yHat: 202) e=-7 -->
+    <line x1="100" y1="195" x2="100" y2="202" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="100" cy="195" r="5" fill="#16a34a"/>
+    <text x="100" y="185" font-size="10.5px" text-anchor="middle" fill="#64748b">e₁=0.2</text>
+
+    <!-- 點 2 (x: 160, y: 172, yHat: 188) e=16 -->
+    <line x1="160" y1="172" x2="160" y2="188" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="160" cy="172" r="5" fill="#16a34a"/>
+    <text x="160" y="162" font-size="10.5px" text-anchor="middle" fill="#64748b">e₂=0.4</text>
+
+    <!-- 點 3 (x: 230, y: 176, yHat: 171) e=-5 -->
+    <line x1="230" y1="176" x2="230" y2="171" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="230" cy="176" r="5" fill="#16a34a"/>
+    <text x="230" y="193" font-size="10.5px" text-anchor="middle" fill="#64748b">e₃=0.1</text>
+
+    <!-- 點 4 (x: 300, y: 125, yHat: 154) e=29 -->
+    <line x1="300" y1="125" x2="300" y2="154" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="300" cy="125" r="5" fill="#16a34a"/>
+    <text x="300" y="115" font-size="10.5px" text-anchor="middle" fill="#64748b">e₄=0.8</text>
+
+    <!-- 點 5 (x: 360, y: 147, yHat: 140) e=-7 -->
+    <line x1="360" y1="147" x2="360" y2="140" stroke="#8b5cf6" stroke-width="2"/>
+    <circle cx="360" cy="147" r="5" fill="#16a34a"/>
+    <text x="360" y="163" font-size="10.5px" text-anchor="middle" fill="#64748b">e₅=0.2</text>
+
+    <!-- 點 6：極端離群值 (x: 420, y: 78, yHat: 125) e=47 超長！ -->
+    <line x1="420" y1="78" x2="420" y2="125" stroke="#dc2626" stroke-width="3" stroke-dasharray="3,2"/>
+    <circle cx="420" cy="78" r="6" fill="#dc2626"/>
+    <rect x="330" y="70" width="80" height="20" rx="4" fill="#fee2e2" stroke="#fca5a5" stroke-width="1"/>
+    <text x="370" y="84" text-anchor="middle" font-size="10.5px" font-weight="800" fill="#dc2626">🚨 離群值 e₆=3.6</text>
+
+    <!-- 圖例 -->
+    <circle cx="70" cy="248" r="4.5" fill="#16a34a"/>
+    <text x="80" y="252" font-size="11px" fill="#475569">正常樣本</text>
+    <line x1="140" y1="248" x2="160" y2="248" stroke="#d97706" stroke-width="2.5"/>
+    <text x="168" y="252" font-size="11px" fill="#475569">模型預測線</text>
+    <line x1="245" y1="248" x2="265" y2="248" stroke="#8b5cf6" stroke-width="2"/>
+    <text x="273" y="252" font-size="11px" fill="#475569">正常殘差 |e|</text>
+    <line x1="355" y1="248" x2="375" y2="248" stroke="#dc2626" stroke-width="2.5"/>
+    <text x="383" y="252" font-size="11px" font-weight="700" fill="#dc2626">離群殘差 (平方放大)</text>
+
+    <!-- ================= 核心數值對比實驗表 ================= -->
+    <text x="25" y="290" font-size="15px" font-weight="800" fill="#0f172a">📊 震撼實測：只多一筆離群值，指標如何劇烈變化？</text>
+    
+    <!-- 對照卡片 A：正常 5 筆樣本 -->
+    <rect x="25" y="306" width="455" height="110" rx="8" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1.2"/>
+    <text x="40" y="328" font-size="13px" font-weight="800" fill="#15803d">情境一：無離群值（5 筆正常資料，誤差 0.1 ~ 0.8）</text>
+    <text x="40" y="352" font-size="12px" fill="#334155">
+      • <tspan font-weight="700">MAE = 0.34 萬元</tspan> ｜ <tspan font-weight="700">MSE = 0.18 萬元²</tspan> ｜ <tspan font-weight="700">RMSE = 0.42 萬元</tspan>
+    </text>
+    <rect x="40" y="366" width="425" height="40" rx="6" fill="#ffffff" stroke="#86efac" stroke-width="1"/>
+    <text x="50" y="383" font-size="11.5px" font-weight="700" fill="#15803d">
+      ✅ 診斷結論：RMSE (0.42) 與 MAE (0.34) 非常接近（比值僅 1.2）！
+    </text>
+    <text x="50" y="399" font-size="11px" fill="#475569">
+      ➔ 說明模型預測極其穩定，各筆誤差均勻分布，完全沒有爆雷大失誤。
+    </text>
+
+    <!-- 對照卡片 B：加入 1 筆離群值 -->
+    <rect x="25" y="428" width="455" height="135" rx="8" fill="#fef2f2" stroke="#fecaca" stroke-width="1.2"/>
+    <text x="40" y="450" font-size="13px" font-weight="800" fill="#b91c1c">情境二：加入僅僅 1 筆離群值（誤差 e₆ = 3.6 萬元！）</text>
+    <text x="40" y="474" font-size="12px" fill="#334155">
+      • <tspan font-weight="700">MAE = 0.88 萬元</tspan>（溫和上升約 2.5 倍，因為對大錯一視同仁）
+    </text>
+    <text x="40" y="494" font-size="12px" fill="#b91c1c" font-weight="700">
+      • MSE = 2.31 萬元²（暴衝 13 倍！因為 3.6² = 12.96 面積極度膨脹）
+    </text>
+    <text x="40" y="514" font-size="12px" fill="#b45309" font-weight="700">
+      • RMSE = 1.52 萬元（飆升近 4 倍！被平方放大後狠狠拉高）
+    </text>
+    <rect x="40" y="524" width="425" height="28" rx="5" fill="#ffffff" stroke="#fca5a5" stroke-width="1"/>
+    <text x="50" y="542" font-size="11px" font-weight="700" fill="#b91c1c">
+      ⚠️ 診斷結論：RMSE (1.52) 遠大於 MAE (0.88) ── 一眼揪出少數致命大翻車！
+    </text>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 右半部：使用者如何看？如何判斷好壞？ (x: 575 ~ 1155) -->
+  <!-- ========================================== -->
+
+  <!-- 卡片 1：MAE 平均絕對誤差 -->
+  <g id="card-mae" transform="translate(575, 105)">
+    <rect width="580" height="110" rx="12" fill="#ffffff" stroke="#86efac" stroke-width="1.8" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="8" height="110" rx="4" fill="#16a34a"/>
+    <text x="25" y="26" class="card-title" fill="#15803d">1. MAE 平均絕對誤差（基準盤）</text>
+    <rect x="390" y="8" width="170" height="28" rx="6" fill="#f0fdf4" stroke="#bbf7d0" stroke-width="1"/>
+    <text x="475" y="27" text-anchor="middle" class="card-formula" fill="#15803d">(1/n) Σ |y - ŷ|</text>
+
+    <text x="25" y="52" class="card-text">
+      <tspan font-weight="700" fill="#0f172a">白話含義：</tspan>所有殘差線段長度的平均值。單位就是原始單位（如：萬元）。
+    </text>
+    <text x="25" y="72" class="card-text">
+      <tspan font-weight="700" fill="#15803d">適用時機：</tspan>向業務主管報告時最清楚（「我們模型平均每筆猜錯 0.34 萬元」）。
+    </text>
+    <rect x="25" y="82" width="535" height="20" rx="4" fill="#f0fdf4"/>
+    <text x="35" y="96" font-size="11px" font-weight="700" fill="#15803d">
+      特性：對極端大失誤一視同仁，抗噪能力強（Robust），不會被少數異常值嚇死。
+    </text>
+  </g>
+
+  <!-- 卡片 2：MSE 均方誤差 -->
+  <g id="card-mse" transform="translate(575, 225)">
+    <rect width="580" height="110" rx="12" fill="#ffffff" stroke="#d8b4fe" stroke-width="1.8" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="8" height="110" rx="4" fill="#9333ea"/>
+    <text x="25" y="26" class="card-title" fill="#7e22ce">2. MSE 均方誤差（平方嚴懲大失誤）</text>
+    <rect x="390" y="8" width="170" height="28" rx="6" fill="#faf5ff" stroke="#e9d5ff" stroke-width="1"/>
+    <text x="475" y="27" text-anchor="middle" class="card-formula" fill="#7e22ce">(1/n) Σ (y - ŷ)²</text>
+
+    <text x="25" y="52" class="card-text">
+      <tspan font-weight="700" fill="#0f172a">白話含義：</tspan>把殘差取平方（化為正方形面積）後算平均。
+    </text>
+    <text x="25" y="72" class="card-text">
+      <tspan font-weight="700" fill="#b91c1c">🚨 致命缺陷：</tspan>單位變成「萬元²」不是人話！而且數值大小隨單位劇烈失真。
+    </text>
+    <rect x="25" y="82" width="535" height="20" rx="4" fill="#faf5ff"/>
+    <text x="35" y="96" font-size="11px" font-weight="700" fill="#6b21a8">
+      特性：處處可導，是演算法最佳化的常用 Loss；但不可直接拿數值跟 MAE 比！
+    </text>
+  </g>
+
+  <!-- 卡片 3：RMSE 均方根誤差 -->
+  <g id="card-rmse" transform="translate(575, 345)">
+    <rect width="580" height="110" rx="12" fill="#ffffff" stroke="#fcd34d" stroke-width="1.8" filter="url(#shadow)"/>
+    <rect x="0" y="0" width="8" height="110" rx="4" fill="#d97706"/>
+    <text x="25" y="26" class="card-title" fill="#b45309">3. RMSE 均方根誤差（兼顧單位與懲罰）</text>
+    <rect x="390" y="8" width="170" height="28" rx="6" fill="#fffbeb" stroke="#fde68a" stroke-width="1"/>
+    <text x="475" y="27" text-anchor="middle" class="card-formula" fill="#b45309">√MSE</text>
+
+    <text x="25" y="52" class="card-text">
+      <tspan font-weight="700" fill="#0f172a">白話含義：</tspan>對 MSE 開根號還原為原單位（萬元），同時保留對大誤差的懲罰！
+    </text>
+    <text x="25" y="72" class="card-text">
+      <tspan font-weight="700" fill="#b45309">業界實務：</tspan>競賽與量產系統最愛。只要偶爾大翻車，RMSE 就會立刻警報大響。
+    </text>
+    <rect x="25" y="82" width="535" height="20" rx="4" fill="#fffbeb"/>
+    <text x="35" y="96" font-size="11px" font-weight="700" fill="#b45309">
+      黃金特性：單位與 MAE 一樣都是原單位，這兩者才能放在同一把尺上比對！
+    </text>
+  </g>
+
+  <!-- ================= 核心總結：使用者如何判讀？如何才是好的？ ================= -->
+  <g id="decision-guide" transform="translate(575, 465)">
+    <rect width="580" height="220" rx="12" fill="#eff6ff" stroke="#93c5fd" stroke-width="2" filter="url(#shadow)"/>
+    <text x="25" y="30" font-size="17px" font-weight="800" fill="#1d4ed8">🎯 使用者到底要如何判斷？怎樣才是「好模型」？</text>
+    
+    <!-- 規則 1 -->
+    <rect x="20" y="44" width="540" height="48" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="35" y="63" font-size="13px" font-weight="800" fill="#0f172a">
+      ① 數值絕對大小：【MAE 與 RMSE 越接近 0 越好】
+    </text>
+    <text x="35" y="80" font-size="11.5px" fill="#475569">
+      兩者都是誤差，數值越低代表模型猜得越準（如房價誤差 0.5 萬算極優）。
+    </text>
+
+    <!-- 規則 2 -->
+    <rect x="20" y="98" width="540" height="54" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="35" y="118" font-size="13px" font-weight="800" fill="#15803d">
+      ② 穩定度判讀：【對比 RMSE 與 MAE 的差距】（看有沒有少數爆雷）
+    </text>
+    <text x="35" y="134" font-size="11.5px" fill="#334155">
+      • 若 <tspan font-weight="700" fill="#15803d">RMSE ≈ MAE</tspan>：各樣本誤差平均穩定，<tspan font-weight="700" fill="#15803d">無離群爆雷（好品質！）</tspan>
+    </text>
+    <text x="35" y="148" font-size="11.5px" fill="#334155">
+      • 若 <tspan font-weight="700" fill="#b91c1c">RMSE ≫ MAE</tspan>：平時猜得還行，但<tspan font-weight="700" fill="#b91c1c">存在極端離群大翻車！</tspan>
+    </text>
+
+    <!-- 規則 3 -->
+    <rect x="20" y="158" width="540" height="52" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1"/>
+    <text x="35" y="177" font-size="13px" font-weight="800" fill="#b45309">
+      ③ 業務指標選擇：【依業務代價決定驗收誰】
+    </text>
+    <text x="35" y="194" font-size="11.5px" fill="#475569">
+      • 看重多數用戶平均體驗、允許偶發雜訊 ➔ 看 <tspan font-weight="700" fill="#15803d">MAE</tspan>。
+    </text>
+    <text x="35" y="206" font-size="11.5px" fill="#475569">
+      • 絕不容許任何一次致命失誤（如醫療、結構安全） ➔ 必須看 <tspan font-weight="700" fill="#b45309">RMSE</tspan>！
+    </text>
+  </g>
+
+  <!-- 底部版權與註腳說明 -->
+  <text x="600" y="718" text-anchor="middle" font-size="12px" fill="#64748b">
+    📌 定理：數學上 RMSE ≥ MAE 恆成立。兩者差值越大，代表資料集中的誤差變異（Variance of Errors）越大。
+  </text>
+</svg>
