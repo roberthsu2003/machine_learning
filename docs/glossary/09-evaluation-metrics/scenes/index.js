@@ -228,4 +228,147 @@ demo('regression-errors','MAE、MSE、RMSE',[
 
   return {message:msg,metrics:{...out,squareScale:scale,absoluteErrors:errors}};
 },undefined,{interactiveOnly:true,guide:['核心操作：勾選下方「加入極端離群值」，直接觀察右上角指標跳變！','MAE (平均絕對誤差)：對大失誤一視同仁，抗離群值干擾。','MSE (均方誤差)：平方放大誤差，演算法好算，但平方單位不是人話，嚴禁與 MAE 比！','RMSE (均方根誤差)：開根號變回原單位，專門用來跟 MAE 相比。','離群值診斷尺：當 RMSE 遠大於 MAE（比值 > 1.25）時，代表模型出現了致命的大翻車樣本！']}),
-demo('r-squared','R²',[select('model','比較預測模型',[['good','正常好模型（捕捉規律）'],['mean','瞎猜笨模型（只猜平均值）'],['bad','幫倒忙模型（預測嚴重離譜）'],['constant','常數標籤（邊界情況：SST=0）']])],(c,s)=>{const data=s.params.model==='constant'?errorData.map(p=>({...p,y:3})):errorData,mu=M.mean(data.map(p=>p.y)),fn=s.params.model==='mean'?()=>mu:s.params.model==='bad'?()=>8:s.params.model==='constant'?()=>2:x=>.8*x+1,stats=M.regressionMetrics(data,fn),a=G.axes(c,{xmin:0,xmax:5,ymin:0,ymax:9,x:55,w:390,h:280,xlabel:'特徵 X₁',ylabel:'標籤 y'});G.dots(c,a,data);G.curve(c,a,()=>mu,C.green,2);G.curve(c,a,fn,C.orange,3);data.forEach(p=>{G.line(c,a.X(p.x),a.Y(p.y),a.X(p.x),a.Y(fn(p.x)),C.purple,2);});const max=Math.max(stats.sse,stats.sst,1);G.rect(c,510,150,170*s.progress*stats.sst/max,45,C.mint,null,0);G.rect(c,510,250,170*s.progress*stats.sse/max,45,'#ebdff3',null,0);G.text(c,`SST = ${M.fmt(stats.sst,2)} (笨模型失誤)`,590,125,15,C.green);G.text(c,`SSE = ${M.fmt(stats.sse,2)} (模型殘差)`,590,225,15,C.purple);G.heading(c,'R² = 1 − SSE / SST','色條逐步展開到總平方和；同一畫面共用比例尺');G.legend(c,[['真實樣本／平均基準',C.green],['比較模型',C.orange],['模型殘差',C.purple]],75,398,245);const msg=stats.sst===0?'y 為常數，SST=0（無波動），R² 未定義。':stats.r2<0?`R²=${M.fmt(stats.r2)}（負數！）。幫倒忙模型：預測誤差比直接猜平均還離譜，代表方向搞反或嚴重過擬合。`:stats.r2===0?'R²=0.00 (0%)。瞎猜笨模型：誤差與直接猜平均值一模一樣，完全沒學到特徵。':`R²=${M.fmt(stats.r2)}（約 ${(stats.r2*100).toFixed(0)}%）。正常好模型：成功消滅了原本笨模型約 ${(stats.r2*100).toFixed(0)}% 的失誤！`;return {message:msg,metrics:stats};},undefined,{guide:['1. 綠線是猜平均值的「基準笨模型」，失誤總量為綠條 SST (總平方和)。','2. 橘線是你的「預測模型」，未消滅的殘差失誤為紫條 SSE (殘差平方和)。','3. 切換「比較預測模型」：觀察 R² 從正常好模型 (約 0.85)、瞎猜笨模型 (0.00) 到幫倒忙模型 (負數)。','4. 公式 R² = 1 − SSE / SST：衡量模型把原本笨模型的失誤消滅了百分之幾。','5. 常數標籤時 SST=0（數據完全無波動），此時 R² 顯示未定義。']})];
+demo('r-squared','R² 決定係數',[
+  select('model','比較預測模型',[
+    ['good','正常好模型（捕捉規律）'],
+    ['mean','瞎猜笨模型（只猜平均值）'],
+    ['bad','幫倒忙模型（預測嚴重離譜）'],
+    ['constant','常數標籤（邊界情況：SST=0）']
+  ])
+],(c,s)=>{
+  const data = s.params.model==='constant' ? errorData.map(p=>({...p,y:3})) : errorData;
+  const mu = M.mean(data.map(p=>p.y));
+  const fn = s.params.model==='mean' ? ()=>mu : s.params.model==='bad' ? ()=>8 : s.params.model==='constant' ? ()=>2 : x=>0.8*x+1;
+  const stats = M.regressionMetrics(data,fn);
+
+  // 1. 左側坐標軸與幾何散佈圖 (x: 55, y: 56, w: 270, h: 280)
+  const a = G.axes(c,{xmin:0,xmax:5,ymin:0,ymax:9,x:55,y:56,w:270,h:280,xlabel:'特徵 X₁',ylabel:'標籤 y'});
+  
+  // 基準水平虛線：笨模型猜平均線 y = mu
+  G.line(c, a.X(0), a.Y(mu), a.X(5), a.Y(mu), '#dc2626', 2, [6, 4]);
+  G.text(c, `基準線 ȳ = ${mu.toFixed(2)}`, a.X(2.5), a.Y(mu) - 10, 11, '#dc2626', 'center');
+
+  // 模型預測線 (藍色實線)
+  G.curve(c, a, fn, '#2563eb', 3);
+
+  // 殘差線 (紫色垂直線) 與 真實樣本點
+  data.forEach(p=>{
+    const yHat = fn(p.x);
+    G.line(c, a.X(p.x), a.Y(p.y), a.X(p.x), a.Y(yHat), C.purple, 2);
+    G.circle(c, a.X(p.x), a.Y(p.y), 5, '#1e293b');
+  });
+
+  // 頂部大標題與左下圖例
+  G.heading(c, 'R² 決定係數：消滅了多少笨模型的失誤？');
+  G.legend(c, [
+    ['真實樣本 y', '#1e293b'],
+    ['基準線 ȳ', '#dc2626'],
+    ['模型 ŷ', '#2563eb'],
+    ['殘差 e', C.purple]
+  ], 40, 418, 76);
+
+  // 2. 右側看板 (rx = 355, 寬度 375)
+  const rx = 355;
+  const isConst = s.params.model==='constant';
+  const isBad = stats.r2 !== null && stats.r2 < 0;
+  const isMean = stats.r2 !== null && Math.abs(stats.r2) < 1e-4;
+
+  // A. 頂部核心分數卡片 (y: 48 ~ 116，高度 68)
+  if(isConst){
+    G.rect(c, rx, 48, 375, 68, '#fffbeb', '#fde68a', 8);
+    G.rect(c, rx, 48, 6, 68, '#d97706', null, 3);
+    G.text(c, 'R² 決定係數 (衡量規律解釋力)', rx+18, 65, 13, '#b45309', 'left');
+    G.text(c, '未定義 (SST = 0)', rx+360, 65, 15, '#b45309', 'right');
+    G.text(c, '⚠️ 數據標籤全為常數，完全無波動！分母 SST=0 無法計算。', rx+18, 94, 11, '#b45309', 'left');
+  } else if(isBad){
+    G.rect(c, rx, 48, 375, 68, '#fef2f2', '#fca5a5', 8);
+    G.rect(c, rx, 48, 6, 68, '#dc2626', null, 3);
+    G.text(c, 'R² 決定係數 (衡量規律解釋力)', rx+18, 65, 13, '#b91c1c', 'left');
+    G.text(c, `${stats.r2.toFixed(3)} (負數！)`, rx+360, 65, 16, '#b91c1c', 'right');
+    G.text(c, '🚨 嚴重災難！比直接猜平均還爛！負數代表方向搞反或嚴重過擬合。', rx+18, 94, 11, '#b91c1c', 'left');
+  } else if(isMean){
+    G.rect(c, rx, 48, 375, 68, '#f8fafc', '#cbd5e1', 8);
+    G.rect(c, rx, 48, 6, 68, '#64748b', null, 3);
+    G.text(c, 'R² 決定係數 (衡量規律解釋力)', rx+18, 65, 13, '#475569', 'left');
+    G.text(c, '0.000 (0.0%)', rx+360, 65, 16, '#475569', 'right');
+    G.text(c, '😐 毫無價值：預測與盲猜平均值完全相同，消滅失誤為 0%。', rx+18, 94, 11, '#475569', 'left');
+  } else {
+    G.rect(c, rx, 48, 375, 68, '#f0fdf4', '#86efac', 8);
+    G.rect(c, rx, 48, 6, 68, '#16a34a', null, 3);
+    G.text(c, 'R² 決定係數 (衡量規律解釋力)', rx+18, 65, 13, '#15803d', 'left');
+    G.text(c, `${stats.r2.toFixed(3)} (${(stats.r2*100).toFixed(1)}%)`, rx+360, 65, 16, '#15803d', 'right');
+    G.text(c, `🌟 表現優異：成功消滅了原本笨模型 ${(stats.r2*100).toFixed(1)}% 的失誤！`, rx+18, 94, 11.5, '#15803d', 'left');
+  }
+
+  // B. 中部失誤對照長條圖 (y: 124 ~ 268，高度 144)
+  G.rect(c, rx, 124, 375, 144, C.white, C.line, 8);
+  G.text(c, '📊 失誤量三線對照尺（基準 vs 殘差 vs 消滅）', rx+18, 139, 12.5, C.ink, 'left');
+
+  const barMaxW = 210;
+  const barX = rx + 18;
+
+  // 1. SST 基準長條 (y: 154)
+  G.text(c, '基準笨模型失誤 (SST 總平方和)', barX, 156, 11, '#dc2626', 'left');
+  G.rect(c, barX, 164, barMaxW, 11, '#fee2e2', '#fca5a5', 3);
+  G.text(c, `${stats.sst.toFixed(2)} (100%)`, barX + barMaxW + 8, 170, 11, '#b91c1c', 'left');
+
+  // 2. SSE 殘差長條 (y: 188)
+  const sseRatio = stats.sst > 0 ? stats.sse / stats.sst : 0;
+  const sseW = Math.min(barMaxW, Math.max(3, sseRatio * barMaxW));
+  G.text(c, '模型殘留失誤 (SSE 殘差平方和)', barX, 187, 11, C.purple, 'left');
+  G.rect(c, barX, 195, barMaxW, 11, '#f1f5f9', '#e2e8f0', 3);
+  G.rect(c, barX, 195, sseW, 11, '#c084fc', C.purple, 3);
+  const sseText = stats.sst > 0 ? `${stats.sse.toFixed(2)} (${(sseRatio*100).toFixed(1)}%)` : `${stats.sse.toFixed(2)}`;
+  G.text(c, sseText, barX + barMaxW + 8, 201, 11, C.purple, 'left');
+
+  // 3. 消滅失誤量長條 (y: 219)
+  if (isConst) {
+    G.text(c, '• 數據完全無波動，無法衡量消滅失誤', barX, 230, 11, C.muted, 'left');
+  } else if (stats.r2 > 0) {
+    const elimW = Math.min(barMaxW, Math.max(3, stats.r2 * barMaxW));
+    G.text(c, '模型消滅失誤 (SST − SSE ＝ R² 貢獻)', barX, 218, 11, '#15803d', 'left');
+    G.rect(c, barX, 226, barMaxW, 11, '#f0fdf4', '#dcfce7', 3);
+    G.rect(c, barX, 226, elimW, 11, '#4ade80', '#16a34a', 3);
+    G.text(c, `${(stats.sst - stats.sse).toFixed(2)} (${(stats.r2*100).toFixed(1)}%)`, barX + barMaxW + 8, 232, 11, '#15803d', 'left');
+    G.text(c, `🎯 R² 就等於綠條所佔的比例（消滅了 ${(stats.r2*100).toFixed(1)}%）！`, barX, 252, 11, '#15803d', 'left');
+  } else if (stats.r2 === 0) {
+    G.text(c, '模型消滅失誤 (SST − SSE ＝ R² 貢獻)', barX, 218, 11, '#64748b', 'left');
+    G.rect(c, barX, 226, barMaxW, 11, '#f8fafc', '#e2e8f0', 3);
+    G.text(c, '0.00 (0.0%)', barX + barMaxW + 8, 232, 11, '#64748b', 'left');
+    G.text(c, '⚠️ 完全沒有消滅任何失誤，與瞎猜平均值完全相同！', barX, 252, 11, '#64748b', 'left');
+  } else {
+    G.text(c, '模型消滅失誤 (SST − SSE ＝ R² 貢獻)', barX, 218, 11, '#b91c1c', 'left');
+    G.rect(c, barX, 226, barMaxW, 11, '#fef2f2', '#fca5a5', 3);
+    G.text(c, '負值 (爆表)', barX + barMaxW + 8, 232, 11, '#b91c1c', 'left');
+    G.text(c, `🚨 幫倒忙！失誤不減反增多出 ${(stats.sse - stats.sst).toFixed(2)}，比瞎猜還糟！`, barX, 252, 11, '#b91c1c', 'left');
+  }
+
+  // C. 底部白話公式與診斷卡片 (y: 276 ~ 406，高度 130)
+  G.rect(c, rx, 276, 375, 130, '#f8fafc', C.line, 8);
+  G.text(c, '💡 決定係數計算公式與白話看圖心法', rx+18, 292, 12.5, C.ink, 'left');
+
+  const formulaStr = isConst ? 'R² = 1 − SSE / 0 （分母為 0，未定義）' :
+    `R² = 1 − (${stats.sse.toFixed(2)} / ${stats.sst.toFixed(2)}) = 1 − ${sseRatio.toFixed(3)} = ${stats.r2.toFixed(3)}`;
+  G.text(c, formulaStr, rx+18, 312, 12, '#0f766e', 'left');
+
+  G.text(c, '① 紅虛線是基準笨模型：不看特徵，盲猜標籤平均值 ȳ。', rx+18, 336, 10.5, C.muted, 'left');
+  G.text(c, '② 模型越準，紫色殘差條越短，綠色消滅失誤越多，R² 逼近 1。', rx+18, 356, 10.5, C.muted, 'left');
+  G.text(c, '③ 若 R² < 0，代表預測不如直接盲猜平均值，徹底「幫倒忙」！', rx+18, 376, 10.5, '#b91c1c', 'left');
+
+  const msg = stats.sst === 0 ? 'y 為常數，SST=0（無波動），R² 未定義。' :
+    stats.r2 < 0 ? `R²=${M.fmt(stats.r2)}（負數！）。幫倒忙模型：預測誤差比直接猜平均還離譜，代表方向搞反或嚴重過擬合。` :
+    stats.r2 === 0 ? 'R²=0.00 (0%)。瞎猜笨模型：誤差與直接猜平均值一模一樣，完全沒學到特徵。' :
+    `R²=${M.fmt(stats.r2)}（約 ${(stats.r2*100).toFixed(0)}%）。正常好模型：成功消滅了原本笨模型約 ${(stats.r2*100).toFixed(0)}% 的失誤！`;
+
+  return { message: msg, metrics: stats };
+}, undefined, {
+  interactiveOnly: true,
+  guide: [
+    '1. 左側紅虛線是「笨模型基準線」：不論特徵，一律猜標籤平均值 ȳ。',
+    '2. 左側藍實線是「你的預測模型」：垂直紫色線段是預測殘差 e。',
+    '3. 右側「失誤對照尺」直接對比：紅色 SST (笨模型總失誤) vs 紫色 SSE (目前殘差)。',
+    '4. 綠色區塊就是 R²：代表你的模型幫忙消滅了百分之幾的笨模型失誤！',
+    '5. 切換下拉選單體驗：好模型 (R²≈0.94)、瞎猜笨模型 (R²=0.00)、幫倒忙 (R²<0)、常數 (未定義)。'
+  ]
+})];
+
