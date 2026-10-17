@@ -1,0 +1,316 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="850" viewBox="0 0 1200 850" role="img" aria-labelledby="title desc">
+  <title id="title">決定係數 R² (R-Squared) 幾何原理與看圖說故事全解</title>
+  <desc id="desc">左側為幾何對抗散佈圖與失誤消滅對照條，右側為核心公式拆解與 4 種 R² 表現光譜卡片，全圖文字支援換行並強化圖文因果對照。</desc>
+  <defs>
+    <!-- 精緻陰影 -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="115%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="4" stdDeviation="5" flood-color="#0f172a" flood-opacity="0.07"/>
+    </filter>
+    <filter id="soft-shadow" x="-3%" y="-3%" width="106%" height="110%" filterUnits="userSpaceOnUse">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#0f172a" flood-opacity="0.05"/>
+    </filter>
+    <!-- 箭頭 -->
+    <marker id="arrow-blue" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7 Z" fill="#2563eb" />
+    </marker>
+    <marker id="arrow-red" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+      <path d="M1 1 L6 4 L1 7 Z" fill="#dc2626" />
+    </marker>
+  </defs>
+
+  <style>
+    text { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif; }
+    .main-title { font-weight: 800; font-size: 25px; fill: #0f172a; }
+    .subtitle-bar { font-size: 13.5px; font-weight: 600; }
+    .sec-header { font-size: 16.5px; font-weight: 800; fill: #0f172a; }
+    .sec-sub { font-size: 12px; fill: #64748b; font-weight: 500; }
+    .formula-title { font-size: 16px; font-weight: 800; fill: #1e3a8a; }
+    .formula-math { font-family: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", monospace; font-size: 14px; font-weight: 700; fill: #1d4ed8; }
+    .card-head { font-size: 15px; font-weight: 800; }
+    .card-line-title { font-weight: 700; font-size: 12.5px; }
+    .card-line-desc { font-weight: 500; font-size: 12.5px; }
+  </style>
+
+  <!-- 背景底色 -->
+  <rect width="1200" height="850" fill="#f8fafc"/>
+
+  <!-- ========================================== -->
+  <!-- 頂部標題區                                 -->
+  <!-- ========================================== -->
+  <text x="600" y="38" text-anchor="middle" class="main-title">決定係數 R² 原理：衡量模型「解釋資料變異」的能力</text>
+
+  <!-- 頂部看圖說故事導讀橫幅 -->
+  <rect x="80" y="53" width="1040" height="36" rx="18" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#soft-shadow)"/>
+  
+  <!-- 徽章標籤 -->
+  <rect x="94" y="60" width="138" height="22" rx="11" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="163" y="75" text-anchor="middle" font-size="11.5px" font-weight="800" fill="#b45309">看圖說故事核心口訣</text>
+
+  <text x="246" y="76" class="subtitle-bar">
+    以「無腦猜平均（紅色虛線）」為及格底線，看你的模型（藍色斜線）到底
+    <tspan fill="#16a34a" font-weight="800">【幫忙消滅了百分之幾的失誤】</tspan>！
+  </text>
+
+  <!-- ========================================== -->
+  <!-- 左半部：幾何對照與失誤消滅對照區 (x: 45 ~ 555) -->
+  <!-- ========================================== -->
+  <g id="left-column" transform="translate(45, 105)">
+    <!-- 外框容器 -->
+    <rect x="0" y="0" width="510" height="725" rx="14" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#shadow)"/>
+
+    <!-- 標題 -->
+    <text x="24" y="32" class="sec-header">幾何對抗：回歸模型 (藍) vs 猜平均基準線 (紅)</text>
+    <text x="24" y="52" class="sec-sub">真實數據點有高有低 ｜ 比比看哪條線預測得更準、誤差更小</text>
+
+    <!-- 圖例 -->
+    <g transform="translate(24, 66)">
+      <circle cx="8" cy="8" r="5.5" fill="#0f172a"/>
+      <text x="18" y="12" font-size="11.5px" font-weight="600" fill="#334155">真實數據點 (y)</text>
+
+      <line x1="125" y1="8" x2="150" y2="8" stroke="#2563eb" stroke-width="3"/>
+      <text x="156" y="12" font-size="11.5px" font-weight="700" fill="#2563eb">我們的模型線 (ŷ)</text>
+
+      <line x1="285" y1="8" x2="310" y2="8" stroke="#dc2626" stroke-width="2.2" stroke-dasharray="5,3"/>
+      <text x="316" y="12" font-size="11.5px" font-weight="700" fill="#dc2626">平均基準線 (ȳ)</text>
+    </g>
+
+    <!-- 散佈圖座標區 (x: 24, y: 92, w: 462, h: 335) -->
+    <g transform="translate(24, 92)">
+      <rect width="462" height="335" rx="8" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+
+      <!-- 網格與座標軸 -->
+      <g stroke="#e2e8f0" stroke-width="1" stroke-dasharray="3,3">
+        <line x1="55" y1="40" x2="435" y2="40"/>
+        <line x1="55" y1="95" x2="435" y2="95"/>
+        <line x1="55" y1="150" x2="435" y2="150"/>
+        <line x1="55" y1="205" x2="435" y2="205"/>
+        <line x1="55" y1="260" x2="435" y2="260"/>
+
+        <line x1="110" y1="20" x2="110" y2="295"/>
+        <line x1="175" y1="20" x2="175" y2="295"/>
+        <line x1="240" y1="20" x2="240" y2="295"/>
+        <line x1="305" y1="20" x2="305" y2="295"/>
+        <line x1="370" y1="20" x2="370" y2="295"/>
+      </g>
+
+      <!-- 座標軸線 -->
+      <line x1="55" y1="20" x2="55" y2="295" stroke="#94a3b8" stroke-width="1.5"/>
+      <line x1="55" y1="295" x2="435" y2="295" stroke="#94a3b8" stroke-width="1.5"/>
+
+      <!-- Y 軸標籤與刻度 -->
+      <text x="18" y="155" text-anchor="middle" font-size="12px" font-weight="700" fill="#64748b" transform="rotate(-90, 18, 155)">目標值 Y</text>
+      <text x="48" y="298" text-anchor="end" font-size="11px" fill="#64748b">0</text>
+      <text x="48" y="263" text-anchor="end" font-size="11px" fill="#64748b">4</text>
+      <text x="48" y="208" text-anchor="end" font-size="11px" fill="#64748b">8</text>
+      <text x="48" y="153" text-anchor="end" font-size="11px" font-weight="700" fill="#dc2626">10.1</text>
+      <text x="48" y="98" text-anchor="end" font-size="11px" fill="#64748b">14</text>
+      <text x="48" y="43" text-anchor="end" font-size="11px" fill="#64748b">18</text>
+
+      <!-- X 軸標籤與刻度 -->
+      <text x="245" y="324" text-anchor="middle" font-size="12px" font-weight="700" fill="#64748b">特徵 X</text>
+      <text x="55" y="312" text-anchor="middle" font-size="11px" fill="#64748b">0</text>
+      <text x="110" y="312" text-anchor="middle" font-size="11px" fill="#64748b">1</text>
+      <text x="175" y="312" text-anchor="middle" font-size="11px" fill="#64748b">2</text>
+      <text x="240" y="312" text-anchor="middle" font-size="11px" fill="#64748b">3</text>
+      <text x="305" y="312" text-anchor="middle" font-size="11px" fill="#64748b">4</text>
+      <text x="370" y="312" text-anchor="middle" font-size="11px" fill="#64748b">5</text>
+      <text x="435" y="312" text-anchor="middle" font-size="11px" fill="#64748b">6</text>
+
+      <!-- 🔴 紅色水平平均基準線 (y = 10.1 ➔ Y px: 150) -->
+      <line x1="55" y1="150" x2="435" y2="150" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4"/>
+      <rect x="330" y="136" width="102" height="18" rx="4" fill="#fef2f2" stroke="#fca5a5" stroke-width="1"/>
+      <text x="381" y="149" text-anchor="middle" font-size="10.5px" font-weight="700" fill="#dc2626">平均基準線 ȳ=10.1</text>
+
+      <!-- 🔵 藍色模型回歸線 (x=0, y=1.2 ➔ 278px; x=6, y=17.5 ➔ 45px) -->
+      <line x1="55" y1="278" x2="435" y2="45" stroke="#2563eb" stroke-width="3.2"/>
+
+      <!-- 普通點淡殘差垂線 -->
+      <line x1="110" y1="218" x2="110" y2="245" stroke="#93c5fd" stroke-width="1.8"/>
+      <line x1="162" y1="214" x2="162" y2="213" stroke="#93c5fd" stroke-width="1.8"/>
+      <line x1="207" y1="267" x2="207" y2="185" stroke="#93c5fd" stroke-width="1.8"/>
+      <line x1="260" y1="186" x2="260" y2="152" stroke="#93c5fd" stroke-width="1.8"/>
+      <line x1="318" y1="143" x2="318" y2="116" stroke="#93c5fd" stroke-width="1.8"/>
+      <line x1="363" y1="165" x2="363" y2="88" stroke="#93c5fd" stroke-width="1.8"/>
+
+      <!-- ★ 核心示範點：(X=5.7, Y=13.5) ➔ 座標 (415, 103) -->
+      <!-- 1. 點到紅色基準線的紅色線段 (總變異) -->
+      <line x1="412" y1="103" x2="412" y2="150" stroke="#dc2626" stroke-width="3"/>
+      <!-- 2. 點到藍色模型線的藍色線段 (殘差) -->
+      <line x1="418" y1="103" x2="418" y2="57" stroke="#2563eb" stroke-width="3"/>
+
+      <!-- 放置在左上方空白無遮擋區的說明卡片 -->
+      <!-- 卡片 1 (藍)：殘差 -->
+      <rect x="68" y="28" width="195" height="44" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" filter="url(#soft-shadow)"/>
+      <text x="78" y="46" font-size="11.5px" font-weight="800" fill="#1d4ed8">🔵 殘差 (y − ŷ)</text>
+      <text x="78" y="62" font-size="10.5px" fill="#1e3a8a">模型學完後「殘留的小失誤」</text>
+      <!-- 引線指向藍色線段 -->
+      <path d="M 263 50 C 330 50, 360 70, 418 78" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-blue)"/>
+
+      <!-- 卡片 2 (紅)：總變異 -->
+      <rect x="68" y="82" width="195" height="44" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.2" filter="url(#soft-shadow)"/>
+      <text x="78" y="100" font-size="11.5px" font-weight="800" fill="#b91c1c">🔴 總變異 (y − ȳ)</text>
+      <text x="78" y="116" font-size="10.5px" fill="#7f1d1d">無腦猜平均時「原始犯下的大失誤」</text>
+      <!-- 引線指向紅色線段 -->
+      <path d="M 263 104 C 320 104, 350 120, 412 126" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-red)"/>
+
+      <!-- 真實樣本黑點 -->
+      <circle cx="110" cy="218" r="6" fill="#0f172a"/>
+      <circle cx="162" cy="214" r="6" fill="#0f172a"/>
+      <circle cx="207" cy="267" r="6" fill="#0f172a"/>
+      <circle cx="260" cy="186" r="6" fill="#0f172a"/>
+      <circle cx="318" cy="143" r="6" fill="#0f172a"/>
+      <circle cx="363" cy="165" r="6" fill="#0f172a"/>
+      <circle cx="415" cy="103" r="7" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+      <text x="428" y="104" font-size="10.5px" font-weight="700" fill="#0f172a">樣本點 (X=5.7, y=13.5)</text>
+    </g>
+
+    <!-- 下半部：失誤消滅視覺長條圖（看圖說故事關鍵橋樑！） -->
+    <g transform="translate(24, 442)">
+      <rect width="462" height="268" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
+
+      <text x="18" y="26" font-size="14.5px" font-weight="800" fill="#0f172a">🎯 左右貫通橋樑：失誤總量消滅對比</text>
+      <text x="18" y="44" font-size="11.5px" fill="#64748b">把左圖所有點的「紅線段平方」與「藍線段平方」加總成兩條失誤柱：</text>
+
+      <!-- 1. 基準線總失誤長條 (SST) -->
+      <text x="18" y="74" font-size="12px" font-weight="700" fill="#b91c1c">基準線總失誤量 SS_tot（無腦猜平均的總犯錯）</text>
+      <rect x="18" y="82" width="426" height="24" rx="5" fill="#fca5a5" stroke="#dc2626" stroke-width="1.2"/>
+      <text x="231" y="98" text-anchor="middle" font-size="11.5px" font-weight="700" fill="#7f1d1d">100% 原始總失誤量（數據天然波動）</text>
+
+      <!-- 2. 模型殘差失誤長條 (SSE) -->
+      <text x="18" y="132" font-size="12px" font-weight="700" fill="#1d4ed8">模型殘留失誤量 SS_res（你的模型依然猜錯的殘差）</text>
+      <!-- 殘留 15% (426 * 0.15 = 64px) -->
+      <rect x="18" y="140" width="64" height="24" rx="5" fill="#93c5fd" stroke="#2563eb" stroke-width="1.2"/>
+      <text x="50" y="156" text-anchor="middle" font-size="10.5px" font-weight="700" fill="#1e3a8a">15%</text>
+
+      <!-- 消滅區域 85% 綠色高亮區 (64px ~ 426px) -->
+      <rect x="88" y="140" width="356" height="24" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="1.5" stroke-dasharray="4,2"/>
+      <text x="266" y="156" text-anchor="middle" font-size="12px" font-weight="800" fill="#15803d">成功消滅了 85% 的失誤！(R² = 0.85)</text>
+
+      <!-- 白話看圖說故事導讀小卡 -->
+      <rect x="18" y="178" width="426" height="76" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
+      <text x="28" y="199" font-size="12px" font-weight="700" fill="#0f172a">🗣️ 看圖說故事口訣：</text>
+      <text x="28" y="220" font-size="11.5px" fill="#334155">
+        「不學特徵時，猜平均會犯下上方整根<tspan fill="#b91c1c" font-weight="700">紅色失誤大柱</tspan>；
+      </text>
+      <text x="28" y="239" font-size="11.5px" fill="#334155">
+        模型學會規律後，失誤縮減到只剩<tspan fill="#1d4ed8" font-weight="700">短短的藍條 (15%)</tspan>，消滅了 85% 的波動！」
+      </text>
+    </g>
+  </g>
+
+  <!-- ========================================== -->
+  <!-- 右半部：核心公式與 4 種 R² 光譜卡片 (x: 580 ~ 1155) -->
+  <!-- ========================================== -->
+  <g id="right-column" transform="translate(580, 105)">
+    
+    <!-- 頂部核心公式卡片 (h: 175) -->
+    <rect x="0" y="0" width="575" height="175" rx="14" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+    <text x="24" y="32" class="formula-title">決定係數 (R² Score) 核心公式與白話拆解</text>
+    
+    <!-- 數學公式展示 -->
+    <rect x="24" y="44" width="527" height="38" rx="6" fill="#ffffff" stroke="#bfdbfe" stroke-width="1.2"/>
+    <text x="287" y="68" text-anchor="middle" class="formula-math">
+      R² = 1 − (SS_res / SS_tot) = 1 − [ Σ(y − ŷ)² / Σ(y − ȳ)² ]
+    </text>
+
+    <!-- 公式分子分母白話換行對照 -->
+    <g transform="translate(24, 96)" font-size="12px">
+      <text x="0" y="14" font-weight="700" fill="#1d4ed8">
+        • 分子 SS_res（藍線殘差）：<tspan font-weight="500" fill="#334155">模型學完後，「依然沒猜對」的殘留失誤平方和。</tspan>
+      </text>
+      <text x="0" y="34" font-weight="700" fill="#dc2626">
+        • 分母 SS_tot（紅線總變異）：<tspan font-weight="500" fill="#334155">基準線無腦猜平均時，「原始犯下」的總失誤平方和。</tspan>
+      </text>
+      <text x="0" y="58" font-weight="700" fill="#15803d">
+        • 相除再用 1 減去：<tspan font-weight="600" fill="#0f172a">相除是殘留失誤率，用 1 扣除就是「成功消滅的失誤百分比」！</tspan>
+      </text>
+    </g>
+
+    <!-- 四大情況光譜卡片列表 (h: 各 124px，間距 13px) -->
+    
+    <!-- 卡片 1：R² = 1.0 (綠色) -->
+    <g transform="translate(0, 190)">
+      <rect width="575" height="122" rx="12" fill="#f0fdf4" stroke="#22c55e" stroke-width="1.8" filter="url(#soft-shadow)"/>
+      <rect x="0" y="0" width="8" height="122" rx="4" fill="#22c55e"/>
+      
+      <!-- 標題徽章 -->
+      <rect x="22" y="14" width="105" height="22" rx="5" fill="#dcfce7" stroke="#22c55e" stroke-width="1"/>
+      <text x="74" y="29" text-anchor="middle" font-size="12px" font-weight="800" fill="#15803d">R² = 1.0 (100%)</text>
+      <text x="138" y="30" class="card-head" fill="#15803d">完美預測神模型</text>
+
+      <text x="22" y="56" class="card-line-title" fill="#166534">
+        幾何特徵：<tspan class="card-line-desc" fill="#14532d">所有真實數據點全部 100% 精確落在藍色回歸線上（SS_res = 0）。</tspan>
+      </text>
+      <text x="22" y="78" class="card-line-title" fill="#166534">
+        白話解讀：<tspan class="card-line-desc" fill="#14532d">基準線原本犯下的所有失誤被「完全消滅」！所有資料起伏被模型徹底看透。</tspan>
+      </text>
+      <text x="22" y="100" font-size="11.5px" font-weight="600" fill="#15803d">
+        實務對應：極少在真實世界出現；若出現通常代表資料洩漏或嚴重過擬合。
+      </text>
+    </g>
+
+    <!-- 卡片 2：0 < R² < 1.0 (黃金色) -->
+    <g transform="translate(0, 325)">
+      <rect width="575" height="122" rx="12" fill="#fffbeb" stroke="#f59e0b" stroke-width="1.8" filter="url(#soft-shadow)"/>
+      <rect x="0" y="0" width="8" height="122" rx="4" fill="#f59e0b"/>
+
+      <!-- 標題徽章 -->
+      <rect x="22" y="14" width="125" height="22" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+      <text x="84" y="29" text-anchor="middle" font-size="12px" font-weight="800" fill="#b45309">0 &lt; R² &lt; 1 (如 0.85)</text>
+      <text x="158" y="30" class="card-head" fill="#b45309">正常優秀模型</text>
+
+      <text x="22" y="56" class="card-line-title" fill="#92400e">
+        幾何特徵：<tspan class="card-line-desc" fill="#78350f">數據點散佈在藍線兩側，但藍線垂直誤差遠遠小於紅色基準線。</tspan>
+      </text>
+      <text x="22" y="78" class="card-line-title" fill="#92400e">
+        白話解讀：<tspan class="card-line-desc" fill="#78350f">模型成功消滅了基準線 85% 的失誤，只剩下 15% 無法避免的微小隨機雜訊。</tspan>
+      </text>
+      <text x="22" y="100" font-size="11.5px" font-weight="600" fill="#b45309">
+        實務對應：業界最健康的正常模型表現，能良好泛化至未見新資料。
+      </text>
+    </g>
+
+    <!-- 卡片 3：R² = 0.0 (灰白色) -->
+    <g transform="translate(0, 460)">
+      <rect width="575" height="122" rx="12" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.8" filter="url(#soft-shadow)"/>
+      <rect x="0" y="0" width="8" height="122" rx="4" fill="#64748b"/>
+
+      <!-- 標題徽章 -->
+      <rect x="22" y="14" width="105" height="22" rx="5" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1"/>
+      <text x="74" y="29" text-anchor="middle" font-size="12px" font-weight="800" fill="#334155">R² = 0.0 (0%)</text>
+      <text x="138" y="30" class="card-head" fill="#334155">水平等同無腦瞎猜</text>
+
+      <text x="22" y="56" class="card-line-title" fill="#475569">
+        幾何特徵：<tspan class="card-line-desc" fill="#334155">藍線完全躺平成為水平線，與紅線重疊（SS_res = SS_tot）。</tspan>
+      </text>
+      <text x="22" y="78" class="card-line-title" fill="#475569">
+        白話解讀：<tspan class="card-line-desc" fill="#334155">模型完全沒學到特徵與目標的關聯，預測能力跟小學生拿計算機猜平均一模一樣。</tspan>
+      </text>
+      <text x="22" y="100" font-size="11.5px" font-weight="600" fill="#475569">
+        實務對應：白忙一場！模型沒捕捉到任何有用資訊，特徵可能與標籤無關。
+      </text>
+    </g>
+
+    <!-- 卡片 4：R² < 0 (粉紅色) -->
+    <g transform="translate(0, 595)">
+      <rect width="575" height="122" rx="12" fill="#fef2f2" stroke="#ef4444" stroke-width="1.8" filter="url(#soft-shadow)"/>
+      <rect x="0" y="0" width="8" height="122" rx="4" fill="#ef4444"/>
+
+      <!-- 標題徽章 -->
+      <rect x="22" y="14" width="105" height="22" rx="5" fill="#fee2e2" stroke="#ef4444" stroke-width="1"/>
+      <text x="74" y="29" text-anchor="middle" font-size="12px" font-weight="800" fill="#b91c1c">R² &lt; 0 (負數！)</text>
+      <text x="138" y="30" class="card-head" fill="#b91c1c">幫倒忙的災難模型</text>
+
+      <text x="22" y="56" class="card-line-title" fill="#991b1b">
+        幾何特徵：<tspan class="card-line-desc" fill="#7f1d1d">藍色模型線嚴重偏離數據點，殘差比直接猜水平紅線還要大（SS_res &gt; SS_tot）。</tspan>
+      </text>
+      <text x="22" y="78" class="card-line-title" fill="#991b1b">
+        白話解讀：<tspan class="card-line-desc" fill="#7f1d1d">災難級表現！模型非但沒幫忙，反而幫倒忙，誤差比直接瞎猜平均數還要慘烈！</tspan>
+      </text>
+      <text x="22" y="100" font-size="11.5px" font-weight="600" fill="#b91c1c">
+        實務對應：模型設計有致命缺陷、方向搞反，或在測試集上嚴重過擬合暴走。
+      </text>
+    </g>
+
+  </g>
+</svg>

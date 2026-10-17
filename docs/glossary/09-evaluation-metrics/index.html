@@ -352,6 +352,40 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
 </section><details class="original"><summary>對照原教材圖解：決定係數 R² 原理：衡量模型解釋資料變異的能力</summary><p class="scene-jump"><a href="#r-squared">↑ 回到互動動畫：R²</a></p><img src="./assets/images/04_r_squared.png" alt="決定係數 R² 原理：衡量模型解釋資料變異的能力" loading="lazy"><a href="./assets/images/04_r_squared.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
+<h4>🔍 圖解關鍵細節：這條「紅色虛線」是什麼？為什麼叫「基準線」？</h4>
+<p>一般人看到這張圖最常問：「<strong>中間這條水平的紅色虛線到底是什麼？為什麼要拿它當基準？</strong>」</p>
+<ol>
+<li><p><strong>它是所有數據點的「算術平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math>（y_mean）」</strong>：</p>
+<ul>
+<li>把畫面上所有樣本點的目標值加起來除以筆數，算出來的平均值大約落在 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y = 10.1"><mrow><mi>y</mi><mo>=</mo><mn>10.1</mn></mrow></math>。這條水平紅線就是畫在 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y = 10.1"><mrow><mi>y</mi><mo>=</mo><mn>10.1</mn></mrow></math> 的位置。</li>
+<li>它代表一個**「完全不看特徵 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math>、只會無腦瞎猜平均值」的最笨對照模型**。不管輸入的特徵 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="X"><mrow><mi>X</mi></mrow></math> 是 1 還是 8，這個笨模型一律回答：「我猜 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y = 10.1"><mrow><mi>y</mi><mo>=</mo><mn>10.1</mn></mrow></math>」。</li>
+</ul>
+</li>
+<li><p><strong>為什麼它叫「基準線（Baseline）」？</strong></p>
+<ul>
+<li><strong>基準線就是「及格底線」</strong>：
+想像要預測全班同學的考試成績，如果不給你任何線索（不知道誰平時用功、誰曠課），最保險、最不費腦力的做法就是「每個人我都猜全班平均 60 分」。這不需要任何高深的機器學習演算法，小學生拿計算機按一下平均值就做得到。</li>
+<li><strong>拿來檢驗你的機器學習模型是否「真的有本事」</strong>：
+我們費盡心思訓練出的機器學習模型（<strong>藍色斜線</strong>），表現到底有沒有比這個「無腦猜平均的笨方法」更好？好多少？
+因此，這條<strong>紅色平均線就是用來當打分數的「對照組及格底線」</strong>。</li>
+</ul>
+</li>
+<li><p><strong>圖中的「垂直距離」在比什麼？（幾何意義）</strong></p>
+<ul>
+<li>🔴 <strong>紅色垂直線段（總變異 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y - \bar{y}"><mrow><mi>y</mi><mo>-</mo><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math>）</strong>：
+真實數據點到<strong>紅色基準線</strong>的垂直距離。把所有樣本點的紅線段平方後加總，就是 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和）</strong>，代表**「完全不學任何特徵時，無腦猜平均原本犯下的總失誤量」**（也就是數據本身的原始總波動）。</li>
+<li>🔵 <strong>藍色垂直線段（殘差 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y - \hat{y}"><mrow><mi>y</mi><mo>-</mo><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math>）</strong>：
+真實數據點到<strong>藍色模型線</strong>的垂直距離。把所有樣本點的藍線段平方後加總，就是 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）</strong>，代表**「你的模型學完之後，依然沒猜對、殘留下來的失誤量」**。</li>
+</ul>
+</li>
+<li><p><strong>公式 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac></mrow></math> 的白話意義</strong>：</p>
+<ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\frac{SS_{\text{res}}}{SS_{\text{tot}}}"><mrow><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac></mrow></math>：藍線模型相對於無腦猜平均，<strong>還剩下百分之幾的失誤沒能消滅</strong>。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac></mrow></math>：你的模型<strong>成功幫忙消滅了百分之幾的失誤</strong>！</li>
+<li>例如 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.85</mn></mrow></math>：代表模型成功消滅了基準線原本犯下的 85% 失誤，只剩下 15% 小誤差，模型掌握了 85% 的規律！</li>
+</ul>
+</li>
+</ol>
 <h4>🎬 互動動畫導覽與操作指引（如何解讀與介紹？）</h4>
 <p>本動畫將回歸模型與「基準笨模型」的對抗過程完全視覺化，可由以下三個視角來解讀：</p>
 <ol>
