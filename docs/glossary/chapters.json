@@ -363,6 +363,7 @@
           "title": "MAE、MSE、RMSE",
           "geometry": "殘差線段對照三大指標卡片，加入極端離群值立即觀察 MSE 與 RMSE 暴衝跳變與診斷比值。",
           "controls": "加入極端離群值、比較三大指標與診斷比值",
+          "interactive_only": true,
           "source_images": [
             "名詞解釋/09_評估指標/images/03_regression_metrics_errors.png"
           ]
@@ -370,8 +371,9 @@
         {
           "id": "r-squared",
           "title": "R²",
-          "geometry": "同時顯示平均值基準線與模型線，對照 SST／SSE 平方塊大小。",
-          "controls": "切換基準／模型、嘗試負 R²",
+          "geometry": "同時顯示紅色平均值基準線與藍色模型線，以三線對照尺直觀呈現 SST 基準失誤、SSE 模型殘差與消除失誤比例。",
+          "controls": "切換正常好模型、瞎猜笨模型、幫倒忙與常數標籤",
+          "interactive_only": true,
           "source_images": [
             "名詞解釋/09_評估指標/images/04_r_squared.png"
           ]

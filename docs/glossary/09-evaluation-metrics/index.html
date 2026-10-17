@@ -1,4 +1,4 @@
-<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 09 章 評估指標：完整教材、原圖對照與互動 2D 幾何動畫。"><title>09 評估指標｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 09 章 評估指標：完整教材、原圖對照與互動 2D 幾何動畫。"><title>09 評估指標｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js?v=20261017c"></script></head><body>
 <header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="https://github.com/roberthsu2003/machine_learning/blob/main/%E5%90%8D%E8%A9%9E%E8%A7%A3%E9%87%8B/09_%E8%A9%95%E4%BC%B0%E6%8C%87%E6%A8%99/README.md">GitHub 原文 ↗</a></nav></header>
 <main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER 09 / 12 · INTERACTIVE LESSON</div><h1>評估指標</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#confusion-matrix">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
 <noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
@@ -278,14 +278,14 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <h4>📊 觀念圖解</h4>
 <blockquote>
 <p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#regression-errors">MAE、MSE、RMSE</a>
-<section class="scene" id="regression-errors" data-scene="regression-errors" aria-labelledby="title-regression-errors">
-<div class="scene-head"><h3 id="title-regression-errors">MAE、MSE、RMSE</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
+<section class="scene scene-interactive-only" id="regression-errors" data-scene="regression-errors" aria-labelledby="title-regression-errors">
+<div class="scene-head"><h3 id="title-regression-errors">MAE、MSE、RMSE</h3><span class="scene-tag">INTERACTIVE CHART</span></div>
 <p class="scene-description">殘差線段對照三大指標卡片，加入極端離群值立即觀察 MSE 與 RMSE 暴衝跳變與診斷比值。</p>
 <canvas width="760" height="450" role="img" aria-label="MAE、MSE、RMSE幾何動畫" aria-describedby="result-regression-errors">請閱讀下方的動畫說明與本節教材。</canvas>
 <div class="scene-parameters"></div>
-<p class="scene-result" id="result-regression-errors" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
-<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="MAE、MSE、RMSE播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="MAE、MSE、RMSE動畫時間軸"><span class="time-label">0%</span></div>
-<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+<p class="scene-result" id="result-regression-errors" role="status" aria-live="polite">調整下方參數即可即時觀察幾何與數值變化。</p>
+<div class="scene-controls"><button data-action="zoom">放大圖表</button></div>
+<p class="scene-note">此為即時互動圖表，調整下方參數即可即時觀察幾何與數值變化；放大後按 Esc 可返回。</p>
 </section><details class="original"><summary>對照原教材圖解：回歸誤差三大指標對比</summary><p class="scene-jump"><a href="#regression-errors">↑ 回到互動動畫：MAE、MSE、RMSE</a></p><img src="./assets/images/03_regression_metrics_errors.png" alt="回歸誤差三大指標對比" loading="lazy"><a href="./assets/images/03_regression_metrics_errors.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
 <hr />
@@ -342,14 +342,14 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <h4>📊 觀念圖解</h4>
 <blockquote>
 <p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#r-squared">R²</a>
-<section class="scene" id="r-squared" data-scene="r-squared" aria-labelledby="title-r-squared">
-<div class="scene-head"><h3 id="title-r-squared">R²</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
-<p class="scene-description">同時顯示平均值基準線與模型線，對照 SST／SSE 平方塊大小。</p>
+<section class="scene scene-interactive-only" id="r-squared" data-scene="r-squared" aria-labelledby="title-r-squared">
+<div class="scene-head"><h3 id="title-r-squared">R²</h3><span class="scene-tag">INTERACTIVE CHART</span></div>
+<p class="scene-description">同時顯示紅色平均值基準線與藍色模型線，以三線對照尺直觀呈現 SST 基準失誤、SSE 模型殘差與消除失誤比例。</p>
 <canvas width="760" height="450" role="img" aria-label="R²幾何動畫" aria-describedby="result-r-squared">請閱讀下方的動畫說明與本節教材。</canvas>
 <div class="scene-parameters"></div>
-<p class="scene-result" id="result-r-squared" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
-<div class="scene-controls"><button data-action="play" aria-pressed="false">▶ 播放動畫</button><button data-action="reset">↺ 重設</button><button data-action="step">下一步 →</button><button data-action="resample" hidden>重抽資料</button><button data-action="zoom">放大動畫</button><label>速度<select class="speed" aria-label="R²播放速度"><option value="0.5">0.5×</option><option value="1" selected>1×</option><option value="2">2×</option></select></label><input class="timeline" type="range" min="0" max="16" step="0.01" value="0" aria-label="R²動畫時間軸"><span class="time-label">0%</span></div>
-<p class="scene-note">動畫預設暫停，離開畫面自動暫停。拖動時間軸可回看；放大後按 Esc 可返回。</p>
+<p class="scene-result" id="result-r-squared" role="status" aria-live="polite">調整下方參數即可即時觀察幾何與數值變化。</p>
+<div class="scene-controls"><button data-action="zoom">放大圖表</button></div>
+<p class="scene-note">此為即時互動圖表，調整下方參數即可即時觀察幾何與數值變化；放大後按 Esc 可返回。</p>
 </section><details class="original"><summary>對照原教材圖解：決定係數 R² 原理：衡量模型解釋資料變異的能力</summary><p class="scene-jump"><a href="#r-squared">↑ 回到互動動畫：R²</a></p><img src="./assets/images/04_r_squared.png" alt="決定係數 R² 原理：衡量模型解釋資料變異的能力" loading="lazy"><a href="./assets/images/04_r_squared.png" target="_blank" rel="noopener">開啟完整尺寸原圖 ↗</a></details></p>
 </blockquote>
 <h4>🔍 圖解關鍵細節：這條「紅色虛線」是什麼？為什麼叫「基準線」？</h4>
@@ -404,38 +404,42 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 </ul>
 </li>
 </ul>
-<h4>🎬 互動動畫導覽與操作指引（如何解讀與介紹？）</h4>
-<p>本動畫將回歸模型與「基準笨模型」的對抗過程完全視覺化，可由以下三個視角來解讀：</p>
+<h4>🎬 互動圖表導覽與操作指引（如何解讀與介紹？）</h4>
+<p>本圖表將回歸模型與「基準笨模型」的對抗過程完全視覺化，可由以下三個視角來解讀：</p>
 <ol>
 <li><p><strong>畫面核心元素對應</strong>：</p>
 <ul>
-<li>🟢 <strong>綠色水平線（平均基準線）</strong>：代表不看任何特徵、只猜平均值的「基準笨模型」。</li>
-<li>🟠 <strong>橘色回歸線（你的預測模型）</strong>：代表加入特徵學習後的模型預測線。</li>
-<li>🟣 <strong>紫色垂直虛線（殘差）</strong>：真實樣本點與預測線之間的誤差距離。</li>
-<li>🟩 <strong>右側綠色色條（SST 總平方和）</strong>：基準笨模型所犯下的「總失誤量」（數據原始總波動）。</li>
-<li>🟪 <strong>右側紫色色條（SSE 殘差平方和）</strong>：你的模型「尚未消滅、仍然猜錯」的殘留失誤量。</li>
+<li>🔴 <strong>紅色水平虛線（基準線 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math>）</strong>：代表不看任何特徵、只盲猜平均值的「基準笨模型」。</li>
+<li>🔵 <strong>藍色回歸實線（你的預測模型 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\hat{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover></mrow></math>）</strong>：代表加入特徵學習後的模型預測線。</li>
+<li>🟣 <strong>紫色垂直垂線（殘差 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="e"><mrow><mi>e</mi></mrow></math>）</strong>：真實樣本點與預測線之間的誤差距離。</li>
+<li>📊 <strong>右側「失誤量三線對照尺」</strong>：<ul>
+<li>🔴 <strong>紅色長條（SST 總平方和，100%）</strong>：基準笨模型所犯下的「總失誤量」（數據原始總波動）。</li>
+<li>🟣 <strong>紫色長條（SSE 殘差平方和）</strong>：你的模型「尚未消滅、仍然猜錯」的殘留失誤量。</li>
+<li>🟢 <strong>綠色長條（SST − SSE 消除失誤）</strong>：你的模型成功幫忙消滅掉的失誤量（<strong>這就是 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 的貢獻！</strong>）。</li>
 </ul>
 </li>
-<li><p><strong>核心公式的白話視覺化：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 1 - \frac{\text{SSE}}{\text{SST}}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math></strong>：</p>
+</ul>
+</li>
+<li><p><strong>核心公式的白話視覺化：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 1 - \frac{\text{SSE}}{\text{SST}} = \frac{\text{消滅的失誤}}{\text{基準總失誤}}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac><mo>=</mo><mfrac><mrow><mtext>消滅的失誤</mtext></mrow><mrow><mtext>基準總失誤</mtext></mrow></mfrac></mrow></math></strong>：</p>
 <ul>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\frac{\text{SSE}}{\text{SST}}"><mrow><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math> 就是**「你的模型還剩下百分之幾的失誤沒解決」**。</li>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{\text{SSE}}{\text{SST}}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math> 就是**「你的模型幫忙消滅了百分之幾的失誤」**！</li>
-<li>紫條越短（SSE 越小），代表消滅越多失誤，分數越逼近 1.0 (100%)。</li>
+<li>紫條越短（SSE 越小），代表消滅越多失誤，綠條越長，分數越逼近 1.0 (100%)。</li>
 </ul>
 </li>
 <li><p><strong>下拉選單切換四種情境實測</strong>：</p>
 <ul>
-<li><strong>正常好模型（捕捉規律）</strong>：紫條 SSE 大幅縮短（只有綠條的 15% 左右），消滅了約 85% 的失誤，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 \approx 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>≈</mo><mn>0.85</mn></mrow></math>！</li>
-<li><strong>瞎猜笨模型（只猜平均值）</strong>：橘線與綠線重疊，紫條與綠條一樣長（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{SSE} = \text{SST}"><mrow><mtext>SSE</mtext><mo>=</mo><mtext>SST</mtext></mrow></math>），<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.0</mn></mrow></math>。</li>
-<li><strong>幫倒忙模型（預測嚴重離譜）</strong>：橘線偏差極遠，紫條 SSE 遠大於綠條 SST，比猜平均還糟糕，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 &lt; 0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>&lt;</mo><mn>0</mn></mrow></math>（負數！）。</li>
+<li><strong>正常好模型（捕捉規律）</strong>：紫條 SSE 大幅縮短至 5.6%，綠條高達 94.4%，消滅了約 94% 的失誤，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.944"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.944</mn></mrow></math>！</li>
+<li><strong>瞎猜笨模型（只猜平均值）</strong>：藍線與紅虛線重疊，紫條與紅條一樣長（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{SSE} = \text{SST}"><mrow><mtext>SSE</mtext><mo>=</mo><mtext>SST</mtext></mrow></math>），綠條為 0，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.000"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.000</mn></mrow></math>。</li>
+<li><strong>幫倒忙模型（預測嚴重離譜）</strong>：藍線偏差極遠，紫條 SSE 飆升至 1981%（遠大於紅條 SST），比猜平均還糟糕，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 &lt; 0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>&lt;</mo><mn>0</mn></mrow></math>（負數！）。</li>
 <li><strong>常數標籤（邊界情況）</strong>：所有樣本 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 值相同（無起伏），數據完全沒有波動（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{SST} = 0"><mrow><mtext>SST</mtext><mo>=</mo><mn>0</mn></mrow></math>），分母為 0，此時 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 顯示「未定義」。</li>
 </ul>
 </li>
 </ol>
 <h4>數學公式</h4>
 <div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover><msup><mo>)</mo><mn>2</mn></msup></mrow></mfrac></mrow></math></div><ul>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）：模型<strong>沒能解釋、仍然猜錯</strong>的預測殘差平方和（動畫中的紫條 SSE）。</li>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和）：直接猜平均值的笨模型猜錯的總量（數據本身的原始總波動，動畫中的綠條 SST）。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）：模型<strong>沒能解釋、仍然猜錯</strong>的預測殘差平方和（圖表中的紫條 SSE）。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和）：直接猜平均值的笨模型猜錯的總量（數據本身的原始總波動，圖表中的紅條 SST）。</li>
 </ul>
 <h4><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 數值解讀光譜與白話對照</h4>
 <div class="table-scroll"><table>

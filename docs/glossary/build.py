@@ -143,6 +143,16 @@ def mathml(source, display=False):
 
 def scene_html(scene):
     sid = scene['id']
+    if scene.get('interactive_only'):
+        return f'''<section class="scene scene-interactive-only" id="{sid}" data-scene="{sid}" aria-labelledby="title-{sid}">
+<div class="scene-head"><h3 id="title-{sid}">{escape(scene['title'])}</h3><span class="scene-tag">INTERACTIVE CHART</span></div>
+<p class="scene-description">{escape(scene['geometry'])}</p>
+<canvas width="760" height="450" role="img" aria-label="{escape(scene['title'])}幾何動畫" aria-describedby="result-{sid}">請閱讀下方的動畫說明與本節教材。</canvas>
+<div class="scene-parameters"></div>
+<p class="scene-result" id="result-{sid}" role="status" aria-live="polite">調整下方參數即可即時觀察幾何與數值變化。</p>
+<div class="scene-controls"><button data-action="zoom">放大圖表</button></div>
+<p class="scene-note">此為即時互動圖表，調整下方參數即可即時觀察幾何與數值變化；放大後按 Esc 可返回。</p>
+</section>'''
     return f'''<section class="scene" id="{sid}" data-scene="{sid}" aria-labelledby="title-{sid}">
 <div class="scene-head"><h3 id="title-{sid}">{escape(scene['title'])}</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
 <p class="scene-description">{escape(scene['geometry'])}</p>
@@ -259,7 +269,7 @@ for chapter in chapters:
     toc = ''.join(f'<a href="#{scene["id"]}">{escape(scene["title"])}</a>' for scene in chapter['scenes'])
     toc += '<hr>' + ''.join(f'<a href="#{sid}">{escape(name)}</a>' for sid, name in renderer.headings)
     source_url = github + quote(chapter['source_readme'])
-    html = f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 {chapter['number']:02} 章 {escape(title)}：完整教材、原圖對照與互動 2D 幾何動畫。"><title>{chapter['number']:02} {escape(title)}｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js"></script></head><body>
+    html = f'''<!doctype html><html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="light"><meta name="description" content="第 {chapter['number']:02} 章 {escape(title)}：完整教材、原圖對照與互動 2D 幾何動畫。"><title>{chapter['number']:02} {escape(title)}｜機器學習互動教材</title><link rel="icon" href="../../favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="../shared/lesson.css"><script type="module" src="./lesson.js?v=20261017c"></script></head><body>
 <header class="site-header"><a class="brand" href="../">機器學習 ／ 名詞解釋</a><nav aria-label="主選單"><a href="../">12 章目錄</a><a href="../../">簡報教材</a><a href="{source_url}">GitHub 原文 ↗</a></nav></header>
 <main class="page-wrap"><section class="chapter-hero"><div class="eyebrow">CHAPTER {chapter['number']:02} / 12 · INTERACTIVE LESSON</div><h1>{escape(title)}</h1><p>沿用原教材順序，用幾何圖形的移動與變化理解本章概念。點選播放，或調整參數觀察結果。</p><div class="hero-actions"><a class="button primary" href="#{chapter['scenes'][0]['id']}">開始本章動畫 ↓</a><button class="button" data-print>列印本章教材</button></div></section>
 <noscript><p class="no-js-note">JavaScript 未啟用，動畫無法播放；完整文字、公式、表格與原圖仍可閱讀。</p></noscript>
@@ -267,7 +277,7 @@ for chapter in chapters:
     html = html.replace('动画', '動畫')
     chapter_dir = BASE / chapter['slug']
     (chapter_dir / 'index.html').write_text(html)
-    (chapter_dir / 'lesson.js').write_text("import {mountScenes} from '../shared/player.js';\nimport {definitions} from './scenes/index.js';\nmountScenes(definitions);\n")
+    (chapter_dir / 'lesson.js').write_text("import {mountScenes} from '../shared/player.js?v=20261017c';\nimport {definitions} from './scenes/index.js?v=20261017c';\nmountScenes(definitions);\n")
     chapter['status'] = 'implemented'
 
 modules = [('模組一：數據與特徵基石', 0, 4), ('模組二：模型與優化機制', 4, 6), ('模組三：經典演算法與集成', 6, 8), ('模組四：評估診斷與實戰落地', 8, 12)]
