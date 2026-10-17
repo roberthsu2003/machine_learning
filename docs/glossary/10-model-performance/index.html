@@ -67,49 +67,23 @@
 <p>💡 <strong>白話解惑：到底「誰」在變異？為什麼過擬合叫高變異數？</strong></p>
 <ol>
 <li><strong>變異的是「模型本身的預測結果」，不是數據！</strong><br />
-很多人會誤以為變異數是指數據本身的波動，其實是指<strong>「模型極度敏感神經質」</strong>：
-<ul>
+很多人會誤以為變異數是指數據本身的波動，其實是指**「模型極度敏感神經質」**：<ul>
 <li>面對週一收集的數據（帶有隨機噪聲 A），模型學出了一條九彎十八拐的曲線把噪聲硬包進去；</li>
-<li>面對週二收集的數據（帶有隨機噪聲 B），模型又學出了一條完全相反的扭曲曲線。</li>
+<li>面對週二收集的數據（帶有隨機噪聲 B），模型又學出了一條完全相反的扭曲曲線。<br />
+👉 <strong>只換了一批稍微不同的訓練數據，訓練出來的模型形狀和預測值就產生了「巨大的波動與變異 (High Variance)」！</strong></li>
 </ul>
-👉 <strong>只換了一批稍微不同的訓練數據，訓練出來的模型形狀和預測值就產生了「巨大的波動與變異 (High Variance)」！</strong>
 </li>
-<li><strong>經典「射箭打靶」比喻（一眼看懂 Bias vs Variance）</strong>：
-<ul>
+<li><strong>經典「射箭打靶」比喻（一眼看懂 Bias vs Variance）</strong>：<ul>
 <li><strong>偏差 (Bias) =「方向瞄得準不準」</strong>：欠擬合就像拉不開弓或瞄錯靶心，每箭都固定射在同一個偏遠角落，頑固死板、偏見極大。</li>
 <li><strong>變異數 (Variance) =「手抖得厲不厲害、穩不穩定」</strong>：過度擬合就像手抖得極度劇烈，雖然平均起來好像在靶心附近，但彈著點到處亂飛，分散程度（變異數）極大！</li>
 </ul>
 </li>
-<li><strong>生活比喻：死記硬背的學生 vs 融會貫通的學生</strong>：
-<div class="table-scroll"><table>
-<thead>
-<tr>
-  <th style="text-align:left">角色</th>
-  <th style="text-align:left">面對練習題（訓練集）</th>
-  <th style="text-align:left">換一份模擬考卷時（換訓練集）</th>
-  <th style="text-align:left">上正式考場時（測試集）</th>
-  <th style="text-align:left">統計特性</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-  <td style="text-align:left"><strong>過度擬合的模型</strong><br />(高變異數)</td>
-  <td style="text-align:left"><strong>死記硬背</strong>：連題目的錯字、印刷污漬、第幾題答案選 C 都背下來。</td>
-  <td style="text-align:left"><strong>認知徹底崩潰</strong>：因為把偶然的雜訊當宇宙真理，換了考卷就整個人大變樣。</td>
-  <td style="text-align:left"><strong>成績起伏極大</strong>：遇到沒看過的題目全憑運氣亂猜，分數忽高忽低。</td>
-  <td style="text-align:left"><strong>高變異數</strong><br />(極不穩定、抗噪差)</td>
-</tr>
-<tr>
-  <td style="text-align:left"><strong>正常擬合的好模型</strong><br />(低變異數)</td>
-  <td style="text-align:left"><strong>融會貫通</strong>：學會題目的解題邏輯與公式定理，忽略印刷污漬。</td>
-  <td style="text-align:left"><strong>處變不驚</strong>：不管做哪一份考卷，抓到的核心規律都一樣，模型形態非常穩定。</td>
-  <td style="text-align:left"><strong>發揮極度穩定</strong>：沒看過的全新考卷也能考出 85~90 分的實力。</td>
-  <td style="text-align:left"><strong>低變異數</strong><br />(穩定可靠、泛化強)</td>
-</tr>
-</tbody>
-</table></div>
-</li>
+<li><strong>生活比喻：死記硬背的學生 vs 融會貫通的學生</strong>：</li>
 </ol>
+<p>| 角色 | 面對練習題（訓練集） | 換一份模擬考卷時（換訓練集） | 上正式考場時（測試集） | 統計特性 |
+| :--- | :--- | :--- | :--- | :--- |
+| <strong>過度擬合的模型</strong><br><em>(高變異數)</em> | <strong>死記硬背</strong>：連題目的錯字、印刷污漬、第幾題答案選 C 都背下來。 | <strong>認知徹底崩潰</strong>：因為把偶然的雜訊當宇宙真理，換了考卷就整個人大變樣。 | <strong>成績起伏極大</strong>：遇到沒看過的題目全憑運氣亂猜，分數忽高忽低。 | <strong>高變異數</strong><br>(極不穩定、抗噪差) |
+| <strong>正常擬合的好模型</strong><br><em>(低變異數)</em> | <strong>融會貫通</strong>：學會題目的解題邏輯與公式定理，忽略印刷污漬。 | <strong>處變不驚</strong>：不管做哪一份考卷，抓到的核心規律都一樣，模型形態非常穩定。 | <strong>發揮極度穩定</strong>：沒看過的全新考卷也能考出 85~90 分的實力。 | <strong>低變異數</strong><br>(穩定可靠、泛化強) |</p>
 </blockquote>
 <h3>標誌性特徵</h3>
 <ul>
@@ -155,23 +129,22 @@
 <blockquote>
 <p>💡 <strong>白話解惑：為什麼叫「權衡 (Tradeoff)」？什麼是「平衡藝術」？</strong></p>
 <ol>
-<li><strong>「權衡」就是「魚與熊掌不可兼得的翹翹板效應」</strong>：
+<li><p><strong>「權衡」就是「魚與熊掌不可兼得的翹翹板效應」</strong>：</p>
 <ul>
 <li><strong>模型做得太簡單（如直線）</strong>：換什麼數據來訓練它都長得差不多（低變異數），但太笨學不會複雜規律 ➔ <strong>偏差飆高（欠擬合）</strong>。</li>
-<li><strong>模型做得太複雜（如深層神經網路、高階曲線）</strong>：訓練集考 100 分（低偏差），但極度神經質，換個數據就暴走變形 ➔ <strong>變異數飆高（過度擬合）</strong>。</li>
+<li><strong>模型做得太複雜（如深層神經網路、高階曲線）</strong>：訓練集考 100 分（低偏差），但極度神經質，換個數據就暴走變形 ➔ <strong>變異數飆高（過度擬合）</strong>。<br />
+👉 我們<strong>不可能同時把兩者都壓到零</strong>，壓下一頭，另一頭就會翹起來！</li>
 </ul>
-👉 我們<strong>不可能同時把兩者都壓到零</strong>，壓下一頭，另一頭就會翹起來！
 </li>
-<li><strong>為什麼終極目標是「平衡」？（數學本質）</strong>：<br />
-從上方公式可知，現實世界預測的「總誤差」是兩者相加的：
-<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\mathbf{總預測誤差} = \mathbf{偏差}^2 + \mathbf{變異數} + \sigma^2"><mrow><mtext>總預測誤差</mtext><mo>=</mo><msup><mtext>偏差</mtext><mn>2</mn></msup><mo>+</mo><mtext>變異數</mtext><mo>+</mo><msup><mi>σ</mi><mn>2</mn></msup></mrow></math></div>
-<ul>
+<li><p><strong>為什麼終極目標是「平衡」？（數學本質）</strong>：<br />
+從上方公式可知，現實世界預測的「總誤差」是兩者相加的：</p>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\mathbf{總預測誤差} = \mathbf{偏差}^2 + \mathbf{變異數} + \sigma^2"><mrow><mo>mathbf</mo><mrow><mi>總</mi><mi>預</mi><mi>測</mi><mi>誤</mi><mi>差</mi></mrow><mo>=</mo><mo>mathbf</mo><msup><mrow><mi>偏</mi><mi>差</mi></mrow><mn>2</mn></msup><mo>+</mo><mo>mathbf</mo><mrow><mi>變</mi><mi>異</mi><mi>數</mi></mrow><mo>+</mo><msup><mi>σ</mi><mn>2</mn></msup></mrow></math></div><ul>
 <li>若只顧著消滅偏差（做超複雜），變異數爆炸，總誤差反而變大！</li>
 <li>若只顧著消滅變異（做超簡單），偏差爆炸，總誤差依然很大！</li>
 <li><strong>最佳解法只有「各退一步」</strong>：容許一點點可接受的小偏差，換取模型的穩定性，讓相加後的「總泛化誤差」降到最低！</li>
 </ul>
 </li>
-<li><strong>生活比喻：買衣服的哲學</strong>：
+<li><p><strong>生活比喻：買衣服的哲學</strong>：</p>
 <ul>
 <li><strong>均碼休閒服 (Free Size / 簡單模型)</strong>：每個人都能穿不會破（低變異），但誰穿都不合身（高偏差）。</li>
 <li><strong>極致量身訂做緊身衣 (超複雜模型)</strong>：今天早上每寸身材完美貼合（超低偏差），但中午多喝一杯珍奶肚子微凸，衣服瞬間爆開穿不下（超高變異）。</li>

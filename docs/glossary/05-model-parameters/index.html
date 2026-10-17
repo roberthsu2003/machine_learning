@@ -9,7 +9,7 @@
 <ol>
 <li>深刻理解<strong>模型參數 (Parameters)</strong> 的內在特性與自主學習本質。</li>
 <li>掌握<strong>超參數 (Hyperparameters)</strong> 作為外部控制旋鈕的功能與常見種類。</li>
-<li>熟悉實務上調校超參數的 3 大經典搜尋策略與實作工具（網格搜尋、隨機搜尋、貝氏優化）。</li>
+<li>熟悉實務上調校超參數的經典搜尋策略（網格搜尋、隨機搜尋等）。</li>
 </ol>
 <hr />
 <h2 id="section-2">1. 模型參數 (Model Parameters)</h2>
@@ -181,6 +181,29 @@
 </tr>
 </tbody>
 </table></div>
+<h3>💻 簡單實作：用網格搜尋找出最佳 <code>alpha</code></h3>
+<p>前一個範例是由人手動指定 <code>alpha=0.1</code> 與 <code>alpha=500</code> 後比較結果；下面以最基礎的 <strong>網格搜尋 (<code>GridSearchCV</code>)</strong> 為例，改由程式幫我們測試多個候選值。它會把資料分成 5 份，輪流以其中 1 份驗證、其餘資料訓練，最後選出平均均方誤差（MSE）最低的 <code>alpha</code>。</p>
+<pre><code class="language-python">from sklearn.linear_model import Ridge
+from sklearn.model_selection import GridSearchCV
+
+# X、y 沿用前一個「廣告與銷售資料集」範例的資料
+候選超參數 = {&quot;alpha&quot;: [0.01, 0.1, 1, 10, 100, 500]}
+
+搜尋器 = GridSearchCV(
+    estimator=Ridge(),
+    param_grid=候選超參數,
+    scoring=&quot;neg_mean_squared_error&quot;,  # 分數越高代表 MSE 越低
+    cv=5
+)
+搜尋器.fit(X, y)
+
+print(&quot;最佳超參數：&quot;, 搜尋器.best_params_)
+print(f&quot;最佳交叉驗證 MSE：{-搜尋器.best_score_:.2f}&quot;)
+
+# 搜尋完成後，best_estimator_ 已用最佳 alpha 在全部訓練資料上重新訓練
+最佳模型 = 搜尋器.best_estimator_
+</code></pre>
+<p>這個範例共嘗試 6 個 <code>alpha</code> 值，每個值進行 5 次交叉驗證，合計訓練 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="6 \times 5 = 30"><mrow><mn>6</mn><mo>×</mo><mn>5</mn><mo>=</mo><mn>30</mn></mrow></math> 次。實際專案中，仍應保留<strong>測試集</strong>到最後才使用，不能用它來挑選超參數。</p>
 <hr />
 <h2 id="section-6">📌 本章精華速記</h2>
 <ol>
