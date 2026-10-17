@@ -140,16 +140,18 @@
 
       <!-- 放置在左上方空白無遮擋區的說明卡片 -->
       <!-- 卡片 1 (藍)：殘差 -->
-      <rect x="68" y="28" width="195" height="44" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" filter="url(#soft-shadow)"/>
-      <text x="78" y="46" font-size="11.5px" font-weight="800" fill="#1d4ed8">🔵 殘差 (y − ŷ)</text>
-      <text x="78" y="62" font-size="10.5px" fill="#1e3a8a">模型學完後「殘留的小失誤」</text>
+      <rect x="68" y="28" width="195" height="46" rx="6" fill="#eff6ff" stroke="#bfdbfe" stroke-width="1.2" filter="url(#soft-shadow)"/>
+      <rect x="76" y="35" width="4" height="14" rx="2" fill="#2563eb"/>
+      <text x="86" y="47" font-size="11.5px" font-weight="800" fill="#1d4ed8">殘差 (y − ŷ) [藍線誤差]</text>
+      <text x="76" y="64" font-size="10.5px" fill="#1e3a8a">模型學完後「殘留的小失誤」</text>
       <!-- 引線指向藍色線段 -->
       <path d="M 263 50 C 330 50, 360 70, 418 78" fill="none" stroke="#2563eb" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-blue)"/>
 
       <!-- 卡片 2 (紅)：總變異 -->
-      <rect x="68" y="82" width="195" height="44" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.2" filter="url(#soft-shadow)"/>
-      <text x="78" y="100" font-size="11.5px" font-weight="800" fill="#b91c1c">🔴 總變異 (y − ȳ)</text>
-      <text x="78" y="116" font-size="10.5px" fill="#7f1d1d">無腦猜平均時「原始犯下的大失誤」</text>
+      <rect x="68" y="82" width="195" height="46" rx="6" fill="#fef2f2" stroke="#fca5a5" stroke-width="1.2" filter="url(#soft-shadow)"/>
+      <rect x="76" y="89" width="4" height="14" rx="2" fill="#dc2626"/>
+      <text x="86" y="101" font-size="11.5px" font-weight="800" fill="#b91c1c">總變異 (y − ȳ) [紅線誤差]</text>
+      <text x="76" y="118" font-size="10.5px" fill="#7f1d1d">無腦猜平均時「原始犯下的大失誤」</text>
       <!-- 引線指向紅色線段 -->
       <path d="M 263 104 C 320 104, 350 120, 412 126" fill="none" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="3,3" marker-end="url(#arrow-red)"/>
 
@@ -161,14 +163,14 @@
       <circle cx="318" cy="143" r="6" fill="#0f172a"/>
       <circle cx="363" cy="165" r="6" fill="#0f172a"/>
       <circle cx="415" cy="103" r="7" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
-      <text x="428" y="104" font-size="10.5px" font-weight="700" fill="#0f172a">樣本點 (X=5.7, y=13.5)</text>
+      <text x="415" y="36" text-anchor="middle" font-size="11px" font-weight="700" fill="#0f172a">示範樣本點 (X=5.7, y=13.5)</text>
     </g>
 
     <!-- 下半部：失誤消滅視覺長條圖（看圖說故事關鍵橋樑！） -->
     <g transform="translate(24, 442)">
       <rect width="462" height="268" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.2"/>
 
-      <text x="18" y="26" font-size="14.5px" font-weight="800" fill="#0f172a">🎯 左右貫通橋樑：失誤總量消滅對比</text>
+      <text x="18" y="26" font-size="14.5px" font-weight="800" fill="#0f172a">【核心橋樑】失誤總量消滅對照（左右關聯）</text>
       <text x="18" y="44" font-size="11.5px" fill="#64748b">把左圖所有點的「紅線段平方」與「藍線段平方」加總成兩條失誤柱：</text>
 
       <!-- 1. 基準線總失誤長條 (SST) -->
@@ -188,7 +190,7 @@
 
       <!-- 白話看圖說故事導讀小卡 -->
       <rect x="18" y="178" width="426" height="76" rx="6" fill="#ffffff" stroke="#e2e8f0" stroke-width="1"/>
-      <text x="28" y="199" font-size="12px" font-weight="700" fill="#0f172a">🗣️ 看圖說故事口訣：</text>
+      <text x="28" y="199" font-size="12px" font-weight="700" fill="#0f172a">【看圖說故事口訣】</text>
       <text x="28" y="220" font-size="11.5px" fill="#334155">
         「不學特徵時，猜平均會犯下上方整根<tspan fill="#b91c1c" font-weight="700">紅色失誤大柱</tspan>；
       </text>
