@@ -14,13 +14,13 @@
 <hr />
 <h2 id="section-2">1. 分類評估指標 (Classification Metrics)</h2>
 <h3>混淆矩陣 (Confusion Matrix)</h3>
-<p>混淆矩陣是一個二維交叉統計表，精確總結了分類模型的預測結果與真實情況，是所有分類衍生指標的基石。<strong>在醫療檢測等實例中，通常將關注重點設定為「正例（病例／患病）」，無病者為「負例（健康）」。</strong></p>
+<p>混淆矩陣是一個二維交叉統計表，精確總結了分類模型的預測結果與真實情況，是所有分類衍生指標的基石。</p>
 <h4>📊 觀念圖解</h4>
 <blockquote>
 <p>🎬 互動動畫：<a href="https://roberthsu2003.github.io/machine_learning/glossary/09-evaluation-metrics/#confusion-matrix">混淆矩陣</a>
 <section class="scene" id="confusion-matrix" data-scene="confusion-matrix" aria-labelledby="title-confusion-matrix">
 <div class="scene-head"><h3 id="title-confusion-matrix">混淆矩陣</h3><span class="scene-tag">2D GEOMETRY · INTERACTIVE</span></div>
-<p class="scene-description">以醫療檢測為例：正例（Positive）＝病例、負例（Negative）＝健康。橫軸為模型預測、縱軸為真實情況，樣本依預測與真實類別落入左上 TP、右上 FN、左下 FP、右下 TN 四象限；保留來源位置並標示兩軸。</p>
+<p class="scene-description">帶 ID 的樣本依真實類別與預測類別移入 TP／FP／FN／TN；保留來源位置並標示兩軸。</p>
 <canvas width="760" height="450" role="img" aria-label="混淆矩陣幾何動畫" aria-describedby="result-confusion-matrix">請閱讀下方的動畫說明與本節教材。</canvas>
 <div class="scene-parameters"></div>
 <p class="scene-result" id="result-confusion-matrix" role="status" aria-live="polite">按播放或單步，觀察本概念。</p>
@@ -35,8 +35,8 @@
 <tr>
   <th style="text-align:left">象限名詞</th>
   <th style="text-align:left">英文全稱</th>
-  <th style="text-align:center">真實情況<br><small style="font-weight:normal">(+病例 / −健康)</small></th>
-  <th style="text-align:center">模型預測<br><small style="font-weight:normal">(+病例 / −健康)</small></th>
+  <th style="text-align:center">真實情況<br>(+病例 / −健康)</th>
+  <th style="text-align:center">模型預測<br>(+病例 / −健康)</th>
   <th style="text-align:left">💡 生活實例（醫療檢測）</th>
 </tr>
 </thead>
@@ -150,7 +150,7 @@
 <li><strong>先釐清正例與負例定義</strong>：<ul>
 <li><strong>正例 (Positive)</strong>：<strong>「罹癌／病例」</strong>（我們關注重點、想主動找出的目標）。</li>
 <li><strong>負例 (Negative)</strong>：<strong>「健康／無病」</strong>（一般正常狀態）。</li>
-<li>模型輸出的是<strong>「罹患癌症（正例）的機率分數」</strong>。</li>
+<li>模型輸出的是**「罹患癌症（正例）的機率分數」**。</li>
 </ul>
 </li>
 <li><strong>假設把門檻調低（例如降到 0.2）——「寧可錯抓，不能放過」</strong>：<ul>
@@ -170,19 +170,18 @@
 </blockquote>
 <ul>
 <li><strong>兩個軸代表什麼意思？（收益 vs 代價）</strong>：<ul>
-<li>📈 <strong>縱軸（Y 軸）TPR (真正例率 / Recall) ➔ 代表【收益 (Benefit)】</strong>：
-  <ul>
-    <li><strong>含義</strong>：模型為我們帶來的「好處與收穫」——<strong>抓對正例（病例）的能力</strong>（成功抓出的病患 / 全部真實病患）。</li>
-    <li><strong>期望</strong>：<strong>越高越好</strong>，上限是 1.0（代表 100% 的病患都被精準抓出，及早治療拯救生命）。</li>
-  </ul>
+<li>📈 <strong>縱軸（Y 軸）TPR (真正例率 / Recall) ➔ 代表【收益 (Benefit)】</strong>：<ul>
+<li><strong>含義</strong>：模型為我們帶來的「好處與收穫」——<strong>抓對正例（病例）的能力</strong>（成功抓出的病患 / 全部真實病患）。</li>
+<li><strong>期望</strong>：<strong>越高越好</strong>，上限是 1.0（代表 100% 的病患都被精準抓出，及早治療拯救生命）。</li>
+</ul>
 </li>
-<li>💸 <strong>橫軸（X 軸）FPR (假正例率) ➔ 代表【代價 (Cost)】</strong>：
-  <ul>
-    <li><strong>含義</strong>：為了獲得上述收益，模型所付出的「損失與副作用」——**誤判負例（健康人）的代價**（被誤診冤枉的健康人 / 全部健康人）。</li>
-    <li><strong>期望</strong>：<strong>越低越好</strong>，下限是 0（代表完全沒有冤枉任何健康人，零多餘恐慌與複檢醫療成本）。</li>
-  </ul>
+<li>💸 <strong>橫軸（X 軸）FPR (假正例率) ➔ 代表【代價 (Cost)】</strong>：<ul>
+<li><strong>含義</strong>：為了獲得上述收益，模型所付出的「損失與副作用」——<strong>誤判負例（健康人）的代價</strong>（被誤診冤枉的健康人 / 全部健康人）。</li>
+<li><strong>期望</strong>：<strong>越低越好</strong>，下限是 0（代表完全沒有冤枉任何健康人，零多餘恐慌與複檢醫療成本）。</li>
+</ul>
 </li>
-<li>🎯 <strong>最理想的頂級目標（以最低代價換取最高收益）</strong>：落在座標圖的<strong>左上角 (0, 1)</strong> ➔ 代價為 0（0% 冤枉健康人），收益為 1.0（100% 抓出病患）！</li>
+<li>🎯 <strong>最理想的頂級目標（以最低代價換取最高收益）</strong>：
+落在座標圖的<strong>左上角 (0, 1)</strong> ➔ 代價為 0（0% 冤枉健康人），收益為 1.0（100% 抓出病患）！</li>
 </ul>
 </li>
 </ul>
@@ -206,7 +205,7 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <li><strong>AUC = 1.0（完美無瑕）</strong>：曲線直接直角衝上左上角，面積鋪滿整張圖（等於 1）。代表隨機抽一個病患和一個健康人，模型給病患的罹病預測分數<strong>永遠高於</strong>健康人！</li>
 <li><strong>AUC = 0.5（毫無鑑別力）</strong>：曲線就是 (0,0) 到 (1,1) 的對角斜線，面積剛好是一半。代表模型的預測效果跟「閉著眼睛丟銅板盲猜」完全一樣。</li>
 <li><strong>實務表現</strong>：一般來說，AUC 在 0.8 以上算良好，0.9 以上算是極為優異的模型。</li>
-<li><strong>最大優點</strong>：<strong>衡量跨門檻的排序能力，但類別不平衡時仍應搭配 PR 指標與情境分析</strong>。因為 TPR 只計算病患內的比例、FPR 只計算健康人內的比例，即便健康人有 100 萬人、病患只有 10 人，面積數值也不會被稀釋或失真！</li>
+<li><strong>最大優點</strong>：<strong>衡量跨門檻的排序能力，但類別不平衡時仍應搭配 PR 指標與情境分析</strong>。因為 TPR 只計算病患內的比例、FPR 只計算好人內的比例，即便好人有 100 萬人、病患只有 10 人，面積數值也不會被稀釋或失真！</li>
 </ul>
 </li>
 </ul>
@@ -304,21 +303,21 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <tbody>
 <tr>
   <td style="text-align:left"><strong>MAE</strong><br>(平均絕對誤差)</td>
-  <td style="text-align:center"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\frac{1}{n}\sum_{i=1}^{n}\|y_i - \hat{y}_i\|"><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><mo>|</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><mo>|</mo></mrow></math></div></td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\displaystyle \frac{1}{n}\sum_{i=1}^{n}\lvert y_i - \hat{y}_i \rvert"><mrow><mo>displaystyle</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><mo>lvert</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><mo>rvert</mo></mrow></math></td>
   <td style="text-align:center">原始單位<br>(如: 萬元)</td>
   <td style="text-align:center"><strong>低 (Robust)</strong><br>線性權重，抗干擾強</td>
   <td style="text-align:left">最直觀好懂（平均猜錯多少錢），適合數據中存在偶發異常雜訊時使用。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>MSE</strong><br>(均方誤差)</td>
-  <td style="text-align:center"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2"><mrow><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow></math></div></td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\displaystyle \frac{1}{n}\sum_{i=1}^{n}(y_i - \hat{y}_i)^2"><mrow><mo>displaystyle</mo><mfrac><mrow><mn>1</mn></mrow><mrow><mi>n</mi></mrow></mfrac><msubsup><mo>∑</mo><mrow><mi>i</mi><mo>=</mo><mn>1</mn></mrow><mrow><mi>n</mi></mrow></msubsup><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow></math></td>
   <td style="text-align:center">平方單位<br>(如: 萬元²)</td>
   <td style="text-align:center"><strong>極高</strong><br>平方放大極端大誤差</td>
   <td style="text-align:left">數學性質極佳（處處可導），是梯度下降優化器最經典的損失函數；但缺乏物理直觀性。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>RMSE</strong><br>(均方根誤差)</td>
-  <td style="text-align:center"><div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="\sqrt{\text{MSE}}"><mrow><msqrt><mrow><mtext>MSE</mtext></mrow></msqrt></mrow></math></div></td>
+  <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\sqrt{\text{MSE}}"><mrow><msqrt><mrow><mtext>MSE</mtext></mrow></msqrt></mrow></math></td>
   <td style="text-align:center">原始單位<br>(如: 萬元)</td>
   <td style="text-align:center"><strong>高</strong><br>兼具平方重罰懲罰性</td>
   <td style="text-align:left"><strong>對 MSE 開根號還原回原始物理尺度</strong>，同時保留對大誤差的懲罰，工業界競賽最愛指標！</td>
@@ -332,9 +331,12 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <blockquote>
 <p>💡 <strong>白話三步驟拆解（為什麼要用 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math>？）</strong>：</p>
 <ol>
-<li><strong>什麼是「無量綱（無單位）」？</strong><br>預測房價時 MAE 是「差 50 萬元」，預測體重時是「差 2 公斤」，兩者單位尺度不同無法橫向比較。<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 將表現轉化為類似「0%～100%」的標準化分數，跨領域、跨任務皆能一眼評斷模型優劣。</li>
-<li><strong>什麼是「基準笨模型（猜平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><>¯</mo></mover></mrow></math>）」？</strong><br>假設要猜全班 40 位同學的考試成績，但完全不給任何線索，最保險的做法就是「所有人都猜全班平均 60 分」。這個不看任何特徵的無腦基準策略，累積的總犯錯量在數學上稱為 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和／數據原始總波動）</strong>。</li>
-<li><strong>什麼叫「解釋了數據的變異性（波動）」？</strong><br>學生成績之所以有高有低（波動起伏），背後有其原因（如讀書時間、出席率）。若模型加入這些特徵後，把原本笨模型犯下的失誤<strong>消滅掉了 85%</strong>，只剩 15% 小誤差，代表「數據高低起伏中，有 85% 的原因被你的模型抓到了、看懂了」，這時 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.85</mn></mrow></math> (85%)</strong>！</li>
+<li><strong>什麼是「無量綱（無單位）」？</strong><br />
+預測房價時 MAE 是「差 50 萬元」，預測體重時是「差 2 公斤」，兩者單位尺度不同無法橫向比較。<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 將表現轉化為類似「0%～100%」的標準化分數，跨領域、跨任務皆能一眼評斷模型優劣。</li>
+<li><strong>什麼是「基準笨模型（猜平均值 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\bar{y}"><mrow><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover></mrow></math>）」？</strong><br />
+假設要猜全班 40 位同學的考試成績，但完全不給任何線索，最保險的做法就是「所有人都猜全班平均 60 分」。這個不看任何特徵的無腦基準策略，累積的總犯錯量在數學上稱為 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和／數據原始總波動）</strong>。</li>
+<li><strong>什麼叫「解釋了數據的變異性（波動）」？</strong><br />
+學生成績之所以有高有低（波動起伏），背後有其原因（如讀書時間、出席率）。若模型加入這些特徵後，把原本笨模型犯下的失誤<strong>消滅掉了 85%</strong>，只剩 15% 小誤差，代表「數據高低起伏中，有 85% 的原因被你的模型抓到了、看懂了」，這時 <strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.85</mn></mrow></math> (85%)</strong>！</li>
 </ol>
 </blockquote>
 <h4>📊 觀念圖解</h4>
@@ -362,25 +364,25 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
 <li>🟪 <strong>右側紫色色條（SSE 殘差平方和）</strong>：你的模型「尚未消滅、仍然猜錯」的殘留失誤量。</li>
 </ul>
 </li>
-<li><p><strong>核心公式的白話視覺化：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 1 - \frac{SSE}{SST}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math></strong>：</p>
+<li><p><strong>核心公式的白話視覺化：<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 1 - \frac{\text{SSE}}{\text{SST}}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math></strong>：</p>
 <ul>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\frac{SSE}{SST}"><mrow><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math> 就是<strong>「你的模型還剩下百分之幾的失誤沒解決」</strong>。</li>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{SSE}{SST}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math> 就是<strong>「你的模型幫忙消滅了百分之幾的失誤」</strong>！</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\frac{\text{SSE}}{\text{SST}}"><mrow><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math> 就是**「你的模型還剩下百分之幾的失誤沒解決」**。</li>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{\text{SSE}}{\text{SST}}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mtext>SSE</mtext></mrow><mrow><mtext>SST</mtext></mrow></mfrac></mrow></math> 就是**「你的模型幫忙消滅了百分之幾的失誤」**！</li>
 <li>紫條越短（SSE 越小），代表消滅越多失誤，分數越逼近 1.0 (100%)。</li>
 </ul>
 </li>
 <li><p><strong>下拉選單切換四種情境實測</strong>：</p>
 <ul>
 <li><strong>正常好模型（捕捉規律）</strong>：紫條 SSE 大幅縮短（只有綠條的 15% 左右），消滅了約 85% 的失誤，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 \approx 0.85"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>≈</mo><mn>0.85</mn></mrow></math>！</li>
-<li><strong>瞎猜笨模型（只猜平均值）</strong>：橘線與綠線重疊，紫條與綠條一樣長（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SSE = SST"><mrow><mtext>SSE</mtext><mo>=</mo><mtext>SST</mtext></mrow></math>），<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.0</mn></mrow></math>。</li>
+<li><strong>瞎猜笨模型（只猜平均值）</strong>：橘線與綠線重疊，紫條與綠條一樣長（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{SSE} = \text{SST}"><mrow><mtext>SSE</mtext><mo>=</mo><mtext>SST</mtext></mrow></math>），<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 = 0.0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>0.0</mn></mrow></math>。</li>
 <li><strong>幫倒忙模型（預測嚴重離譜）</strong>：橘線偏差極遠，紫條 SSE 遠大於綠條 SST，比猜平均還糟糕，<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2 &lt; 0"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>&lt;</mo><mn>0</mn></mrow></math>（負數！）。</li>
-<li><strong>常數標籤（邊界情況）</strong>：所有樣本 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 值相同（無起伏），數據完全沒有波動（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SST = 0"><mrow><mtext>SST</mtext><mo>=</mo><mn>0</mn></mrow></math>），分母為 0，此時 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 顯示「未定義」。</li>
+<li><strong>常數標籤（邊界情況）</strong>：所有樣本 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="y"><mrow><mi>y</mi></mrow></math> 值相同（無起伏），數據完全沒有波動（<math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="\text{SST} = 0"><mrow><mtext>SST</mtext><mo>=</mo><mn>0</mn></mrow></math>），分母為 0，此時 <math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 顯示「未定義」。</li>
 </ul>
 </li>
 </ol>
 <h4>數學公式</h4>
-<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><mover accent="true"><mrow><mi>y</mi></mrow><>¯</mo></mover><msup><mo>)</mo><mn>2</mn></msup></mrow></mfrac></mrow></math></div><ul>
-<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）：模型**沒能解釋、仍然猜錯**的預測殘差平方和（動畫中的紫條 SSE）。</li>
+<div class="math-block"><math xmlns="http://www.w3.org/1998/Math/MathML" display="block" aria-label="R^2 = 1 - \frac{SS_{\text{res}}}{SS_{\text{tot}}} = 1 - \frac{\sum (y_i - \hat{y}_i)^2}{\sum (y_i - \bar{y})^2}"><mrow><msup><mi>R</mi><mn>2</mn></msup><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac><mo>=</mo><mn>1</mn><mo>-</mo><mfrac><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><msub><mover accent="true"><mrow><mi>y</mi></mrow><mo>^</mo></mover><mi>i</mi></msub><msup><mo>)</mo><mn>2</mn></msup></mrow><mrow><mo>∑</mo><mo>(</mo><msub><mi>y</mi><mi>i</mi></msub><mo>-</mo><mover accent="true"><mrow><mi>y</mi></mrow><mo>¯</mo></mover><msup><mo>)</mo><mn>2</mn></msup></mrow></mfrac></mrow></math></div><ul>
+<li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{res}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>res</mtext></mrow></msub></mrow></math>（殘差平方和）：模型<strong>沒能解釋、仍然猜錯</strong>的預測殘差平方和（動畫中的紫條 SSE）。</li>
 <li><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="SS_{\text{tot}}"><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></math>（總平方和）：直接猜平均值的笨模型猜錯的總量（數據本身的原始總波動，動畫中的綠條 SST）。</li>
 </ul>
 <h4><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="R^2"><mrow><msup><mi>R</mi><mn>2</mn></msup></mrow></math> 數值解讀光譜與白話對照</h4>
@@ -399,29 +401,29 @@ ROC 曲線下方的面積大小（介於 0 到 1 之間；低於 0.5 可能表�
   <td style="text-align:left"><strong>完美神預測</strong></td>
   <td style="text-align:left">模型完全沒猜錯（誤差 = 0）</td>
   <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{0}{SS_{\text{tot}}}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>0</mn></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac></mrow></math></td>
-  <td style="text-align:center"><strong>1.0 (100%)</strong></td>
+  <td style="text-align:center"><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1.0"><mrow><mn>1.0</mn></mrow></math> (100%)</strong></td>
   <td style="text-align:left">數據的所有起伏波動被模型 100% 完整捕捉！</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>正常好模型</strong></td>
   <td style="text-align:left">誤差只有猜平均笨模型的 15%</td>
   <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{15}{100}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>15</mn></mrow><mrow><mn>100</mn></mrow></mfrac></mrow></math></td>
-  <td style="text-align:center"><strong>0.85 (85%)</strong></td>
+  <td style="text-align:center"><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.85"><mrow><mn>0.85</mn></mrow></math> (85%)</strong></td>
   <td style="text-align:left">模型成功解釋了數據中 85% 的波動規律。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>瞎猜笨模型</strong></td>
   <td style="text-align:left">表現跟直接猜平均值一模一樣</td>
   <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{SS_{\text{tot}}}{SS_{\text{tot}}}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow><mrow><mi>S</mi><msub><mi>S</mi><mrow><mtext>tot</mtext></mrow></msub></mrow></mfrac></mrow></math></td>
-  <td style="text-align:center"><strong>0.0 (0%)</strong></td>
+  <td style="text-align:center"><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="0.0"><mrow><mn>0.0</mn></mrow></math> (0%)</strong></td>
   <td style="text-align:left">模型完全沒學到任何有用特徵，等同瞎猜。</td>
 </tr>
 <tr>
   <td style="text-align:left"><strong>幫倒忙模型</strong></td>
   <td style="text-align:left">預測離譜到比直接猜平均還差</td>
   <td style="text-align:center"><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="1 - \frac{150}{100}"><mrow><mn>1</mn><mo>-</mo><mfrac><mrow><mn>150</mn></mrow><mrow><mn>100</mn></mrow></mfrac></mrow></math></td>
-  <td style="text-align:center"><strong>&lt; 0 (負數！)</strong></td>
-  <td style="text-align:left">模型預測邏輯搞反或嚴重過擬合，比瞎猜平均還糟糕。</td>
+  <td style="text-align:center"><strong><math xmlns="http://www.w3.org/1998/Math/MathML" display="inline" aria-label="&lt; 0"><mrow><mo>&lt;</mo><mn>0</mn></mrow></math> (負數！)</strong></td>
+  <td style="text-align:left">模型的預測邏輯搞反或嚴重過擬合，比瞎猜平均還糟糕。</td>
 </tr>
 </tbody>
 </table></div>

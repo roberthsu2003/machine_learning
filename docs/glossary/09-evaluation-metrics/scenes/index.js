@@ -41,7 +41,97 @@ function confusion(c,s,data){
 const errorData=[{x:0,y:1},{x:1,y:2},{x:2,y:2.5},{x:3,y:4},{x:4,y:4.2}];
 export const definitions=[
 demo('confusion-matrix','混淆矩陣',[range('threshold','判為正類的門檻',0,1,.5,.05)],(c,s)=>{const data=M.scored(30,.3),out=confusion(c,s,data);G.heading(c,'正例＝病例，負例＝健康 ｜ P/N 為預測、T/F 為對錯');return {message:`最終分格：TP=${out.tp}, FP=${out.fp}, FN=${out.fn}, TN=${out.tn}，總數 30。設定「正例=病例、負例=健康」；預測 score ≥ ${s.params.threshold} 判為正類。每個方塊保留原本真實標籤。`,metrics:out};},undefined,{guide:['左邊 30 格是樣本（橘色=真實病例，綠色=真實健康），右邊是混淆矩陣四象限。','四象限結構（對齊教材圖解）：橫軸為預測（左正／右負），縱軸為真實（上正／下負）；左上 TP、右上 FN、左下 FP、右下 TN。','情境設定：正例 (Positive) = 病例、負例 (Negative) = 健康。','拖動門檻滑桿：看方塊重新落格，數量同步更新。','按「下一步」或拖時間軸：看方塊從左邊移入四格。','下方訊息顯示四格數量，總數恆為 30。']}),
-demo('classification-metrics','分類指標與 ROC',[range('threshold','分類門檻（分數 ≥ 門檻判正類）',0,1,.5,.05),range('positive','正類比例（%）：重抽 40 筆樣本',10,90,30,10)],(c,s)=>{const data=M.scored(40,s.params.positive/100),out=M.metrics(data,s.params.threshold),roc=M.roc(data),a=G.axes(c,{xmin:0,xmax:1,ymin:0,ymax:1,x:65,y:90,w:325,h:280,xlabel:'FPR（代價：誤報率）',ylabel:'TPR / Recall（收益：抓全率）'});G.line(c,a.X(0),a.Y(0),a.X(1),a.Y(1),C.line,1,[5,4]);const n=Math.max(1,Math.floor(s.progress*roc.curve.length));roc.curve.slice(0,n).forEach((p,i,arr)=>{if(i)G.line(c,a.X(arr[i-1].fpr),a.Y(arr[i-1].recall),a.X(p.fpr),a.Y(p.recall),C.green,3);});G.diamond(c,a.X(out.fpr),a.Y(out.recall),8,C.orange);[['Accuracy',out.accuracy],['Precision',out.precision],['Recall',out.recall],['F1',out.f1]].forEach(([label,value],i)=>{G.rect(c,455,100+i*68,250,54,C.white,C.line);G.text(c,label,475,127+i*68,16,C.muted,'left');G.text(c,M.fmt(value),675,127+i*68,21,C.green,'right');});G.heading(c,'門檻改變，四象限與指標一起變');return {message:`TP ${out.tp} / FP ${out.fp} / FN ${out.fn} / TN ${out.tn}；AUC=${M.fmt(roc.auc)}。AUC 描述此分數的排序能力；它可小於 0.5，且類別不平衡時仍需看 PR 指標與情境。分母為零顯示未定義。`,metrics:{...out,auc:roc.auc}};},undefined,{guide:['分類門檻：模型輸出「像正類的分數」，≥ 門檻才判正類；是「判多嚴」的開關。','正類比例：40 筆樣本中真實正類的占比；改變會重抽整批數據，ROC 形狀與 AUC 跟著變。','左圖 ROC 曲線：縱軸 TPR 是收益（抓對病例），橫軸 FPR 是代價（冤枉健康人）。','拖動門檻：橘點沿曲線走，指標此消彼長，但 AUC 不動（門檻無關）。','分母為零時顯示「未定義」；AUC 可小於 0.5。']}),
+demo('classification-metrics','分類指標與 ROC',[select('view','指標觀察視角与切片',[
+  ['overview','總覽：混淆矩陣切片與指標'],
+  ['precision','縱看 Precision（預測正類欄 TP/(TP+FP)）'],
+  ['recall','橫看 Recall（真實正類列 TP/(TP+FN)）'],
+  ['accuracy','斜看 Accuracy（對角猜對 (TP+TN)/全部）'],
+  ['f1','天平 F1-Score（調和平均平衡）']
+]),range('threshold','分類門檻（分數 ≥ 門檻判正類）',0,1,.5,.05),range('positive','正類比例（%）：重抽 40 筆樣本',10,90,30,10)],(c,s)=>{
+  const data=M.scored(40,s.params.positive/100),out=M.metrics(data,s.params.threshold),roc=M.roc(data);
+  const a=G.axes(c,{xmin:0,xmax:1,ymin:0,ymax:1,x:50,y:80,w:285,h:265,xlabel:'FPR（代價：誤報率）',ylabel:'TPR / Recall（收益：抓全率）'});
+  G.line(c,a.X(0),a.Y(0),a.X(1),a.Y(1),C.line,1,[5,4]);
+  const n=Math.max(1,Math.floor(s.progress*roc.curve.length));
+  roc.curve.slice(0,n).forEach((p,i,arr)=>{if(i)G.line(c,a.X(arr[i-1].fpr),a.Y(arr[i-1].recall),a.X(p.fpr),a.Y(p.recall),C.green,3);});
+  G.diamond(c,a.X(out.fpr),a.Y(out.recall),8,C.orange);
+  G.text(c,`AUC = ${M.fmt(roc.auc,2)}`,a.X(.72),a.Y(.15),13,C.green);
+
+  const view=s.params.view||'overview';
+  const mx=395,my=68;
+  G.text(c,'混淆矩陣 2×2 切片視角',mx+115,my,14,C.muted);
+  G.text(c,'預測正(+)',mx+55,my+18,11,C.ink);
+  G.text(c,'預測負(−)',mx+165,my+18,11,C.ink);
+  G.text(c,'真實正(+)',mx-32,my+48,11,C.orange);
+  G.text(c,'真實負(−)',mx-32,my+96,11,C.green);
+
+  const isP=view==='precision',isR=view==='recall',isA=view==='accuracy',isF=view==='f1';
+  const tpFill=(isP||isR||isA||isF)?'#d1fae5':C.mint;
+  const fnFill=isR?'#fee2e2':(isP||isA)?'#f8fafc':'#fde8e8';
+  const fpFill=isP?'#fef3c7':(isR||isA)?'#f8fafc':'#fef3c7';
+  const tnFill=isA?'#e2e8f0':(isP||isR)?'#f8fafc':C.mint;
+
+  G.rect(c,mx+5,my+28,102,44,tpFill,isA||isP||isR?C.green:C.line,5);
+  G.text(c,`TP：${out.tp} (確診)`,mx+56,my+50,13,C.green);
+
+  G.rect(c,mx+113,my+28,102,44,fnFill,isR?'#dc2626':C.line,5);
+  G.text(c,`FN：${out.fn} (漏報)`,mx+164,my+50,13,isR?'#dc2626':'#c53030');
+
+  G.rect(c,mx+5,my+76,102,44,fpFill,isP?'#d97706':C.line,5);
+  G.text(c,`FP：${out.fp} (誤報)`,mx+56,my+98,13,isP?'#d97706':'#c47d35');
+
+  G.rect(c,mx+113,my+76,102,44,tnFill,isA?C.green:C.line,5);
+  G.text(c,`TN：${out.tn} (平安)`,mx+164,my+98,13,C.green);
+
+  if(isP){
+    G.rect(c,mx+3,my+25,106,97,'rgba(37,99,235,0.08)','#2563eb',7);
+    G.text(c,'↓ 縱看預測正欄',mx+56,my+135,12,'#2563eb');
+  }else if(isR){
+    G.rect(c,mx+3,my+25,214,49,'rgba(217,119,6,0.08)','#d97706',7);
+    G.text(c,'→ 橫看真實正列',mx+270,my+50,12,'#d97706');
+  }else if(isA){
+    G.line(c,mx+15,my+35,mx+205,my+110,'#16a34a',2,[4,3]);
+    G.text(c,'⤨ 斜看對角總和',mx+115,my+135,12,'#16a34a');
+  }else if(isF){
+    G.text(c,'⚖️ 調和天平：平衡 Precision 與 Recall',mx+115,my+135,12,C.purple);
+  }
+
+  const cards=[
+    {key:'precision',name:'Precision 精確率',formula:`TP/(TP+FP) = ${out.tp}/${out.tp+out.fp}`,val:out.precision,color:'#2563eb'},
+    {key:'recall',name:'Recall 召回率',formula:`TP/(TP+FN) = ${out.tp}/${out.tp+out.fn}`,val:out.recall,color:'#d97706'},
+    {key:'accuracy',name:'Accuracy 準確率',formula:`(TP+TN)/40 = ${out.tp+out.tn}/40`,val:out.accuracy,color:'#16a34a'},
+    {key:'f1',name:'F1-Score',formula:'2PR / (P+R)',val:out.f1,color:C.purple}
+  ];
+
+  cards.forEach((card,i)=>{
+    const cy=168+i*54;
+    const active=view===card.key;
+    G.rect(c,mx-12,cy,332,48,active?'#f0fdf4':C.white,active?card.color:C.line,6);
+    G.text(c,card.name,mx+5,cy+16,14,active?card.color:C.ink,'left');
+    G.text(c,card.formula,mx+5,cy+34,11,C.muted,'left');
+    G.text(c,M.fmt(card.val),mx+305,cy+18,17,active?card.color:C.green,'right');
+    if(typeof card.val==='number'){
+      G.rect(c,mx+210,cy+31,95,5,'#e2e8f0',null,2);
+      G.rect(c,mx+210,cy+31,Math.max(0,Math.min(95,card.val*95)),5,card.color,null,2);
+    }
+  });
+
+  G.heading(c,'分類指標體系：觀察視角與動態切片');
+
+  let msg=`TP ${out.tp} / FP ${out.fp} / FN ${out.fn} / TN ${out.tn}；AUC=${M.fmt(roc.auc)}。`;
+  if(view==='precision'){
+    msg+=`【Precision 縱向視角】= ${M.fmt(out.precision)}。在所有模型判定患病的 ${out.tp+out.fp} 人中，抓對 ${out.tp} 人（冤枉誤報 ${out.fp} 人）。適用於垃圾郵件、定罪等「絕不能冤枉好人」的情境。`;
+  }else if(view==='recall'){
+    msg+=`【Recall 橫向視角】= ${M.fmt(out.recall)}。在真實世界全部患病的 ${out.tp+out.fn} 人中，成功抓出 ${out.tp} 人（遺漏 ${out.fn} 人！）。適用於癌症篩檢、地震警報等「寧可誤報、絕不能漏放」的情境。`;
+  }else if(view==='accuracy'){
+    msg+=`【Accuracy 對角視角】= ${M.fmt(out.accuracy)}。全部 40 筆樣本猜對了 ${out.tp+out.tn} 筆。請留意：當正類極少時，模型即使全部瞎猜健康，Accuracy 也能飆高，容易掩蓋抓不出病人的致命缺陷。`;
+  }else if(view==='f1'){
+    msg+=`【F1-Score 調和天平】= ${M.fmt(out.f1)}。Precision 與 Recall 彼此牽制拉扯；F1 採用調和平均，任何一項短板都會大幅拖垮總分。`;
+  }else{
+    msg+=`拖動門檻滑桿：門檻調高通常 Precision 提升但 Recall 下降。切換「觀察視角」可啟動混淆矩陣切片探照燈！`;
+  }
+
+  return {message:msg,metrics:{...out,auc:roc.auc}};
+},undefined,{guide:['指標觀察視角：切換「縱看 Precision / 橫看 Recall / 斜看 Accuracy / 天平 F1」，右側矩陣會打出切片探照燈！','混淆矩陣切片：右上為微縮 2×2 矩陣，左欄為「預測正類」、上列為「真實正類」。','分類門檻：移動滑桿觀察 ROC 曲線橘點滑動，四象限人數即時變動，指標彼此拉扯。','正類比例：可調整真實正類占比（如罕見疾病不平衡數據），體會 Accuracy 的失真陷阱。','分母為零時指標顯示「未定義」。']}),
 demo('regression-errors','MAE、MSE、RMSE',[range('slope','預測斜率',0,2,.8,.1),check('outlier','加入離群值',false)],(c,s)=>{
  const data=s.params.outlier?[...errorData,{x:4.5,y:8}]:errorData,a=G.axes(c,{xmin:0,xmax:5,ymin:0,ymax:9,x:55,w:390,h:280,xlabel:'特徵 X₁',ylabel:'標籤 y'}),fn=x=>s.params.slope*x+.8,out=M.regressionMetrics(data,fn);
  const errors=data.map(p=>Math.abs(p.y-fn(p.x))),scale=65/Math.max(...errors,1);
