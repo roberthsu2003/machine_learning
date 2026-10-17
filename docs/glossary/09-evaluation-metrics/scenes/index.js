@@ -137,15 +137,12 @@ demo('classification-metrics','分類指標與 ROC',[select('view','指標觀察
 
   return {message:msg,metrics:{...out,auc:roc.auc}};
 },undefined,{guide:['指標觀察視角：切換「縱看 Precision / 橫看 Recall / 斜看 Accuracy / 天平 F1」，右側矩陣會打出切片探照燈！','混淆矩陣切片：右上為微縮 2×2 矩陣，左欄為「預測正類」、上列為「真實正類」。','分類門檻：移動滑桿觀察 ROC 曲線橘點滑動，四象限人數即時變動，指標彼此拉扯。','正類比例：可調整真實正類占比（如罕見疾病不平衡數據），體會 Accuracy 的失真陷阱。','分母為零時指標顯示「未定義」。']}),
-demo('regression-errors','MAE、MSE、RMSE',[select('focus','指標聚焦與白話解讀',[
-  ['compare','三大指標總覽對比（MAE vs MSE vs RMSE）'],
-  ['mae','MAE：平均每筆猜錯多少？（原單位·直觀接地氣）'],
-  ['mse','MSE：平方放大嚴懲大失誤（平方單位·極度敏感）'],
-  ['rmse','RMSE：開根號還原人話單位（兼顧懲罰與可讀性）']
-]),range('slope','預測斜率',0,2,.8,.1),check('outlier','加入極端離群值（觀察指標跳變！）',false)],(c,s)=>{
+demo('regression-errors','MAE、MSE、RMSE',[
+  check('outlier','🚨 加入極端離群值（觀察 MAE、MSE 與 RMSE 的跳變反應）',false)
+],(c,s)=>{
   const data=s.params.outlier?[...errorData,{x:4.5,y:8}]:errorData;
   const a=G.axes(c,{xmin:0,xmax:5,ymin:0,ymax:9,x:50,y:75,w:280,h:265,xlabel:'特徵 X₁',ylabel:'標籤 y'});
-  const fn=x=>s.params.slope*x+.8,out=M.regressionMetrics(data,fn);
+  const fn=x=>.8*x+.8,out=M.regressionMetrics(data,fn);
   const errors=data.map(p=>Math.abs(p.y-fn(p.x))),scale=65/Math.max(...errors,1);
 
   G.dots(c,a,data);
@@ -158,72 +155,77 @@ demo('regression-errors','MAE、MSE、RMSE',[select('focus','指標聚焦與白�
     G.line(c,a.X(p.x),a.Y(p.y),a.X(p.x),a.Y(yHat),isOutlier?'#dc2626':C.purple,isOutlier?3:2);
     if(isOutlier){
       G.circle(c,a.X(p.x),a.Y(p.y),6,'#dc2626');
-      G.text(c,'🚨 離群值',a.X(p.x)-32,a.Y(p.y),11,'#dc2626');
+      G.text(c,'🚨 離群值 (4.5, 8.0)',a.X(p.x)-50,a.Y(p.y)-10,11.5,'#dc2626','left');
+      G.text(c,`殘差 e = 3.60`,a.X(p.x)-50,a.Y(p.y)+14,10.5,'#dc2626','left');
     }
   });
 
-  G.heading(c,'回歸評估指標：MAE、MSE 與 RMSE');
-  G.legend(c,[['真實樣本',C.green],['預測線',C.orange],[s.params.outlier?'殘差／離群值':'殘差 e',C.purple]],50,420,135);
+  G.heading(c,'回歸評估指標：離群值對 MAE、MSE、RMSE 的衝擊');
+  G.legend(c,[['真實樣本',C.green],['預測線 (y=0.8x+0.8)',C.orange],[s.params.outlier?'離群殘差 (大錯)':'正常殘差 e',s.params.outlier?'#dc2626':C.purple]],50,420,120);
 
-  const focus=s.params.focus||'compare';
-  const rx=360;
-
-  // 頂部狀態橫幅 (y: 50 ~ 82)
-  if(s.params.outlier){
-    G.rect(c,rx,52,370,32,'#fef2f2','#fca5a5',6);
-    G.text(c,'⚠️ 偵測到極端離群值！MSE 平方放大暴增，RMSE 飆升',rx+185,68,12,'#b91c1c');
-  }else{
-    G.rect(c,rx,52,370,32,'#f8fafc',C.line,6);
-    G.text(c,`共有 ${data.length} 筆樣本殘差：觀察三個指標如何衡量失誤`,rx+185,68,12,C.muted);
-  }
-
-  // 三大指標卡片 (y: 92, 182, 272)
-  const isMae=focus==='mae',isMse=focus==='mse',isRmse=focus==='rmse';
+  const rx=355;
+  const ratio=out.mae?out.rmse/out.mae:1;
   const sumAbs=errors.reduce((sum,v)=>sum+v,0);
 
+  // 頂部核心診斷狀態列 (y: 48 ~ 92)
+  if(s.params.outlier){
+    G.rect(c,rx,48,375,44,'#fef2f2','#fca5a5',8);
+    G.text(c,'🚨 警報！偵測到極端離群值大失誤（翻車樣本）',rx+16,66,13,'#b91c1c','left');
+    G.text(c,`僅 1 筆離群大錯，MSE 暴衝 13 倍！RMSE 飆開 MAE 達 ${ratio.toFixed(2)} 倍！`,rx+16,82,11,'#b91c1c','left');
+  }else{
+    G.rect(c,rx,48,375,44,'#f0fdf4','#86efac',8);
+    G.text(c,'✅ 狀態良好：模型預測均勻穩定，無離群爆雷',rx+16,66,13,'#15803d','left');
+    G.text(c,`RMSE (${M.fmt(out.rmse,2)}) ≈ MAE (${M.fmt(out.mae,2)})，比值 ${ratio.toFixed(2)}（在健康門檻 ≤ 1.25 內）`,rx+16,82,11,'#15803d','left');
+  }
+
+  // 三大指標卡片 (y: 102, 178, 254，高度各 68px)
   // 1. MAE 卡片
-  G.rect(c,rx,92,370,82,isMae?'#f0fdf4':C.white,isMae?'#16a34a':C.line,8);
-  G.rect(c,rx,92,6,82,'#16a34a',null,3);
-  G.text(c,'MAE 平均絕對誤差',rx+18,108,13.5,isMae?'#15803d':C.ink,'left');
-  G.text(c,`${M.fmt(out.mae,3)} (原單位)`,rx+355,108,16,'#15803d','right');
-  G.text(c,`公式：Σ|e| / ${data.length} = ${M.fmt(sumAbs,2)} / ${data.length}`,rx+18,128,11,C.muted,'left');
-  G.text(c,`白話：平均每筆猜錯約 ${M.fmt(out.mae,2)} 單位（最接地氣的人話）`,rx+18,146,11.5,C.ink,'left');
-  G.text(c,'特性：一視同仁 · 抗離群值干擾，不會被少數極端值綁架',rx+18,162,10.5,'#15803d','left');
+  G.rect(c,rx,102,375,68,C.white,'#16a34a',7);
+  G.rect(c,rx,102,6,68,'#16a34a',null,3);
+  G.text(c,'MAE 平均絕對誤差',rx+18,118,13.5,'#15803d','left');
+  G.text(c,`${M.fmt(out.mae,3)} (原單位)`,rx+360,118,16,'#15803d','right');
+  G.text(c,`公式：Σ|e| / ${data.length} = ${M.fmt(sumAbs,2)} / ${data.length}`,rx+18,136,11,C.muted,'left');
+  G.text(c,'白話：平均每筆猜錯多少 ｜ 特性：對離群值一視同仁，抗噪穩健',rx+18,153,11,'#15803d','left');
 
   // 2. MSE 卡片
-  G.rect(c,rx,182,370,82,isMse?'#faf5ff':C.white,isMse?C.purple:C.line,8);
-  G.rect(c,rx,182,6,82,C.purple,null,3);
-  G.text(c,'MSE 均方誤差',rx+18,198,13.5,isMse?C.purple:C.ink,'left');
-  G.text(c,`${M.fmt(out.mse,3)} (平方單位²)`,rx+355,198,16,C.purple,'right');
-  G.text(c,`公式：Σ(e²) / ${data.length} = ${M.fmt(out.sse,2)} / ${data.length}`,rx+18,218,11,C.muted,'left');
-  G.text(c,'白話：把誤差取平方當面積平均（極度嚴懲大失誤！）',rx+18,236,11.5,C.ink,'left');
-  G.text(c,'特性：對離群值極度敏感；缺點是平方單位不是人話',rx+18,252,10.5,C.purple,'left');
+  G.rect(c,rx,178,375,68,C.white,C.purple,7);
+  G.rect(c,rx,178,6,68,C.purple,null,3);
+  G.text(c,'MSE 均方誤差',rx+18,194,13.5,C.purple,'left');
+  G.text(c,`${M.fmt(out.mse,3)} (平方單位²)`,rx+360,194,16,C.purple,'right');
+  G.text(c,`公式：Σ(e²) / ${data.length} = ${M.fmt(out.sse,2)} / ${data.length}`,rx+18,212,11,C.muted,'left');
+  G.text(c,'白話：誤差取平方當面積平均 ｜ 缺陷：單位不是人話，嚴禁與 MAE 比！',rx+18,229,11,C.purple,'left');
 
   // 3. RMSE 卡片
-  G.rect(c,rx,272,370,82,isRmse?'#fffbeb':C.white,isRmse?'#d97706':C.line,8);
-  G.rect(c,rx,272,6,82,'#d97706',null,3);
-  G.text(c,'RMSE 均方根誤差',rx+18,288,13.5,isRmse?'#b45309':C.ink,'left');
-  G.text(c,`${M.fmt(out.rmse,3)} (原單位)`,rx+355,288,16,'#b45309','right');
-  G.text(c,`公式：√MSE = √${M.fmt(out.mse,3)}`,rx+18,308,11,C.muted,'left');
-  G.text(c,`白話：把 MSE 開根號變回原單位，但保留對大錯的懲罰！`,rx+18,326,11.5,C.ink,'left');
-  G.text(c,'特性：實務最受歡迎指標！兼顧「敏感懲罰」與「可讀單位」',rx+18,342,10.5,'#b45309','left');
+  G.rect(c,rx,254,375,68,C.white,'#d97706',7);
+  G.rect(c,rx,254,6,68,'#d97706',null,3);
+  G.text(c,'RMSE 均方根誤差',rx+18,270,13.5,'#b45309','left');
+  G.text(c,`${M.fmt(out.rmse,3)} (原單位)`,rx+360,270,16,'#b45309','right');
+  G.text(c,`公式：√MSE = √${M.fmt(out.mse,3)}`,rx+18,288,11,C.muted,'left');
+  G.text(c,'白話：開根號還原原單位 ｜ 核心：兼顧人話單位與嚴懲大錯，專與 MAE 比',rx+18,305,10.5,'#b45309','left');
 
-  // 底部白話小提醒
-  G.text(c,'💡 勾選下方「加入極端離群值」，立即感受 MSE 與 RMSE 被炸飛！',rx+185,385,11,C.muted);
+  // 底部離群值診斷條 (y: 332 ~ 398)
+  G.rect(c,rx,332,375,66,s.params.outlier?'#fffbeb':'#f8fafc',C.line,8);
+  G.text(c,'🎯 診斷尺：比值 RMSE / MAE',rx+18,348,12.5,C.ink,'left');
+  G.text(c,`${ratio.toFixed(2)} 倍 ${s.params.outlier?'(異常！)':'(健康)'}`,rx+360,348,14.5,s.params.outlier?'#b91c1c':'#15803d','right');
+  
+  // 診斷條進度背景
+  G.rect(c,rx+18,363,338,8,'#e2e8f0',null,4);
+  const barW=Math.min(338,Math.max(20,(ratio-1)/1.2*338));
+  G.rect(c,rx+18,363,barW,8,s.params.outlier?'#dc2626':'#16a34a',null,4);
+  
+  if(s.params.outlier){
+    G.text(c,'⚠️ 比值達 1.72（遠大於 1.25）：明確存在少數極端離群大失誤！',rx+18,386,11,'#b91c1c','left');
+  }else{
+    G.text(c,'✅ 比值為 1.24（≤ 1.25）：代表各筆誤差小且均勻分布，無離群爆雷。',rx+18,386,11,'#15803d','left');
+  }
 
   let msg=`MAE=${M.fmt(out.mae)}（原單位），MSE=${M.fmt(out.mse)}（平方單位），RMSE=${M.fmt(out.rmse)}（原單位）。`;
   if(s.params.outlier){
-    msg+=`【離群值效應】加入一筆 (4.5, 8.0) 的極端失誤後，該筆誤差平方直接炸出巨大面積，導致 MSE 暴衝！RMSE 也大幅飆高，唯獨 MAE 依然保持穩健。`;
-  }else if(focus==='mae'){
-    msg+=`【MAE 白話】平均絕對誤差：所有資料點到回歸線的直線距離平均。若預測房價單位是「萬元」，MAE=0.34 代表模型平均每筆猜錯 0.34 萬元，最容易向業務主管報告。`;
-  }else if(focus==='mse'){
-    msg+=`【MSE 白話】均方誤差：把誤差平方後平均。猜錯 1 單位平方罰 1 分，猜錯 4 單位平方狠罰 16 分！數學上好求導，是演算法最佳化的常用損失函數。`;
-  }else if(focus==='rmse'){
-    msg+=`【RMSE 白話】均方根誤差：因為 MSE 單位是「平方萬元」讀不懂，開根號還原回「萬元」。因為有平方過，它比 MAE 更嚴格要求不能出現太大的致命失誤。`;
+    msg+=`【離群值診斷】勾選加入 1 筆離群值後，RMSE / MAE 比值飆升至 ${ratio.toFixed(2)} 倍！這說明：不需要很多離群值，只要有一兩筆大失誤，RMSE 就會大幅甩開 MAE。`;
   }else{
-    msg+=`三者關係：通常 RMSE ≥ MAE。當差距越大時，代表資料中存在越懸殊的極端失誤！`;
+    msg+=`【無離群值】RMSE (${M.fmt(out.rmse,2)}) 與 MAE (${M.fmt(out.mae,2)}) 非常接近（比值 ${ratio.toFixed(2)}）。代表模型預測極其穩定，各筆誤差均勻分布。`;
   }
 
   return {message:msg,metrics:{...out,squareScale:scale,absoluteErrors:errors}};
-},undefined,{guide:['左圖散佈圖：綠圓為真實資料點，橘線為預測模型，紫色垂直線為殘差（失誤距離）。','MAE (平均絕對誤差)：把所有紫色線段長度直接平均，最符合人類直覺，代表「平均猜錯多少」。','MSE (均方誤差)：把殘差平方後平均，專門用來嚴格處罰大錯誤，但單位不是人話。','RMSE (均方根誤差)：把 MSE 開根號變回原單位，兼顧「對大失誤的敏感懲罰」與「人能看懂的單位」。','切換「加入極端離群值」：立刻觀察為什麼 MAE 只溫和上升，而 MSE 與 RMSE 卻劇烈暴增！']}),
+},undefined,{interactiveOnly:true,guide:['核心操作：勾選下方「加入極端離群值」，直接觀察右上角指標跳變！','MAE (平均絕對誤差)：對大失誤一視同仁，抗離群值干擾。','MSE (均方誤差)：平方放大誤差，演算法好算，但平方單位不是人話，嚴禁與 MAE 比！','RMSE (均方根誤差)：開根號變回原單位，專門用來跟 MAE 相比。','離群值診斷尺：當 RMSE 遠大於 MAE（比值 > 1.25）時，代表模型出現了致命的大翻車樣本！']}),
 demo('r-squared','R²',[select('model','比較預測模型',[['good','正常好模型（捕捉規律）'],['mean','瞎猜笨模型（只猜平均值）'],['bad','幫倒忙模型（預測嚴重離譜）'],['constant','常數標籤（邊界情況：SST=0）']])],(c,s)=>{const data=s.params.model==='constant'?errorData.map(p=>({...p,y:3})):errorData,mu=M.mean(data.map(p=>p.y)),fn=s.params.model==='mean'?()=>mu:s.params.model==='bad'?()=>8:s.params.model==='constant'?()=>2:x=>.8*x+1,stats=M.regressionMetrics(data,fn),a=G.axes(c,{xmin:0,xmax:5,ymin:0,ymax:9,x:55,w:390,h:280,xlabel:'特徵 X₁',ylabel:'標籤 y'});G.dots(c,a,data);G.curve(c,a,()=>mu,C.green,2);G.curve(c,a,fn,C.orange,3);data.forEach(p=>{G.line(c,a.X(p.x),a.Y(p.y),a.X(p.x),a.Y(fn(p.x)),C.purple,2);});const max=Math.max(stats.sse,stats.sst,1);G.rect(c,510,150,170*s.progress*stats.sst/max,45,C.mint,null,0);G.rect(c,510,250,170*s.progress*stats.sse/max,45,'#ebdff3',null,0);G.text(c,`SST = ${M.fmt(stats.sst,2)} (笨模型失誤)`,590,125,15,C.green);G.text(c,`SSE = ${M.fmt(stats.sse,2)} (模型殘差)`,590,225,15,C.purple);G.heading(c,'R² = 1 − SSE / SST','色條逐步展開到總平方和；同一畫面共用比例尺');G.legend(c,[['真實樣本／平均基準',C.green],['比較模型',C.orange],['模型殘差',C.purple]],75,398,245);const msg=stats.sst===0?'y 為常數，SST=0（無波動），R² 未定義。':stats.r2<0?`R²=${M.fmt(stats.r2)}（負數！）。幫倒忙模型：預測誤差比直接猜平均還離譜，代表方向搞反或嚴重過擬合。`:stats.r2===0?'R²=0.00 (0%)。瞎猜笨模型：誤差與直接猜平均值一模一樣，完全沒學到特徵。':`R²=${M.fmt(stats.r2)}（約 ${(stats.r2*100).toFixed(0)}%）。正常好模型：成功消滅了原本笨模型約 ${(stats.r2*100).toFixed(0)}% 的失誤！`;return {message:msg,metrics:stats};},undefined,{guide:['1. 綠線是猜平均值的「基準笨模型」，失誤總量為綠條 SST (總平方和)。','2. 橘線是你的「預測模型」，未消滅的殘差失誤為紫條 SSE (殘差平方和)。','3. 切換「比較預測模型」：觀察 R² 從正常好模型 (約 0.85)、瞎猜笨模型 (0.00) 到幫倒忙模型 (負數)。','4. 公式 R² = 1 − SSE / SST：衡量模型把原本笨模型的失誤消滅了百分之幾。','5. 常數標籤時 SST=0（數據完全無波動），此時 R² 顯示未定義。']})];

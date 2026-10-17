@@ -76,7 +76,9 @@ function buildGuideModal(def, panel){
   const h4 = document.createElement('h4');
   h4.textContent = '🎮 底部控制按鈕功能說明';
   const actionList = document.createElement('ul');
-  const actions = [
+  const actions = def.interactiveOnly ? [
+    ['放大圖表', '展開全螢幕視角，查看更多幾何座標與指標細節（按 Esc 鍵即可返回）。']
+  ] : [
     ['▶ 播放動畫', '自動連續播放動畫，動態展示數據計算、演算法推演與邊界形成過程。'],
     ['下一步 →', '單步推進關鍵步驟（每按一次前進一步），適合細細觀察每階段的圖形與數值變化。'],
     ['↺ 重設', '將動畫進度歸零並復原初始狀態，方便重新看起。'],
@@ -156,13 +158,37 @@ export function mountScenes(definitions){
     const controls=panel.querySelector('.scene-parameters');(def.fields||[]).forEach(field=>fieldControl(field,state,controls));
     const play=panel.querySelector('[data-action="play"]'),timeline=panel.querySelector('.timeline');
     state.buttonState=()=>{play.textContent=state.playing?'Ⅱ 暫停':'▶ 播放動畫';play.setAttribute('aria-pressed',String(state.playing));};
+    
+    if(def.interactiveOnly){
+      panel.classList.add('scene-interactive-only');
+      if(play) play.hidden=true;
+      const resetBtn=panel.querySelector('[data-action="reset"]');
+      if(resetBtn) resetBtn.hidden=true;
+      const stepBtn=panel.querySelector('[data-action="step"]');
+      if(stepBtn) stepBtn.hidden=true;
+      const speedLabel=panel.querySelector('.speed')?.closest('label');
+      if(speedLabel) speedLabel.hidden=true;
+      if(timeline) timeline.hidden=true;
+      const timeLabel=panel.querySelector('.time-label');
+      if(timeLabel) timeLabel.hidden=true;
+      const note=panel.querySelector('.scene-note');
+      if(note) note.textContent='此為即時互動圖表，調整下方參數即可即時觀察幾何與數值變化；放大後按 Esc 可返回。';
+      const zoomBtn=panel.querySelector('[data-action="zoom"]');
+      if(zoomBtn) zoomBtn.textContent='放大圖表';
+      const tag=panel.querySelector('.scene-tag');
+      if(tag) tag.textContent='INTERACTIVE CHART';
+    }
+
     state.draw=()=>{
       const r=canvas.getBoundingClientRect();if(!r.width||!r.height)return;
       const [viewWidth,viewHeight]=def.viewSize?.(r.width)??[760,450];
       if(def.viewSize)canvas.style.aspectRatio=`${viewWidth}/${viewHeight}`;
       const dpr=Math.min(devicePixelRatio||1,2),w=Math.round(r.width*dpr),h=Math.round(r.height*dpr);if(canvas.width!==w||canvas.height!==h){canvas.width=w;canvas.height=h;}
       ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,w,h);const scale=Math.min(w/viewWidth,h/viewHeight);ctx.setTransform(scale,0,0,scale,(w-viewWidth*scale)/2,(h-viewHeight*scale)/2);
-      state.progress=state.time/16;const steps=typeof def.steps==='function'?def.steps(state):def.steps??12;state.step=Math.min(steps,Math.floor(state.progress*steps+1e-6));state.phase=state.progress*4;
+      state.progress=def.interactiveOnly?1:state.time/16;
+      const steps=typeof def.steps==='function'?def.steps(state):def.steps??12;
+      state.step=def.interactiveOnly?steps:Math.min(steps,Math.floor(state.progress*steps+1e-6));
+      state.phase=state.progress*4;
       const result=def.render(ctx,state)||{};
       if(result.message&&panel.querySelector('.scene-result').textContent!==result.message)panel.querySelector('.scene-result').textContent=result.message;
       state.lastResult=result;panel.dataset.result=JSON.stringify(result.metrics??{});panel.dataset.time=state.time.toFixed(3);
@@ -173,7 +199,13 @@ export function mountScenes(definitions){
     panel.querySelector('[data-action="step"]').addEventListener('click',()=>{state.playing=false;const steps=typeof def.steps==='function'?def.steps(state):def.steps??12;state.time=state.time>=16?0:Math.min(16,(Math.floor(state.time/16*steps+1e-6)+1)*16/steps);state.buttonState();state.draw();});
     panel.querySelector('[data-action="resample"]').addEventListener('click',()=>{state.params.seed++;state.time=0;state.playing=false;state.buttonState();state.draw();});
     panel.querySelector('[data-action="resample"]').hidden=!def.resample;
-    panel.querySelector('[data-action="zoom"]').addEventListener('click',event=>{const zoom=panel.classList.toggle('zoomed');event.currentTarget.textContent=zoom?'收回動畫':'放大動畫';document.body.classList.toggle('scene-open',zoom);state.draw();});
+    panel.querySelector('[data-action="zoom"]').addEventListener('click',event=>{
+      const zoom=panel.classList.toggle('zoomed');
+      const baseLabel=def.interactiveOnly?'圖表':'動畫';
+      event.currentTarget.textContent=zoom?`收回${baseLabel}`:`放大${baseLabel}`;
+      document.body.classList.toggle('scene-open',zoom);
+      state.draw();
+    });
     const guideBtn=document.createElement('button');guideBtn.type='button';guideBtn.className='btn-guide-toggle';guideBtn.setAttribute('data-action','guide');guideBtn.textContent='💡 操作解說';guideBtn.title='查看本場景完整操作指南與按鈕解說';guideBtn.addEventListener('click',openGuide);panel.querySelector('[data-action="zoom"]').after(guideBtn);
     panel.querySelector('.speed').addEventListener('change',event=>state.speed=Number(event.target.value));
     timeline.addEventListener('input',event=>{state.time=Number(event.target.value);state.playing=false;state.buttonState();state.draw();});
@@ -187,7 +219,16 @@ let previous=performance.now();
 function frame(now){const dt=Math.min(.1,(now-previous)/1000);previous=now;scenes.forEach(s=>{if(s.playing&&s.visible&&!document.hidden){s.time=clamp(s.time+dt*s.speed,0,16);if(s.time>=16){s.playing=false;s.buttonState();}s.draw();}});requestAnimationFrame(frame);}
 requestAnimationFrame(frame);
 document.addEventListener('visibilitychange',()=>{if(document.hidden)scenes.forEach(s=>{s.playing=false;s.buttonState();});});
-document.addEventListener('keydown',event=>{if(event.key==='Escape'){document.querySelectorAll('.zoomed').forEach(panel=>{panel.classList.remove('zoomed');panel.querySelector('[data-action="zoom"]').textContent='放大動畫';});document.body.classList.remove('scene-open');}});
+document.addEventListener('keydown',event=>{
+  if(event.key==='Escape'){
+    document.querySelectorAll('.zoomed').forEach(panel=>{
+      panel.classList.remove('zoomed');
+      const zoomBtn=panel.querySelector('[data-action="zoom"]');
+      if(zoomBtn)zoomBtn.textContent=panel.classList.contains('scene-interactive-only')?'放大圖表':'放大動畫';
+    });
+    document.body.classList.remove('scene-open');
+  }
+});
 document.querySelector('[data-print]')?.addEventListener('click',()=>window.print());
 const demoLinks=[...document.querySelectorAll('.lesson-toc a')];
 const tocObserver=new IntersectionObserver(entries=>{const first=entries.find(e=>e.isIntersecting);if(first)demoLinks.forEach(a=>a.toggleAttribute('aria-current',a.hash===`#${first.target.id}`));},{rootMargin:'-10% 0px -60% 0px'});

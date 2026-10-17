@@ -361,8 +361,8 @@
         {
           "id": "regression-errors",
           "title": "MAE、MSE、RMSE",
-          "geometry": "殘差線段對應各筆平方色塊，標出 |e|、e² 與共用倍率，避免裁切、重疊或色塊太小。",
-          "controls": "移動預測線、加入／移除離群值、比較誤差數值",
+          "geometry": "殘差線段對照三大指標卡片，加入極端離群值立即觀察 MSE 與 RMSE 暴衝跳變與診斷比值。",
+          "controls": "加入極端離群值、比較三大指標與診斷比值",
           "source_images": [
             "名詞解釋/09_評估指標/images/03_regression_metrics_errors.png"
           ]

@@ -39,3 +39,8 @@ dialog.scene-guide-dialog::backdrop{background:#18332f50;backdrop-filter:blur(3p
 .guide-dialog-footer{padding:12px 22px;border-top:1px solid var(--line);background:#fbfdfa;display:flex;justify-content:flex-end}
 .guide-dialog-footer button{padding:8px 20px;font-size:14px}
 @media print{dialog.scene-guide-dialog,.guide-chip,.scene-controls button[data-action="guide"]{display:none!important}}
+.scene-interactive-only .scene-controls{gap:12px;padding:10px 20px}
+.scene-parameters > .parameter:only-child{grid-column:1/-1}
+.parameter:has(input[type=checkbox]){cursor:pointer;background:#f8fafc;border:1px solid #cbd5e1;border-radius:8px;padding:10px 16px;display:flex;align-items:center;gap:12px;font-weight:600;color:#1e293b;transition:all .2s ease}
+.parameter:has(input[type=checkbox]):hover{background:#f1f5f9;border-color:#94a3b8}
+.parameter:has(input[type=checkbox]:checked){background:#fef2f2;border-color:#fca5a5;color:#b91c1c}
