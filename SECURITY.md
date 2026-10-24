@@ -1,21 +1,12 @@
-# Security Policy
+# 教材安全與套件維護
 
-## Supported Versions
+這是教學儲存庫，沒有獨立的軟體發行版本。課堂環境以根目錄的 `pyproject.toml` 和 `uv.lock` 為準。
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
+```bash
+uv sync --locked
+uv audit --frozen
+```
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+GitHub Dependabot 每週檢查 `uv` 依賴更新。合併更新前，應重跑套件匯入檢查與相關 Notebook。
 
-## Reporting a Vulnerability
-
-Use this section to tell people how to report a vulnerability.
-
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+教材中的金鑰、權杖與密碼一律使用佔位文字或環境變數，不應寫入 Notebook 或提交至 Git。`LINE Notify` 已停止服務，相關 Notebook 只保留作為歷史範例。

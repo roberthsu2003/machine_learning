@@ -9,3 +9,5 @@ graphviz
 ipywidgets
 xlrd
 mplfonts
+jupyter>=1.1.1
+mglearn>=0.2.0

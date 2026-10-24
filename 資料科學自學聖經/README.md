@@ -18,8 +18,10 @@
 ├── 📁 05_自然語言與文本分類/    # 新聞標題文字分類 (TF-IDF + Naive Bayes/Logistic Regression)
 ├── 📁 06_時間序列與RNN/         # 台股股價歷史數據與 RNN/LSTM 時間序列預測
 ├── 📁 07_電腦視覺與深度學習/    # MNIST 手寫數字 (DNN)、貓狗二分類 (CNN)、花朵遷移學習與 YOLOv4
-└── 📁 08_自動化推播與應用/      # 模型成果整合與 LINE Notify 自動化推播
+└── 📁 08_自動化推播與應用/      # LINE Notify 歷史範例（服務已停止）
 ```
+
+> LINE Notify 已於 2025 年 3 月 31 日停止服務。第 08 章與「進階模組實戰」中的相關程式僅供閱讀舊版流程，現在無法發送通知。若要開發新的 LINE 通知功能，請參考 [官方 Messaging API 說明](https://developers.line.biz/en/docs/messaging-api/overview/)。
 
 ---
 

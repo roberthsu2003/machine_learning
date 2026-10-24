@@ -1,11 +1,21 @@
 [project]
 name = "machine-learning"
 version = "0.1.0"
-description = "Add your description here"
+description = "Machine learning teaching notebooks and examples"
 readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
+    "graphviz",
+    "ipython",
+    "ipywidgets",
     "jupyter>=1.1.1",
-    "lab>=8.10",
+    "matplotlib",
     "mglearn>=0.2.0",
+    "mplfonts",
+    "numpy",
+    "pandas",
+    "scikit-learn",
+    "scipy",
+    "seaborn",
+    "xlrd",
 ]

@@ -41,6 +41,8 @@ python -m pip install -r requirements.txt
 
 Windows 的啟用指令為 `.venv\Scripts\activate`。進入選定的專案資料夾後，先閱讀該專案 `README.md` 的「從這裡開始」。桌面示範程式可能還需要平台支援的圖形介面套件。
 
+若已安裝 `uv`，也可以在儲存庫根目錄執行 `uv sync --locked`，依照已檢查的 `uv.lock` 安裝相同版本。
+
 教材中的房價、醫療、司法與職場範例以教學為目的；模型輸出不供實際個人判斷或專業決策。
 
 [教師課程時數規劃](./教師課程規劃.md) · [專案導覽維護說明](./docs/projects/README.md)
