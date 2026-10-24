@@ -1,4 +1,25 @@
-# 🩺 範例 05：乳癌診斷與 PCA 降維（降維篇）
+# 05｜乳癌診斷｜PCA降維篇
+
+**任務：分類／降維 · 程度：進階**
+
+**要回答的問題：降維後的分類結果如何變化？**
+
+## 從這裡開始
+
+1. 開啟 [教學 Notebook](./%E4%B9%B3%E7%99%8C%E8%A8%BA%E6%96%B7_PCA%E9%99%8D%E7%B6%AD%E7%AF%87.ipynb)，從第一個儲存格依序執行。
+2. 對照 [資料集](./breastCancer.csv)，找出輸入欄位與預測目標。
+3. 完成後再看 [示範應用程式](./app.py)，比較它的輸入、輸出與 Notebook 是否一致。
+
+**完成檢查：**比較 PCA 前後的資料與模型；僅供教學。
+
+> 本專案僅供機器學習教學，不能用於醫療診斷。
+
+[返回本系列目錄](../README.md) · [回到全部實戰專案](../../docs/projects/index.html)
+
+<details>
+<summary>展開完整說明、資料欄位與 AI 提問</summary>
+
+<!-- student-guide:details -->
 
 [乳癌診斷_PCA降維篇.ipynb](./乳癌診斷_PCA降維篇.ipynb)
 
@@ -89,3 +110,6 @@ python app.py
 ```
 
 此 GUI 是教學與模型比較工具，不可作為真實領域的專業判斷。
+
+<!-- student-guide:details-end -->
+</details>

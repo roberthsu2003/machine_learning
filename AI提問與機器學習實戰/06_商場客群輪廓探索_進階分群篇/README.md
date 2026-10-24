@@ -1,4 +1,23 @@
-# 🧭 範例 06：商場客群輪廓探索（進階分群篇）
+# 06｜商場客群輪廓探索｜進階分群篇
+
+**任務：分群 · 程度：進階**
+
+**要回答的問題：不同分群方法會給出什麼結果？**
+
+## 從這裡開始
+
+1. 開啟 [教學 Notebook](./%E5%95%86%E5%A0%B4%E5%AE%A2%E7%BE%A4%E8%BC%AA%E5%BB%93%E6%8E%A2%E7%B4%A2_%E9%80%B2%E9%9A%8E%E5%88%86%E7%BE%A4%E7%AF%87.ipynb)，從第一個儲存格依序執行。
+2. 對照 [資料集](./customer.csv)，找出輸入欄位與預測目標。
+3. 完成後再看 [示範應用程式](./app.py)，比較它的輸入、輸出與 Notebook 是否一致。
+
+**完成檢查：**比較階層式分群、DBSCAN 與雜訊點。
+
+[返回本系列目錄](../README.md) · [回到全部實戰專案](../../docs/projects/index.html)
+
+<details>
+<summary>展開完整說明、資料欄位與 AI 提問</summary>
+
+<!-- student-guide:details -->
 
 [商場客群輪廓探索_進階分群篇.ipynb](./商場客群輪廓探索_進階分群篇.ipynb)
 
@@ -89,3 +108,6 @@ python app.py
 ```
 
 此 GUI 是教學與模型比較工具，不可作為真實領域的專業判斷。
+
+<!-- student-guide:details-end -->
+</details>
