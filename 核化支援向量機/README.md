@@ -66,7 +66,7 @@ gamma參數，它控制高斯核的寬度。它決定了點靠近的尺度。 C 
 
 > [!IMPORTANT]
 > 調整SVM的c參數和gamma參數
-> [調整SVC模型的c和gamma參數_範例](./svm_4調整SVC模型的c和gamma參數.ipynb)
+> [調整SVC模型的c和gamma參數_範例](./svm_4調整SVC模型的c和gamma參數.ipynb)
 
 ## 為SVM預處理資料
 
@@ -74,6 +74,3 @@ gamma參數，它控制高斯核的寬度。它決定了點靠近的尺度。 C 
 > 使用SVM的RBF核心,應用在乳癌資料集
 > 整理數據資料,提昇SVM模型
 > [乳癌資料集使用SVM_範例](svm_5乳癌資料集使用SVM.ipynb)
-
-## 實作:
-[**SVC(Support Vector Classifier）model實作**](./sklearn實作1.ipynb)
