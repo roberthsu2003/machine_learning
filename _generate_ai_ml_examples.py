@@ -2,6 +2,7 @@ from pathlib import Path
 from textwrap import dedent
 import json
 import shutil
+from urllib.parse import quote
 
 ROOT = Path("AI提問與機器學習實戰")
 BOOK = Path("資料科學自學聖經")
@@ -42,6 +43,19 @@ except Exception:
     print("提示：中文字型設定失敗時，模型仍可正常執行。")
 plt.rcParams["axes.unicode_minus"] = False
 sns.set_theme(style="whitegrid")"""
+
+COLAB_SETUP = """# 只在 Colab 缺少套件時安裝；本機使用專案的 requirements.txt
+try:
+    import google.colab
+except ImportError:
+    pass
+else:
+    import importlib.util
+    import subprocess
+    import sys
+    missing = [name for name in ("mplfonts", "seaborn", "scipy") if importlib.util.find_spec(name) is None]
+    if missing:
+        subprocess.check_call([sys.executable, "-m", "pip", "install", *missing])"""
 
 def classified(target, kind):
  base = f"""from sklearn.model_selection import train_test_split, StratifiedKFold, cross_val_score
@@ -188,8 +202,8 @@ def notebook(spec):
  folder, file, title, dataset, source, target, task, algos, kind = spec
  target_note = f"目標欄位：{target}" if target else "沒有標籤，目標是探索客群結構"
  body = clustered() if kind == "cluster" else classified(target, kind)
- cells = [M(f'<a href="https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/{folder}/{file}" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>'),
-  C("%%capture\n# 在 Google Colab 執行時，先安裝中文字型與資料下載支援\n%pip install wget mplfonts scipy seaborn"),
+ cells = [M(f'<a href="https://colab.research.google.com/github/roberthsu2003/machine_learning/blob/main/AI%E6%8F%90%E5%95%8F%E8%88%87%E6%A9%9F%E5%99%A8%E5%AD%B8%E7%BF%92%E5%AF%A6%E6%88%B0/{quote(folder)}/{quote(file)}" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>'),
+  C(COLAB_SETUP),
   M(f"""# {title} — AI 伴學實戰筆記本
 
 歡迎來到本實戰筆記本！本筆記本沿用範例 01 的 **「一段程式碼 + 一段 AI 互動學習指引」** 架構：
@@ -204,8 +218,8 @@ def notebook(spec):
   M("---  \n### 【步驟 1】：資料載入與結構探索（EDA）\n讀取資料、查看欄位型態與摘要統計，先了解資料再下模型。"),
   C(f"""# [步驟 1 程式碼] 資料載入與結構探索
 if not os.path.exists("{dataset}"):
-    import wget
-    wget.download("{RAW}/{folder}/{dataset}", "{dataset}")
+    from urllib.request import urlretrieve
+    urlretrieve("{RAW}/{quote(folder)}/{quote(dataset)}", "{dataset}")
 df = pd.read_csv("{dataset}")
 print(f"資料筆數：{{len(df):,}}；欄位數：{{df.shape[1]}}")
 display(df.head())
@@ -247,7 +261,7 @@ def readme(spec):
 
 | 項目 | 說明 |
 | :--- | :--- |
-| 資料檔 | [{dataset}](./{dataset})（[直接下載]({RAW}/{folder}/{dataset})） |
+| 資料檔 | [{dataset}](./{dataset})（[直接下載]({RAW}/{quote(folder)}/{quote(dataset)})） |
 | 任務類型 | {task} |
 | 目標 y | {y} |
 | 核心演算法 | {algos} |
