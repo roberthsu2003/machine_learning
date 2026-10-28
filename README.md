@@ -10,39 +10,6 @@
 
 ---
 
-## 💻 快速開始 (Quick Start)
-
-為了在本機執行原有程式，我們推薦使用現代化的 Python 套件管理器 [uv](https://github.com/astral-sh/uv) 或是傳統的 `pip` 來配置環境。
-
-### 1. 複製本專案至本地
-```bash
-git clone https://github.com/roberthsu2003/machine_learning.git
-cd machine_learning
-```
-
-### 2. 建立虛擬環境並安裝依賴
-*   **使用 `uv`（推薦，極速）：**
-    ```bash
-    # 方法 A：直接依照 uv.lock 同步完整環境
-    uv sync --locked
-
-    # 方法 B：手動建立虛擬環境並安裝 requirements.txt
-    uv venv
-    uv pip install -r requirements.txt
-    ```
-*   **使用傳統 `pip`：**
-    ```bash
-    # 建立環境
-    python3 -m venv .venv
-    source .venv/bin/activate  # macOS/Linux
-    # .venv\Scripts\activate   # Windows
-    
-    # 安裝套件
-    pip install -r requirements.txt
-    ```
-
----
-
 ## 📚 學習地圖單元明細
 你可以依照以下主要模組循序漸進地研習。
 
